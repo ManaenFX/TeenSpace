@@ -18,11 +18,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
         .box {
             background: white;
-            width: 90%;
+            width: 100%;
             max-width: 450px;
             padding: 35px;
             border-radius: 20px;
@@ -34,9 +35,10 @@
             color: #6c5ce7;
         }
 
-        p {
+        .intro {
             text-align: center;
             color: #555;
+            margin-bottom: 25px;
         }
 
         label {
@@ -46,12 +48,14 @@
             font-weight: bold;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 13px;
             border: 1px solid #ccc;
             border-radius: 10px;
             font-size: 16px;
+            background: white;
         }
 
         button {
@@ -78,6 +82,14 @@
             color: #6c5ce7;
             text-decoration: none;
         }
+
+        .privacy {
+            font-size: 13px;
+            color: #777;
+            margin-top: 18px;
+            line-height: 1.5;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -87,37 +99,115 @@
 
         <h1>🌍 Join TeenSpace</h1>
 
-        <p>Create your TeenSpace profile.</p>
+        <p class="intro">
+            Create your TeenSpace profile and join teens
+            from around the world.
+        </p>
 
         <form onsubmit="joinSite(event)">
 
-            <label>Username</label>
-            <input type="text" id="username" placeholder="Choose a username" required>
+            <label for="username">Username</label>
 
-            <label>Email</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
+            <input
+                type="text"
+                id="username"
+                placeholder="Choose a username"
+                required
+            >
 
-            <label>Password</label>
-            <input type="password" id="password" placeholder="Create a password" required>
 
-            <button type="submit">Create Account</button>
+            <label for="country">Country</label>
+
+            <select id="country" required>
+
+                <option value="">Select your country</option>
+
+                <option>Nigeria 🇳🇬</option>
+                <option>Ghana 🇬🇭</option>
+                <option>Kenya 🇰🇪</option>
+                <option>South Africa 🇿🇦</option>
+                <option>United States 🇺🇸</option>
+                <option>Canada 🇨🇦</option>
+                <option>United Kingdom 🇬🇧</option>
+                <option>France 🇫🇷</option>
+                <option>Germany 🇩🇪</option>
+                <option>Spain 🇪🇸</option>
+                <option>Italy 🇮🇹</option>
+                <option>Brazil 🇧🇷</option>
+                <option>Mexico 🇲🇽</option>
+                <option>India 🇮🇳</option>
+                <option>China 🇨🇳</option>
+                <option>Japan 🇯🇵</option>
+                <option>South Korea 🇰🇷</option>
+                <option>Australia 🇦🇺</option>
+                <option>New Zealand 🇳🇿</option>
+                <option>Other 🌍</option>
+
+            </select>
+
+
+            <label for="email">Email</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                required
+            >
+
+
+            <button type="submit">
+                Create Account 🚀
+            </button>
 
         </form>
 
-        <a class="back" href="index.html">← Back to TeenSpace</a>
+
+        <p class="privacy">
+            🛡️ Keep your personal information private.
+            Never share your password or home address with other users.
+        </p>
+
+
+        <a class="back" href="index.html">
+            ← Back to TeenSpace
+        </a>
 
     </div>
 
+
     <script>
+
         function joinSite(event) {
+
             event.preventDefault();
 
-            const username = document.getElementById("username").value;
+            const username =
+                document.getElementById("username").value;
 
-            alert("Welcome to TeenSpace, " + username + "! 🌍");
+            const country =
+                document.getElementById("country").value;
+
+            alert(
+                "Welcome to TeenSpace, " +
+                username +
+                "! 🌍\n\nCountry: " +
+                country
+            );
 
             window.location.href = "index.html";
         }
+
     </script>
 
 </body>
