@@ -1,214 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join TeenSpace 🌍</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeenSpace - Join</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        body {
-            margin: 0;
-            background: #f4f7ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7ff;
+      margin: 0;
+      padding: 40px 20px;
+    }
 
-        .box {
-            background: white;
-            width: 100%;
-            max-width: 450px;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
+    .box {
+      max-width: 450px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
 
-        h1 {
-            text-align: center;
-            color: #6c5ce7;
-        }
+    h1 {
+      text-align: center;
+    }
 
-        .intro {
-            text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-        }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
 
-        label {
-            display: block;
-            margin-top: 18px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
+    button {
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
 
-        input,
-        select {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-            background: white;
-        }
+    button:hover {
+      opacity: 0.9;
+    }
 
-        button {
-            width: 100%;
-            margin-top: 25px;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #6c5ce7;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
 
-        button:hover {
-            background: #5849c4;
-        }
-
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #6c5ce7;
-            text-decoration: none;
-        }
-
-        .privacy {
-            font-size: 13px;
-            color: #777;
-            margin-top: 18px;
-            line-height: 1.5;
-            text-align: center;
-        }
-    </style>
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="box">
+  <div class="box">
+    <h1>🌍 Join TeenSpace</h1>
 
-        <h1>🌍 Join TeenSpace</h1>
+    <p>Create your TeenSpace account and connect with teens around the world.</p>
 
-        <p class="intro">
-            Create your TeenSpace profile and join teens
-            from around the world.
-        </p>
+    <form id="joinForm">
 
-        <form onsubmit="joinSite(event)">
+      <input
+        type="text"
+        id="username"
+        placeholder="Username"
+        required
+      >
 
-            <label for="username">Username</label>
+      <select id="country" required>
+        <option value="">Select your country</option>
+        <option>Nigeria</option>
+        <option>Ghana</option>
+        <option>United States</option>
+        <option>United Kingdom</option>
+        <option>Canada</option>
+        <option>South Africa</option>
+        <option>Kenya</option>
+        <option>India</option>
+        <option>Australia</option>
+        <option>Other</option>
+      </select>
 
-            <input
-                type="text"
-                id="username"
-                placeholder="Choose a username"
-                required
-            >
+      <input
+        type="email"
+        id="email"
+        placeholder="Email address"
+        required
+      >
 
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        minlength="6"
+        required
+      >
 
-            <label for="country">Country</label>
+      <button type="submit">Create Account</button>
 
-            <select id="country" required>
+    </form>
 
-                <option value="">Select your country</option>
+    <div id="message"></div>
 
-                <option>Nigeria 🇳🇬</option>
-                <option>Ghana 🇬🇭</option>
-                <option>Kenya 🇰🇪</option>
-                <option>South Africa 🇿🇦</option>
-                <option>United States 🇺🇸</option>
-                <option>Canada 🇨🇦</option>
-                <option>United Kingdom 🇬🇧</option>
-                <option>France 🇫🇷</option>
-                <option>Germany 🇩🇪</option>
-                <option>Spain 🇪🇸</option>
-                <option>Italy 🇮🇹</option>
-                <option>Brazil 🇧🇷</option>
-                <option>Mexico 🇲🇽</option>
-                <option>India 🇮🇳</option>
-                <option>China 🇨🇳</option>
-                <option>Japan 🇯🇵</option>
-                <option>South Korea 🇰🇷</option>
-                <option>Australia 🇦🇺</option>
-                <option>New Zealand 🇳🇿</option>
-                <option>Other 🌍</option>
+    <a class="back" href="index.html">← Back to TeenSpace</a>
+  </div>
 
-            </select>
+<script>
+  const SUPABASE_URL = https://YOUR-PROJECT-ID.supabase.co
+  const SUPABASE_KEY = sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7
 
+  const { createClient } = supabase;
 
-            <label for="email">Email</label>
+  const supabaseClient = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-            >
+  const form = document.getElementById("joinForm");
+  const message = document.getElementById("message");
 
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-            <label for="password">Password</label>
+    const username = document.getElementById("username").value.trim();
+    const country = document.getElementById("country").value;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Create a password"
-                required
-            >
+    message.textContent = "Creating your account...";
 
-
-            <button type="submit">
-                Create Account 🚀
-            </button>
-
-        </form>
-
-
-        <p class="privacy">
-            🛡️ Keep your personal information private.
-            Never share your password or home address with other users.
-        </p>
-
-
-        <a class="back" href="index.html">
-            ← Back to TeenSpace
-        </a>
-
-    </div>
-
-
-    <script>
-
-        function joinSite(event) {
-
-            event.preventDefault();
-
-            const username =
-                document.getElementById("username").value;
-
-            const country =
-                document.getElementById("country").value;
-
-            alert(
-                "Welcome to TeenSpace, " +
-                username +
-                "! 🌍\n\nCountry: " +
-                country
-            );
-
-            window.location.href = "index.html";
+    const { error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          username: username,
+          country: country
         }
+      }
+    });
 
-    </script>
+    if (error) {
+      message.textContent = error.message;
+      return;
+    }
+
+    message.textContent =
+      "🎉 Account created! Check your email to confirm your account.";
+
+    form.reset();
+  });
+</script>
 
 </body>
 </html>
