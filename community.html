@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community | TeenSpace 🌍</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7ff;
+            color: #222;
+        }
+
+        header {
+            background: #6c5ce7;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: white;
+            text-align: center;
+            padding: 55px 20px;
+        }
+
+        .hero h1 {
+            color: #6c5ce7;
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .community {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .notice {
+            background: #fff8e1;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .topic {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+        }
+
+        .topic h3 {
+            color: #6c5ce7;
+            margin-bottom: 10px;
+        }
+
+        .topic p {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .topic button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .topic button:hover {
+            background: #5849c4;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                display: inline-block;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">🌍 TeenSpace</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="explore.html">Explore</a>
+            <a href="community.html">Community</a>
+            <a href="join.html">Join</a>
+        </nav>
+
+    </header>
+
+
+    <section class="hero">
+
+        <h1>💬 TeenSpace Community</h1>
+
+        <p>
+            Meet people, discover discussions and share
+            your interests in a safe environment.
+        </p>
+
+    </section>
+
+
+    <main class="community">
+
+        <div class="notice">
+            🛡️ <strong>Stay Safe:</strong>
+            Never share your password, home address, phone number,
+            school address or other private information online.
+            Be respectful to other members.
+        </div>
+
+
+        <div class="topic">
+
+            <h3>🌎 Around the World</h3>
+
+            <p>
+                Talk about different countries, cultures,
+                languages and interesting places around the world.
+            </p>
+
+            <button onclick="showMessage('Around the World')">
+                View Discussion
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <h3>🎮 Gaming</h3>
+
+            <p>
+                Talk about games, gaming experiences,
+                strategies and your favorite genres.
+            </p>
+
+            <button onclick="showMessage('Gaming')">
+                View Discussion
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <h3>🎨 Creativity</h3>
+
+            <p>
+                Discuss art, music, writing, photography,
+                design and other creative hobbies.
+            </p>
+
+            <button onclick="showMessage('Creativity')">
+                View Discussion
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <h3>📚 School & Learning</h3>
+
+            <p>
+                Share study ideas, learning tips and
+                ways to make school more interesting.
+            </p>
+
+            <button onclick="showMessage('School & Learning')">
+                View Discussion
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <h3>💡 Ideas & Projects</h3>
+
+            <p>
+                Talk about interesting ideas, projects,
+                hobbies and things you want to create.
+            </p>
+
+            <button onclick="showMessage('Ideas & Projects')">
+                View Discussion
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>© 2026 TeenSpace 🌍 | Made for teens, with safety in mind.</p>
+
+    </footer>
+
+
+    <script>
+
+        function showMessage(topic) {
+            alert(
+                topic +
+                " discussions are coming soon! 🚀"
+            );
+        }
+
+    </script>
+
+</body>
+</html>
