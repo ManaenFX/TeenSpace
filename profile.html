@@ -2,14 +2,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>TeenSpace - My Profile</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -29,12 +35,12 @@
       background: white;
       padding: 30px;
       border-radius: 22px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
     }
 
     h1 {
       text-align: center;
-      color: #6352e8;
+      color: #6c5ce7;
       margin-bottom: 8px;
     }
 
@@ -42,28 +48,12 @@
       text-align: center;
       color: #666;
       margin-bottom: 25px;
-      font-size: 18px;
-    }
-
-    #message {
-      text-align: center;
-      margin: 15px 0;
-      min-height: 25px;
-      line-height: 1.5;
-    }
-
-    .error {
-      color: #ff2864;
-    }
-
-    .success {
-      color: #159447;
     }
 
     .profile {
       background: #f8f7ff;
       padding: 22px;
-      border-radius: 18px;
+      border-radius: 16px;
     }
 
     .field {
@@ -71,42 +61,31 @@
     }
 
     .label {
-      font-size: 14px;
+      font-size: 13px;
       color: #777;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
+    }
+
+    .value {
+      font-size: 18px;
       font-weight: bold;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 11px;
-      font-size: 16px;
-      outline: none;
-      background: white;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #6352e8;
-      box-shadow: 0 0 0 3px rgba(99,82,232,0.12);
+      color: #222;
+      word-break: break-word;
     }
 
     textarea {
-      min-height: 120px;
+      width: 100%;
+      min-height: 110px;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 11px;
       resize: vertical;
+      font-size: 16px;
+      outline: none;
     }
 
-    .email-box {
-      background: #eeeef8;
-      padding: 14px;
-      border-radius: 11px;
-      color: #555;
-      word-break: break-word;
+    textarea:focus {
+      border-color: #6c5ce7;
     }
 
     button,
@@ -117,7 +96,7 @@
       margin-top: 15px;
       border: none;
       border-radius: 11px;
-      background: #6352e8;
+      background: #6c5ce7;
       color: white;
       font-size: 16px;
       font-weight: bold;
@@ -128,7 +107,7 @@
 
     button:hover,
     .link-button:hover {
-      background: #5140d5;
+      background: #5849c4;
     }
 
     button:disabled {
@@ -144,31 +123,51 @@
       background: #c0392b;
     }
 
-    .hint {
-      font-size: 12px;
-      color: #888;
-      margin-top: 5px;
+    #message {
+      text-align: center;
+      margin: 15px 0;
+      min-height: 24px;
+      line-height: 1.5;
     }
+
+    .success {
+      color: #159447;
+    }
+
+    .error {
+      color: #e74c3c;
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
 <div class="box">
 
-  <h1>👤 My TeenSpace Profile</h1>
+  <h1>
+    👤 My TeenSpace Profile
+  </h1>
 
   <p class="welcome">
-    Edit your TeenSpace profile 🌍
+    Your TeenSpace profile 🌍
   </p>
+
 
   <div id="message">
     Loading profile...
   </div>
 
-  <div class="profile" id="profileBox" style="display:none;">
 
-    <!-- USERNAME -->
+  <div
+    class="profile"
+    id="profileBox"
+    style="display:none;"
+  >
+
 
     <div class="field">
 
@@ -176,21 +175,13 @@
         Username
       </div>
 
-      <input
-        type="text"
+      <div
+        class="value"
         id="username"
-        maxlength="30"
-        placeholder="Enter your username"
-      >
-
-      <div class="hint">
-        This is the name other TeenSpace members will see.
-      </div>
+      ></div>
 
     </div>
 
-
-    <!-- COUNTRY -->
 
     <div class="field">
 
@@ -198,68 +189,13 @@
         Country
       </div>
 
-      <select id="country">
-
-        <option value="">Select your country</option>
-
-        <option>Nigeria</option>
-        <option>Ghana</option>
-        <option>South Africa</option>
-        <option>Kenya</option>
-        <option>Uganda</option>
-        <option>Tanzania</option>
-        <option>Rwanda</option>
-        <option>Egypt</option>
-        <option>Morocco</option>
-        <option>Algeria</option>
-        <option>Zimbabwe</option>
-        <option>Zambia</option>
-        <option>Cameroon</option>
-        <option>Ethiopia</option>
-
-        <option>United Kingdom</option>
-        <option>Ireland</option>
-        <option>France</option>
-        <option>Germany</option>
-        <option>Spain</option>
-        <option>Italy</option>
-        <option>Portugal</option>
-        <option>Netherlands</option>
-        <option>Belgium</option>
-        <option>Switzerland</option>
-        <option>Austria</option>
-        <option>Sweden</option>
-        <option>Norway</option>
-        <option>Denmark</option>
-        <option>Finland</option>
-        <option>Poland</option>
-        <option>Greece</option>
-        <option>Ukraine</option>
-
-        <option>United States</option>
-        <option>Canada</option>
-        <option>Brazil</option>
-        <option>Mexico</option>
-        <option>Argentina</option>
-
-        <option>India</option>
-        <option>China</option>
-        <option>Japan</option>
-        <option>South Korea</option>
-        <option>Philippines</option>
-        <option>Indonesia</option>
-        <option>Malaysia</option>
-        <option>Singapore</option>
-
-        <option>Australia</option>
-        <option>New Zealand</option>
-
-      </select>
+      <div
+        class="value"
+        id="country"
+      ></div>
 
     </div>
 
-
-    <!-- EMAIL -->
 
     <div class="field">
 
@@ -267,68 +203,46 @@
         Email
       </div>
 
-      <div class="email-box" id="email">
-        Loading...
-      </div>
-
-      <div class="hint">
-        Your email cannot be changed here.
-      </div>
+      <div
+        class="value"
+        id="email"
+      ></div>
 
     </div>
 
 
-    <!-- BIO -->
-
     <div class="field">
 
       <div class="label">
-        About You
+        Bio
       </div>
 
       <textarea
         id="bio"
         maxlength="150"
-        placeholder="Tell the TeenSpace community a little about yourself..."
+        placeholder="Tell the TeenSpace community about your interests..."
       ></textarea>
-
-      <div class="hint">
-        Maximum 150 characters.
-      </div>
 
     </div>
 
 
-    <!-- SAVE -->
-
     <button id="saveButton">
-      💾 Save Profile
+      Save Profile 💾
     </button>
+
 
   </div>
 
 
-  <!-- HOME -->
+  <!-- IMPORTANT: HOME = home.html -->
 
   <a
     class="link-button"
-    href="index.html"
+    href="home.html"
   >
     🏠 Home
   </a>
 
-
-  <!-- EXPLORE -->
-
-  <a
-    class="link-button"
-    href="explore.html"
-  >
-    🌍 Explore TeenSpace
-  </a>
-
-
-  <!-- LOGOUT -->
 
   <button
     class="logout"
@@ -337,382 +251,332 @@
     Log Out
   </button>
 
+
 </div>
 
 
 <script>
 
-  // ==========================================
-  // SUPABASE
-  // ==========================================
 
-  const SUPABASE_URL =
-    "https://gcigveojqwwovitlwtxl.supabase.co";
+// ==========================================
+// SUPABASE
+// ==========================================
 
-  const SUPABASE_KEY =
-    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+const SUPABASE_URL =
+  "https://gcigveojqwwovitlwtxl.supabase.co";
 
 
-  // ==========================================
-  // ELEMENTS
-  // ==========================================
-
-  const message =
-    document.getElementById("message");
-
-  const profileBox =
-    document.getElementById("profileBox");
-
-  const username =
-    document.getElementById("username");
-
-  const country =
-    document.getElementById("country");
-
-  const email =
-    document.getElementById("email");
-
-  const bio =
-    document.getElementById("bio");
-
-  const saveButton =
-    document.getElementById("saveButton");
-
-  const logoutButton =
-    document.getElementById("logoutButton");
+const SUPABASE_KEY =
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 
-  let currentUser = null;
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-  // ==========================================
-  // LOAD PROFILE
-  // ==========================================
+// ==========================================
+// ELEMENTS
+// ==========================================
 
-  async function loadProfile() {
+const message =
+  document.getElementById("message");
+
+
+const profileBox =
+  document.getElementById("profileBox");
+
+
+const username =
+  document.getElementById("username");
+
+
+const country =
+  document.getElementById("country");
+
+
+const email =
+  document.getElementById("email");
+
+
+const bio =
+  document.getElementById("bio");
+
+
+const saveButton =
+  document.getElementById("saveButton");
+
+
+const logoutButton =
+  document.getElementById("logoutButton");
+
+
+let currentUser = null;
+
+
+// ==========================================
+// LOAD PROFILE
+// ==========================================
+
+async function loadProfile() {
+
+  try {
+
+    const {
+      data: {
+        user
+      },
+      error: userError
+    } =
+      await supabaseClient.auth.getUser();
+
+
+    if (
+      userError ||
+      !user
+    ) {
+
+      message.className =
+        "error";
+
+      message.textContent =
+        "❌ Please log in first.";
+
+      setTimeout(
+        () => {
+          window.location.href =
+            "login.html";
+        },
+        1200
+      );
+
+      return;
+
+    }
+
+
+    currentUser =
+      user;
+
+
+    // ======================================
+    // USER INFORMATION
+    // ======================================
+
+    username.textContent =
+      user.user_metadata?.username ||
+      "No username";
+
+
+    country.textContent =
+      user.user_metadata?.country ||
+      "No country";
+
+
+    email.textContent =
+      user.email ||
+      "No email";
+
+
+    // ======================================
+    // LOAD PROFILE USING user-id
+    // ======================================
+
+    const {
+      data: profile,
+      error: profileError
+    } =
+      await supabaseClient
+
+        .from("profiles")
+
+        .select(
+          '"user-id", bio'
+        )
+
+        .eq(
+          '"user-id"',
+          user.id
+        )
+
+        .maybeSingle();
+
+
+    if (profileError) {
+
+      console.error(
+        "Profile loading error:",
+        profileError
+      );
+
+    }
+
+
+    if (profile) {
+
+      bio.value =
+        profile.bio ||
+        "";
+
+    }
+
+
+    message.textContent =
+      "";
+
+    profileBox.style.display =
+      "block";
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.className =
+      "error";
+
+    message.textContent =
+      "❌ Could not load your profile.";
+
+  }
+
+}
+
+
+// ==========================================
+// SAVE PROFILE
+// ==========================================
+
+saveButton.addEventListener(
+  "click",
+  async function() {
+
+    if (!currentUser) {
+      return;
+    }
+
+
+    saveButton.disabled =
+      true;
+
+    saveButton.textContent =
+      "Saving...";
+
+
+    message.textContent =
+      "";
+
 
     try {
 
       const {
-        data: { user },
-        error: userError
-      } = await supabaseClient.auth.getUser();
+        error
+      } =
+        await supabaseClient
 
-
-      if (userError || !user) {
-
-        message.className = "error";
-
-        message.textContent =
-          "❌ Please log in first.";
-
-        setTimeout(() => {
-          window.location.href = "login.html";
-        }, 1500);
-
-        return;
-      }
-
-
-      currentUser = user;
-
-
-      // ==========================================
-      // EMAIL
-      // ==========================================
-
-      email.textContent =
-        user.email || "No email";
-
-
-      // ==========================================
-      // GET PROFILE USING "user-id"
-      // ==========================================
-
-      const {
-        data: profile,
-        error: profileError
-      } = await supabaseClient
-        .from("profiles")
-        .select('"user-id", username, country, bio')
-        .eq('"user-id"', user.id)
-        .maybeSingle();
-
-
-      if (profileError) {
-
-        console.error(
-          "Profile loading error:",
-          profileError
-        );
-
-        message.className = "error";
-
-        message.textContent =
-          "❌ Could not load your profile.";
-
-        return;
-      }
-
-
-      // ==========================================
-      // FILL EDITABLE FIELDS
-      // ==========================================
-
-      if (profile) {
-
-        username.value =
-          profile.username || "";
-
-        country.value =
-          profile.country || "";
-
-        bio.value =
-          profile.bio || "";
-
-      } else {
-
-        // If profile doesn't exist yet,
-        // use information from signup metadata.
-
-        username.value =
-          user.user_metadata?.username || "";
-
-        country.value =
-          user.user_metadata?.country || "";
-
-        bio.value = "";
-
-      }
-
-
-      message.textContent = "";
-
-      profileBox.style.display =
-        "block";
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      message.className = "error";
-
-      message.textContent =
-        "❌ Could not load your profile.";
-
-    }
-
-  }
-
-
-  // ==========================================
-  // SAVE PROFILE
-  // ==========================================
-
-  saveButton.addEventListener(
-    "click",
-    async function() {
-
-      if (!currentUser) return;
-
-
-      const newUsername =
-        username.value.trim();
-
-      const newCountry =
-        country.value;
-
-      const newBio =
-        bio.value.trim();
-
-
-      if (!newUsername) {
-
-        message.className = "error";
-
-        message.textContent =
-          "❌ Please enter a username.";
-
-        return;
-      }
-
-
-      if (!newCountry) {
-
-        message.className = "error";
-
-        message.textContent =
-          "❌ Please select your country.";
-
-        return;
-      }
-
-
-      saveButton.disabled = true;
-
-      saveButton.textContent =
-        "Saving...";
-
-      message.textContent = "";
-
-
-      try {
-
-        // ==========================================
-        // CHECK IF PROFILE EXISTS
-        // ==========================================
-
-        const {
-          data: existingProfile,
-          error: checkError
-        } = await supabaseClient
           .from("profiles")
-          .select('"user-id"')
-          .eq('"user-id"', currentUser.id)
-          .maybeSingle();
 
+          .upsert(
 
-        if (checkError) {
+            {
+              "user-id":
+                currentUser.id,
 
-          console.error(
-            "Profile check error:",
-            checkError
+              bio:
+                bio.value.trim()
+            },
+
+            {
+              onConflict:
+                "user-id"
+            }
+
           );
 
-          throw checkError;
-        }
 
-
-        // ==========================================
-        // UPDATE EXISTING PROFILE
-        // ==========================================
-
-        if (existingProfile) {
-
-          const {
-            error: updateError
-          } = await supabaseClient
-            .from("profiles")
-            .update({
-              username: newUsername,
-              country: newCountry,
-              bio: newBio
-            })
-            .eq('"user-id"', currentUser.id);
-
-
-          if (updateError) {
-            throw updateError;
-          }
-
-        }
-
-
-        // ==========================================
-        // CREATE PROFILE IF IT DOESN'T EXIST
-        // ==========================================
-
-        else {
-
-          const {
-            error: insertError
-          } = await supabaseClient
-            .from("profiles")
-            .insert({
-              "user-id": currentUser.id,
-              username: newUsername,
-              country: newCountry,
-              bio: newBio
-            });
-
-
-          if (insertError) {
-            throw insertError;
-          }
-
-        }
-
-
-        // ==========================================
-        // ALSO UPDATE AUTH METADATA
-        // ==========================================
-
-        await supabaseClient.auth.updateUser({
-          data: {
-            username: newUsername,
-            country: newCountry
-          }
-        });
-
-
-        message.className = "success";
-
-        message.textContent =
-          "✅ Profile saved successfully!";
-
-
-      } catch (error) {
+      if (error) {
 
         console.error(
           "Save profile error:",
           error
         );
 
-        message.className = "error";
+        message.className =
+          "error";
 
         message.textContent =
-          "❌ Could not save your profile.";
+          "❌ Could not save your bio.";
+
+      } else {
+
+        message.className =
+          "success";
+
+        message.textContent =
+          "✅ Profile saved!";
 
       }
 
 
-      saveButton.disabled = false;
+    } catch (error) {
 
-      saveButton.textContent =
-        "💾 Save Profile";
+      console.error(error);
 
-    }
-  );
+      message.className =
+        "error";
 
-
-  // ==========================================
-  // LOG OUT
-  // ==========================================
-
-  logoutButton.addEventListener(
-    "click",
-    async function() {
-
-      logoutButton.disabled = true;
-
-      logoutButton.textContent =
-        "Logging out...";
-
-
-      await supabaseClient.auth.signOut();
-
-
-      window.location.href =
-        "login.html";
+      message.textContent =
+        "❌ Something went wrong.";
 
     }
-  );
 
 
-  // ==========================================
-  // START
-  // ==========================================
+    saveButton.disabled =
+      false;
 
-  loadProfile();
+    saveButton.textContent =
+      "Save Profile 💾";
+
+  }
+);
+
+
+// ==========================================
+// LOG OUT
+// ==========================================
+
+logoutButton.addEventListener(
+  "click",
+  async function() {
+
+    logoutButton.disabled =
+      true;
+
+    logoutButton.textContent =
+      "Logging out...";
+
+
+    await supabaseClient.auth.signOut();
+
+
+    window.location.href =
+      "login.html";
+
+  }
+);
+
+
+// ==========================================
+// START
+// ==========================================
+
+loadProfile();
 
 </script>
 
+
 </body>
 </html>
+
