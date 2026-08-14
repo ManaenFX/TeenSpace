@@ -1,25 +1,39 @@
+```html id="g8r4m1"
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Messages | TeenSpace 💬</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
 
+
     body {
       margin: 0;
-      background: linear-gradient(135deg, #f4f7ff, #eee8ff);
+      background: linear-gradient(
+        135deg,
+        #f4f7ff,
+        #eee8ff
+      );
       color: #222;
     }
+
 
     header {
       background: #6c5ce7;
@@ -30,10 +44,12 @@
       align-items: center;
     }
 
+
     .logo {
       font-size: 28px;
       font-weight: bold;
     }
+
 
     nav a {
       color: white;
@@ -42,11 +58,18 @@
       font-weight: bold;
     }
 
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+
     .container {
       width: 92%;
       max-width: 800px;
       margin: 35px auto;
     }
+
 
     .chat-card {
       background: white;
@@ -55,21 +78,30 @@
       box-shadow: 0 10px 35px rgba(0,0,0,.08);
     }
 
+
     .chat-header {
       padding: 22px;
-      background: linear-gradient(135deg, #6c5ce7, #8e74ff);
+      background:
+        linear-gradient(
+          135deg,
+          #6c5ce7,
+          #8e74ff
+        );
       color: white;
     }
+
 
     .chat-name {
       font-size: 25px;
       font-weight: bold;
     }
 
+
     .chat-subtitle {
       margin-top: 5px;
       opacity: .9;
     }
+
 
     .messages {
       height: 500px;
@@ -78,20 +110,24 @@
       background: #faf9ff;
     }
 
+
     .empty {
       text-align: center;
       color: #888;
       padding: 50px 20px;
     }
 
+
     .bubble-row {
       display: flex;
       margin-bottom: 14px;
     }
 
+
     .bubble-row.mine {
       justify-content: flex-end;
     }
+
 
     .bubble {
       max-width: 75%;
@@ -100,9 +136,10 @@
       background: #eeeaff;
       color: #333;
       line-height: 1.5;
-      white-space: pre-wrap;
       word-break: break-word;
+      white-space: pre-wrap;
     }
+
 
     .mine .bubble {
       background: #6c5ce7;
@@ -110,11 +147,13 @@
       border-bottom-right-radius: 5px;
     }
 
+
     .bubble-time {
       font-size: 11px;
       margin-top: 6px;
       opacity: .7;
     }
+
 
     .composer {
       padding: 18px;
@@ -123,6 +162,7 @@
       background: white;
       border-top: 1px solid #eee;
     }
+
 
     textarea {
       flex: 1;
@@ -136,9 +176,11 @@
       outline: none;
     }
 
+
     textarea:focus {
       border-color: #6c5ce7;
     }
+
 
     .send {
       width: 120px;
@@ -150,10 +192,17 @@
       cursor: pointer;
     }
 
+
+    .send:hover {
+      background: #5849c4;
+    }
+
+
     .send:disabled {
       opacity: .6;
       cursor: not-allowed;
     }
+
 
     #status {
       text-align: center;
@@ -161,13 +210,16 @@
       min-height: 20px;
     }
 
+
     .error {
       color: #d63050;
     }
 
+
     .success {
       color: #159447;
     }
+
 
     .back {
       display: block;
@@ -178,34 +230,45 @@
       font-weight: bold;
     }
 
+
     @media (max-width: 700px) {
+
       header {
         flex-direction: column;
         gap: 14px;
       }
+
 
       nav a {
         margin: 4px 6px;
         display: inline-block;
       }
 
+
       .messages {
         height: 430px;
       }
+
 
       .composer {
         flex-direction: column;
       }
 
+
       .send {
         width: 100%;
         padding: 15px;
       }
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -213,23 +276,35 @@
     🌍 TeenSpace
   </div>
 
+
   <nav>
+
     <a href="home.html">Home</a>
+
     <a href="explore.html">Explore</a>
+
     <a href="community.html">Community</a>
+
     <a href="profile.html">Profile</a>
+
   </nav>
 
 </header>
 
 
+
 <main class="container">
+
 
   <div class="chat-card">
 
+
     <div class="chat-header">
 
-      <div id="chatName" class="chat-name">
+      <div
+        id="chatName"
+        class="chat-name"
+      >
         Private Message
       </div>
 
@@ -240,7 +315,11 @@
     </div>
 
 
-    <div id="messages" class="messages">
+
+    <div
+      id="messages"
+      class="messages"
+    >
 
       <div class="empty">
         Loading messages...
@@ -249,9 +328,11 @@
     </div>
 
 
+
     <div
       id="status"
     ></div>
+
 
 
     <div class="composer">
@@ -262,6 +343,7 @@
         placeholder="Write a private message..."
       ></textarea>
 
+
       <button
         id="sendButton"
         class="send"
@@ -271,7 +353,9 @@
 
     </div>
 
+
   </div>
+
 
 
   <a
@@ -281,13 +365,21 @@
     ← Back to Explore
   </a>
 
+
 </main>
+
 
 
 <script>
 
+
+/* =========================================
+   SUPABASE
+========================================= */
+
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
+
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
@@ -300,32 +392,48 @@ const supabaseClient =
     {
       auth: {
         persistSession: true,
-        autoRefreshToken: true
+        autoRefreshToken: true,
+        detectSessionInUrl: true
       }
     }
   );
 
 
+/* =========================================
+   ELEMENTS
+========================================= */
+
 const messagesBox =
   document.getElementById("messages");
+
 
 const messageInput =
   document.getElementById("messageInput");
 
+
 const sendButton =
   document.getElementById("sendButton");
 
+
 const status =
   document.getElementById("status");
+
 
 const chatName =
   document.getElementById("chatName");
 
 
 let currentUser = null;
-let receiverId = null;
-let receiverName = "User";
 
+let receiverId = null;
+
+let receiverName =
+  "TeenSpace User";
+
+
+/* =========================================
+   HELPERS
+========================================= */
 
 function escapeHTML(value) {
 
@@ -340,6 +448,10 @@ function escapeHTML(value) {
 }
 
 
+/* =========================================
+   GET RECIPIENT
+========================================= */
+
 function getReceiverFromURL() {
 
   const params =
@@ -347,17 +459,25 @@ function getReceiverFromURL() {
       window.location.search
     );
 
+
   receiverId =
     params.get("user_id");
+
 
   receiverName =
     params.get("name") ||
     "TeenSpace User";
 
+
   chatName.textContent =
     "💬 " + receiverName;
+
 }
 
+
+/* =========================================
+   CHECK LOGIN
+========================================= */
 
 async function getCurrentUser() {
 
@@ -369,23 +489,40 @@ async function getCurrentUser() {
   } =
   await supabaseClient.auth.getUser();
 
-  if (error || !user) {
+
+  if (
+    error ||
+    !user
+  ) {
 
     window.location.href =
       "login.html";
 
     return null;
+
   }
 
+
   return user;
+
 }
 
 
+/* =========================================
+   LOAD MESSAGES
+========================================= */
+
 async function loadMessages() {
 
-  if (!currentUser || !receiverId) {
+  if (
+    !currentUser ||
+    !receiverId
+  ) {
+
     return;
+
   }
+
 
   const {
     data,
@@ -396,7 +533,13 @@ async function loadMessages() {
     .from("messages")
 
     .select(
-      "id, sender_id, receiver_id, content, created_at"
+      `
+      id,
+      sender_id,
+      receiver_id,
+      content,
+      created_at
+      `
     )
 
     .or(
@@ -413,78 +556,122 @@ async function loadMessages() {
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      "Message load error:",
+      error
+    );
+
 
     messagesBox.innerHTML = `
+
       <div class="empty">
+
         ❌ Could not load messages.
+
       </div>
+
     `;
 
     return;
+
   }
 
 
-  if (!data || data.length === 0) {
+  if (
+    !data ||
+    data.length === 0
+  ) {
 
     messagesBox.innerHTML = `
+
       <div class="empty">
+
         👋 Start the conversation.
+
       </div>
+
     `;
 
     return;
+
   }
 
 
-  messagesBox.innerHTML = "";
+  messagesBox.innerHTML =
+    "";
 
 
   data.forEach(message => {
 
     const mine =
-      message.sender_id === currentUser.id;
+      message.sender_id ===
+      currentUser.id;
 
 
     const row =
       document.createElement("div");
 
+
     row.className =
       "bubble-row" +
-      (mine ? " mine" : "");
+      (
+        mine
+          ? " mine"
+          : ""
+      );
 
 
     const bubble =
       document.createElement("div");
+
 
     bubble.className =
       "bubble";
 
 
     bubble.innerHTML = `
+
       <div>
-        ${escapeHTML(message.content)}
+
+        ${escapeHTML(
+          message.content
+        )}
+
       </div>
 
+
       <div class="bubble-time">
+
         ${new Date(
           message.created_at
         ).toLocaleString()}
+
       </div>
+
     `;
 
 
-    row.appendChild(bubble);
+    row.appendChild(
+      bubble
+    );
 
-    messagesBox.appendChild(row);
+
+    messagesBox.appendChild(
+      row
+    );
 
   });
 
 
   messagesBox.scrollTop =
     messagesBox.scrollHeight;
+
 }
 
+
+/* =========================================
+   SEND MESSAGE
+========================================= */
 
 async function sendMessage() {
 
@@ -493,7 +680,9 @@ async function sendMessage() {
 
 
   if (!content) {
+
     return;
+
   }
 
 
@@ -503,17 +692,39 @@ async function sendMessage() {
       "error";
 
     status.textContent =
-      "No recipient was selected.";
+      "No recipient selected.";
 
     return;
+
+  }
+
+
+  if (
+    receiverId ===
+    currentUser.id
+  ) {
+
+    status.className =
+      "error";
+
+    status.textContent =
+      "You cannot message yourself.";
+
+    return;
+
   }
 
 
   sendButton.disabled =
     true;
 
+
   sendButton.textContent =
     "Sending...";
+
+
+  status.textContent =
+    "";
 
 
   const {
@@ -524,15 +735,26 @@ async function sendMessage() {
     .from("messages")
 
     .insert({
-      sender_id: currentUser.id,
-      receiver_id: receiverId,
-      content: content
+
+      sender_id:
+        currentUser.id,
+
+      receiver_id:
+        receiverId,
+
+      content:
+        content
+
     });
 
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      "Send message error:",
+      error
+    );
+
 
     status.className =
       "error";
@@ -540,15 +762,19 @@ async function sendMessage() {
     status.textContent =
       "❌ " + error.message;
 
+
   } else {
 
     status.className =
       "success";
 
     status.textContent =
-      "Sent ✓";
+      "✅ Sent";
 
-    messageInput.value = "";
+
+    messageInput.value =
+      "";
+
 
     await loadMessages();
 
@@ -558,23 +784,26 @@ async function sendMessage() {
   sendButton.disabled =
     false;
 
+
   sendButton.textContent =
     "Send 💬";
 
 
-  setTimeout(() => {
+  setTimeout(
+    function() {
 
-    status.textContent = "";
+      status.textContent = "";
 
-  }, 1800);
+    },
+    1800
+  );
+
 }
 
 
-sendButton.addEventListener(
-  "click",
-  sendMessage
-);
-
+/* =========================================
+   SEND WITH ENTER
+========================================= */
 
 messageInput.addEventListener(
   "keydown",
@@ -595,16 +824,57 @@ messageInput.addEventListener(
 );
 
 
+sendButton.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+/* =========================================
+   START
+========================================= */
+
 async function start() {
 
   getReceiverFromURL();
 
+
   currentUser =
     await getCurrentUser();
+
 
   if (!currentUser) {
     return;
   }
+
+
+  if (!receiverId) {
+
+    messagesBox.innerHTML = `
+
+      <div class="empty">
+
+        👤 No person selected.
+
+        <br><br>
+
+        Go to Explore and choose someone
+        to message.
+
+      </div>
+
+    `;
+
+    sendButton.disabled =
+      true;
+
+    messageInput.disabled =
+      true;
+
+    return;
+
+  }
+
 
   await loadMessages();
 
@@ -615,5 +885,7 @@ start();
 
 </script>
 
+
 </body>
 </html>
+```
