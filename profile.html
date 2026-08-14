@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,77 +20,115 @@
       min-height: 100vh;
       background: #f4f7ff;
       padding: 25px 15px;
+      color: #222;
     }
 
     .box {
-      max-width: 500px;
+      max-width: 550px;
       margin: auto;
       background: white;
       padding: 30px;
-      border-radius: 20px;
+      border-radius: 22px;
       box-shadow: 0 5px 25px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
-      color: #6c5ce7;
-      margin-bottom: 5px;
+      color: #6352e8;
+      margin-bottom: 8px;
     }
 
     .welcome {
       text-align: center;
       color: #666;
       margin-bottom: 25px;
+      font-size: 18px;
+    }
+
+    #message {
+      text-align: center;
+      margin: 15px 0;
+      min-height: 25px;
+      line-height: 1.5;
+    }
+
+    .error {
+      color: #ff2864;
+    }
+
+    .success {
+      color: #159447;
     }
 
     .profile {
       background: #f8f7ff;
-      padding: 20px;
-      border-radius: 15px;
+      padding: 22px;
+      border-radius: 18px;
     }
 
     .field {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .label {
-      font-size: 13px;
+      font-size: 14px;
       color: #777;
-      margin-bottom: 5px;
+      margin-bottom: 7px;
+      font-weight: bold;
     }
 
-    .value {
-      font-size: 18px;
-      font-weight: bold;
-      color: #222;
-      word-break: break-word;
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 11px;
+      font-size: 16px;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #6352e8;
+      box-shadow: 0 0 0 3px rgba(99,82,232,0.12);
     }
 
     textarea {
-      width: 100%;
-      min-height: 100px;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      min-height: 120px;
       resize: vertical;
-      font-size: 15px;
+    }
+
+    .email-box {
+      background: #eeeef8;
+      padding: 14px;
+      border-radius: 11px;
+      color: #555;
+      word-break: break-word;
     }
 
     button,
     .link-button {
       display: block;
       width: 100%;
-      padding: 13px;
+      padding: 14px;
       margin-top: 15px;
       border: none;
-      border-radius: 10px;
-      background: #6c5ce7;
+      border-radius: 11px;
+      background: #6352e8;
       color: white;
       font-size: 16px;
       font-weight: bold;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
+    }
+
+    button:hover,
+    .link-button:hover {
+      background: #5140d5;
     }
 
     button:disabled {
@@ -101,11 +140,14 @@
       background: #e74c3c;
     }
 
-    #message {
-      text-align: center;
-      margin: 15px 0;
-      line-height: 1.5;
-      min-height: 24px;
+    .logout:hover {
+      background: #c0392b;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -117,55 +159,192 @@
   <h1>👤 My TeenSpace Profile</h1>
 
   <p class="welcome">
-    Your TeenSpace profile 🌍
+    Edit your TeenSpace profile 🌍
   </p>
 
-  <div id="message">Loading profile...</div>
+  <div id="message">
+    Loading profile...
+  </div>
 
   <div class="profile" id="profileBox" style="display:none;">
 
-    <div class="field">
-      <div class="label">Username</div>
-      <div class="value" id="username"></div>
-    </div>
+    <!-- USERNAME -->
 
     <div class="field">
-      <div class="label">Country</div>
-      <div class="value" id="country"></div>
+
+      <div class="label">
+        Username
+      </div>
+
+      <input
+        type="text"
+        id="username"
+        maxlength="30"
+        placeholder="Enter your username"
+      >
+
+      <div class="hint">
+        This is the name other TeenSpace members will see.
+      </div>
+
     </div>
 
-    <div class="field">
-      <div class="label">Email</div>
-      <div class="value" id="email"></div>
-    </div>
+
+    <!-- COUNTRY -->
 
     <div class="field">
-      <div class="label">Bio</div>
+
+      <div class="label">
+        Country
+      </div>
+
+      <select id="country">
+
+        <option value="">Select your country</option>
+
+        <option>Nigeria</option>
+        <option>Ghana</option>
+        <option>South Africa</option>
+        <option>Kenya</option>
+        <option>Uganda</option>
+        <option>Tanzania</option>
+        <option>Rwanda</option>
+        <option>Egypt</option>
+        <option>Morocco</option>
+        <option>Algeria</option>
+        <option>Zimbabwe</option>
+        <option>Zambia</option>
+        <option>Cameroon</option>
+        <option>Ethiopia</option>
+
+        <option>United Kingdom</option>
+        <option>Ireland</option>
+        <option>France</option>
+        <option>Germany</option>
+        <option>Spain</option>
+        <option>Italy</option>
+        <option>Portugal</option>
+        <option>Netherlands</option>
+        <option>Belgium</option>
+        <option>Switzerland</option>
+        <option>Austria</option>
+        <option>Sweden</option>
+        <option>Norway</option>
+        <option>Denmark</option>
+        <option>Finland</option>
+        <option>Poland</option>
+        <option>Greece</option>
+        <option>Ukraine</option>
+
+        <option>United States</option>
+        <option>Canada</option>
+        <option>Brazil</option>
+        <option>Mexico</option>
+        <option>Argentina</option>
+
+        <option>India</option>
+        <option>China</option>
+        <option>Japan</option>
+        <option>South Korea</option>
+        <option>Philippines</option>
+        <option>Indonesia</option>
+        <option>Malaysia</option>
+        <option>Singapore</option>
+
+        <option>Australia</option>
+        <option>New Zealand</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- EMAIL -->
+
+    <div class="field">
+
+      <div class="label">
+        Email
+      </div>
+
+      <div class="email-box" id="email">
+        Loading...
+      </div>
+
+      <div class="hint">
+        Your email cannot be changed here.
+      </div>
+
+    </div>
+
+
+    <!-- BIO -->
+
+    <div class="field">
+
+      <div class="label">
+        About You
+      </div>
 
       <textarea
         id="bio"
         maxlength="150"
-        placeholder="Tell the TeenSpace community a little about your interests..."
+        placeholder="Tell the TeenSpace community a little about yourself..."
       ></textarea>
+
+      <div class="hint">
+        Maximum 150 characters.
+      </div>
+
     </div>
 
+
+    <!-- SAVE -->
+
     <button id="saveButton">
-      Save Profile 💾
+      💾 Save Profile
     </button>
 
   </div>
 
-  <a class="link-button" href="index.html">
+
+  <!-- HOME -->
+
+  <a
+    class="link-button"
+    href="index.html"
+  >
     🏠 Home
   </a>
 
-  <button class="logout" id="logoutButton">
+
+  <!-- EXPLORE -->
+
+  <a
+    class="link-button"
+    href="explore.html"
+  >
+    🌍 Explore TeenSpace
+  </a>
+
+
+  <!-- LOGOUT -->
+
+  <button
+    class="logout"
+    id="logoutButton"
+  >
     Log Out
   </button>
 
 </div>
 
+
 <script>
+
+  // ==========================================
+  // SUPABASE
+  // ==========================================
 
   const SUPABASE_URL =
     "https://gcigveojqwwovitlwtxl.supabase.co";
@@ -179,6 +358,10 @@
       SUPABASE_KEY
     );
 
+
+  // ==========================================
+  // ELEMENTS
+  // ==========================================
 
   const message =
     document.getElementById("message");
@@ -208,9 +391,9 @@
   let currentUser = null;
 
 
-  // =========================
+  // ==========================================
   // LOAD PROFILE
-  // =========================
+  // ==========================================
 
   async function loadProfile() {
 
@@ -223,6 +406,8 @@
 
 
       if (userError || !user) {
+
+        message.className = "error";
 
         message.textContent =
           "❌ Please log in first.";
@@ -238,24 +423,25 @@
       currentUser = user;
 
 
-      username.textContent =
-        user.user_metadata?.username || "No username";
-
-      country.textContent =
-        user.user_metadata?.country || "No country";
+      // ==========================================
+      // EMAIL
+      // ==========================================
 
       email.textContent =
         user.email || "No email";
 
 
-      // LOAD BIO
+      // ==========================================
+      // GET PROFILE USING "user-id"
+      // ==========================================
+
       const {
         data: profile,
         error: profileError
       } = await supabaseClient
         .from("profiles")
-        .select("bio")
-        .eq("user-id", user.id)
+        .select('"user-id", username, country, bio')
+        .eq('"user-id"', user.id)
         .maybeSingle();
 
 
@@ -266,10 +452,42 @@
           profileError
         );
 
-      } else if (profile) {
+        message.className = "error";
+
+        message.textContent =
+          "❌ Could not load your profile.";
+
+        return;
+      }
+
+
+      // ==========================================
+      // FILL EDITABLE FIELDS
+      // ==========================================
+
+      if (profile) {
+
+        username.value =
+          profile.username || "";
+
+        country.value =
+          profile.country || "";
 
         bio.value =
           profile.bio || "";
+
+      } else {
+
+        // If profile doesn't exist yet,
+        // use information from signup metadata.
+
+        username.value =
+          user.user_metadata?.username || "";
+
+        country.value =
+          user.user_metadata?.country || "";
+
+        bio.value = "";
 
       }
 
@@ -284,6 +502,8 @@
 
       console.error(error);
 
+      message.className = "error";
+
       message.textContent =
         "❌ Could not load your profile.";
 
@@ -292,15 +512,47 @@
   }
 
 
-  // =========================
+  // ==========================================
   // SAVE PROFILE
-  // =========================
+  // ==========================================
 
   saveButton.addEventListener(
     "click",
     async function() {
 
       if (!currentUser) return;
+
+
+      const newUsername =
+        username.value.trim();
+
+      const newCountry =
+        country.value;
+
+      const newBio =
+        bio.value.trim();
+
+
+      if (!newUsername) {
+
+        message.className = "error";
+
+        message.textContent =
+          "❌ Please enter a username.";
+
+        return;
+      }
+
+
+      if (!newCountry) {
+
+        message.className = "error";
+
+        message.textContent =
+          "❌ Please select your country.";
+
+        return;
+      }
 
 
       saveButton.disabled = true;
@@ -313,48 +565,110 @@
 
       try {
 
+        // ==========================================
+        // CHECK IF PROFILE EXISTS
+        // ==========================================
+
         const {
-          error
+          data: existingProfile,
+          error: checkError
         } = await supabaseClient
           .from("profiles")
-          .upsert(
-            {
-              "user-id": currentUser.id,
-              bio: bio.value.trim()
-            },
-            {
-              onConflict: "user-id"
-            }
-          );
+          .select('"user-id"')
+          .eq('"user-id"', currentUser.id)
+          .maybeSingle();
 
 
-        if (error) {
+        if (checkError) {
 
           console.error(
-            "SUPABASE SAVE ERROR:",
-            error
+            "Profile check error:",
+            checkError
           );
 
-          message.textContent =
-            "❌ " + (error.message || "Could not save your bio.");
+          throw checkError;
+        }
 
-        } else {
 
-          message.textContent =
-            "✅ Profile saved!";
+        // ==========================================
+        // UPDATE EXISTING PROFILE
+        // ==========================================
+
+        if (existingProfile) {
+
+          const {
+            error: updateError
+          } = await supabaseClient
+            .from("profiles")
+            .update({
+              username: newUsername,
+              country: newCountry,
+              bio: newBio
+            })
+            .eq('"user-id"', currentUser.id);
+
+
+          if (updateError) {
+            throw updateError;
+          }
 
         }
+
+
+        // ==========================================
+        // CREATE PROFILE IF IT DOESN'T EXIST
+        // ==========================================
+
+        else {
+
+          const {
+            error: insertError
+          } = await supabaseClient
+            .from("profiles")
+            .insert({
+              "user-id": currentUser.id,
+              username: newUsername,
+              country: newCountry,
+              bio: newBio
+            });
+
+
+          if (insertError) {
+            throw insertError;
+          }
+
+        }
+
+
+        // ==========================================
+        // ALSO UPDATE AUTH METADATA
+        // ==========================================
+
+        await supabaseClient.auth.updateUser({
+          data: {
+            username: newUsername,
+            country: newCountry
+          }
+        });
+
+
+        message.className = "success";
+
+        message.textContent =
+          "✅ Profile saved successfully!";
 
 
       } catch (error) {
 
         console.error(
-          "SAVE ERROR:",
+          "Save profile error:",
           error
         );
 
+        message.className = "error";
+
         message.textContent =
-          "❌ " + (error.message || "Something went wrong.");
+          "❌ Could not save your profile.";
 
       }
 
@@ -362,15 +676,15 @@
       saveButton.disabled = false;
 
       saveButton.textContent =
-        "Save Profile 💾";
+        "💾 Save Profile";
 
     }
   );
 
 
-  // =========================
+  // ==========================================
   // LOG OUT
-  // =========================
+  // ==========================================
 
   logoutButton.addEventListener(
     "click",
@@ -392,9 +706,9 @@
   );
 
 
-  // =========================
+  // ==========================================
   // START
-  // =========================
+  // ==========================================
 
   loadProfile();
 
