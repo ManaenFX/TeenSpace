@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -65,6 +66,11 @@
     .customize-nav {
       background: rgba(255,255,255,.20);
       border: 1px solid rgba(255,255,255,.35);
+    }
+
+    .premium-nav {
+      background: rgba(255,220,100,.20);
+      border: 1px solid rgba(255,240,160,.45);
     }
 
     .page {
@@ -434,9 +440,11 @@
     }
 
     @media (max-width: 850px) {
+
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
+
     }
 
     @media (max-width: 700px) {
@@ -483,6 +491,7 @@
       .profile-body {
         padding: 22px;
       }
+
     }
 
   </style>
@@ -500,27 +509,26 @@
 
   <nav>
 
-    <a href="home.html">
-      Home
-    </a>
+    <a href="home.html">Home</a>
 
-    <a href="explore.html">
-      Explore
-    </a>
+    <a href="explore.html">Explore</a>
 
-    <a href="community.html">
-      Community
-    </a>
+    <a href="community.html">Community</a>
 
-    <a href="profile.html">
-      Profile
-    </a>
+    <a href="profile.html">Profile</a>
 
     <a
       href="customize.html"
       class="customize-nav"
     >
       ✨ Customize
+    </a>
+
+    <a
+      href="premium.html"
+      class="premium-nav"
+    >
+      💎 Premium
     </a>
 
   </nav>
@@ -548,7 +556,6 @@
 
     <div class="cover">
 
-
       <video
         id="wallpaperVideo"
         autoplay
@@ -557,12 +564,9 @@
         playsinline
       ></video>
 
-
       <div class="cover-overlay"></div>
 
-
       <div class="cover-content">
-
 
         <div
           id="founderLabel"
@@ -571,19 +575,15 @@
           🌍 TeenSpace Member
         </div>
 
-
         <h1 id="coverTitle">
           My TeenSpace
         </h1>
-
 
         <p id="coverSubtitle">
           Your profile, your space.
         </p>
 
-
       </div>
-
 
     </div>
 
@@ -604,14 +604,12 @@
 
         <div class="identity-text">
 
-
           <div
             id="username"
             class="username"
           >
             TeenSpace User
           </div>
-
 
           <div
             id="handle"
@@ -620,26 +618,21 @@
             @user
           </div>
 
-
           <div
             id="badges"
             class="badges"
           ></div>
 
-
         </div>
-
 
       </div>
 
 
       <div class="intro">
 
-
         <div class="intro-title">
           ABOUT
         </div>
-
 
         <div
           id="bioDisplay"
@@ -647,7 +640,6 @@
         >
           No bio yet.
         </div>
-
 
       </div>
 
@@ -657,23 +649,19 @@
         class="music-card"
       >
 
-
         <div class="music-title">
           🎵 Profile Music
         </div>
 
-
         <div class="music-subtitle">
           Tap ▶️ to play this profile's music.
         </div>
-
 
         <audio
           id="profileMusic"
           controls
           preload="metadata"
         ></audio>
-
 
       </div>
 
@@ -758,7 +746,6 @@
 
       <div class="edit-section">
 
-
         <div class="edit-title">
           ✨ Edit Your Bio
         </div>
@@ -781,7 +768,6 @@
 
         <div id="message"></div>
 
-
       </div>
 
 
@@ -803,9 +789,7 @@
 
     </div>
 
-
   </section>
-
 
 </main>
 
@@ -910,7 +894,7 @@ let currentUsername = "";
 
 
 /* =========================================
-   SIGNED STORAGE URL
+   STORAGE
 ========================================= */
 
 async function getSignedUrl(
@@ -960,7 +944,7 @@ async function getSignedUrl(
 
 
 /* =========================================
-   ROLE DISPLAY
+   ROLE
 ========================================= */
 
 function applyRole(
@@ -1075,7 +1059,7 @@ function applyRole(
 
 
 /* =========================================
-   GENDER DISPLAY
+   GENDER
 ========================================= */
 
 function displayGender(
@@ -1191,7 +1175,7 @@ async function loadProfile() {
 
     bioDisplay.textContent =
       data.bio ||
-      "No bio yet.";
+      "No bio yet";
 
 
     bioInput.value =
@@ -1224,6 +1208,14 @@ async function loadProfile() {
         : "—";
 
 
+    if (data.font_style) {
+
+      document.body.style.fontFamily =
+        data.font_style;
+
+    }
+
+
     applyRole(
       data.role ||
       "user",
@@ -1233,33 +1225,23 @@ async function loadProfile() {
     );
 
 
-    /* FONT */
-
-    if (data.font_style) {
-
-      document.body.style.fontFamily =
-        data.font_style;
-
-    }
-
-
     /* AVATAR */
 
     if (data.avatar_url) {
 
-      const avatarUrl =
+      const url =
         await getSignedUrl(
           "profile-avatars",
           data.avatar_url
         );
 
 
-      if (avatarUrl) {
+      if (url) {
 
         avatar.innerHTML = `
 
           <img
-            src="${avatarUrl}"
+            src="${url}"
             alt="Profile picture"
           >
 
@@ -1274,17 +1256,17 @@ async function loadProfile() {
 
     if (data.profile_music_url) {
 
-      const musicUrl =
+      const url =
         await getSignedUrl(
           "profile-music",
           data.profile_music_url
         );
 
 
-      if (musicUrl) {
+      if (url) {
 
         profileMusic.src =
-          musicUrl;
+          url;
 
         musicCard.style.display =
           "block";
@@ -1300,17 +1282,17 @@ async function loadProfile() {
 
     if (data.profile_wallpaper_url) {
 
-      const wallpaperUrl =
+      const url =
         await getSignedUrl(
           "profile-wallpapers",
           data.profile_wallpaper_url
         );
 
 
-      if (wallpaperUrl) {
+      if (url) {
 
         wallpaperVideo.src =
-          wallpaperUrl;
+          url;
 
         wallpaperVideo.style.display =
           "block";
@@ -1442,7 +1424,7 @@ saveButton.addEventListener(
 
       bioDisplay.textContent =
         newBio ||
-        "No bio yet.";
+        "No bio yet";
 
 
       showMessage(
@@ -1479,7 +1461,7 @@ saveButton.addEventListener(
 
 
 /* =========================================
-   SHOW MESSAGE
+   MESSAGE
 ========================================= */
 
 function showMessage(
