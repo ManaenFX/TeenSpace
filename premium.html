@@ -1,0 +1,922 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>TeenSpace Premium 💎</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, #eee8ff 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #ffe8f4 0%, transparent 35%),
+        #f4f7ff;
+      color: #222;
+    }
+
+    header {
+      background: #6c5ce7;
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,.14);
+    }
+
+    .page {
+      width: 92%;
+      max-width: 900px;
+      margin: 45px auto 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      color: #6c5ce7;
+      font-size: 45px;
+      margin: 0 0 10px;
+    }
+
+    .hero p {
+      color: #666;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .status-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.07);
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .free {
+      background: #eeeaff;
+      color: #5f4ce0;
+    }
+
+    .trial {
+      background: #fff0b8;
+      color: #946c00;
+    }
+
+    .premium {
+      background: #ffe1f1;
+      color: #b52270;
+    }
+
+    .days {
+      font-size: 26px;
+      font-weight: 800;
+      color: #5f4ce0;
+      margin-top: 5px;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .plan {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.07);
+      border: 2px solid transparent;
+    }
+
+    .plan.featured {
+      border-color: #6c5ce7;
+      transform: translateY(-4px);
+    }
+
+    .plan h2 {
+      margin-top: 0;
+      color: #5f4ce0;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 10px 0;
+    }
+
+    .muted {
+      color: #777;
+      line-height: 1.5;
+    }
+
+    .features {
+      margin: 18px 0;
+      line-height: 1.8;
+      color: #444;
+    }
+
+    .button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 13px;
+      background: #6c5ce7;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: #5849c4;
+    }
+
+    .button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .note {
+      margin-top: 18px;
+      background: #faf9ff;
+      border: 1px solid #e6e2f7;
+      padding: 15px;
+      border-radius: 14px;
+      color: #666;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    #message {
+      min-height: 25px;
+      text-align: center;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    .success {
+      color: #159447;
+    }
+
+    .error {
+      color: #d63050;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media (max-width: 800px) {
+
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .plan.featured {
+        transform: none;
+      }
+
+      header {
+        flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 35px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+<header>
+
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
+
+  <nav>
+
+    <a href="home.html">Home</a>
+    <a href="community.html">Community</a>
+    <a href="explore.html">Explore</a>
+    <a href="profile.html">Profile</a>
+
+  </nav>
+
+</header>
+
+
+<main class="page">
+
+  <section class="hero">
+
+    <h1>
+      💎 TeenSpace Premium
+    </h1>
+
+    <p>
+      Unlock more ways to customize your TeenSpace profile.
+    </p>
+
+  </section>
+
+
+  <section class="status-card">
+
+    <div
+      id="statusBadge"
+      class="status-badge free"
+    >
+      FREE MEMBER
+    </div>
+
+    <div
+      id="statusText"
+      class="muted"
+    >
+      You're currently using the free plan.
+    </div>
+
+    <div
+      id="days"
+      class="days"
+    ></div>
+
+  </section>
+
+
+  <section class="plans">
+
+
+    <article class="plan">
+
+      <h2>
+        🌍 Free
+      </h2>
+
+      <div class="price">
+        Free
+      </div>
+
+      <div class="features">
+
+        ✅ Community posts<br>
+        ✅ Private messages<br>
+        ✅ Basic profile<br>
+        ✅ Normal profile picture
+
+      </div>
+
+      <button
+        class="button"
+        disabled
+      >
+        Current Plan
+      </button>
+
+    </article>
+
+
+    <article class="plan featured">
+
+      <h2>
+        ✨ 5-Day Trial
+      </h2>
+
+      <div class="price">
+        Free
+      </div>
+
+      <div class="features">
+
+        ✅ Premium badge<br>
+        ✅ Custom profile colours<br>
+        ✅ Custom name colour<br>
+        ✅ Custom fonts<br>
+        ✅ Message-card colours<br>
+        ✅ Profile music<br>
+        ✅ Live wallpaper
+
+      </div>
+
+      <button
+        id="trialButton"
+        class="button"
+      >
+        Start 5-Day Trial 🚀
+      </button>
+
+    </article>
+
+
+    <article class="plan">
+
+      <h2>
+        💎 Premium
+      </h2>
+
+      <div class="price">
+        Coming Soon
+      </div>
+
+      <div class="features">
+
+        ✅ Keep Premium features<br>
+        ✅ Advanced customization<br>
+        ✅ More themes<br>
+        ✅ More profile options
+
+      </div>
+
+      <button
+        class="button"
+        id="comingSoonButton"
+      >
+        Coming Soon
+      </button>
+
+    </article>
+
+
+  </section>
+
+
+  <div
+    id="message"
+  ></div>
+
+
+  <div class="note">
+
+    🛡️ The 5-day trial is designed to be used once per account.
+    Paid subscriptions are not connected yet. When you add real
+    payments later, use a proper payment provider and have the
+    payment arrangement handled by a parent/guardian or the
+    responsible business account.
+
+  </div>
+
+
+</main>
+
+
+<footer>
+
+  © 2026 TeenSpace 🌍 |
+  Made for teens, with safety in mind.
+
+</footer>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://gcigveojqwwovitlwtxl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true
+      }
+    }
+  );
+
+
+const statusBadge =
+  document.getElementById(
+    "statusBadge"
+  );
+
+const statusText =
+  document.getElementById(
+    "statusText"
+  );
+
+const daysElement =
+  document.getElementById(
+    "days"
+  );
+
+const trialButton =
+  document.getElementById(
+    "trialButton"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+
+let currentUser = null;
+let profile = null;
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function showMessage(
+  text,
+  type
+) {
+
+  message.className =
+    type || "";
+
+  message.textContent =
+    text;
+
+}
+
+
+function getDaysLeft(
+  start
+) {
+
+  const startDate =
+    new Date(start);
+
+  const endDate =
+    new Date(
+      startDate.getTime() +
+      (5 * 24 * 60 * 60 * 1000)
+    );
+
+  const now =
+    new Date();
+
+  const difference =
+    endDate - now;
+
+  return Math.max(
+    0,
+    Math.ceil(
+      difference /
+      (24 * 60 * 60 * 1000)
+    )
+  );
+
+}
+
+
+/* =========================================
+   LOAD USER
+========================================= */
+
+async function loadUser() {
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+  await supabaseClient
+    .auth
+    .getUser();
+
+
+  if (
+    error ||
+    !user
+  ) {
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
+  }
+
+
+  currentUser =
+    user;
+
+  return user;
+
+}
+
+
+/* =========================================
+   SHOW CURRENT STATUS
+========================================= */
+
+function updateStatus() {
+
+  const status =
+    profile?.premium_status ||
+    "free";
+
+
+  if (
+    status === "premium"
+  ) {
+
+    statusBadge.className =
+      "status-badge premium";
+
+    statusBadge.textContent =
+      "💎 PREMIUM";
+
+    statusText.textContent =
+      "Premium is active on your account.";
+
+    daysElement.textContent =
+      "";
+
+    trialButton.disabled =
+      true;
+
+    trialButton.textContent =
+      "Already Premium ✓";
+
+    return;
+
+  }
+
+
+  if (
+    status === "trial" &&
+    profile?.trial_started_at
+  ) {
+
+    const daysLeft =
+      getDaysLeft(
+        profile.trial_started_at
+      );
+
+
+    if (
+      daysLeft > 0
+    ) {
+
+      statusBadge.className =
+        "status-badge trial";
+
+      statusBadge.textContent =
+        "✨ PREMIUM TRIAL";
+
+      statusText.textContent =
+        "Your Premium trial is active.";
+
+      daysElement.textContent =
+        daysLeft +
+        " day" +
+        (
+          daysLeft === 1
+            ? ""
+            : "s"
+        ) +
+        " remaining";
+
+      trialButton.disabled =
+        true;
+
+      trialButton.textContent =
+        "Trial Active ✓";
+
+      return;
+
+    }
+
+
+    /* Trial expired */
+
+    statusBadge.className =
+      "status-badge free";
+
+    statusBadge.textContent =
+      "FREE MEMBER";
+
+    statusText.textContent =
+      "Your 5-day Premium trial has ended.";
+
+    daysElement.textContent =
+      "";
+
+    trialButton.disabled =
+      true;
+
+    trialButton.textContent =
+      "Trial Finished";
+
+    return;
+
+  }
+
+
+  statusBadge.className =
+    "status-badge free";
+
+  statusBadge.textContent =
+    "FREE MEMBER";
+
+  statusText.textContent =
+    "You're currently using the free plan.";
+
+  daysElement.textContent =
+    "";
+
+}
+
+
+/* =========================================
+   START TRIAL
+========================================= */
+
+trialButton.addEventListener(
+  "click",
+  async function() {
+
+    trialButton.disabled =
+      true;
+
+    trialButton.textContent =
+      "Starting trial...";
+
+
+    try {
+
+      const {
+        data: latestProfile,
+        error: loadError
+      } =
+      await supabaseClient
+
+        .from("profiles")
+
+        .select(
+          "trial_started_at,premium_status,premium"
+        )
+
+        .eq(
+          "user-id",
+          currentUser.id
+        )
+
+        .maybeSingle();
+
+
+      if (loadError) {
+        throw loadError;
+      }
+
+
+      if (
+        latestProfile?.premium_status ===
+        "premium"
+      ) {
+
+        profile =
+          {
+            ...profile,
+            ...latestProfile
+          };
+
+        updateStatus();
+
+        return;
+
+      }
+
+
+      if (
+        latestProfile?.trial_started_at
+      ) {
+
+        profile =
+          {
+            ...profile,
+            ...latestProfile
+          };
+
+        updateStatus();
+
+        showMessage(
+          "Your trial has already been used.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      const now =
+        new Date().toISOString();
+
+
+      const {
+        error
+      } =
+      await supabaseClient
+
+        .from("profiles")
+
+        .update({
+
+          trial_started_at:
+            now,
+
+          premium_status:
+            "trial",
+
+          premium:
+            true
+
+        })
+
+        .eq(
+          "user-id",
+          currentUser.id
+        );
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      profile.trial_started_at =
+        now;
+
+      profile.premium_status =
+        "trial";
+
+      profile.premium =
+        true;
+
+
+      updateStatus();
+
+
+      showMessage(
+        "🎉 Your 5-day Premium trial has started!",
+        "success"
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Trial error:",
+        error
+      );
+
+
+      showMessage(
+        "❌ " +
+        (
+          error.message ||
+          "Could not start trial."
+        ),
+        "error"
+      );
+
+
+      trialButton.disabled =
+        false;
+
+      trialButton.textContent =
+        "Start 5-Day Trial 🚀";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   LOAD PROFILE
+========================================= */
+
+async function start() {
+
+  currentUser =
+    await loadUser();
+
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .from("profiles")
+
+    .select(
+      "trial_started_at,premium_status,premium"
+    )
+
+    .eq(
+      "user-id",
+      currentUser.id
+    )
+
+    .maybeSingle();
+
+
+  if (error) {
+
+    console.error(error);
+
+    showMessage(
+      "❌ Could not load Premium status.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  profile =
+    data || {};
+
+
+  updateStatus();
+
+}
+
+
+start();
+
+</script>
+
+</body>
+</html>
+```
