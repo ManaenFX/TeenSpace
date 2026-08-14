@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TeenSpace - Community</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f7ff;
+      color: #222;
+      padding-bottom: 40px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 25px;
+    }
+
+    header h1 {
+      color: #6352e8;
+      font-size: 42px;
+      margin: 0;
+    }
+
+    header p {
+      color: #666;
+      font-size: 17px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .post-box {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 13px;
+      resize: vertical;
+      font-size: 16px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #6352e8;
+      box-shadow: 0 0 0 3px rgba(99,82,232,0.12);
+    }
+
+    .post-button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #6352e8;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .post-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      text-align: center;
+      min-height: 25px;
+      margin: 15px 0;
+    }
+
+    .error {
+      color: #e53935;
+    }
+
+    .success {
+      color: #159447;
+    }
+
+    .post {
+      background: white;
+      padding: 23px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 7px 22px rgba(0,0,0,0.07);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6352e8, #8c7cff);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .username {
+      color: #6352e8;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .date {
+      color: #999;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .content {
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #444;
+    }
+
+    .empty {
+      text-align: center;
+      background: white;
+      padding: 40px 20px;
+      border-radius: 20px;
+      color: #777;
+    }
+
+    .home-button {
+      display: block;
+      width: 92%;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 16px;
+      background: #6352e8;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 13px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌍 TeenSpace Community</h1>
+  <p>Share something with the TeenSpace community.</p>
+</header>
+
+
+<main class="container">
+
+  <section class="post-box">
+
+    <textarea
+      id="postContent"
+      maxlength="500"
+      placeholder="What's on your mind?"
+    ></textarea>
+
+    <button
+      class="post-button"
+      id="postButton"
+    >
+      Publish Post 🚀
+    </button>
+
+    <div id="message"></div>
+
+  </section>
+
+
+  <section id="posts">
+    <div class="empty">
+      Loading posts...
+    </div>
+  </section>
+
+</main>
+
+
+<a
+  class="home-button"
+  href="index.html"
+>
+  🏠 Back Home
+</a>
+
+
+<script>
+
+  // ==========================================
+  // SUPABASE
+  // ==========================================
+
+  const SUPABASE_URL =
+    "https://gcigveojqwwovitlwtxl.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  // ==========================================
+  // ELEMENTS
+  // ==========================================
+
+  const postContent =
+    document.getElementById("postContent");
+
+  const postButton =
+    document.getElementById("postButton");
+
+  const message =
+    document.getElementById("message");
+
+  const postsContainer =
+    document.getElementById("posts");
+
+
+  // ==========================================
+  // CURRENT USER
+  // ==========================================
+
+  let currentUser = null;
+
+
+  async function getCurrentUser() {
+
+    const {
+      data: { user },
+      error
+    } = await supabaseClient.auth.getUser();
+
+
+    if (error || !user) {
+
+      message.className = "error";
+
+      message.textContent =
+        "❌ Please log in first.";
+
+      setTimeout(() => {
+
+        window.location.href =
+          "login.html";
+
+      }, 1200);
+
+      return null;
+
+    }
+
+
+    currentUser = user;
+
+    return user;
+
+  }
+
+
+  // ==========================================
+  // PUBLISH POST
+  // ==========================================
+
+  postButton.addEventListener(
+    "click",
+    async function() {
+
+      if (!currentUser) {
+
+        const user =
+          await getCurrentUser();
+
+        if (!user) return;
+
+      }
+
+
+      const content =
+        postContent.value.trim();
+
+
+      if (!content) {
+
+        message.className = "error";
+
+        message.textContent =
+          "❌ Write something first.";
+
+        return;
+
+      }
+
+
+      postButton.disabled = true;
+
+      postButton.textContent =
+        "Publishing...";
+
+      message.textContent = "";
+
+
+      const {
+        error
+      } = await supabaseClient
+        .from("posts")
+        .insert({
+
+          "user-id":
+            currentUser.id,
+
+          content:
+            content
+
+        });
+
+
+      if (error) {
+
+        console.error(
+          "Post error:",
+          error
+        );
+
+        message.className = "error";
+
+        message.textContent =
+          "❌ Could not publish your post.";
+
+      } else {
+
+        message.className = "success";
+
+        message.textContent =
+          "✅ Post published!";
+
+        postContent.value = "";
+
+        await loadPosts();
+
+      }
+
+
+      postButton.disabled = false;
+
+      postButton.textContent =
+        "Publish Post 🚀";
+
+    }
+  );
+
+
+  // ==========================================
+  // LOAD POSTS
+  // ==========================================
+
+  async function loadPosts() {
+
+    postsContainer.innerHTML = `
+      <div class="empty">
+        Loading posts...
+      </div>
+    `;
+
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("posts")
+      .select('"user-id", content, created_at')
+      .order("created_at", {
+        ascending: false
+      });
+
+
+    if (error) {
+
+      console.error(
+        "Load posts error:",
+        error
+      );
+
+      postsContainer.innerHTML = `
+        <div class="empty">
+          ❌ Could not load posts.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+      postsContainer.innerHTML = `
+        <div class="empty">
+          <div style="font-size:40px;">📝</div>
+          <h2>No posts yet</h2>
+          <p>Be the first person to post!</p>
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    postsContainer.innerHTML = "";
+
+
+    // ==========================================
+    // GET PROFILE INFORMATION
+    // ==========================================
+
+    for (const post of data) {
+
+      let username =
+        "TeenSpace Member";
+
+
+      let profileData = null;
+
+
+      const {
+        data: profile
+      } = await supabaseClient
+        .from("profiles")
+        .select('username')
+        .eq(
+          '"user-id"',
+          post["user-id"]
+        )
+        .maybeSingle();
+
+
+      profileData = profile;
+
+
+      if (
+        profileData &&
+        profileData.username
+      ) {
+
+        username =
+          profileData.username;
+
+      }
+
+
+      // ========================================
+      // CREATE POST CARD
+      // ========================================
+
+      const postElement =
+        document.createElement("article");
+
+      postElement.className =
+        "post";
+
+
+      const firstLetter =
+        username
+          .charAt(0)
+          .toUpperCase();
+
+
+      postElement.innerHTML = `
+
+        <div class="post-header">
+
+          <div class="avatar">
+            ${escapeHTML(firstLetter)}
+          </div>
+
+          <div>
+
+            <div class="username">
+              ${escapeHTML(username)}
+            </div>
+
+            <div class="date">
+              ${formatDate(post.created_at)}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="content">
+          ${escapeHTML(post.content)}
+        </div>
+
+      `;
+
+
+      postsContainer.appendChild(
+        postElement
+      );
+
+    }
+
+  }
+
+
+  // ==========================================
+  // DATE
+  // ==========================================
+
+  function formatDate(date) {
+
+    if (!date) return "";
+
+    return new Date(date)
+      .toLocaleString();
+
+  }
+
+
+  // ==========================================
+  // SECURITY
+  // ==========================================
+
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  // ==========================================
+  // START
+  // ==========================================
+
+  async function start() {
+
+    const user =
+      await getCurrentUser();
+
+
+    if (!user) return;
+
+
+    await loadPosts();
+
+  }
+
+
+  start();
+
+</script>
+
+</body>
+</html>
