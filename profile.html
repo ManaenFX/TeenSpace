@@ -29,26 +29,41 @@
     header {
       background: #6c5ce7;
       color: white;
-      padding: 18px 8%;
+      padding: 18px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
 
     .logo {
       font-size: 28px;
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 16px;
+      padding: 9px 11px;
+      border-radius: 10px;
       font-weight: bold;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      background: rgba(255,255,255,.14);
+    }
+
+    .customize-nav {
+      background: rgba(255,255,255,.20);
+      border: 1px solid rgba(255,255,255,.35);
     }
 
     .page {
@@ -61,16 +76,16 @@
       background: white;
       border-radius: 30px;
       overflow: hidden;
-      box-shadow: 0 18px 50px rgba(70, 50, 150, .16);
+      box-shadow: 0 18px 50px rgba(70,50,150,.16);
     }
 
     .cover {
-      min-height: 300px;
+      min-height: 310px;
       position: relative;
       overflow: hidden;
       padding: 35px 30px;
       color: white;
-      background: linear-gradient(135deg, #5d49d8, #806cf0, #5f90e8);
+      background: linear-gradient(135deg,#5d49d8,#806cf0,#5f90e8);
     }
 
     #wallpaperVideo {
@@ -86,10 +101,11 @@
     .cover-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        rgba(45, 30, 100, .42),
-        rgba(45, 30, 100, .62)
-      );
+      background:
+        linear-gradient(
+          rgba(45,30,100,.40),
+          rgba(45,30,100,.62)
+        );
       z-index: 1;
     }
 
@@ -137,7 +153,7 @@
       width: 135px;
       height: 135px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #fff, #eee8ff);
+      background: linear-gradient(135deg,#fff,#eee8ff);
       border: 7px solid white;
       box-shadow: 0 12px 30px rgba(0,0,0,.18);
       display: flex;
@@ -162,6 +178,7 @@
       font-size: 34px;
       font-weight: 800;
       color: #5f4ce0;
+      word-break: break-word;
     }
 
     .handle {
@@ -229,28 +246,39 @@
       white-space: pre-wrap;
     }
 
+    /* MUSIC */
+
     .music-card {
       display: none;
       margin-top: 22px;
       padding: 20px;
       border-radius: 20px;
-      background: linear-gradient(135deg, #fff4fb, #f5f1ff);
+      background: linear-gradient(135deg,#fff4fb,#f5f1ff);
       border: 1px solid #f0d7ea;
     }
 
     .music-title {
       font-weight: bold;
       color: #b52270;
+      font-size: 18px;
       margin-bottom: 10px;
+    }
+
+    .music-subtitle {
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 12px;
     }
 
     .music-card audio {
       width: 100%;
     }
 
+    /* STATS */
+
     .stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3,1fr);
       gap: 14px;
       margin-top: 22px;
     }
@@ -276,33 +304,28 @@
       font-size: 13px;
     }
 
-    .customize-button,
-    .home-button {
+    /* CUSTOMIZE */
+
+    .customize-button {
       display: block;
       width: 100%;
       margin-top: 22px;
-      padding: 17px;
-      border-radius: 14px;
+      padding: 18px;
+      border-radius: 15px;
       text-align: center;
       text-decoration: none;
-      font-size: 19px;
+      font-size: 20px;
       font-weight: bold;
-    }
-
-    .customize-button {
-      background: linear-gradient(135deg, #6c5ce7, #8e74ff);
+      background: linear-gradient(135deg,#6c5ce7,#8e74ff);
       color: white;
-      box-shadow: 0 8px 20px rgba(108,92,231,.20);
+      box-shadow: 0 8px 22px rgba(108,92,231,.22);
     }
 
     .customize-button:hover {
-      background: linear-gradient(135deg, #5849c4, #7962e6);
+      background: linear-gradient(135deg,#5849c4,#7962e6);
     }
 
-    .home-button {
-      background: #eeeaff;
-      color: #5f4ce0;
-    }
+    /* EDIT */
 
     .edit-section {
       margin-top: 28px;
@@ -336,23 +359,33 @@
     }
 
     .save-button,
+    .home-button,
     .logout-button {
       width: 100%;
+      display: block;
       padding: 16px;
       margin-top: 14px;
-      border: none;
       border-radius: 14px;
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
+      text-align: center;
+      text-decoration: none;
     }
 
     .save-button {
+      border: none;
       background: #6c5ce7;
       color: white;
     }
 
+    .home-button {
+      background: #eeeaff;
+      color: #5f4ce0;
+    }
+
     .logout-button {
+      border: none;
       background: #ffe4e8;
       color: #c53350;
     }
@@ -361,6 +394,7 @@
       min-height: 24px;
       margin-top: 15px;
       text-align: center;
+      line-height: 1.5;
     }
 
     .success {
@@ -385,15 +419,20 @@
       padding: 25px;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width:700px) {
+
       header {
         flex-direction: column;
         gap: 14px;
       }
 
+      nav {
+        justify-content: center;
+      }
+
       nav a {
         display: inline-block;
-        margin: 4px 6px;
+        margin: 3px;
       }
 
       .cover h1 {
@@ -420,12 +459,18 @@
       .stats {
         grid-template-columns: 1fr;
       }
+
+      .profile-body {
+        padding: 22px;
+      }
     }
+
   </style>
 </head>
 
 
 <body>
+
 
 <header>
 
@@ -434,16 +479,29 @@
   </div>
 
   <nav>
+
     <a href="home.html">Home</a>
+
     <a href="explore.html">Explore</a>
+
     <a href="community.html">Community</a>
+
     <a href="profile.html">Profile</a>
+
+    <a
+      href="customize.html"
+      class="customize-nav"
+    >
+      ✨ Customize
+    </a>
+
   </nav>
 
 </header>
 
 
 <main class="page">
+
 
   <div
     id="loading"
@@ -458,6 +516,7 @@
     class="profile-card"
     style="display:none;"
   >
+
 
     <div class="cover">
 
@@ -495,7 +554,9 @@
 
     <div class="profile-body">
 
+
       <div class="identity">
+
 
         <div
           id="avatar"
@@ -507,12 +568,14 @@
 
         <div class="identity-text">
 
+
           <div
             id="username"
             class="username"
           >
             TeenSpace User
           </div>
+
 
           <div
             id="handle"
@@ -521,10 +584,12 @@
             @user
           </div>
 
+
           <div
             id="badges"
             class="badges"
           ></div>
+
 
         </div>
 
@@ -556,6 +621,10 @@
           🎵 Profile Music
         </div>
 
+        <div class="music-subtitle">
+          Tap ▶️ to play this profile's music.
+        </div>
+
         <audio
           id="profileMusic"
           controls
@@ -566,6 +635,7 @@
 
 
       <div class="stats">
+
 
         <div class="stat">
 
@@ -614,8 +684,11 @@
 
         </div>
 
+
       </div>
 
+
+      <!-- PERMANENT CUSTOMIZE BUTTON -->
 
       <a
         href="customize.html"
@@ -627,15 +700,18 @@
 
       <div class="edit-section">
 
+
         <div class="edit-title">
           ✨ Edit Your Bio
         </div>
+
 
         <textarea
           id="bioInput"
           maxlength="300"
           placeholder="Tell the TeenSpace community about yourself..."
         ></textarea>
+
 
         <button
           id="saveButton"
@@ -644,7 +720,9 @@
           Save Profile 💾
         </button>
 
+
         <div id="message"></div>
+
 
       </div>
 
@@ -664,6 +742,7 @@
         Log Out
       </button>
 
+
     </div>
 
   </section>
@@ -672,12 +751,15 @@
 
 
 <footer>
+
   © 2026 TeenSpace 🌍 |
   Made for teens, with safety in mind.
+
 </footer>
 
 
 <script>
+
 
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
@@ -691,9 +773,9 @@ const supabaseClient =
     SUPABASE_URL,
     SUPABASE_KEY,
     {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true
       }
     }
   );
@@ -764,96 +846,76 @@ let currentUsername = "";
 
 
 /* =========================================
-   STATUS
+   SIGNED STORAGE URL
 ========================================= */
 
-function showMessage(text, type) {
-
-  message.className = type;
-  message.textContent = text;
-
-}
-
-
-/* =========================================
-   JOIN DATE
-========================================= */
-
-function formatJoinDate(value) {
-
-  if (!value) {
-    return "—";
-  }
-
-  return new Date(value).toLocaleDateString(
-    undefined,
-    {
-      month: "short",
-      year: "numeric"
-    }
-  );
-
-}
-
-
-/* =========================================
-   CREATE SIGNED URL
-========================================= */
-
-async function getSignedFileUrl(
+async function getSignedUrl(
   bucket,
   path
-) {
+){
 
-  if (!path) {
+  if(!path){
     return null;
   }
 
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-    .storage
-    .from(bucket)
-    .createSignedUrl(
-      path,
-      3600
-    );
+  try{
 
-  if (error) {
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .storage
+      .from(bucket)
+      .createSignedUrl(
+        path,
+        3600
+      );
+
+
+    if(error){
+
+      console.error(
+        "Storage signed URL error:",
+        bucket,
+        path,
+        error
+      );
+
+      throw error;
+    }
+
+
+    return data.signedUrl;
+
+  }catch(error){
 
     console.error(
-      "Storage error:",
-      bucket,
-      path,
+      "Storage access failed:",
       error
     );
 
     return null;
-  }
 
-  return data.signedUrl;
+  }
 
 }
 
 
 /* =========================================
-   ROLE DISPLAY
+   ROLE
 ========================================= */
 
 function applyRole(
   role,
   badge,
   premium
-) {
+){
 
   badges.innerHTML = "";
 
 
-  if (role === "owner") {
-
-    avatar.textContent = "👑";
+  if(role === "owner"){
 
     founderLabel.textContent =
       "👑 TeenSpace Founder";
@@ -865,10 +927,20 @@ function applyRole(
       "Building TeenSpace for teens around the world 🌍";
 
 
+    if(
+      !avatar.querySelector("img")
+    ){
+      avatar.textContent = "👑";
+    }
+
+
     badges.innerHTML += `
 
       <span class="badge owner-badge">
-        👑 ${badge || "TEENSPACE FOUNDER"}
+        👑 ${
+          badge ||
+          "TEENSPACE FOUNDER"
+        }
       </span>
 
       <span class="badge verified-badge">
@@ -878,9 +950,7 @@ function applyRole(
     `;
 
 
-  } else if (role === "staff") {
-
-    avatar.textContent = "🛡️";
+  }else if(role === "staff"){
 
     founderLabel.textContent =
       "🛡️ TeenSpace Staff";
@@ -892,6 +962,13 @@ function applyRole(
       "Helping keep TeenSpace welcoming and safe.";
 
 
+    if(
+      !avatar.querySelector("img")
+    ){
+      avatar.textContent = "🛡️";
+    }
+
+
     badges.innerHTML += `
 
       <span class="badge staff-badge">
@@ -901,9 +978,7 @@ function applyRole(
     `;
 
 
-  } else {
-
-    avatar.textContent = "👤";
+  }else{
 
     founderLabel.textContent =
       "🌍 TeenSpace Member";
@@ -913,6 +988,13 @@ function applyRole(
 
     coverSubtitle.textContent =
       "Your profile, your space.";
+
+
+    if(
+      !avatar.querySelector("img")
+    ){
+      avatar.textContent = "👤";
+    }
 
 
     badges.innerHTML += `
@@ -926,7 +1008,7 @@ function applyRole(
   }
 
 
-  if (premium) {
+  if(premium){
 
     badges.innerHTML += `
 
@@ -945,25 +1027,25 @@ function applyRole(
    LOAD PROFILE
 ========================================= */
 
-async function loadProfile() {
+async function loadProfile(){
 
-  try {
+  try{
 
     const {
-      data: {
+      data:{
         user
       },
-      error: authError
+      error:authError
     } =
     await supabaseClient
       .auth
       .getUser();
 
 
-    if (
+    if(
       authError ||
       !user
-    ) {
+    ){
 
       window.location.href =
         "login.html";
@@ -978,7 +1060,7 @@ async function loadProfile() {
       "";
 
 
-    if (!currentUsername) {
+    if(!currentUsername){
 
       throw new Error(
         "No username is attached to this account."
@@ -988,8 +1070,8 @@ async function loadProfile() {
 
 
     const {
-      data: profile,
-      error: profileError
+      data:profile,
+      error:profileError
     } =
     await supabaseClient
 
@@ -1007,8 +1089,10 @@ async function loadProfile() {
       .maybeSingle();
 
 
-    if (profileError) {
+    if(profileError){
+
       throw profileError;
+
     }
 
 
@@ -1025,7 +1109,7 @@ async function loadProfile() {
       "@" +
       username.textContent
         .toLowerCase()
-        .replace(/\s+/g, "_");
+        .replace(/\s+/g,"_");
 
 
     bioDisplay.textContent =
@@ -1044,10 +1128,30 @@ async function loadProfile() {
 
 
     joinDate.textContent =
-      formatJoinDate(
-        user.created_at
-      );
+      user.created_at
+        ? new Date(
+            user.created_at
+          ).toLocaleDateString(
+            undefined,
+            {
+              month:"short",
+              year:"numeric"
+            }
+          )
+        : "—";
 
+
+    /* FONT */
+
+    if(data.font_style){
+
+      document.body.style.fontFamily =
+        data.font_style;
+
+    }
+
+
+    /* ROLE */
 
     applyRole(
       data.role || "user",
@@ -1056,28 +1160,18 @@ async function loadProfile() {
     );
 
 
-    /* FONT */
-
-    if (data.font_style) {
-
-      document.body.style.fontFamily =
-        data.font_style;
-
-    }
-
-
     /* AVATAR */
 
-    if (data.avatar_url) {
+    if(data.avatar_url){
 
       const avatarUrl =
-        await getSignedFileUrl(
+        await getSignedUrl(
           "profile-avatars",
           data.avatar_url
         );
 
 
-      if (avatarUrl) {
+      if(avatarUrl){
 
         avatar.innerHTML = `
 
@@ -1095,16 +1189,16 @@ async function loadProfile() {
 
     /* MUSIC */
 
-    if (data.profile_music_url) {
+    if(data.profile_music_url){
 
       const musicUrl =
-        await getSignedFileUrl(
+        await getSignedUrl(
           "profile-music",
           data.profile_music_url
         );
 
 
-      if (musicUrl) {
+      if(musicUrl){
 
         profileMusic.src =
           musicUrl;
@@ -1112,28 +1206,51 @@ async function loadProfile() {
         musicCard.style.display =
           "block";
 
-        /*
-          We DO NOT autoplay.
-          The visitor can press play.
-        */
+
+        profileMusic.load();
+
+
+        profileMusic.addEventListener(
+          "error",
+          function(){
+
+            console.error(
+              "Audio could not be loaded."
+            );
+
+          },
+          {
+            once:true
+          }
+        );
+
+      }else{
+
+        musicCard.style.display =
+          "none";
 
       }
+
+    }else{
+
+      musicCard.style.display =
+        "none";
 
     }
 
 
     /* WALLPAPER */
 
-    if (data.profile_wallpaper_url) {
+    if(data.profile_wallpaper_url){
 
       const wallpaperUrl =
-        await getSignedFileUrl(
+        await getSignedUrl(
           "profile-wallpapers",
           data.profile_wallpaper_url
         );
 
 
-      if (wallpaperUrl) {
+      if(wallpaperUrl){
 
         wallpaperVideo.src =
           wallpaperUrl;
@@ -1152,7 +1269,7 @@ async function loadProfile() {
 
     const {
       count,
-      error: countError
+      error:countError
     } =
     await supabaseClient
 
@@ -1161,8 +1278,8 @@ async function loadProfile() {
       .select(
         "id",
         {
-          count: "exact",
-          head: true
+          count:"exact",
+          head:true
         }
       )
 
@@ -1172,7 +1289,7 @@ async function loadProfile() {
       );
 
 
-    if (!countError) {
+    if(!countError){
 
       postCount.textContent =
         count ?? 0;
@@ -1183,15 +1300,14 @@ async function loadProfile() {
     loading.style.display =
       "none";
 
-
     profileCard.style.display =
       "block";
 
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
-      "Profile load error:",
+      "PROFILE ERROR:",
       error
     );
 
@@ -1199,13 +1315,16 @@ async function loadProfile() {
     loading.style.display =
       "none";
 
-
     profileCard.style.display =
       "block";
 
 
     showMessage(
-      "❌ Could not load your profile.",
+      "❌ " +
+      (
+        error.message ||
+        "Could not load your profile."
+      ),
       "error"
     );
 
@@ -1220,10 +1339,12 @@ async function loadProfile() {
 
 saveButton.addEventListener(
   "click",
-  async function() {
+  async function(){
 
-    if (!currentUsername) {
+    if(!currentUsername){
+
       return;
+
     }
 
 
@@ -1238,7 +1359,7 @@ saveButton.addEventListener(
       "Saving...";
 
 
-    try {
+    try{
 
       const {
         error
@@ -1248,7 +1369,9 @@ saveButton.addEventListener(
         .from("profiles")
 
         .update({
-          bio: newBio
+
+          bio:newBio
+
         })
 
         .eq(
@@ -1257,8 +1380,10 @@ saveButton.addEventListener(
         );
 
 
-      if (error) {
+      if(error){
+
         throw error;
+
       }
 
 
@@ -1273,12 +1398,17 @@ saveButton.addEventListener(
       );
 
 
-    } catch (error) {
+    }catch(error){
 
       console.error(error);
 
+
       showMessage(
-        "❌ Could not save your profile.",
+        "❌ " +
+        (
+          error.message ||
+          "Could not save your profile."
+        ),
         "error"
       );
 
@@ -1296,12 +1426,30 @@ saveButton.addEventListener(
 
 
 /* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+  text,
+  type
+){
+
+  message.className =
+    type || "";
+
+  message.textContent =
+    text;
+
+}
+
+
+/* =========================================
    LOGOUT
 ========================================= */
 
 logoutButton.addEventListener(
   "click",
-  async function() {
+  async function(){
 
     logoutButton.disabled =
       true;
