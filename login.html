@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,8 +30,8 @@
       max-width: 450px;
       background: white;
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     }
 
     h1 {
@@ -53,11 +54,16 @@
 
     input {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       margin-top: 7px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 9px;
       font-size: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #6c5ce7;
     }
 
     .password-row {
@@ -74,22 +80,26 @@
       width: 70px;
       margin-top: 7px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       background: #ddd;
       cursor: pointer;
     }
 
     .login-button {
       width: 100%;
-      padding: 13px;
+      padding: 14px;
       margin-top: 25px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       background: #6c5ce7;
       color: white;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
+    }
+
+    .login-button:hover {
+      background: #5747d4;
     }
 
     .login-button:disabled {
@@ -103,6 +113,14 @@
       line-height: 1.5;
     }
 
+    .success {
+      color: #159447;
+    }
+
+    .error {
+      color: #d92950;
+    }
+
     .links {
       text-align: center;
       margin-top: 20px;
@@ -111,6 +129,7 @@
     .links a {
       color: #6c5ce7;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .privacy {
@@ -140,9 +159,9 @@
         type="email"
         id="email"
         placeholder="Enter your email"
+        autocomplete="email"
         required
       >
-
 
       <label for="password">Password</label>
 
@@ -152,6 +171,7 @@
           type="password"
           id="password"
           placeholder="Enter your password"
+          autocomplete="current-password"
           required
         >
 
@@ -165,7 +185,6 @@
 
       </div>
 
-
       <button
         type="submit"
         class="login-button"
@@ -176,20 +195,16 @@
 
     </form>
 
-
     <div id="message"></div>
-
 
     <div class="links">
       Don't have an account?
       <a href="join.html">Join TeenSpace</a>
     </div>
 
-
     <div class="links">
       <a href="index.html">← Back to TeenSpace</a>
     </div>
-
 
     <p class="privacy">
       🛡️ Keep your password private.
@@ -200,16 +215,15 @@
 
   <script>
 
-    // =========================
-    // SUPABASE
-    // =========================
+    /* ==========================================
+       SUPABASE
+       ========================================== */
 
     const SUPABASE_URL =
       "https://gcigveojqwwovitlwtxl.supabase.co";
 
     const SUPABASE_KEY =
       "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
-
 
     const supabaseClient =
       window.supabase.createClient(
@@ -218,9 +232,9 @@
       );
 
 
-    // =========================
-    // ELEMENTS
-    // =========================
+    /* ==========================================
+       ELEMENTS
+       ========================================== */
 
     const form =
       document.getElementById("loginForm");
@@ -238,106 +252,154 @@
       document.getElementById("togglePassword");
 
 
-    // =========================
-    // SHOW / HIDE PASSWORD
-    // =========================
+    /* ==========================================
+       SHOW / HIDE PASSWORD
+       ========================================== */
 
-    togglePassword.addEventListener("click", function() {
+    togglePassword.addEventListener(
+      "click",
+      function() {
 
-      if (password.type === "password") {
+        if (password.type === "password") {
 
-        password.type = "text";
-        togglePassword.textContent = "Hide";
+          password.type = "text";
+          togglePassword.textContent = "Hide";
 
-      } else {
+        } else {
 
-        password.type = "password";
-        togglePassword.textContent = "Show";
+          password.type = "password";
+          togglePassword.textContent = "Show";
+
+        }
 
       }
-
-    });
-
-
-    // =========================
-    // LOGIN
-    // =========================
-
-    form.addEventListener("submit", async function(event) {
-
-      event.preventDefault();
+    );
 
 
-      const email =
-        document.getElementById("email").value.trim();
+    /* ==========================================
+       LOGIN
+       ========================================== */
 
-      const passwordValue =
-        password.value;
+    form.addEventListener(
+      "submit",
+      async function(event) {
 
+        event.preventDefault();
 
-      button.disabled = true;
-      button.textContent = "Logging in...";
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
-      message.textContent = "";
-
-
-      try {
-
-        const { data, error } =
-          await supabaseClient.auth.signInWithPassword({
-
-            email: email,
-            password: passwordValue
-
-          });
+        const passwordValue =
+          password.value;
 
 
-        if (error) {
+        button.disabled = true;
+        button.textContent = "Logging in...";
+
+        message.className = "";
+        message.textContent = "";
+
+
+        try {
+
+          const { data, error } =
+            await supabaseClient.auth
+              .signInWithPassword({
+
+                email: email,
+                password: passwordValue
+
+              });
+
+
+          if (error) {
+
+            console.error(
+              "Login error:",
+              error
+            );
+
+            message.className = "error";
+
+            message.textContent =
+              "❌ " + error.message;
+
+            button.disabled = false;
+            button.textContent =
+              "Login 🚀";
+
+            return;
+          }
+
+
+          if (!data.session) {
+
+            message.className = "error";
+
+            message.textContent =
+              "❌ Login could not create a session.";
+
+            button.disabled = false;
+            button.textContent =
+              "Login 🚀";
+
+            return;
+          }
+
+
+          message.className = "success";
 
           message.textContent =
-            "❌ " + error.message;
+            "🎉 Login successful! Opening your profile...";
+
+
+          button.textContent =
+            "Logged In ✓";
+
+
+          /*
+             Send the member to their profile.
+             We will build profile.html next.
+          */
+
+          setTimeout(
+            function() {
+
+              window.location.href =
+                "profile.html";
+
+            },
+            800
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Unexpected login error:",
+            error
+          );
+
+          message.className = "error";
+
+          message.textContent =
+            "❌ Something went wrong. Please try again.";
 
           button.disabled = false;
+
           button.textContent =
             "Login 🚀";
 
-          return;
         }
 
-
-        message.textContent =
-          "🎉 Login successful!";
-
-
-        button.textContent =
-          "Logged In ✓";
-
-
-        // Temporary destination
-        setTimeout(function() {
-
-          window.location.href =
-            "index.html";
-
-        }, 1000);
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-          "❌ Something went wrong. Please try again.";
-
-        button.disabled = false;
-        button.textContent =
-          "Login 🚀";
-
       }
-
-    });
+    );
 
   </script>
 
 </body>
 </html>
+```
