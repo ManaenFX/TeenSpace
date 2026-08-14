@@ -35,26 +35,46 @@
     header {
       background: #6c5ce7;
       color: white;
-      padding: 18px 8%;
+      padding: 18px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
 
     .logo {
       font-size: 28px;
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 16px;
+      padding: 9px 11px;
+      border-radius: 10px;
       font-weight: bold;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      background: rgba(255,255,255,.14);
+    }
+
+    .customize-nav {
+      background: rgba(255,255,255,.20);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+
+    .premium-nav {
+      background: rgba(255,220,100,.20);
+      border: 1px solid rgba(255,240,160,.45);
     }
 
     .hero {
@@ -120,7 +140,10 @@
 
     #profiles {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(290px, 1fr)
+      );
       gap: 22px;
     }
 
@@ -148,7 +171,11 @@
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: linear-gradient(135deg,#eee8ff,#dfe8ff);
+      background: linear-gradient(
+        135deg,
+        #eee8ff,
+        #dfe8ff
+      );
       display: flex;
       align-items: center;
       justify-content: center;
@@ -252,11 +279,6 @@
       background: #5849c4;
     }
 
-    .profile-button-secondary {
-      background: #eeeaff;
-      color: #5f4ce0;
-    }
-
     .empty {
       grid-column: 1 / -1;
       background: white;
@@ -280,9 +302,12 @@
         gap: 14px;
       }
 
+      nav {
+        justify-content: center;
+      }
+
       nav a {
-        margin: 4px 6px;
-        display: inline-block;
+        margin: 3px;
       }
 
       .hero h1 {
@@ -309,12 +334,38 @@
     🌍 TeenSpace
   </div>
 
+
   <nav>
 
-    <a href="home.html">Home</a>
-    <a href="explore.html">Explore</a>
-    <a href="community.html">Community</a>
-    <a href="profile.html">Profile</a>
+    <a href="home.html">
+      Home
+    </a>
+
+    <a href="explore.html">
+      Explore
+    </a>
+
+    <a href="community.html">
+      Community
+    </a>
+
+    <a href="profile.html">
+      Profile
+    </a>
+
+    <a
+      href="customize.html"
+      class="customize-nav"
+    >
+      ✨ Customize
+    </a>
+
+    <a
+      href="premium.html"
+      class="premium-nav"
+    >
+      💎 Premium
+    </a>
 
   </nav>
 
