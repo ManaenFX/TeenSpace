@@ -1,423 +1,408 @@
-```html id="y8kq6j"
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<title>TeenSpace - Join 🌍</title>
 
-  <title>TeenSpace - Join 🌍</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 
-  <style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#eee8ff 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#dff3ff 0%,transparent 35%),
+    #f4f7ff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, #eee8ff 0%, transparent 35%),
-        radial-gradient(circle at bottom right, #e0f2ff 0%, transparent 35%),
-        #f4f7ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+.box{
+  width:100%;
+  max-width:470px;
+  background:white;
+  padding:30px;
+  border-radius:24px;
+  box-shadow:0 12px 35px rgba(0,0,0,.10);
+}
 
-    .box {
-      width: 100%;
-      max-width: 470px;
-      background: white;
-      padding: 30px;
-      border-radius: 24px;
-      box-shadow: 0 12px 35px rgba(0,0,0,.10);
-    }
+h1{
+  text-align:center;
+  color:#6c5ce7;
+  margin:0 0 10px;
+}
 
-    h1 {
-      text-align: center;
-      color: #6c5ce7;
-      margin: 0 0 10px;
-    }
+.intro{
+  text-align:center;
+  color:#666;
+  line-height:1.5;
+  margin-bottom:25px;
+}
 
-    .intro {
-      text-align: center;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 25px;
-    }
+label{
+  display:block;
+  margin-top:16px;
+  font-weight:bold;
+  color:#444;
+}
 
-    label {
-      display: block;
-      margin-top: 16px;
-      font-weight: bold;
-      color: #444;
-    }
+input,
+select{
+  width:100%;
+  padding:13px;
+  margin-top:7px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+  outline:none;
+  background:white;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 13px;
-      margin-top: 7px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      outline: none;
-      background: white;
-    }
+input:focus,
+select:focus{
+  border-color:#6c5ce7;
+  box-shadow:0 0 0 3px rgba(108,92,231,.10);
+}
 
-    input:focus,
-    select:focus {
-      border-color: #6c5ce7;
-      box-shadow: 0 0 0 3px rgba(108,92,231,.10);
-    }
+.password-row{
+  display:flex;
+  gap:8px;
+  align-items:stretch;
+}
 
-    .password-row {
-      display: flex;
-      gap: 8px;
-      align-items: stretch;
-    }
+.password-row input{
+  flex:1;
+  min-width:0;
+}
 
-    .password-row input {
-      flex: 1;
-      min-width: 0;
-    }
+.show-button{
+  width:70px;
+  margin-top:7px;
+  border:none;
+  border-radius:10px;
+  background:#e8e8e8;
+  color:#333;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    .show-button {
-      width: 70px;
-      margin-top: 7px;
-      border: none;
-      border-radius: 10px;
-      background: #e8e8e8;
-      color: #333;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.join-button{
+  width:100%;
+  padding:15px;
+  margin-top:24px;
+  border:none;
+  border-radius:12px;
+  background:#6c5ce7;
+  color:white;
+  cursor:pointer;
+  font-size:17px;
+  font-weight:bold;
+}
 
-    .join-button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 24px;
-      border: none;
-      border-radius: 12px;
-      background: #6c5ce7;
-      color: white;
-      cursor: pointer;
-      font-size: 17px;
-      font-weight: bold;
-    }
+.join-button:hover{
+  background:#5849c4;
+}
 
-    .join-button:hover {
-      background: #5849c4;
-    }
+.join-button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
 
-    .join-button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
+#message{
+  margin-top:16px;
+  text-align:center;
+  line-height:1.5;
+  font-weight:bold;
+}
 
-    #message {
-      margin-top: 16px;
-      text-align: center;
-      line-height: 1.5;
-      font-weight: bold;
-    }
+.success{
+  color:#159447;
+}
 
-    .success {
-      color: #159447;
-    }
+.error{
+  color:#d63050;
+}
 
-    .error {
-      color: #d63050;
-    }
+.back{
+  display:block;
+  text-align:center;
+  margin-top:20px;
+  color:#6c5ce7;
+  text-decoration:none;
+  font-weight:bold;
+}
 
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #6c5ce7;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.privacy{
+  margin-top:18px;
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  line-height:1.5;
+}
 
-    .privacy {
-      margin-top: 18px;
-      text-align: center;
-      color: #777;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-  </style>
+</style>
 
 </head>
 
-
 <body>
-
 
 <div class="box">
 
+<h1>
+🌍 Join TeenSpace
+</h1>
 
-  <h1>
-    🌍 Join TeenSpace
-  </h1>
+<p class="intro">
+Create your TeenSpace account and connect
+with teens around the world.
+</p>
 
+<form id="joinForm">
 
-  <p class="intro">
-    Create your TeenSpace account and connect
-    with teens around the world.
-  </p>
+<label for="username">
+Username
+</label>
 
-
-  <form id="joinForm">
-
-
-    <label for="username">
-      Username
-    </label>
-
-
-    <input
-      type="text"
-      id="username"
-      placeholder="Choose a username"
-      maxlength="20"
-      required
-    >
+<input
+  type="text"
+  id="username"
+  placeholder="Choose a username"
+  maxlength="20"
+  required
+>
 
 
-    <label for="country">
-      Country
-    </label>
+<label for="country">
+Country
+</label>
+
+<select
+  id="country"
+  required
+>
+
+<option value="">
+Select your country
+</option>
+
+<option value="Nigeria">
+🇳🇬 Nigeria
+</option>
+
+<option value="Ghana">
+🇬🇭 Ghana
+</option>
+
+<option value="Kenya">
+🇰🇪 Kenya
+</option>
+
+<option value="South Africa">
+🇿🇦 South Africa
+</option>
+
+<option value="United States">
+🇺🇸 United States
+</option>
+
+<option value="Canada">
+🇨🇦 Canada
+</option>
+
+<option value="United Kingdom">
+🇬🇧 United Kingdom
+</option>
+
+<option value="France">
+🇫🇷 France
+</option>
+
+<option value="Germany">
+🇩🇪 Germany
+</option>
+
+<option value="India">
+🇮🇳 India
+</option>
+
+<option value="Japan">
+🇯🇵 Japan
+</option>
+
+<option value="Australia">
+🇦🇺 Australia
+</option>
+
+<option value="Brazil">
+🇧🇷 Brazil
+</option>
+
+<option value="Mexico">
+🇲🇽 Mexico
+</option>
+
+<option value="Other">
+🌍 Other
+</option>
+
+</select>
 
 
-    <select
-      id="country"
-      required
-    >
+<label for="gender">
+Gender <span style="font-weight:normal;color:#888;">(optional)</span>
+</label>
 
-      <option value="">
-        Select your country
-      </option>
+<select
+  id="gender"
+>
 
-      <option value="Nigeria">
-        🇳🇬 Nigeria
-      </option>
+<option value="">
+Prefer not to say
+</option>
 
-      <option value="Ghana">
-        🇬🇭 Ghana
-      </option>
+<option value="Male">
+♂ Male
+</option>
 
-      <option value="Kenya">
-        🇰🇪 Kenya
-      </option>
+<option value="Female">
+♀ Female
+</option>
 
-      <option value="South Africa">
-        🇿🇦 South Africa
-      </option>
-
-      <option value="United States">
-        🇺🇸 United States
-      </option>
-
-      <option value="Canada">
-        🇨🇦 Canada
-      </option>
-
-      <option value="United Kingdom">
-        🇬🇧 United Kingdom
-      </option>
-
-      <option value="France">
-        🇫🇷 France
-      </option>
-
-      <option value="Germany">
-        🇩🇪 Germany
-      </option>
-
-      <option value="India">
-        🇮🇳 India
-      </option>
-
-      <option value="Japan">
-        🇯🇵 Japan
-      </option>
-
-      <option value="Australia">
-        🇦🇺 Australia
-      </option>
-
-      <option value="Brazil">
-        🇧🇷 Brazil
-      </option>
-
-      <option value="Mexico">
-        🇲🇽 Mexico
-      </option>
-
-      <option value="Other">
-        🌍 Other
-      </option>
-
-    </select>
+</select>
 
 
-    <label for="email">
-      Email
-    </label>
+<label for="email">
+Email
+</label>
+
+<input
+  type="email"
+  id="email"
+  placeholder="Enter your email"
+  required
+>
 
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Enter your email"
-      required
-    >
+<label for="password">
+Password
+</label>
+
+<div class="password-row">
+
+<input
+  type="password"
+  id="password"
+  placeholder="Create a password"
+  minlength="6"
+  required
+>
+
+<button
+  type="button"
+  class="show-button"
+  id="togglePassword"
+>
+Show
+</button>
+
+</div>
 
 
-    <label for="password">
-      Password
-    </label>
+<button
+  type="submit"
+  class="join-button"
+  id="joinButton"
+>
+Create Account 🚀
+</button>
+
+</form>
 
 
-    <div class="password-row">
-
-      <input
-        type="password"
-        id="password"
-        placeholder="Create a password"
-        minlength="6"
-        required
-      >
+<div id="message"></div>
 
 
-      <button
-        type="button"
-        class="show-button"
-        id="togglePassword"
-      >
-        Show
-      </button>
-
-    </div>
+<p class="privacy">
+🛡️ Keep your password private.
+</p>
 
 
-    <button
-      type="submit"
-      class="join-button"
-      id="joinButton"
-    >
-      Create Account 🚀
-    </button>
-
-
-  </form>
-
-
-  <div
-    id="message"
-  ></div>
-
-
-  <p class="privacy">
-    🛡️ Keep your password private.
-  </p>
-
-
-  <a
-    class="back"
-    href="index.html"
-  >
-    ← Back to TeenSpace
-  </a>
-
+<a
+  class="back"
+  href="index.html"
+>
+← Back to TeenSpace
+</a>
 
 </div>
 
 
 <script>
 
-
-/* =========================================
-   SUPABASE
-========================================= */
-
 const SUPABASE_URL =
-  "https://gcigveojqwwovitlwtxl.supabase.co";
+"https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
     }
-  );
+  }
+);
 
-
-/* =========================================
-   ELEMENTS
-========================================= */
 
 const form =
-  document.getElementById("joinForm");
+document.getElementById("joinForm");
 
 const message =
-  document.getElementById("message");
+document.getElementById("message");
 
 const button =
-  document.getElementById("joinButton");
+document.getElementById("joinButton");
 
 const password =
-  document.getElementById("password");
+document.getElementById("password");
 
 const togglePassword =
-  document.getElementById("togglePassword");
+document.getElementById("togglePassword");
 
-
-/* =========================================
-   SHOW / HIDE PASSWORD
-========================================= */
 
 togglePassword.addEventListener(
   "click",
-  function() {
+  function(){
 
-    if (
-      password.type === "password"
-    ) {
+    if(password.type === "password"){
 
       password.type = "text";
+      togglePassword.textContent = "Hide";
 
-      togglePassword.textContent =
-        "Hide";
-
-    } else {
+    }else{
 
       password.type = "password";
-
-      togglePassword.textContent =
-        "Show";
+      togglePassword.textContent = "Show";
 
     }
 
@@ -425,44 +410,44 @@ togglePassword.addEventListener(
 );
 
 
-/* =========================================
-   SIGN UP
-========================================= */
-
 form.addEventListener(
   "submit",
-  async function(event) {
+  async function(event){
 
     event.preventDefault();
 
 
     const username =
-      document
-        .getElementById("username")
-        .value
-        .trim();
+    document
+      .getElementById("username")
+      .value
+      .trim();
 
 
     const country =
-      document
-        .getElementById("country")
-        .value;
+    document
+      .getElementById("country")
+      .value;
+
+
+    const gender =
+    document
+      .getElementById("gender")
+      .value;
 
 
     const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
+    document
+      .getElementById("email")
+      .value
+      .trim();
 
 
     const passwordValue =
-      password.value;
+    password.value;
 
 
-    if (
-      username.length < 2
-    ) {
+    if(username.length < 2){
 
       showError(
         "Please choose a username with at least 2 characters."
@@ -473,25 +458,12 @@ form.addEventListener(
     }
 
 
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Creating account...";
+    button.disabled = true;
+    button.textContent = "Creating account...";
+    message.textContent = "";
 
 
-    message.textContent =
-      "";
-
-
-    try {
-
-
-      /*
-        Supabase creates the Auth account.
-        The database trigger automatically creates
-        the matching profiles row.
-      */
+    try{
 
       const {
         data,
@@ -499,54 +471,35 @@ form.addEventListener(
       } =
       await supabaseClient.auth.signUp({
 
-        email:
-          email,
+        email:email,
 
-        password:
-          passwordValue,
+        password:passwordValue,
 
-        options: {
-
-          data: {
-
-            username:
-              username,
-
-            country:
-              country
-
+        options:{
+          data:{
+            username:username,
+            country:country,
+            gender:gender
           }
-
         }
 
       });
 
 
-      if (error) {
-
+      if(error){
         throw error;
-
       }
 
 
-      /*
-        If email confirmation is enabled,
-        session may be null. That's okay.
-      */
+      if(data && data.session){
 
-      if (
-        data &&
-        data.session
-      ) {
-
-        message.className =
-          "success";
+        message.className = "success";
 
         message.textContent =
           "🎉 Account created! Welcome to TeenSpace.";
 
         setTimeout(
-          function() {
+          function(){
 
             window.location.href =
               "home.html";
@@ -555,30 +508,26 @@ form.addEventListener(
           1200
         );
 
+      }else{
 
-      } else {
-
-        message.className =
-          "success";
+        message.className = "success";
 
         message.textContent =
           "🎉 Account created! Check your email to confirm your account.";
 
         form.reset();
 
-        togglePassword.textContent =
-          "Show";
+        togglePassword.textContent = "Show";
 
       }
 
 
-    } catch (error) {
+    }catch(error){
 
       console.error(
         "Signup error:",
         error
       );
-
 
       showError(
         "❌ " +
@@ -588,14 +537,10 @@ form.addEventListener(
         )
       );
 
+    }finally{
 
-    } finally {
-
-      button.disabled =
-        false;
-
-      button.textContent =
-        "Create Account 🚀";
+      button.disabled = false;
+      button.textContent = "Create Account 🚀";
 
     }
 
@@ -603,22 +548,14 @@ form.addEventListener(
 );
 
 
-/* =========================================
-   ERROR
-========================================= */
+function showError(text){
 
-function showError(text) {
-
-  message.className =
-    "error";
-
-  message.textContent =
-    text;
+  message.className = "error";
+  message.textContent = text;
 
 }
 
 </script>
-
 
 </body>
 </html>
