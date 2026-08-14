@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -334,7 +333,31 @@
           return;
         }
 
-        allProfiles = data || [];
+
+        /* ==========================================
+           REMOVE DUPLICATE USERNAMES
+           ========================================== */
+
+        const uniqueProfiles = [];
+        const seenUsernames = new Set();
+
+        for (const profile of (data || [])) {
+
+          const username =
+            (profile.username || "")
+              .trim()
+              .toLowerCase();
+
+          if (!seenUsernames.has(username)) {
+
+            seenUsernames.add(username);
+            uniqueProfiles.push(profile);
+
+          }
+        }
+
+        allProfiles = uniqueProfiles;
+
 
         message.className = "success";
         message.textContent =
@@ -504,4 +527,3 @@
 
 </body>
 </html>
-```
