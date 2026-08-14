@@ -45,6 +45,7 @@
     .logo {
       font-size: 28px;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     nav {
@@ -56,8 +57,8 @@
     nav a {
       color: white;
       text-decoration: none;
-      padding: 8px 10px;
-      border-radius: 9px;
+      padding: 9px 11px;
+      border-radius: 10px;
       font-weight: bold;
     }
 
@@ -157,11 +158,6 @@
       margin: 10px 0;
     }
 
-    .muted {
-      color: #777;
-      line-height: 1.5;
-    }
-
     .features {
       margin: 18px 0;
       line-height: 1.8;
@@ -245,6 +241,7 @@
   </style>
 </head>
 
+
 <body>
 
 
@@ -260,6 +257,7 @@
     <a href="community.html">Community</a>
     <a href="explore.html">Explore</a>
     <a href="profile.html">Profile</a>
+    <a href="customize.html">✨ Customize</a>
 
   </nav>
 
@@ -390,7 +388,7 @@
 
       <button
         class="button"
-        id="comingSoonButton"
+        disabled
       >
         Coming Soon
       </button>
@@ -401,18 +399,13 @@
   </section>
 
 
-  <div
-    id="message"
-  ></div>
+  <div id="message"></div>
 
 
   <div class="note">
 
-    🛡️ The 5-day trial is designed to be used once per account.
-    Paid subscriptions are not connected yet. When you add real
-    payments later, use a proper payment provider and have the
-    payment arrangement handled by a parent/guardian or the
-    responsible business account.
+    🛡️ The 5-day trial is available once per account.
+    Paid Premium is not connected yet.
 
   </div>
 
@@ -451,29 +444,19 @@ const supabaseClient =
 
 
 const statusBadge =
-  document.getElementById(
-    "statusBadge"
-  );
+  document.getElementById("statusBadge");
 
 const statusText =
-  document.getElementById(
-    "statusText"
-  );
+  document.getElementById("statusText");
 
 const daysElement =
-  document.getElementById(
-    "days"
-  );
+  document.getElementById("days");
 
 const trialButton =
-  document.getElementById(
-    "trialButton"
-  );
+  document.getElementById("trialButton");
 
 const message =
-  document.getElementById(
-    "message"
-  );
+  document.getElementById("message");
 
 
 let currentUser = null;
@@ -481,41 +464,32 @@ let profile = null;
 
 
 /* =========================================
-   HELPERS
+   TRIAL HELPERS
 ========================================= */
 
-function showMessage(
-  text,
-  type
-) {
-
-  message.className =
-    type || "";
-
-  message.textContent =
-    text;
-
-}
-
-
-function getDaysLeft(
-  start
-) {
+function getTrialEnd(start) {
 
   const startDate =
     new Date(start);
 
-  const endDate =
-    new Date(
-      startDate.getTime() +
-      (5 * 24 * 60 * 60 * 1000)
-    );
+  return new Date(
+    startDate.getTime() +
+    5 * 24 * 60 * 60 * 1000
+  );
+
+}
+
+
+function getDaysLeft(start) {
+
+  const end =
+    getTrialEnd(start);
 
   const now =
     new Date();
 
   const difference =
-    endDate - now;
+    end - now;
 
   return Math.max(
     0,
@@ -528,58 +502,36 @@ function getDaysLeft(
 }
 
 
-/* =========================================
-   LOAD USER
-========================================= */
+function isTrialActive(start) {
 
-async function loadUser() {
-
-  const {
-    data: {
-      user
-    },
-    error
-  } =
-  await supabaseClient
-    .auth
-    .getUser();
-
-
-  if (
-    error ||
-    !user
-  ) {
-
-    window.location.href =
-      "login.html";
-
-    return null;
-
+  if (!start) {
+    return false;
   }
 
-
-  currentUser =
-    user;
-
-  return user;
+  return new Date() <
+    getTrialEnd(start);
 
 }
 
 
 /* =========================================
-   SHOW CURRENT STATUS
+   STATUS
 ========================================= */
 
 function updateStatus() {
 
-  const status =
-    profile?.premium_status ||
-    "free";
+  const permanentPremium =
+    profile?.premium_status === "premium";
 
 
-  if (
-    status === "premium"
-  ) {
+  const activeTrial =
+    profile?.premium_status === "trial" &&
+    isTrialActive(
+      profile?.trial_started_at
+    );
+
+
+  if (permanentPremium) {
 
     statusBadge.className =
       "status-badge premium";
@@ -600,14 +552,10 @@ function updateStatus() {
       "Already Premium ✓";
 
     return;
-
   }
 
 
-  if (
-    status === "trial" &&
-    profile?.trial_started_at
-  ) {
+  if (activeTrial) {
 
     const daysLeft =
       getDaysLeft(
@@ -615,41 +563,38 @@ function updateStatus() {
       );
 
 
-    if (
-      daysLeft > 0
-    ) {
+    statusBadge.className =
+      "status-badge trial";
 
-      statusBadge.className =
-        "status-badge trial";
+    statusBadge.textContent =
+      "✨ PREMIUM TRIAL";
 
-      statusBadge.textContent =
-        "✨ PREMIUM TRIAL";
+    statusText.textContent =
+      "Your Premium trial is active.";
 
-      statusText.textContent =
-        "Your Premium trial is active.";
+    daysElement.textContent =
+      daysLeft +
+      " day" +
+      (
+        daysLeft === 1
+          ? ""
+          : "s"
+      ) +
+      " remaining";
 
-      daysElement.textContent =
-        daysLeft +
-        " day" +
-        (
-          daysLeft === 1
-            ? ""
-            : "s"
-        ) +
-        " remaining";
+    trialButton.disabled =
+      true;
 
-      trialButton.disabled =
-        true;
+    trialButton.textContent =
+      "Trial Active ✓";
 
-      trialButton.textContent =
-        "Trial Active ✓";
-
-      return;
-
-    }
+    return;
+  }
 
 
-    /* Trial expired */
+  if (
+    profile?.trial_started_at
+  ) {
 
     statusBadge.className =
       "status-badge free";
@@ -670,7 +615,6 @@ function updateStatus() {
       "Trial Finished";
 
     return;
-
   }
 
 
@@ -706,16 +650,20 @@ trialButton.addEventListener(
 
     try {
 
+      const now =
+        new Date().toISOString();
+
+
       const {
-        data: latestProfile,
-        error: loadError
+        data,
+        error
       } =
       await supabaseClient
 
         .from("profiles")
 
         .select(
-          "trial_started_at,premium_status,premium"
+          "trial_started_at,premium_status"
         )
 
         .eq(
@@ -726,57 +674,50 @@ trialButton.addEventListener(
         .maybeSingle();
 
 
-      if (loadError) {
-        throw loadError;
+      if (error) {
+        throw error;
       }
 
 
       if (
-        latestProfile?.premium_status ===
-        "premium"
+        data?.premium_status === "premium"
       ) {
 
         profile =
           {
             ...profile,
-            ...latestProfile
+            ...data
           };
 
         updateStatus();
 
         return;
-
       }
 
 
       if (
-        latestProfile?.trial_started_at
+        data?.trial_started_at
       ) {
 
         profile =
           {
             ...profile,
-            ...latestProfile
+            ...data
           };
 
         updateStatus();
 
         showMessage(
-          "Your trial has already been used.",
+          "Your 5-day trial has already been used.",
           "error"
         );
 
         return;
-
       }
 
 
-      const now =
-        new Date().toISOString();
-
-
       const {
-        error
+        error: updateError
       } =
       await supabaseClient
 
@@ -801,8 +742,8 @@ trialButton.addEventListener(
         );
 
 
-      if (error) {
-        throw error;
+      if (updateError) {
+        throw updateError;
       }
 
 
@@ -856,23 +797,59 @@ trialButton.addEventListener(
 
 
 /* =========================================
-   LOAD PROFILE
+   MESSAGE
+========================================= */
+
+function showMessage(
+  text,
+  type
+) {
+
+  message.className =
+    type || "";
+
+  message.textContent =
+    text;
+
+}
+
+
+/* =========================================
+   LOAD
 ========================================= */
 
 async function start() {
 
-  currentUser =
-    await loadUser();
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+  await supabaseClient
+    .auth
+    .getUser();
 
 
-  if (!currentUser) {
+  if (
+    error ||
+    !user
+  ) {
+
+    window.location.href =
+      "login.html";
+
     return;
   }
 
 
+  currentUser =
+    user;
+
+
   const {
     data,
-    error
+    error: profileError
   } =
   await supabaseClient
 
@@ -884,15 +861,13 @@ async function start() {
 
     .eq(
       "user-id",
-      currentUser.id
+      user.id
     )
 
     .maybeSingle();
 
 
-  if (error) {
-
-    console.error(error);
+  if (profileError) {
 
     showMessage(
       "❌ Could not load Premium status.",
@@ -900,7 +875,6 @@ async function start() {
     );
 
     return;
-
   }
 
 
