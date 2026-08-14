@@ -1,15 +1,22 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TeenSpace - Explore 🌍</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Explore | TeenSpace 🌍</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -18,14 +25,17 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #f4f7ff;
+      background:
+        radial-gradient(circle at top left, #eee8ff 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #e0f2ff 0%, transparent 35%),
+        #f4f7ff;
       color: #222;
     }
 
     header {
       background: #6c5ce7;
       color: white;
-      padding: 20px 8%;
+      padding: 18px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -39,7 +49,7 @@
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 18px;
+      margin-left: 16px;
       font-weight: bold;
     }
 
@@ -49,141 +59,181 @@
 
     .hero {
       text-align: center;
-      background: white;
-      padding: 50px 20px 35px;
+      padding: 45px 20px 25px;
     }
 
     .hero h1 {
-      color: #6352e8;
-      font-size: 44px;
-      margin: 0 0 12px;
+      color: #6c5ce7;
+      font-size: 42px;
+      margin: 0 0 10px;
     }
 
     .hero p {
-      color: #555;
-      font-size: 19px;
+      color: #666;
+      font-size: 18px;
     }
 
     .container {
       width: 92%;
       max-width: 1100px;
-      margin: 30px auto 50px;
+      margin: 25px auto 60px;
     }
 
     .search-box {
       background: white;
       padding: 25px;
       border-radius: 22px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.07);
+      margin-bottom: 28px;
     }
 
     input,
     select {
       width: 100%;
-      padding: 17px;
-      margin-bottom: 14px;
+      padding: 16px;
       border: 1px solid #ccc;
       border-radius: 14px;
       font-size: 17px;
+      margin-bottom: 14px;
       outline: none;
       background: white;
     }
 
     input:focus,
     select:focus {
-      border-color: #6352e8;
+      border-color: #6c5ce7;
     }
 
     #message {
       text-align: center;
-      margin: 20px 0;
-      min-height: 25px;
-      font-size: 17px;
-    }
-
-    .error {
-      color: #e74c3c;
+      min-height: 24px;
+      margin: 18px 0;
     }
 
     .success {
       color: #159447;
     }
 
+    .error {
+      color: #d63050;
+    }
+
     #profiles {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 22px;
     }
 
     .profile-card {
       background: white;
+      border-radius: 24px;
       padding: 25px;
-      border-radius: 22px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      box-shadow: 0 9px 28px rgba(0,0,0,.07);
+      border-left: 6px solid #6c5ce7;
+      transition: .2s;
     }
 
-    .profile-top {
+    .profile-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(0,0,0,.11);
+    }
+
+    .top {
       display: flex;
       align-items: center;
       gap: 15px;
-      margin-bottom: 18px;
     }
 
     .avatar {
-      width: 65px;
-      height: 65px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #6352e8, #8c7cff);
-      color: white;
+      background: linear-gradient(135deg,#eee8ff,#dfe8ff);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 27px;
-      font-weight: bold;
+      font-size: 32px;
       flex-shrink: 0;
+      border: 3px solid #eeeaff;
     }
 
     .username {
-      color: #6352e8;
-      font-size: 22px;
-      font-weight: bold;
+      color: #5f4ce0;
+      font-size: 23px;
+      font-weight: 800;
       word-break: break-word;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .badge {
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .owner {
+      background: #fff1b8;
+      color: #946c00;
+    }
+
+    .staff {
+      background: #e2efff;
+      color: #1869a7;
+    }
+
+    .premium {
+      background: #ffe1f1;
+      color: #b52270;
+    }
+
+    .verified {
+      background: #e4f8ff;
+      color: #087796;
     }
 
     .member {
-      color: #999;
-      font-size: 13px;
-      margin-top: 4px;
+      background: #eeeaff;
+      color: #5f4ce0;
     }
 
     .country {
-      background: #f3f1ff;
-      padding: 12px;
-      border-radius: 11px;
-      margin-bottom: 15px;
+      margin-top: 20px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f5f2ff;
+      color: #444;
     }
 
-    .bio-title {
-      color: #888;
+    .about-title {
+      margin-top: 18px;
       font-size: 12px;
       font-weight: bold;
-      margin-bottom: 5px;
+      color: #8074b8;
+      letter-spacing: .5px;
     }
 
     .bio {
+      margin-top: 5px;
       color: #555;
       line-height: 1.6;
       word-break: break-word;
+      white-space: pre-wrap;
     }
 
     .empty {
+      grid-column: 1 / -1;
       background: white;
-      padding: 40px 20px;
+      padding: 35px;
       border-radius: 20px;
       text-align: center;
       color: #666;
-      grid-column: 1 / -1;
     }
 
     footer {
@@ -197,11 +247,11 @@
 
       header {
         flex-direction: column;
-        gap: 15px;
+        gap: 14px;
       }
 
       nav a {
-        margin: 5px;
+        margin: 4px 6px;
         display: inline-block;
       }
 
@@ -209,11 +259,10 @@
         font-size: 34px;
       }
 
-      .container {
-        width: 94%;
-      }
     }
+
   </style>
+
 </head>
 
 
@@ -227,13 +276,9 @@
 
   <nav>
 
-    <!-- HOME = home.html -->
     <a href="home.html">Home</a>
-
     <a href="explore.html">Explore</a>
-
     <a href="community.html">Community</a>
-
     <a href="profile.html">Profile</a>
 
   </nav>
@@ -243,10 +288,12 @@
 
 <section class="hero">
 
-  <h1>🌍 Explore TeenSpace</h1>
+  <h1>
+    🌍 Explore TeenSpace
+  </h1>
 
   <p>
-    Discover people around the TeenSpace community.
+    Discover members from around the world.
   </p>
 
 </section>
@@ -254,11 +301,11 @@
 
 <main class="container">
 
-  <section class="search-box">
+  <div class="search-box">
 
     <input
-      type="text"
       id="search"
+      type="text"
       placeholder="🔎 Search username..."
       autocomplete="off"
     >
@@ -278,12 +325,6 @@
       <option>Rwanda</option>
       <option>Egypt</option>
       <option>Morocco</option>
-      <option>Algeria</option>
-      <option>Zimbabwe</option>
-      <option>Zambia</option>
-      <option>Cameroon</option>
-      <option>Ethiopia</option>
-
       <option>United Kingdom</option>
       <option>Ireland</option>
       <option>France</option>
@@ -292,38 +333,23 @@
       <option>Italy</option>
       <option>Portugal</option>
       <option>Netherlands</option>
-      <option>Belgium</option>
-      <option>Switzerland</option>
-      <option>Austria</option>
       <option>Sweden</option>
       <option>Norway</option>
-      <option>Denmark</option>
-      <option>Finland</option>
-      <option>Poland</option>
-      <option>Greece</option>
-      <option>Ukraine</option>
-
       <option>United States</option>
       <option>Canada</option>
-      <option>Brazil</option>
       <option>Mexico</option>
+      <option>Brazil</option>
       <option>Argentina</option>
-
       <option>India</option>
       <option>China</option>
       <option>Japan</option>
       <option>South Korea</option>
-      <option>Philippines</option>
-      <option>Indonesia</option>
-      <option>Malaysia</option>
-      <option>Singapore</option>
-
       <option>Australia</option>
       <option>New Zealand</option>
 
     </select>
 
-  </section>
+  </div>
 
 
   <div id="message">
@@ -346,15 +372,12 @@
 
 <script>
 
-// ==========================================
-// SUPABASE
-// ==========================================
-
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
 
 const supabaseClient =
   window.supabase.createClient(
@@ -362,10 +385,6 @@ const supabaseClient =
     SUPABASE_KEY
   );
 
-
-// ==========================================
-// ELEMENTS
-// ==========================================
 
 const profilesContainer =
   document.getElementById("profiles");
@@ -380,9 +399,223 @@ const countrySelect =
   document.getElementById("country");
 
 
-// ==========================================
-// LOAD PROFILES
-// ==========================================
+let allProfiles = [];
+
+
+function escapeHTML(value) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    value ?? "";
+
+  return div.innerHTML;
+
+}
+
+
+function getAvatar(role) {
+
+  if (role === "owner") {
+    return "👑";
+  }
+
+  if (role === "staff") {
+    return "🛡️";
+  }
+
+  return "👤";
+
+}
+
+
+function getBadges(profile) {
+
+  const role =
+    profile.role || "user";
+
+  let html = "";
+
+
+  if (role === "owner") {
+
+    html += `
+      <span class="badge owner">
+        👑 ${escapeHTML(
+          profile.badge || "FOUNDER"
+        )}
+      </span>
+    `;
+
+    html += `
+      <span class="badge verified">
+        ✅ VERIFIED
+      </span>
+    `;
+
+  } else if (role === "staff") {
+
+    html += `
+      <span class="badge staff">
+        🛡️ STAFF
+      </span>
+    `;
+
+  } else {
+
+    html += `
+      <span class="badge member">
+        👤 MEMBER
+      </span>
+    `;
+
+  }
+
+
+  if (profile.premium === true) {
+
+    html += `
+      <span class="badge premium">
+        💎 PREMIUM
+      </span>
+    `;
+
+  }
+
+
+  return html;
+
+}
+
+
+function displayProfiles() {
+
+  const search =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+  const selectedCountry =
+    countrySelect.value;
+
+
+  const filtered =
+    allProfiles.filter(profile => {
+
+      const username =
+        (
+          profile.username || ""
+        ).toLowerCase();
+
+      const country =
+        profile.country || "";
+
+
+      return (
+        username.includes(search) &&
+        (
+          !selectedCountry ||
+          country === selectedCountry
+        )
+      );
+
+    });
+
+
+  profilesContainer.innerHTML =
+    "";
+
+
+  if (filtered.length === 0) {
+
+    profilesContainer.innerHTML = `
+
+      <div class="empty">
+
+        😕 No members found.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  filtered.forEach(profile => {
+
+    const username =
+      profile.username ||
+      "TeenSpace Member";
+
+    const country =
+      profile.country ||
+      "Country not set";
+
+    const bio =
+      profile.bio ||
+      "No bio yet.";
+
+    const role =
+      profile.role ||
+      "user";
+
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "profile-card";
+
+
+    card.innerHTML = `
+
+      <div class="top">
+
+        <div class="avatar">
+          ${getAvatar(role)}
+        </div>
+
+        <div>
+
+          <div class="username">
+            ${escapeHTML(username)}
+          </div>
+
+          <div class="badges">
+            ${getBadges(profile)}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="country">
+        🌍 ${escapeHTML(country)}
+      </div>
+
+
+      <div class="about-title">
+        ABOUT
+      </div>
+
+
+      <div class="bio">
+        ${escapeHTML(bio)}
+      </div>
+
+    `;
+
+
+    profilesContainer.appendChild(card);
+
+  });
+
+}
+
 
 async function loadProfiles() {
 
@@ -391,82 +624,36 @@ async function loadProfiles() {
   message.textContent =
     "Loading community...";
 
-  profilesContainer.innerHTML = "";
-
 
   try {
 
     const {
-      data: profiles,
+      data,
       error
     } =
-      await supabaseClient
+    await supabaseClient
 
-        .from("profiles")
+      .from("profiles")
 
-        .select(
-          '"user-id", username, country, bio'
-        );
+      .select(
+        "username, country, bio, role, badge, premium"
+      );
 
 
     if (error) {
-
-      console.error(
-        "Supabase error:",
-        error
-      );
-
-      message.className =
-        "error";
-
-      message.textContent =
-        "❌ Could not load profiles.";
-
-      return;
-
+      throw error;
     }
 
 
-    const uniqueProfiles = [];
-
-    const seenUserIds =
-      new Set();
-
-
-    for (
-      const profile
-      of (profiles || [])
-    ) {
-
-      const userId =
-        profile["user-id"];
-
-
-      if (
-        userId &&
-        !seenUserIds.has(userId)
-      ) {
-
-        seenUserIds.add(userId);
-
-        uniqueProfiles.push(
-          profile
-        );
-
-      }
-
-    }
-
-
-    window.allProfiles =
-      uniqueProfiles;
+    allProfiles =
+      data || [];
 
 
     message.className =
       "success";
 
     message.textContent =
-      `✅ ${uniqueProfiles.length} member(s) found`;
+      `✅ ${allProfiles.length} member(s) found`;
 
 
     displayProfiles();
@@ -480,203 +667,12 @@ async function loadProfiles() {
       "error";
 
     message.textContent =
-      "❌ Could not connect to TeenSpace.";
+      "❌ Could not load members.";
 
   }
 
 }
 
-
-// ==========================================
-// DISPLAY
-// ==========================================
-
-function displayProfiles() {
-
-  const profiles =
-    window.allProfiles || [];
-
-
-  const search =
-    searchInput.value
-      .trim()
-      .toLowerCase();
-
-
-  const selectedCountry =
-    countrySelect.value;
-
-
-  const filtered =
-    profiles.filter(profile => {
-
-      const username =
-        (
-          profile.username || ""
-        )
-        .toLowerCase();
-
-
-      const profileCountry =
-        profile.country || "";
-
-
-      const matchesUsername =
-        username.includes(search);
-
-
-      const matchesCountry =
-        !selectedCountry ||
-        profileCountry === selectedCountry;
-
-
-      return (
-        matchesUsername &&
-        matchesCountry
-      );
-
-    });
-
-
-  profilesContainer.innerHTML =
-    "";
-
-
-  if (
-    filtered.length === 0
-  ) {
-
-    profilesContainer.innerHTML = `
-
-      <div class="empty">
-
-        <div style="font-size:40px;">
-          😕
-        </div>
-
-        <h2>
-          No members found
-        </h2>
-
-        <p>
-          Try another username or country.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  filtered.forEach(
-    profile => {
-
-      const username =
-        profile.username ||
-        "TeenSpace Member";
-
-
-      const country =
-        profile.country ||
-        "Country not set";
-
-
-      const bio =
-        profile.bio ||
-        "No bio yet.";
-
-
-      const firstLetter =
-        username
-          .charAt(0)
-          .toUpperCase();
-
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "profile-card";
-
-
-      card.innerHTML = `
-
-        <div class="profile-top">
-
-          <div class="avatar">
-
-            ${escapeHTML(
-              firstLetter
-            )}
-
-          </div>
-
-
-          <div>
-
-            <div class="username">
-
-              ${escapeHTML(
-                username
-              )}
-
-            </div>
-
-            <div class="member">
-
-              TeenSpace Member
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="country">
-
-          🌍 ${escapeHTML(
-            country
-          )}
-
-        </div>
-
-
-        <div class="bio-title">
-          ABOUT
-        </div>
-
-
-        <div class="bio">
-
-          ${escapeHTML(
-            bio
-          )}
-
-        </div>
-
-      `;
-
-
-      profilesContainer.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-// ==========================================
-// SEARCH
-// ==========================================
 
 searchInput.addEventListener(
   "input",
@@ -690,50 +686,10 @@ countrySelect.addEventListener(
 );
 
 
-// ==========================================
-// SECURITY
-// ==========================================
-
-function escapeHTML(value) {
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-// ==========================================
-// START
-// ==========================================
-
 loadProfiles();
 
 </script>
 
 </body>
 </html>
-
+```
