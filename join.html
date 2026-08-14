@@ -1,14 +1,22 @@
+```html id="y8kq6j"
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TeenSpace - Join</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>TeenSpace - Join 🌍</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -17,7 +25,10 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #f4f7ff;
+      background:
+        radial-gradient(circle at top left, #eee8ff 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #e0f2ff 0%, transparent 35%),
+        #f4f7ff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,39 +37,49 @@
 
     .box {
       width: 100%;
-      max-width: 450px;
+      max-width: 470px;
       background: white;
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      border-radius: 24px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.10);
     }
 
     h1 {
       text-align: center;
       color: #6c5ce7;
-      margin-bottom: 10px;
+      margin: 0 0 10px;
     }
 
     .intro {
       text-align: center;
       color: #666;
       line-height: 1.5;
+      margin-bottom: 25px;
     }
 
     label {
       display: block;
       margin-top: 16px;
       font-weight: bold;
+      color: #444;
     }
 
     input,
     select {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       margin-top: 7px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #ccc;
       font-size: 16px;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #6c5ce7;
+      box-shadow: 0 0 0 3px rgba(108,92,231,.10);
     }
 
     .password-row {
@@ -76,35 +97,48 @@
       width: 70px;
       margin-top: 7px;
       border: none;
-      border-radius: 8px;
-      background: #ddd;
+      border-radius: 10px;
+      background: #e8e8e8;
       color: #333;
       cursor: pointer;
+      font-weight: bold;
     }
 
     .join-button {
       width: 100%;
-      padding: 13px;
-      margin-top: 22px;
+      padding: 15px;
+      margin-top: 24px;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       background: #6c5ce7;
       color: white;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: bold;
     }
 
+    .join-button:hover {
+      background: #5849c4;
+    }
+
     .join-button:disabled {
-      opacity: 0.6;
+      opacity: .6;
       cursor: not-allowed;
     }
 
     #message {
-      margin-top: 15px;
+      margin-top: 16px;
       text-align: center;
       line-height: 1.5;
       font-weight: bold;
+    }
+
+    .success {
+      color: #159447;
+    }
+
+    .error {
+      color: #d63050;
     }
 
     .back {
@@ -113,6 +147,7 @@
       margin-top: 20px;
       color: #6c5ce7;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .privacy {
@@ -120,265 +155,471 @@
       text-align: center;
       color: #777;
       font-size: 13px;
+      line-height: 1.5;
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <div class="box">
 
-    <h1>🌍 Join TeenSpace</h1>
+<div class="box">
 
-    <p class="intro">
-      Create your TeenSpace account and connect with teens around the world.
-    </p>
 
-    <form id="joinForm">
+  <h1>
+    🌍 Join TeenSpace
+  </h1>
 
-      <label for="username">Username</label>
+
+  <p class="intro">
+    Create your TeenSpace account and connect
+    with teens around the world.
+  </p>
+
+
+  <form id="joinForm">
+
+
+    <label for="username">
+      Username
+    </label>
+
+
+    <input
+      type="text"
+      id="username"
+      placeholder="Choose a username"
+      maxlength="20"
+      required
+    >
+
+
+    <label for="country">
+      Country
+    </label>
+
+
+    <select
+      id="country"
+      required
+    >
+
+      <option value="">
+        Select your country
+      </option>
+
+      <option value="Nigeria">
+        🇳🇬 Nigeria
+      </option>
+
+      <option value="Ghana">
+        🇬🇭 Ghana
+      </option>
+
+      <option value="Kenya">
+        🇰🇪 Kenya
+      </option>
+
+      <option value="South Africa">
+        🇿🇦 South Africa
+      </option>
+
+      <option value="United States">
+        🇺🇸 United States
+      </option>
+
+      <option value="Canada">
+        🇨🇦 Canada
+      </option>
+
+      <option value="United Kingdom">
+        🇬🇧 United Kingdom
+      </option>
+
+      <option value="France">
+        🇫🇷 France
+      </option>
+
+      <option value="Germany">
+        🇩🇪 Germany
+      </option>
+
+      <option value="India">
+        🇮🇳 India
+      </option>
+
+      <option value="Japan">
+        🇯🇵 Japan
+      </option>
+
+      <option value="Australia">
+        🇦🇺 Australia
+      </option>
+
+      <option value="Brazil">
+        🇧🇷 Brazil
+      </option>
+
+      <option value="Mexico">
+        🇲🇽 Mexico
+      </option>
+
+      <option value="Other">
+        🌍 Other
+      </option>
+
+    </select>
+
+
+    <label for="email">
+      Email
+    </label>
+
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Enter your email"
+      required
+    >
+
+
+    <label for="password">
+      Password
+    </label>
+
+
+    <div class="password-row">
 
       <input
-        type="text"
-        id="username"
-        placeholder="Choose a username"
-        maxlength="20"
+        type="password"
+        id="password"
+        placeholder="Create a password"
+        minlength="6"
         required
       >
-
-
-      <label for="country">Country</label>
-
-      <select id="country" required>
-        <option value="">Select your country</option>
-        <option value="Nigeria">🇳🇬 Nigeria</option>
-        <option value="Ghana">🇬🇭 Ghana</option>
-        <option value="Kenya">🇰🇪 Kenya</option>
-        <option value="South Africa">🇿🇦 South Africa</option>
-        <option value="United States">🇺🇸 United States</option>
-        <option value="Canada">🇨🇦 Canada</option>
-        <option value="United Kingdom">🇬🇧 United Kingdom</option>
-        <option value="France">🇫🇷 France</option>
-        <option value="Germany">🇩🇪 Germany</option>
-        <option value="India">🇮🇳 India</option>
-        <option value="Japan">🇯🇵 Japan</option>
-        <option value="Australia">🇦🇺 Australia</option>
-        <option value="Brazil">🇧🇷 Brazil</option>
-        <option value="Mexico">🇲🇽 Mexico</option>
-        <option value="Other">🌍 Other</option>
-      </select>
-
-
-      <label for="email">Email</label>
-
-      <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-        required
-      >
-
-
-      <label for="password">Password</label>
-
-      <div class="password-row">
-
-        <input
-          type="password"
-          id="password"
-          placeholder="Create a password"
-          minlength="6"
-          required
-        >
-
-        <button
-          type="button"
-          class="show-button"
-          id="togglePassword"
-        >
-          Show
-        </button>
-
-      </div>
 
 
       <button
-        type="submit"
-        class="join-button"
-        id="joinButton"
+        type="button"
+        class="show-button"
+        id="togglePassword"
       >
-        Create Account 🚀
+        Show
       </button>
 
-    </form>
+    </div>
 
 
-    <div id="message"></div>
+    <button
+      type="submit"
+      class="join-button"
+      id="joinButton"
+    >
+      Create Account 🚀
+    </button>
 
 
-    <p class="privacy">
-      🛡️ Keep your password private.
-    </p>
+  </form>
 
 
-    <a class="back" href="index.html">
-      ← Back to TeenSpace
-    </a>
-
-  </div>
+  <div
+    id="message"
+  ></div>
 
 
-  <script>
-
-    // =========================
-    // SUPABASE
-    // =========================
-
-    const SUPABASE_URL =
-      "https://gcigveojqwwovitlwtxl.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+  <p class="privacy">
+    🛡️ Keep your password private.
+  </p>
 
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+  <a
+    class="back"
+    href="index.html"
+  >
+    ← Back to TeenSpace
+  </a>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+  "https://gcigveojqwwovitlwtxl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
+  );
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const form =
+  document.getElementById("joinForm");
+
+const message =
+  document.getElementById("message");
+
+const button =
+  document.getElementById("joinButton");
+
+const password =
+  document.getElementById("password");
+
+const togglePassword =
+  document.getElementById("togglePassword");
+
+
+/* =========================================
+   SHOW / HIDE PASSWORD
+========================================= */
+
+togglePassword.addEventListener(
+  "click",
+  function() {
+
+    if (
+      password.type === "password"
+    ) {
+
+      password.type = "text";
+
+      togglePassword.textContent =
+        "Hide";
+
+    } else {
+
+      password.type = "password";
+
+      togglePassword.textContent =
+        "Show";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   SIGN UP
+========================================= */
+
+form.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    const username =
+      document
+        .getElementById("username")
+        .value
+        .trim();
+
+
+    const country =
+      document
+        .getElementById("country")
+        .value;
+
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+
+    const passwordValue =
+      password.value;
+
+
+    if (
+      username.length < 2
+    ) {
+
+      showError(
+        "Please choose a username with at least 2 characters."
       );
 
+      return;
 
-    // =========================
-    // ELEMENTS
-    // =========================
-
-    const form =
-      document.getElementById("joinForm");
-
-    const message =
-      document.getElementById("message");
-
-    const button =
-      document.getElementById("joinButton");
-
-    const password =
-      document.getElementById("password");
-
-    const togglePassword =
-      document.getElementById("togglePassword");
+    }
 
 
-    // =========================
-    // SHOW / HIDE PASSWORD
-    // =========================
+    button.disabled =
+      true;
 
-    togglePassword.addEventListener("click", function() {
+    button.textContent =
+      "Creating account...";
 
-      if (password.type === "password") {
 
-        password.type = "text";
-        togglePassword.textContent = "Hide";
+    message.textContent =
+      "";
 
-      } else {
 
-        password.type = "password";
-        togglePassword.textContent = "Show";
+    try {
+
+
+      /*
+        Supabase creates the Auth account.
+        The database trigger automatically creates
+        the matching profiles row.
+      */
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth.signUp({
+
+        email:
+          email,
+
+        password:
+          passwordValue,
+
+        options: {
+
+          data: {
+
+            username:
+              username,
+
+            country:
+              country
+
+          }
+
+        }
+
+      });
+
+
+      if (error) {
+
+        throw error;
 
       }
 
-    });
+
+      /*
+        If email confirmation is enabled,
+        session may be null. That's okay.
+      */
+
+      if (
+        data &&
+        data.session
+      ) {
+
+        message.className =
+          "success";
+
+        message.textContent =
+          "🎉 Account created! Welcome to TeenSpace.";
+
+        setTimeout(
+          function() {
+
+            window.location.href =
+              "home.html";
+
+          },
+          1200
+        );
 
 
-    // =========================
-    // CREATE ACCOUNT
-    // =========================
+      } else {
 
-    form.addEventListener("submit", async function(event) {
-
-      event.preventDefault();
-
-
-      const username =
-        document.getElementById("username").value.trim();
-
-      const country =
-        document.getElementById("country").value;
-
-      const email =
-        document.getElementById("email").value.trim();
-
-      const passwordValue =
-        password.value;
-
-
-      button.disabled = true;
-      button.textContent = "Creating account...";
-
-      message.textContent = "";
-
-
-      try {
-
-        const { error } =
-          await supabaseClient.auth.signUp({
-
-            email: email,
-
-            password: passwordValue,
-
-            options: {
-
-              data: {
-                username: username,
-                country: country
-              }
-
-            }
-
-          });
-
-
-        if (error) {
-
-          message.textContent =
-            "❌ " + error.message;
-
-          button.disabled = false;
-          button.textContent =
-            "Create Account 🚀";
-
-          return;
-        }
-
+        message.className =
+          "success";
 
         message.textContent =
           "🎉 Account created! Check your email to confirm your account.";
 
         form.reset();
 
-        button.textContent =
-          "Account Created ✓";
-
         togglePassword.textContent =
           "Show";
 
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-          "❌ Something went wrong. Please try again.";
-
-        button.disabled = false;
-        button.textContent =
-          "Create Account 🚀";
-
       }
 
-    });
 
-  </script>
+    } catch (error) {
+
+      console.error(
+        "Signup error:",
+        error
+      );
+
+
+      showError(
+        "❌ " +
+        (
+          error.message ||
+          "Something went wrong."
+        )
+      );
+
+
+    } finally {
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Create Account 🚀";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+function showError(text) {
+
+  message.className =
+    "error";
+
+  message.textContent =
+    text;
+
+}
+
+</script>
+
 
 </body>
 </html>
+```
