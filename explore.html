@@ -227,6 +227,36 @@
       white-space: pre-wrap;
     }
 
+    .profile-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .profile-button {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .message-button {
+      background: #6c5ce7;
+      color: white;
+    }
+
+    .message-button:hover {
+      background: #5849c4;
+    }
+
+    .profile-button-secondary {
+      background: #eeeaff;
+      color: #5f4ce0;
+    }
+
     .empty {
       grid-column: 1 / -1;
       background: white;
@@ -259,6 +289,10 @@
         font-size: 34px;
       }
 
+      .profile-actions {
+        flex-direction: column;
+      }
+
     }
 
   </style>
@@ -267,6 +301,7 @@
 
 
 <body>
+
 
 <header>
 
@@ -301,6 +336,7 @@
 
 <main class="container">
 
+
   <div class="search-box">
 
     <input
@@ -309,6 +345,7 @@
       placeholder="🔎 Search username..."
       autocomplete="off"
     >
+
 
     <select id="country">
 
@@ -325,6 +362,7 @@
       <option>Rwanda</option>
       <option>Egypt</option>
       <option>Morocco</option>
+
       <option>United Kingdom</option>
       <option>Ireland</option>
       <option>France</option>
@@ -335,15 +373,18 @@
       <option>Netherlands</option>
       <option>Sweden</option>
       <option>Norway</option>
+
       <option>United States</option>
       <option>Canada</option>
       <option>Mexico</option>
       <option>Brazil</option>
       <option>Argentina</option>
+
       <option>India</option>
       <option>China</option>
       <option>Japan</option>
       <option>South Korea</option>
+
       <option>Australia</option>
       <option>New Zealand</option>
 
@@ -359,6 +400,7 @@
 
   <section id="profiles"></section>
 
+
 </main>
 
 
@@ -372,6 +414,7 @@
 
 <script>
 
+
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
 
@@ -382,7 +425,13 @@ const SUPABASE_KEY =
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true
+      }
+    }
   );
 
 
@@ -401,6 +450,12 @@ const countrySelect =
 
 let allProfiles = [];
 
+let currentUser = null;
+
+
+/* =========================================
+   HELPERS
+========================================= */
 
 function escapeHTML(value) {
 
@@ -489,6 +544,10 @@ function getBadges(profile) {
 }
 
 
+/* =========================================
+   DISPLAY PROFILES
+========================================= */
+
 function displayProfiles() {
 
   const search =
@@ -506,7 +565,8 @@ function displayProfiles() {
       const username =
         (
           profile.username || ""
-        ).toLowerCase();
+        )
+        .toLowerCase();
 
       const country =
         profile.country || "";
@@ -563,6 +623,10 @@ function displayProfiles() {
       "user";
 
 
+    const authUserId =
+      profile["user-id"];
+
+
     const card =
       document.createElement("article");
 
@@ -607,6 +671,22 @@ function displayProfiles() {
         ${escapeHTML(bio)}
       </div>
 
+
+      <div class="profile-actions">
+
+        <a
+          class="profile-button message-button"
+          href="messages.html?user_id=${encodeURIComponent(
+            authUserId || ""
+          )}&name=${encodeURIComponent(
+            username
+          )}"
+        >
+          💬 Message
+        </a>
+
+      </div>
+
     `;
 
 
@@ -616,6 +696,29 @@ function displayProfiles() {
 
 }
 
+
+/* =========================================
+   LOAD CURRENT USER
+========================================= */
+
+async function loadCurrentUser() {
+
+  const {
+    data: {
+      user
+    }
+  } =
+  await supabaseClient.auth.getUser();
+
+  currentUser =
+    user || null;
+
+}
+
+
+/* =========================================
+   LOAD PROFILES
+========================================= */
 
 async function loadProfiles() {
 
@@ -636,7 +739,7 @@ async function loadProfiles() {
       .from("profiles")
 
       .select(
-        "username, country, bio, role, badge, premium"
+        "username, country, bio, role, badge, premium, \"user-id\""
       );
 
 
@@ -647,6 +750,22 @@ async function loadProfiles() {
 
     allProfiles =
       data || [];
+
+
+    /*
+      Don't show yourself as a PM target.
+    */
+
+    if (currentUser) {
+
+      allProfiles =
+        allProfiles.filter(
+          profile =>
+            profile["user-id"] !==
+            currentUser.id
+        );
+
+    }
 
 
     message.className =
@@ -674,6 +793,10 @@ async function loadProfiles() {
 }
 
 
+/* =========================================
+   SEARCH
+========================================= */
+
 searchInput.addEventListener(
   "input",
   displayProfiles
@@ -686,10 +809,25 @@ countrySelect.addEventListener(
 );
 
 
-loadProfiles();
+/* =========================================
+   START
+========================================= */
+
+async function start() {
+
+  await loadCurrentUser();
+
+  await loadProfiles();
+
+}
+
+
+start();
 
 </script>
 
+
 </body>
+
 </html>
 ```
