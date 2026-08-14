@@ -1,208 +1,352 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore | TeenSpace 🌍</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <title>TeenSpace - Explore</title>
 
-        body {
-            margin: 0;
-            background: #f4f7ff;
-            color: #222;
-        }
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        header {
-            background: #6c5ce7;
-            color: white;
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f7ff;
+      padding: 25px 15px;
+    }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 18px;
-            font-weight: bold;
-        }
+    .box {
+      max-width: 700px;
+      margin: auto;
+    }
 
-        .hero {
-            text-align: center;
-            padding: 55px 20px;
-            background: white;
-        }
+    h1 {
+      text-align: center;
+      color: #6c5ce7;
+      margin-bottom: 5px;
+    }
 
-        .hero h1 {
-            color: #6c5ce7;
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
+    .intro {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
 
-        .hero p {
-            font-size: 18px;
-            color: #555;
-        }
+    .search-area {
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
 
-        .content {
-            padding: 45px 8%;
-        }
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
 
-        .content h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    .profile-card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+    .username {
+      font-size: 21px;
+      font-weight: bold;
+      color: #6c5ce7;
+    }
 
-        .card {
-            background: white;
-            width: 280px;
-            padding: 28px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
+    .country {
+      margin-top: 7px;
+      color: #555;
+    }
 
-        .card h3 {
-            color: #6c5ce7;
-        }
+    .bio {
+      margin-top: 12px;
+      color: #333;
+      line-height: 1.5;
+    }
 
-        .card p {
-            line-height: 1.5;
-            color: #555;
-        }
+    .empty {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      text-align: center;
+      color: #666;
+    }
 
-        .read {
-            display: inline-block;
-            margin-top: 10px;
-            color: #6c5ce7;
-            font-weight: bold;
-            text-decoration: none;
-        }
+    .back {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border-radius: 10px;
+      background: #6c5ce7;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        footer {
-            margin-top: 30px;
-            padding: 25px;
-            background: #222;
-            color: white;
-            text-align: center;
-        }
-    </style>
+    #message {
+      text-align: center;
+      margin: 15px 0;
+    }
+  </style>
 </head>
 
 <body>
 
-    <header>
+<div class="box">
 
-        <div class="logo">🌍 TeenSpace</div>
+  <h1>🌍 Explore TeenSpace</h1>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="explore.html">Explore</a>
-            <a href="join.html">Join</a>
-        </nav>
+  <p class="intro">
+    Discover people around the TeenSpace community.
+  </p>
 
-    </header>
+  <div class="search-area">
 
+    <input
+      type="text"
+      id="search"
+      placeholder="🔎 Search username..."
+    >
 
-    <section class="hero">
+    <select id="countryFilter">
+      <option value="">🌍 All countries</option>
+      <option value="Nigeria">🇳🇬 Nigeria</option>
+      <option value="Ghana">🇬🇭 Ghana</option>
+      <option value="Kenya">🇰🇪 Kenya</option>
+      <option value="South Africa">🇿🇦 South Africa</option>
+      <option value="United States">🇺🇸 United States</option>
+      <option value="United Kingdom">🇬🇧 United Kingdom</option>
+      <option value="Canada">🇨🇦 Canada</option>
+      <option value="India">🇮🇳 India</option>
+      <option value="Australia">🇦🇺 Australia</option>
+      <option value="Other">🌍 Other</option>
+    </select>
 
-        <h1>Explore TeenSpace 🌎</h1>
+  </div>
 
-        <p>Discover interesting things from teens and cultures around the world.</p>
+  <div id="message">
+    Loading community...
+  </div>
 
-    </section>
+  <div id="profiles"></div>
 
+  <a class="back" href="index.html">
+    🏠 Back Home
+  </a>
 
-    <section class="content">
+</div>
 
-        <h2>Explore Topics</h2>
+<script>
 
-        <div class="cards">
+  const SUPABASE_URL =
+    "https://gcigveojqwwovitlwtxl.supabase.co";
 
-            <div class="card">
-                <h3>🌎 Around the World</h3>
-                <p>
-                    Discover countries, cultures, traditions,
-                    languages and interesting facts.
-                </p>
-                <a class="read" href="#">Explore →</a>
-            </div>
+  const SUPABASE_KEY =
+    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7Y";
 
-
-            <div class="card">
-                <h3>🎮 Games & Fun</h3>
-                <p>
-                    Find quizzes, games, puzzles and
-                    fun challenges.
-                </p>
-                <a class="read" href="#">Play →</a>
-            </div>
-
-
-            <div class="card">
-                <h3>💡 Ideas & Skills</h3>
-                <p>
-                    Learn useful skills, discover hobbies
-                    and find new things to try.
-                </p>
-                <a class="read" href="#">Discover →</a>
-            </div>
-
-
-            <div class="card">
-                <h3>🎨 Creativity</h3>
-                <p>
-                    Share ideas about art, music, writing,
-                    design and other creative interests.
-                </p>
-                <a class="read" href="#">Create →</a>
-            </div>
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
 
-            <div class="card">
-                <h3>📚 School & Learning</h3>
-                <p>
-                    Study tips, educational resources
-                    and ways to make learning more interesting.
-                </p>
-                <a class="read" href="#">Learn →</a>
-            </div>
+  const profilesContainer =
+    document.getElementById("profiles");
+
+  const message =
+    document.getElementById("message");
+
+  const search =
+    document.getElementById("search");
+
+  const countryFilter =
+    document.getElementById("countryFilter");
 
 
-            <div class="card">
-                <h3>🌟 Teen Spotlight</h3>
-                <p>
-                    Discover inspiring projects and
-                    achievements from young people.
-                </p>
-                <a class="read" href="#">See More →</a>
-            </div>
+  let allProfiles = [];
 
+
+  async function loadProfiles() {
+
+    message.textContent =
+      "Loading community...";
+
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("profiles")
+      .select("username, country, bio")
+      .order("created_at", {
+        ascending: false
+      });
+
+
+    if (error) {
+
+      console.error(error);
+
+      message.textContent =
+        "❌ Could not load the community.";
+
+      return;
+    }
+
+
+    allProfiles = data || [];
+
+    displayProfiles(allProfiles);
+  }
+
+
+  function displayProfiles(profiles) {
+
+    profilesContainer.innerHTML = "";
+
+
+    if (profiles.length === 0) {
+
+      message.textContent = "";
+
+      profilesContainer.innerHTML = `
+        <div class="empty">
+          🔎 No profiles found.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    message.textContent =
+      `${profiles.length} profile${profiles.length === 1 ? "" : "s"} found.`;
+
+
+    profiles.forEach(profile => {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "profile-card";
+
+
+      const username =
+        profile.username || "TeenSpace User";
+
+      const country =
+        profile.country || "Unknown country";
+
+      const bio =
+        profile.bio || "No bio yet.";
+
+
+      card.innerHTML = `
+        <div class="username">
+          👤 ${escapeHTML(username)}
         </div>
 
-    </section>
+        <div class="country">
+          🌍 ${escapeHTML(country)}
+        </div>
+
+        <div class="bio">
+          ${escapeHTML(bio)}
+        </div>
+      `;
 
 
-    <footer>
-        <p>© 2026 TeenSpace 🌍</p>
-    </footer>
+      profilesContainer.appendChild(card);
+
+    });
+
+  }
+
+
+  function escapeHTML(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent =
+      text;
+
+    return div.innerHTML;
+  }
+
+
+  function filterProfiles() {
+
+    const searchText =
+      search.value
+        .trim()
+        .toLowerCase();
+
+    const selectedCountry =
+      countryFilter.value;
+
+
+    const filtered =
+      allProfiles.filter(profile => {
+
+        const username =
+          (profile.username || "")
+            .toLowerCase();
+
+        const matchesSearch =
+          username.includes(searchText);
+
+        const matchesCountry =
+          !selectedCountry ||
+          profile.country === selectedCountry;
+
+        return matchesSearch &&
+               matchesCountry;
+
+      });
+
+
+    displayProfiles(filtered);
+  }
+
+
+  search.addEventListener(
+    "input",
+    filterProfiles
+  );
+
+  countryFilter.addEventListener(
+    "change",
+    filterProfiles
+  );
+
+
+  loadProfiles();
+
+</script>
 
 </body>
 </html>
+```
