@@ -1,30 +1,30 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Explore TeenSpace</title>
+  <title>TeenSpace - Explore</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
       background: #f4f7ff;
       color: #222;
     }
 
     header {
       text-align: center;
-      padding: 45px 20px 25px;
+      padding: 45px 20px 30px;
     }
 
     header h1 {
@@ -36,13 +36,13 @@
     header p {
       font-size: 20px;
       color: #555;
-      margin-top: 15px;
+      margin-top: 12px;
     }
 
     .container {
       width: 92%;
       max-width: 1200px;
-      margin: 25px auto;
+      margin: 20px auto;
     }
 
     .search-box {
@@ -61,17 +61,19 @@
       border-radius: 15px;
       font-size: 18px;
       outline: none;
+      background: white;
     }
 
     input:focus,
     select:focus {
       border-color: #6352e8;
+      box-shadow: 0 0 0 3px rgba(99,82,232,0.12);
     }
 
     #message {
       text-align: center;
       font-size: 18px;
-      margin: 25px 0;
+      margin: 28px 0;
       min-height: 28px;
     }
 
@@ -85,61 +87,90 @@
 
     #profiles {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
       margin-top: 25px;
     }
 
     .profile-card {
       background: white;
-      border-radius: 22px;
-      padding: 25px;
+      border-radius: 24px;
+      padding: 28px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.08);
       transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(99,82,232,0.08);
+      min-height: 250px;
     }
 
     .profile-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
     }
 
     .avatar {
-      width: 75px;
-      height: 75px;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
       border-radius: 50%;
-      background: #6352e8;
+      background: linear-gradient(135deg, #6352e8, #8c7cff);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 30px;
       font-weight: bold;
-      margin-bottom: 15px;
+      box-shadow: 0 6px 15px rgba(99,82,232,0.25);
     }
 
     .username {
-      font-size: 24px;
+      font-size: 23px;
       font-weight: bold;
       color: #6352e8;
-      margin-bottom: 8px;
+      word-break: break-word;
     }
 
-    .country {
-      font-size: 17px;
-      margin-bottom: 12px;
+    .member-label {
+      color: #999;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .country-box {
+      background: #f6f5ff;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+
+    .bio-title {
+      font-size: 13px;
+      color: #888;
+      font-weight: bold;
+      margin-bottom: 5px;
     }
 
     .bio {
-      color: #666;
-      line-height: 1.5;
+      color: #555;
+      line-height: 1.6;
+      word-break: break-word;
     }
 
     .empty {
       text-align: center;
       background: white;
-      padding: 30px;
+      padding: 40px 20px;
       border-radius: 20px;
       color: #666;
+      grid-column: 1 / -1;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     }
 
     .home-button {
@@ -155,19 +186,37 @@
       border-radius: 18px;
       font-size: 22px;
       font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
     }
 
     .home-button:hover {
       background: #5140d5;
+      transform: translateY(-2px);
     }
 
     @media (max-width: 600px) {
+      header {
+        padding-top: 30px;
+      }
+
       header h1 {
         font-size: 34px;
       }
 
       header p {
         font-size: 17px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .search-box {
+        padding: 20px;
+      }
+
+      .profile-card {
+        padding: 22px;
       }
     }
   </style>
@@ -188,6 +237,7 @@
         type="text"
         id="search"
         placeholder="🔎 Search username..."
+        autocomplete="off"
       >
 
       <select id="country">
@@ -265,9 +315,9 @@
 
   <script>
 
-    /* ==========================================
-       TEENSPACE SUPABASE CONNECTION
-       ========================================== */
+    // ==========================================
+    // TEENSPACE SUPABASE CONNECTION
+    // ==========================================
 
     const SUPABASE_URL =
       "https://gcigveojqwwovitlwtxl.supabase.co";
@@ -282,9 +332,9 @@
       );
 
 
-    /* ==========================================
-       PAGE ELEMENTS
-       ========================================== */
+    // ==========================================
+    // PAGE ELEMENTS
+    // ==========================================
 
     const profilesContainer =
       document.getElementById("profiles");
@@ -302,9 +352,9 @@
     let allProfiles = [];
 
 
-    /* ==========================================
-       LOAD PROFILES
-       ========================================== */
+    // ==========================================
+    // LOAD PROFILES
+    // ==========================================
 
     async function loadProfiles() {
 
@@ -323,10 +373,13 @@
               ascending: false
             });
 
+
         if (error) {
+
           console.error("Supabase error:", error);
 
           message.className = "error";
+
           message.textContent =
             "❌ Could not load the community.";
 
@@ -334,12 +387,13 @@
         }
 
 
-        /* ==========================================
-           REMOVE DUPLICATE USERNAMES
-           ========================================== */
+        // ==========================================
+        // REMOVE DUPLICATE USERNAMES
+        // ==========================================
 
         const uniqueProfiles = [];
         const seenUsernames = new Set();
+
 
         for (const profile of (data || [])) {
 
@@ -348,38 +402,50 @@
               .trim()
               .toLowerCase();
 
-          if (!seenUsernames.has(username)) {
+
+          if (
+            username &&
+            !seenUsernames.has(username)
+          ) {
 
             seenUsernames.add(username);
+
             uniqueProfiles.push(profile);
 
           }
+
         }
+
 
         allProfiles = uniqueProfiles;
 
 
         message.className = "success";
+
         message.textContent =
           `✅ ${allProfiles.length} member(s) found`;
 
+
         displayProfiles();
+
 
       } catch (err) {
 
         console.error("Connection error:", err);
 
         message.className = "error";
+
         message.textContent =
           "❌ Could not connect to TeenSpace.";
 
       }
+
     }
 
 
-    /* ==========================================
-       DISPLAY PROFILES
-       ========================================== */
+    // ==========================================
+    // DISPLAY PROFILES
+    // ==========================================
 
     function displayProfiles() {
 
@@ -388,8 +454,9 @@
           .trim()
           .toLowerCase();
 
-      const country =
+      const selectedCountry =
         countrySelect.value;
+
 
       const filtered =
         allProfiles.filter(profile => {
@@ -401,15 +468,21 @@
           const profileCountry =
             profile.country || "";
 
+
           const matchesSearch =
             username.includes(search);
 
-          const matchesCountry =
-            !country ||
-            profileCountry === country;
 
-          return matchesSearch &&
-                 matchesCountry;
+          const matchesCountry =
+            !selectedCountry ||
+            profileCountry === selectedCountry;
+
+
+          return (
+            matchesSearch &&
+            matchesCountry
+          );
+
         });
 
 
@@ -420,11 +493,14 @@
 
         profilesContainer.innerHTML = `
           <div class="empty">
-            😕 No members found.
+            <div style="font-size:40px;">😕</div>
+            <h2>No members found</h2>
+            <p>Try another username or country.</p>
           </div>
         `;
 
         return;
+
       }
 
 
@@ -460,16 +536,32 @@
 
         card.innerHTML = `
 
-          <div class="avatar">
-            ${firstLetter}
+          <div class="profile-top">
+
+            <div class="avatar">
+              ${escapeHTML(firstLetter)}
+            </div>
+
+            <div>
+              <div class="username">
+                ${escapeHTML(username)}
+              </div>
+
+              <div class="member-label">
+                TeenSpace Member
+              </div>
+            </div>
+
           </div>
 
-          <div class="username">
-            ${escapeHTML(username)}
-          </div>
 
-          <div class="country">
+          <div class="country-box">
             🌍 ${escapeHTML(country)}
+          </div>
+
+
+          <div class="bio-title">
+            ABOUT
           </div>
 
           <div class="bio">
@@ -486,14 +578,15 @@
     }
 
 
-    /* ==========================================
-       SEARCH + FILTER
-       ========================================== */
+    // ==========================================
+    // SEARCH + FILTER
+    // ==========================================
 
     searchInput.addEventListener(
       "input",
       displayProfiles
     );
+
 
     countrySelect.addEventListener(
       "change",
@@ -501,9 +594,9 @@
     );
 
 
-    /* ==========================================
-       SECURITY
-       ========================================== */
+    // ==========================================
+    // SECURITY
+    // ==========================================
 
     function escapeHTML(value) {
 
@@ -517,9 +610,9 @@
     }
 
 
-    /* ==========================================
-       START
-       ========================================== */
+    // ==========================================
+    // START
+    // ==========================================
 
     loadProfiles();
 
