@@ -15,6 +15,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -68,15 +69,12 @@
       box-shadow: 0 18px 50px rgba(70, 50, 150, 0.16);
     }
 
-    /* FOUNDER COVER */
-
     .cover {
       min-height: 270px;
       padding: 35px 30px;
       color: white;
       position: relative;
       overflow: hidden;
-
       background:
         radial-gradient(
           circle at 10% 15%,
@@ -140,8 +138,6 @@
       position: relative;
       z-index: 2;
     }
-
-    /* BODY */
 
     .profile-body {
       padding: 30px;
@@ -231,8 +227,6 @@
       color: #5f4ce0;
     }
 
-    /* FOUNDER MESSAGE */
-
     .founder-message {
       margin-top: 28px;
       padding: 20px 22px;
@@ -260,8 +254,6 @@
       font-size: 17px;
     }
 
-    /* BIO */
-
     .intro {
       margin-top: 22px;
       padding: 22px;
@@ -288,8 +280,6 @@
       white-space: pre-wrap;
       color: #333;
     }
-
-    /* STATS */
 
     .stats {
       display: grid;
@@ -319,7 +309,32 @@
       font-size: 13px;
     }
 
-    /* EDIT */
+    /* CUSTOMIZE BUTTON */
+
+    .customize-button {
+      display: block;
+      width: 100%;
+      margin-top: 22px;
+      padding: 17px;
+      border-radius: 14px;
+      background: linear-gradient(
+        135deg,
+        #6c5ce7,
+        #8e74ff
+      );
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 19px;
+      font-weight: bold;
+      box-shadow: 0 8px 20px rgba(108,92,231,.20);
+      transition: .2s;
+    }
+
+    .customize-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(108,92,231,.28);
+    }
 
     .edit-section {
       margin-top: 28px;
@@ -462,6 +477,7 @@
       .profile-body {
         padding: 22px;
       }
+
     }
 
   </style>
@@ -469,6 +485,7 @@
 
 
 <body>
+
 
 <header>
 
@@ -488,7 +505,11 @@
 
 <main class="page">
 
-  <div id="loading" class="loading">
+
+  <div
+    id="loading"
+    class="loading"
+  >
     Loading your profile...
   </div>
 
@@ -499,9 +520,13 @@
     style="display:none;"
   >
 
+
     <div class="cover">
 
-      <div id="founderLabel" class="founder-label">
+      <div
+        id="founderLabel"
+        class="founder-label"
+      >
         🌍 TeenSpace Member
       </div>
 
@@ -518,7 +543,9 @@
 
     <div class="profile-body">
 
+
       <div class="identity">
+
 
         <div
           id="avatar"
@@ -537,12 +564,14 @@
             TeenSpace User
           </div>
 
+
           <div
             id="handle"
             class="handle"
           >
             @user
           </div>
+
 
           <div
             id="badges"
@@ -589,6 +618,7 @@
 
 
       <div class="stats">
+
 
         <div class="stat">
 
@@ -640,11 +670,22 @@
       </div>
 
 
+      <!-- CUSTOMIZE PROFILE BUTTON -->
+
+      <a
+        href="customize.html"
+        class="customize-button"
+      >
+        ✨ Customize Profile
+      </a>
+
+
       <div class="edit-section">
 
         <div class="edit-title">
           ✨ Edit Your Bio
         </div>
+
 
         <textarea
           id="bioInput"
@@ -652,12 +693,14 @@
           placeholder="Tell the TeenSpace community about yourself..."
         ></textarea>
 
+
         <button
           id="saveButton"
           class="save-button"
         >
           Save Profile 💾
         </button>
+
 
         <div id="message"></div>
 
@@ -679,6 +722,7 @@
         Log Out
       </button>
 
+
     </div>
 
   </section>
@@ -696,8 +740,10 @@
 
 <script>
 
+
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
+
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
@@ -706,7 +752,13 @@ const SUPABASE_KEY =
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true
+      }
+    }
   );
 
 
@@ -768,10 +820,16 @@ const message =
 let currentUsername = "";
 
 
-function showMessage(text, type) {
+function showMessage(
+  text,
+  type
+) {
 
-  message.className = type;
-  message.textContent = text;
+  message.className =
+    type;
+
+  message.textContent =
+    text;
 
 }
 
@@ -789,7 +847,9 @@ function escapeHTML(value) {
 }
 
 
-function formatJoinDate(dateString) {
+function formatJoinDate(
+  dateString
+) {
 
   if (!dateString) {
     return "—";
@@ -813,10 +873,14 @@ async function loadProfile() {
   try {
 
     const {
-      data: { user },
+      data: {
+        user
+      },
       error: authError
     } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient
+      .auth
+      .getUser();
 
 
     if (
@@ -832,8 +896,13 @@ async function loadProfile() {
     }
 
 
+    const authUsername =
+      user.user_metadata?.username ||
+      "";
+
+
     currentUsername =
-      user.user_metadata?.username || "";
+      authUsername;
 
 
     if (!currentUsername) {
@@ -872,23 +941,29 @@ async function loadProfile() {
 
     const username =
       profile?.username ||
-      currentUsername;
+      currentUsername ||
+      "TeenSpace User";
+
 
     const country =
       profile?.country ||
       "Not set";
 
+
     const bio =
       profile?.bio ||
       "";
+
 
     const role =
       profile?.role ||
       "user";
 
+
     const badge =
       profile?.badge ||
       "";
+
 
     const premium =
       profile?.premium === true;
@@ -896,6 +971,7 @@ async function loadProfile() {
 
     usernameElement.textContent =
       username;
+
 
     handleElement.textContent =
       "@" +
@@ -907,6 +983,7 @@ async function loadProfile() {
     bioDisplay.textContent =
       bio ||
       "No bio yet.";
+
 
     bioInput.value =
       bio;
@@ -928,59 +1005,83 @@ async function loadProfile() {
       "";
 
 
-    if (role === "owner") {
+    if (
+      role === "owner"
+    ) {
 
       avatarElement.textContent =
         "👑";
 
+
       founderLabel.textContent =
         "👑 TeenSpace Founder";
+
 
       coverTitle.textContent =
         "Welcome, Founder";
 
+
       coverSubtitle.textContent =
         "Building TeenSpace for teens around the world 🌍";
+
 
       founderMessage.style.display =
         "block";
 
 
       badgesElement.innerHTML += `
+
         <span class="badge owner-badge">
+
           👑 ${escapeHTML(
-            badge || "TEENSPACE FOUNDER"
+            badge ||
+            "TEENSPACE FOUNDER"
           )}
+
         </span>
+
       `;
 
 
       badgesElement.innerHTML += `
+
         <span class="badge verified-badge">
+
           ✅ VERIFIED OWNER
+
         </span>
+
       `;
 
 
-    } else if (role === "staff") {
+    } else if (
+      role === "staff"
+    ) {
 
       avatarElement.textContent =
         "🛡️";
 
+
       founderLabel.textContent =
         "🛡️ TeenSpace Staff";
 
+
       coverTitle.textContent =
         "Welcome, Staff Member";
+
 
       coverSubtitle.textContent =
         "Helping keep TeenSpace welcoming and safe.";
 
 
       badgesElement.innerHTML += `
+
         <span class="badge staff-badge">
+
           🛡️ STAFF
+
         </span>
+
       `;
 
 
@@ -989,31 +1090,44 @@ async function loadProfile() {
       avatarElement.textContent =
         "👤";
 
+
       founderLabel.textContent =
         "🌍 TeenSpace Member";
 
+
       coverTitle.textContent =
         "My TeenSpace";
+
 
       coverSubtitle.textContent =
         "Your profile, your space.";
 
 
       badgesElement.innerHTML += `
+
         <span class="badge member-badge">
+
           👤 MEMBER
+
         </span>
+
       `;
 
     }
 
 
-    if (premium) {
+    if (
+      premium
+    ) {
 
       badgesElement.innerHTML += `
+
         <span class="badge premium-badge">
+
           💎 PREMIUM
+
         </span>
+
       `;
 
     }
@@ -1052,6 +1166,7 @@ async function loadProfile() {
     loading.style.display =
       "none";
 
+
     profileCard.style.display =
       "block";
 
@@ -1060,11 +1175,14 @@ async function loadProfile() {
 
     console.error(error);
 
+
     loading.style.display =
       "none";
 
+
     profileCard.style.display =
       "block";
+
 
     showMessage(
       "❌ Could not load your profile.",
@@ -1076,13 +1194,11 @@ async function loadProfile() {
 }
 
 
+/* SAVE BIO */
+
 saveButton.addEventListener(
   "click",
   async function() {
-
-    const newBio =
-      bioInput.value.trim();
-
 
     if (!currentUsername) {
 
@@ -1096,8 +1212,13 @@ saveButton.addEventListener(
     }
 
 
+    const newBio =
+      bioInput.value.trim();
+
+
     saveButton.disabled =
       true;
+
 
     saveButton.textContent =
       "Saving...";
@@ -1145,6 +1266,7 @@ saveButton.addEventListener(
 
       console.error(error);
 
+
       showMessage(
         "❌ Could not save your profile.",
         "error"
@@ -1156,12 +1278,15 @@ saveButton.addEventListener(
     saveButton.disabled =
       false;
 
+
     saveButton.textContent =
       "Save Profile 💾";
 
   }
 );
 
+
+/* LOG OUT */
 
 logoutButton.addEventListener(
   "click",
@@ -1170,11 +1295,14 @@ logoutButton.addEventListener(
     logoutButton.disabled =
       true;
 
+
     logoutButton.textContent =
       "Logging out...";
 
 
-    await supabaseClient.auth.signOut();
+    await supabaseClient
+      .auth
+      .signOut();
 
 
     window.location.href =
@@ -1183,6 +1311,8 @@ logoutButton.addEventListener(
   }
 );
 
+
+/* START */
 
 loadProfile();
 
