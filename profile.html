@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TeenSpace - My Profile</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f7ff;
+      padding: 25px 15px;
+    }
+
+    .box {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #6c5ce7;
+      margin-bottom: 5px;
+    }
+
+    .welcome {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .profile {
+      background: #f8f7ff;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .label {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 5px;
+    }
+
+    .value {
+      font-size: 18px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      resize: vertical;
+      font-size: 15px;
+    }
+
+    button,
+    .link-button {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #6c5ce7;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logout {
+      background: #e74c3c;
+    }
+
+    #message {
+      text-align: center;
+      margin: 15px 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h1>👤 My TeenSpace Profile</h1>
+
+  <p class="welcome">
+    Your TeenSpace profile 🌍
+  </p>
+
+  <div id="message">Loading profile...</div>
+
+  <div class="profile" id="profileBox" style="display:none;">
+
+    <div class="field">
+      <div class="label">Username</div>
+      <div class="value" id="username"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Country</div>
+      <div class="value" id="country"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Email</div>
+      <div class="value" id="email"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Bio</div>
+      <textarea
+        id="bio"
+        maxlength="150"
+        placeholder="Tell the TeenSpace community a little about your interests..."
+      ></textarea>
+    </div>
+
+    <button id="saveButton">
+      Save Profile 💾
+    </button>
+
+  </div>
+
+  <a class="link-button" href="index.html">
+    🏠 Home
+  </a>
+
+  <button class="logout" id="logoutButton">
+    Log Out
+  </button>
+
+</div>
+
+<script>
+
+  const SUPABASE_URL =
+    "https://gcigveojqwwovitlwtxl.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  const message =
+    document.getElementById("message");
+
+  const profileBox =
+    document.getElementById("profileBox");
+
+  const username =
+    document.getElementById("username");
+
+  const country =
+    document.getElementById("country");
+
+  const email =
+    document.getElementById("email");
+
+  const bio =
+    document.getElementById("bio");
+
+  const saveButton =
+    document.getElementById("saveButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
+
+
+  let currentUser = null;
+
+
+  async function loadProfile() {
+
+    const {
+      data: { user },
+      error: userError
+    } = await supabaseClient.auth.getUser();
+
+
+    if (userError || !user) {
+
+      message.textContent =
+        "❌ Please log in first.";
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+
+      return;
+    }
+
+
+    currentUser = user;
+
+
+    username.textContent =
+      user.user_metadata?.username || "No username";
+
+    country.textContent =
+      user.user_metadata?.country || "No country";
+
+    email.textContent =
+      user.email || "No email";
+
+
+    const {
+      data: profile,
+      error
+    } = await supabaseClient
+      .from("profiles")
+      .select("bio")
+      .eq("user-id", user.id)
+      .maybeSingle();
+
+
+    if (!error && profile) {
+      bio.value = profile.bio || "";
+    }
+
+
+    message.textContent = "";
+    profileBox.style.display = "block";
+  }
+
+
+  saveButton.addEventListener("click", async function() {
+
+    if (!currentUser) return;
+
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+
+    const {
+      error
+    } = await supabaseClient
+      .from("profiles")
+      .update({
+        bio: bio.value.trim()
+      })
+      .eq("user-id", currentUser.id);
+
+
+    if (error) {
+
+      message.textContent =
+        "❌ Could not save your bio.";
+
+      console.error(error);
+
+    } else {
+
+      message.textContent =
+        "✅ Profile saved!";
+
+    }
+
+
+    saveButton.disabled = false;
+    saveButton.textContent =
+      "Save Profile 💾";
+  });
+
+
+  logoutButton.addEventListener("click", async function() {
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+      "login.html";
+  });
+
+
+  loadProfile();
+
+</script>
+
+</body>
+</html>
+```
