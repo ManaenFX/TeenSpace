@@ -1,1087 +1,286 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community | TeenSpace 🌍</title>
 
-  <title>TeenSpace Community 🌍</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+<style>
     * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
     }
 
     body {
-      margin: 0;
-      background: #f4f7ff;
-      color: #222;
+        background: #f4f7ff;
+        color: #222;
     }
 
     header {
-      background: #6c5ce7;
-      color: white;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+        background: #6c5ce7;
+        color: white;
+        padding: 20px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .logo {
-      font-size: 28px;
-      font-weight: bold;
+        font-size: 28px;
+        font-weight: bold;
     }
 
     nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 18px;
-      font-weight: bold;
+        color: white;
+        text-decoration: none;
+        margin-left: 18px;
+        font-weight: bold;
     }
 
     nav a:hover {
-      text-decoration: underline;
+        text-decoration: underline;
     }
 
     .hero {
-      text-align: center;
-      padding: 55px 20px 35px;
+        background: white;
+        text-align: center;
+        padding: 55px 20px;
     }
 
     .hero h1 {
-      margin: 0;
-      color: #6352e8;
-      font-size: 48px;
+        color: #6c5ce7;
+        font-size: 42px;
+        margin-bottom: 12px;
     }
 
     .hero p {
-      color: #555;
-      font-size: 20px;
-      margin-top: 12px;
+        color: #555;
+        font-size: 18px;
+        line-height: 1.5;
     }
 
-    .container {
-      width: 92%;
-      max-width: 900px;
-      margin: 20px auto 50px;
+    .community {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
     }
 
     .notice {
-      background: #fff8e1;
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
-
-    .composer {
-      background: white;
-      padding: 28px;
-      border-radius: 24px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom: 30px;
-    }
-
-    .composer h2 {
-      color: #6352e8;
-      margin-bottom: 18px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 150px;
-      resize: vertical;
-      padding: 18px;
-      border: 1px solid #ccc;
-      border-radius: 15px;
-      font-size: 18px;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: #6352e8;
-      box-shadow: 0 0 0 3px rgba(99,82,232,0.12);
-    }
-
-    select {
-      width: 100%;
-      margin-top: 14px;
-      padding: 16px;
-      border: 1px solid #ccc;
-      border-radius: 14px;
-      background: white;
-      font-size: 17px;
-      outline: none;
-    }
-
-    .publish-button {
-      width: 100%;
-      margin-top: 16px;
-      padding: 18px;
-      border: none;
-      border-radius: 15px;
-      background: #6352e8;
-      color: white;
-      font-size: 21px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .publish-button:hover {
-      background: #5140d5;
-    }
-
-    .publish-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #message {
-      text-align: center;
-      margin-top: 18px;
-      min-height: 28px;
-      line-height: 1.5;
-    }
-
-    .error {
-      color: #ff2864;
-    }
-
-    .success {
-      color: #159447;
-    }
-
-    .post {
-      background: white;
-      padding: 25px;
-      border-radius: 22px;
-      margin-bottom: 22px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-    }
-
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #6352e8, #8c7cff);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 25px;
-      font-weight: bold;
-      flex-shrink: 0;
-    }
-
-    .username {
-      color: #6352e8;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .country {
-      color: #777;
-      margin-top: 4px;
-      font-size: 14px;
+        background: #fff8e1;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        line-height: 1.6;
     }
 
     .topic {
-      display: inline-block;
-      background: #f1efff;
-      color: #6352e8;
-      padding: 7px 11px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 13px;
+        background: white;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.07);
     }
 
-    .content {
-      color: #444;
-      font-size: 18px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      word-break: break-word;
+    .topic h3 {
+        color: #6c5ce7;
+        margin-bottom: 10px;
     }
 
-    .date {
-      color: #999;
-      font-size: 13px;
-      margin-top: 15px;
+    .topic p {
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 18px;
     }
 
-    .empty {
-      background: white;
-      padding: 45px 20px;
-      text-align: center;
-      border-radius: 22px;
-      color: #666;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    .topic button {
+        background: #6c5ce7;
+        color: white;
+        border: none;
+        padding: 11px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
     }
 
-    .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-      margin-bottom: 25px;
-    }
-
-    .login-box a {
-      color: #6352e8;
-      font-weight: bold;
+    .topic button:hover {
+        background: #5849c4;
     }
 
     footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 25px;
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 25px;
+        margin-top: 40px;
     }
 
     @media (max-width: 700px) {
+        header {
+            flex-direction: column;
+            gap: 15px;
+        }
 
-      header {
-        flex-direction: column;
-        gap: 15px;
-      }
+        nav a {
+            margin: 5px;
+            display: inline-block;
+        }
 
-      nav {
-        text-align: center;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 5px;
-      }
-
-      .hero h1 {
-        font-size: 35px;
-      }
-
-      .hero p {
-        font-size: 17px;
-      }
-
-      .container {
-        width: 94%;
-      }
-
-      .composer,
-      .post {
-        padding: 20px;
-      }
+        .hero h1 {
+            font-size: 34px;
+        }
     }
-  </style>
-</head>
+</style>
+```
 
+</head>
 
 <body>
 
+```
 <header>
 
-  <div class="logo">
-    🌍 TeenSpace
-  </div>
+    <div class="logo">🌍 TeenSpace</div>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="explore.html">Explore</a>
-    <a href="community.html">Community</a>
-    <a href="profile.html">Profile</a>
-  </nav>
+    <nav>
+        <!-- HOME NOW GOES TO PROFILE -->
+        <a href="profile.html">Home</a>
+
+        <a href="explore.html">Explore</a>
+
+        <a href="community.html">Community</a>
+
+        <a href="profile.html">Profile</a>
+    </nav>
 
 </header>
 
 
 <section class="hero">
 
-  <h1>🌍 TeenSpace Community</h1>
+    <h1>💬 TeenSpace Community</h1>
 
-  <p>
-    Share something with the TeenSpace community.
-  </p>
+    <p>
+        Meet people, discover discussions and share
+        your interests in a safe environment.
+    </p>
 
 </section>
 
 
-<main class="container">
+<main class="community">
 
-
-  <div class="notice">
-
-    🛡️ <strong>Stay Safe:</strong>
-
-    Never share your password, home address,
-    phone number, school address or other
-    private information online.
-
-    Be respectful to other members.
-
-  </div>
-
-
-  <!-- LOGIN STATUS -->
-
-  <div
-    id="loginBox"
-    class="login-box"
-    style="display:none;"
-  >
-
-    🔐 You need to be logged in to create a post.
-
-    <br><br>
-
-    <a href="login.html">
-      Log in to TeenSpace
-    </a>
-
-  </div>
-
-
-  <!-- CREATE POST -->
-
-  <div
-    id="composer"
-    class="composer"
-  >
-
-    <h2>
-      ✨ Create a Post
-    </h2>
-
-
-    <textarea
-      id="postContent"
-      maxlength="500"
-      placeholder="What's on your mind?"
-    ></textarea>
-
-
-    <select id="topic">
-
-      <option value="Around the World">
-        🌎 Around the World
-      </option>
-
-      <option value="Gaming">
-        🎮 Gaming
-      </option>
-
-      <option value="Creativity">
-        🎨 Creativity
-      </option>
-
-      <option value="School & Learning">
-        📚 School & Learning
-      </option>
-
-      <option value="Ideas & Projects">
-        💡 Ideas & Projects
-      </option>
-
-      <option value="General">
-        💬 General
-      </option>
-
-    </select>
-
-
-    <button
-      id="publishButton"
-      class="publish-button"
-    >
-      Publish Post 🚀
-    </button>
-
-
-    <div id="message"></div>
-
-  </div>
-
-
-  <!-- POSTS -->
-
-  <section id="posts">
-
-    <div class="empty">
-      Loading community posts...
+    <div class="notice">
+        🛡️ <strong>Stay Safe:</strong>
+        Never share your password, home address, phone number,
+        school address or other private information online.
+        Be respectful to other members.
     </div>
 
-  </section>
 
+    <div class="topic">
+
+        <h3>🌎 Around the World</h3>
+
+        <p>
+            Talk about different countries, cultures,
+            languages and interesting places around the world.
+        </p>
+
+        <button onclick="showMessage('Around the World')">
+            View Discussion
+        </button>
+
+    </div>
+
+
+    <div class="topic">
+
+        <h3>🎮 Gaming</h3>
+
+        <p>
+            Talk about games, gaming experiences,
+            strategies and your favorite genres.
+        </p>
+
+        <button onclick="showMessage('Gaming')">
+            View Discussion
+        </button>
+
+    </div>
+
+
+    <div class="topic">
+
+        <h3>🎨 Creativity</h3>
+
+        <p>
+            Discuss art, music, writing, photography,
+            design and other creative hobbies.
+        </p>
+
+        <button onclick="showMessage('Creativity')">
+            View Discussion
+        </button>
+
+    </div>
+
+
+    <div class="topic">
+
+        <h3>📚 School & Learning</h3>
+
+        <p>
+            Share study ideas, learning tips and
+            ways to make school more interesting.
+        </p>
+
+        <button onclick="showMessage('School & Learning')">
+            View Discussion
+        </button>
+
+    </div>
+
+
+    <div class="topic">
+
+        <h3>💡 Ideas & Projects</h3>
+
+        <p>
+            Talk about interesting ideas, projects,
+            hobbies and things you want to create.
+        </p>
+
+        <button onclick="showMessage('Ideas & Projects')">
+            View Discussion
+        </button>
+
+    </div>
 
 </main>
 
 
 <footer>
 
-  <p>
-    © 2026 TeenSpace 🌍 |
-    Made for teens, with safety in mind.
-  </p>
+    <p>© 2026 TeenSpace 🌍 | Made for teens, with safety in mind.</p>
 
 </footer>
 
 
 <script>
 
-
-// ==========================================
-// SUPABASE CONNECTION
-// ==========================================
-
-const SUPABASE_URL =
-  "https://gcigveojqwwovitlwtxl.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-// ==========================================
-// ELEMENTS
-// ==========================================
-
-const postContent =
-  document.getElementById("postContent");
-
-const topic =
-  document.getElementById("topic");
-
-const publishButton =
-  document.getElementById("publishButton");
-
-const message =
-  document.getElementById("message");
-
-const postsContainer =
-  document.getElementById("posts");
-
-const composer =
-  document.getElementById("composer");
-
-const loginBox =
-  document.getElementById("loginBox");
-
-
-// ==========================================
-// CURRENT USER
-// ==========================================
-
-let currentUser = null;
-
-
-// ==========================================
-// GET CURRENT USER
-// ==========================================
-
-async function getCurrentUser() {
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient.auth.getUser();
-
-
-  if (error) {
-
-    console.error(
-      "Auth error:",
-      error
-    );
-
-    currentUser = null;
-
-    composer.style.display = "none";
-
-    loginBox.style.display = "block";
-
-    return null;
-  }
-
-
-  currentUser =
-    data.user;
-
-
-  if (!currentUser) {
-
-    composer.style.display = "none";
-
-    loginBox.style.display = "block";
-
-    return null;
-  }
-
-
-  composer.style.display = "block";
-
-  loginBox.style.display = "none";
-
-
-  return currentUser;
-
-}
-
-
-// ==========================================
-// LOAD POSTS
-// ==========================================
-
-async function loadPosts() {
-
-  postsContainer.innerHTML = `
-    <div class="empty">
-      Loading community posts...
-    </div>
-  `;
-
-
-  try {
-
-    const {
-      data: posts,
-      error
-    } =
-      await supabaseClient
-
-        .from("posts")
-
-        .select(
-          'id, "user-id", content, created_at, topic'
-        )
-
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
+    function showMessage(topic) {
+        alert(
+            topic +
+            " discussions are coming soon! 🚀"
         );
-
-
-    if (error) {
-
-      console.error(
-        "LOAD POSTS ERROR:",
-        error
-      );
-
-
-      postsContainer.innerHTML = `
-
-        <div class="empty error">
-
-          ❌ Could not load posts.
-
-          <br><br>
-
-          ${escapeHTML(error.message)}
-
-        </div>
-
-      `;
-
-      return;
-
     }
-
-
-    if (!posts || posts.length === 0) {
-
-      postsContainer.innerHTML = `
-
-        <div class="empty">
-
-          <div style="font-size:45px;">
-            💬
-          </div>
-
-          <h2 style="margin:12px 0;">
-            No posts yet
-          </h2>
-
-          <p>
-            Be the first TeenSpace member
-            to post something!
-          </p>
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-    // ========================================
-    // GET USER IDS
-    // ========================================
-
-    const userIds =
-      [
-        ...new Set(
-          posts
-            .map(
-              post =>
-                post["user-id"]
-            )
-            .filter(Boolean)
-        )
-      ];
-
-
-    let profiles = [];
-
-
-    if (userIds.length > 0) {
-
-      const {
-        data,
-        error: profileError
-      } =
-        await supabaseClient
-
-          .from("profiles")
-
-          .select(
-            '"user-id", username, country'
-          )
-
-          .in(
-            '"user-id"',
-            userIds
-          );
-
-
-      if (profileError) {
-
-        console.error(
-          "PROFILE ERROR:",
-          profileError
-        );
-
-      } else {
-
-        profiles =
-          data || [];
-
-      }
-
-    }
-
-
-    // ========================================
-    // CREATE PROFILE LOOKUP
-    // ========================================
-
-    const profileMap =
-      new Map();
-
-
-    profiles.forEach(
-      profile => {
-
-        profileMap.set(
-          profile["user-id"],
-          profile
-        );
-
-      }
-    );
-
-
-    // ========================================
-    // DISPLAY POSTS
-    // ========================================
-
-    postsContainer.innerHTML = "";
-
-
-    posts.forEach(
-      post => {
-
-        const profile =
-          profileMap.get(
-            post["user-id"]
-          ) || {};
-
-
-        const username =
-          profile.username ||
-          "TeenSpace Member";
-
-
-        const country =
-          profile.country ||
-          "Country not set";
-
-
-        const content =
-          post.content ||
-          "";
-
-
-        const postTopic =
-          post.topic ||
-          "General";
-
-
-        const firstLetter =
-          username
-            .charAt(0)
-            .toUpperCase();
-
-
-        const date =
-          post.created_at
-            ? new Date(
-                post.created_at
-              ).toLocaleString()
-            : "";
-
-
-        const postElement =
-          document.createElement(
-            "article"
-          );
-
-
-        postElement.className =
-          "post";
-
-
-        postElement.innerHTML = `
-
-          <div class="post-header">
-
-            <div class="avatar">
-
-              ${escapeHTML(
-                firstLetter
-              )}
-
-            </div>
-
-
-            <div>
-
-              <div class="username">
-
-                ${escapeHTML(
-                  username
-                )}
-
-              </div>
-
-
-              <div class="country">
-
-                🌍 ${escapeHTML(
-                  country
-                )}
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="topic">
-
-            ${escapeHTML(
-              postTopic
-            )}
-
-          </div>
-
-
-          <div class="content">
-
-            ${escapeHTML(
-              content
-            )}
-
-          </div>
-
-
-          <div class="date">
-
-            ${escapeHTML(
-              date
-            )}
-
-          </div>
-
-        `;
-
-
-        postsContainer.appendChild(
-          postElement
-        );
-
-      }
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "Unexpected load error:",
-      error
-    );
-
-
-    postsContainer.innerHTML = `
-
-      <div class="empty error">
-
-        ❌ Could not load posts.
-
-        <br><br>
-
-        ${escapeHTML(
-          error.message
-        )}
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-// ==========================================
-// PUBLISH POST
-// ==========================================
-
-publishButton.addEventListener(
-  "click",
-  async function() {
-
-
-    if (!currentUser) {
-
-      await getCurrentUser();
-
-      return;
-
-    }
-
-
-    const content =
-      postContent.value.trim();
-
-
-    if (!content) {
-
-      message.className =
-        "error";
-
-      message.textContent =
-        "❌ Write something first.";
-
-      return;
-
-    }
-
-
-    publishButton.disabled =
-      true;
-
-
-    publishButton.textContent =
-      "Publishing...";
-
-
-    message.className =
-      "";
-
-
-    message.textContent =
-      "";
-
-
-    try {
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-
-          .from("posts")
-
-          .insert({
-
-            "user-id":
-              currentUser.id,
-
-            content:
-              content,
-
-            topic:
-              topic.value
-
-          })
-
-          .select();
-
-
-      if (error) {
-
-        console.error(
-          "PUBLISH ERROR:",
-          error
-        );
-
-
-        message.className =
-          "error";
-
-
-        message.innerHTML =
-          "❌ " +
-          escapeHTML(
-            error.message
-          );
-
-
-        return;
-
-      }
-
-
-      console.log(
-        "POST CREATED:",
-        data
-      );
-
-
-      message.className =
-        "success";
-
-
-      message.textContent =
-        "✅ Your post was published!";
-
-
-      postContent.value =
-        "";
-
-
-      await loadPosts();
-
-
-    } catch (error) {
-
-      console.error(
-        "PUBLISH EXCEPTION:",
-        error
-      );
-
-
-      message.className =
-        "error";
-
-
-      message.textContent =
-        "❌ " +
-        (
-          error.message ||
-          "Something went wrong."
-        );
-
-    }
-
-
-    publishButton.disabled =
-      false;
-
-
-    publishButton.textContent =
-      "Publish Post 🚀";
-
-  }
-);
-
-
-// ==========================================
-// SECURITY
-// ==========================================
-
-function escapeHTML(value) {
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-// ==========================================
-// START
-// ==========================================
-
-async function start() {
-
-  await getCurrentUser();
-
-  await loadPosts();
-
-}
-
-
-start();
 
 </script>
 
+
 </body>
 </html>
-
