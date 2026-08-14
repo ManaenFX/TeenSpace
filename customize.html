@@ -1,4 +1,4 @@
-```html id="q4r8nz"
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -213,6 +213,16 @@ input[type="color"]{
   line-height:1.5;
 }
 
+.premium-active{
+  padding:15px;
+  border-radius:14px;
+  background:#f4fff7;
+  color:#159447;
+  border:1px solid #cdebd8;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
 .save{
   width:100%;
   padding:17px;
@@ -409,6 +419,13 @@ footer{
 
     <div class="section-title">
       🎨 Premium Appearance
+    </div>
+
+    <div
+      id="premiumNotice"
+      class="premium-active"
+    >
+      Checking Premium status...
     </div>
 
 
@@ -622,6 +639,11 @@ const musicArea =
 const wallpaperArea =
   document.getElementById("wallpaperArea");
 
+const premiumNotice =
+  document.getElementById(
+    "premiumNotice"
+  );
+
 const saveButton =
   document.getElementById("saveButton");
 
@@ -631,6 +653,8 @@ const status =
 
 let currentUser = null;
 let profile = null;
+
+let premiumActive = false;
 
 let selectedAvatar = null;
 let selectedMusic = null;
@@ -656,35 +680,62 @@ function showStatus(
 
 
 /* =========================================
-   LOAD USER
+   TRIAL CHECK
 ========================================= */
 
-async function getCurrentUser(){
+function trialIsActive(
+  trialStartedAt
+){
 
-  const {
-    data:{
-      user
-    },
-    error
-  } =
-  await supabaseClient.auth.getUser();
+  if(!trialStartedAt){
+    return false;
+  }
 
 
-  if(error || !user){
+  const started =
+    new Date(
+      trialStartedAt
+    ).getTime();
 
-    window.location.href =
-      "login.html";
 
-    return null;
+  const expires =
+    started +
+    (5 * 24 * 60 * 60 * 1000);
+
+
+  return Date.now() <
+    expires;
+
+}
+
+
+/* =========================================
+   EFFECTIVE PREMIUM
+========================================= */
+
+function isPremiumActive(){
+
+  if(
+    profile?.premium_status ===
+    "premium"
+  ){
+    return true;
+  }
+
+
+  if(
+    profile?.premium_status ===
+    "trial"
+  ){
+
+    return trialIsActive(
+      profile.trial_started_at
+    );
 
   }
 
 
-  currentUser =
-    user;
-
-
-  return user;
+  return false;
 
 }
 
@@ -727,7 +778,7 @@ function updatePreview(){
         "🛡️ STAFF";
 
     }else if(
-      profile.premium === true
+      premiumActive
     ){
 
       previewBadge.textContent =
@@ -744,6 +795,367 @@ function updatePreview(){
 
 }
 
+
+/* =========================================
+   LOAD USER
+========================================= */
+
+async function getCurrentUser(){
+
+  const {
+    data:{
+      user
+    },
+    error
+  } =
+  await supabaseClient.auth.getUser();
+
+
+  if(
+    error ||
+    !user
+  ){
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
+  }
+
+
+  currentUser =
+    user;
+
+
+  return user;
+
+}
+
+
+/* =========================================
+   BUILD PREMIUM AREAS
+========================================= */
+
+function buildPremiumAreas(){
+
+  premiumActive =
+    isPremiumActive();
+
+
+  updatePreview();
+
+
+  if(premiumActive){
+
+    premiumNotice.className =
+      "premium-active";
+
+    premiumNotice.textContent =
+      profile.premium_status === "trial"
+        ? "✨ Your 5-day Premium trial is active."
+        : "💎 Premium is active on your account.";
+
+
+    musicArea.innerHTML = `
+
+      <input
+        type="file"
+        id="musicInput"
+        accept="audio/mpeg,audio/mp3,audio/wav,audio/ogg,audio/webm"
+      >
+
+      <div class="help">
+        Maximum 10 MB.
+      </div>
+
+    `;
+
+
+    wallpaperArea.innerHTML = `
+
+      <input
+        type="file"
+        id="wallpaperInput"
+        accept="video/mp4,video/webm"
+      >
+
+      <div class="help">
+        Maximum 25 MB.
+      </div>
+
+    `;
+
+
+    connectMusicInput();
+    connectWallpaperInput();
+
+
+  }else{
+
+    premiumNotice.className =
+      "locked";
+
+    premiumNotice.innerHTML = `
+
+      💎 Premium customization is locked.
+
+      <br><br>
+
+      Start the 5-day trial from the Premium page
+      to unlock colours, fonts, music and live wallpaper.
+
+    `;
+
+
+    musicArea.innerHTML = `
+
+      <div class="locked">
+
+        🎵 Profile music is locked.
+
+        <br><br>
+
+        <a
+          href="premium.html"
+          style="
+            color:#b52270;
+            font-weight:bold;
+            text-decoration:none;
+          "
+        >
+          💎 Open Premium
+        </a>
+
+      </div>
+
+    `;
+
+
+    wallpaperArea.innerHTML = `
+
+      <div class="locked">
+
+        🎬 Live wallpaper is locked.
+
+        <br><br>
+
+        <a
+          href="premium.html"
+          style="
+            color:#b52270;
+            font-weight:bold;
+            text-decoration:none;
+          "
+        >
+          💎 Open Premium
+        </a>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================
+   MUSIC INPUT
+========================================= */
+
+function connectMusicInput(){
+
+  const musicInput =
+    document.getElementById(
+      "musicInput"
+    );
+
+
+  if(!musicInput){
+    return;
+  }
+
+
+  musicInput.addEventListener(
+    "change",
+    function(){
+
+      selectedMusic =
+        musicInput.files[0] ||
+        null;
+
+
+      if(!selectedMusic){
+        return;
+      }
+
+
+      if(
+        selectedMusic.size >
+        10 * 1024 * 1024
+      ){
+
+        showStatus(
+          "❌ Music must be 10 MB or smaller.",
+          "error"
+        );
+
+        musicInput.value =
+          "";
+
+        selectedMusic =
+          null;
+
+        return;
+
+      }
+
+
+      const url =
+        URL.createObjectURL(
+          selectedMusic
+        );
+
+
+      previewAudioBox.innerHTML = `
+
+        <audio
+          class="preview-audio"
+          src="${url}"
+          controls
+        ></audio>
+
+      `;
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   WALLPAPER INPUT
+========================================= */
+
+function connectWallpaperInput(){
+
+  const wallpaperInput =
+    document.getElementById(
+      "wallpaperInput"
+    );
+
+
+  if(!wallpaperInput){
+    return;
+  }
+
+
+  wallpaperInput.addEventListener(
+    "change",
+    function(){
+
+      selectedWallpaper =
+        wallpaperInput.files[0] ||
+        null;
+
+
+      if(!selectedWallpaper){
+        return;
+      }
+
+
+      if(
+        selectedWallpaper.size >
+        25 * 1024 * 1024
+      ){
+
+        showStatus(
+          "❌ Wallpaper must be 25 MB or smaller.",
+          "error"
+        );
+
+        wallpaperInput.value =
+          "";
+
+        selectedWallpaper =
+          null;
+
+        return;
+
+      }
+
+
+      const oldVideo =
+        document.getElementById(
+          "previewWallpaper"
+        );
+
+
+      if(oldVideo){
+        oldVideo.remove();
+      }
+
+
+      const video =
+        document.createElement(
+          "video"
+        );
+
+
+      video.id =
+        "previewWallpaper";
+
+      video.src =
+        URL.createObjectURL(
+          selectedWallpaper
+        );
+
+      video.autoplay =
+        true;
+
+      video.loop =
+        true;
+
+      video.muted =
+        true;
+
+      video.playsInline =
+        true;
+
+
+      video.style.position =
+        "absolute";
+
+      video.style.inset =
+        "0";
+
+      video.style.width =
+        "100%";
+
+      video.style.height =
+        "100%";
+
+      video.style.objectFit =
+        "cover";
+
+      video.style.zIndex =
+        "0";
+
+
+      preview.prepend(
+        video
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   COLOR EVENTS
+========================================= */
 
 themeColor.addEventListener(
   "input",
@@ -795,6 +1207,8 @@ async function loadProfile(){
       role,
       badge,
       premium,
+      premium_status,
+      trial_started_at,
       avatar_url,
       profile_music_url,
       profile_wallpaper_url,
@@ -835,17 +1249,21 @@ async function loadProfile(){
     profile.username ||
     "TeenSpace User";
 
+
   themeColor.value =
     profile.theme_color ||
     "#6c5ce7";
+
 
   nameColor.value =
     profile.name_color ||
     "#5f4ce0";
 
+
   messageColor.value =
     profile.message_color ||
     "#eeeaff";
+
 
   fontStyle.value =
     profile.font_style ||
@@ -855,247 +1273,7 @@ async function loadProfile(){
   updatePreview();
 
 
-  /* MUSIC */
-
-  if(profile.premium === true){
-
-    musicArea.innerHTML = `
-
-      <input
-        type="file"
-        id="musicInput"
-        accept="audio/mpeg,audio/mp3,audio/wav,audio/ogg,audio/webm"
-      >
-
-      <div class="help">
-        Maximum 10 MB.
-      </div>
-
-    `;
-
-
-    const musicInput =
-      document.getElementById(
-        "musicInput"
-      );
-
-
-    musicInput.addEventListener(
-      "change",
-      function(){
-
-        selectedMusic =
-          musicInput.files[0] ||
-          null;
-
-
-        if(!selectedMusic){
-          return;
-        }
-
-
-        if(
-          selectedMusic.size >
-          10 * 1024 * 1024
-        ){
-
-          showStatus(
-            "❌ Music must be 10 MB or smaller.",
-            "error"
-          );
-
-          musicInput.value =
-            "";
-
-          selectedMusic =
-            null;
-
-          return;
-
-        }
-
-
-        const url =
-          URL.createObjectURL(
-            selectedMusic
-          );
-
-
-        previewAudioBox.innerHTML = `
-
-          <audio
-            class="preview-audio"
-            src="${url}"
-            controls
-          ></audio>
-
-        `;
-
-      }
-    );
-
-
-  }else{
-
-    musicArea.innerHTML = `
-
-      <div class="locked">
-
-        💎 Profile music is a Premium feature.
-
-        <br><br>
-
-        Visit the Premium page to learn about
-        the 5-day trial.
-
-      </div>
-
-    `;
-
-  }
-
-
-  /* WALLPAPER */
-
-  if(profile.premium === true){
-
-    wallpaperArea.innerHTML = `
-
-      <input
-        type="file"
-        id="wallpaperInput"
-        accept="video/mp4,video/webm"
-      >
-
-      <div class="help">
-        Maximum 25 MB.
-      </div>
-
-    `;
-
-
-    const wallpaperInput =
-      document.getElementById(
-        "wallpaperInput"
-      );
-
-
-    wallpaperInput.addEventListener(
-      "change",
-      function(){
-
-        selectedWallpaper =
-          wallpaperInput.files[0] ||
-          null;
-
-
-        if(!selectedWallpaper){
-          return;
-        }
-
-
-        if(
-          selectedWallpaper.size >
-          25 * 1024 * 1024
-        ){
-
-          showStatus(
-            "❌ Wallpaper must be 25 MB or smaller.",
-            "error"
-          );
-
-          wallpaperInput.value =
-            "";
-
-          selectedWallpaper =
-            null;
-
-          return;
-
-        }
-
-
-        const oldVideo =
-          document.getElementById(
-            "previewWallpaper"
-          );
-
-
-        if(oldVideo){
-          oldVideo.remove();
-        }
-
-
-        const video =
-          document.createElement(
-            "video"
-          );
-
-
-        video.id =
-          "previewWallpaper";
-
-        video.src =
-          URL.createObjectURL(
-            selectedWallpaper
-          );
-
-        video.autoplay =
-          true;
-
-        video.loop =
-          true;
-
-        video.muted =
-          true;
-
-        video.playsInline =
-          true;
-
-
-        video.style.position =
-          "absolute";
-
-        video.style.inset =
-          "0";
-
-        video.style.width =
-          "100%";
-
-        video.style.height =
-          "100%";
-
-        video.style.objectFit =
-          "cover";
-
-        video.style.zIndex =
-          "0";
-
-
-        preview.prepend(video);
-
-      }
-    );
-
-
-  }else{
-
-    wallpaperArea.innerHTML = `
-
-      <div class="locked">
-
-        🎬 Live wallpaper is a Premium feature.
-
-        <br><br>
-
-        Visit the Premium page to learn about
-        the 5-day trial.
-
-      </div>
-
-    `;
-
-  }
+  buildPremiumAreas();
 
 }
 
@@ -1155,7 +1333,7 @@ avatarInput.addEventListener(
 
 
 /* =========================================
-   UPLOAD
+   UPLOAD FILE
 ========================================= */
 
 async function uploadFile(
@@ -1231,6 +1409,43 @@ saveButton.addEventListener(
 
     try{
 
+      /* Re-check status before saving */
+
+      const {
+        data:latestProfile,
+        error:latestError
+      } =
+      await supabaseClient
+
+        .from("profiles")
+
+        .select(
+          "premium,premium_status,trial_started_at"
+        )
+
+        .eq(
+          "user-id",
+          currentUser.id
+        )
+
+        .maybeSingle();
+
+
+      if(latestError){
+        throw latestError;
+      }
+
+
+      profile = {
+        ...profile,
+        ...latestProfile
+      };
+
+
+      premiumActive =
+        isPremiumActive();
+
+
       let avatarPath =
         profile.avatar_url ||
         null;
@@ -1244,6 +1459,8 @@ saveButton.addEventListener(
         null;
 
 
+      /* AVATAR IS ALWAYS ALLOWED */
+
       if(selectedAvatar){
 
         avatarPath =
@@ -1256,7 +1473,9 @@ saveButton.addEventListener(
       }
 
 
-      if(profile.premium === true){
+      /* PREMIUM FILES */
+
+      if(premiumActive){
 
         if(selectedMusic){
 
@@ -1281,6 +1500,20 @@ saveButton.addEventListener(
 
         }
 
+
+      }else{
+
+        /*
+          Do not save Premium extras
+          for Free/expired accounts.
+        */
+
+        musicPath =
+          null;
+
+        wallpaperPath =
+          null;
+
       }
 
 
@@ -1303,16 +1536,24 @@ saveButton.addEventListener(
             wallpaperPath,
 
           font_style:
-            fontStyle.value,
+            premiumActive
+              ? fontStyle.value
+              : "Arial",
 
           theme_color:
-            themeColor.value,
+            premiumActive
+              ? themeColor.value
+              : "#6c5ce7",
 
           name_color:
-            nameColor.value,
+            premiumActive
+              ? nameColor.value
+              : "#5f4ce0",
 
           message_color:
-            messageColor.value
+            premiumActive
+              ? messageColor.value
+              : "#eeeaff"
 
         })
 
@@ -1336,21 +1577,11 @@ saveButton.addEventListener(
       profile.profile_wallpaper_url =
         wallpaperPath;
 
-      profile.font_style =
-        fontStyle.value;
-
-      profile.theme_color =
-        themeColor.value;
-
-      profile.name_color =
-        nameColor.value;
-
-      profile.message_color =
-        messageColor.value;
-
 
       showStatus(
-        "✅ Customization saved!",
+        premiumActive
+          ? "✅ Customization saved!"
+          : "✅ Profile saved! Premium extras stay locked.",
         "success"
       );
 
