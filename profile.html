@@ -4,13 +4,12 @@
 <head>
 
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>TeenSpace - My Profile</title>
+  <title>My Profile | TeenSpace 🌍</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -24,109 +23,284 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #f4f7ff;
-      padding: 25px 15px;
+      background:
+        radial-gradient(circle at top left, #eee8ff 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #e0f2ff 0%, transparent 35%),
+        #f4f7ff;
       color: #222;
     }
 
-    .box {
-      max-width: 550px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 22px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    header {
+      background: #6c5ce7;
+      color: white;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    h1 {
-      text-align: center;
-      color: #6c5ce7;
-      margin-bottom: 8px;
-    }
-
-    .welcome {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
-    }
-
-    .profile {
-      background: #f8f7ff;
-      padding: 22px;
-      border-radius: 16px;
-    }
-
-    .field {
-      margin-bottom: 20px;
-    }
-
-    .label {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 6px;
-    }
-
-    .value {
-      font-size: 18px;
+    .logo {
+      font-size: 28px;
       font-weight: bold;
-      color: #222;
-      word-break: break-word;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 16px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      width: 92%;
+      max-width: 850px;
+      margin: 45px auto 60px;
+    }
+
+    .profile-card {
+      background: white;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 15px 45px rgba(70, 50, 150, 0.15);
+    }
+
+    .cover {
+      min-height: 220px;
+      padding: 35px 30px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.35), transparent 24%),
+        radial-gradient(circle at 80% 15%, rgba(255,255,255,.25), transparent 24%),
+        linear-gradient(135deg, #6c5ce7, #8e74ff, #5b8def);
+      color: white;
+      position: relative;
+    }
+
+    .founder-label {
+      display: inline-block;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: bold;
+      backdrop-filter: blur(8px);
+    }
+
+    .cover h1 {
+      margin: 28px 0 8px;
+      font-size: 44px;
+      line-height: 1.05;
+    }
+
+    .cover p {
+      margin: 0;
+      font-size: 18px;
+      opacity: .95;
+    }
+
+    .profile-body {
+      padding: 30px;
+    }
+
+    .identity {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-top: -80px;
+      position: relative;
+    }
+
+    .avatar {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fff, #eee8ff);
+      border: 7px solid white;
+      box-shadow: 0 10px 25px rgba(0,0,0,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 58px;
+      flex-shrink: 0;
+    }
+
+    .identity-text {
+      padding-top: 60px;
+    }
+
+    .username {
+      font-size: 32px;
+      font-weight: 800;
+      color: #5f4ce0;
+    }
+
+    .handle {
+      color: #777;
+      margin-top: 5px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .owner-badge {
+      background: #fff0b3;
+      color: #9a7000;
+    }
+
+    .premium-badge {
+      background: #ffe0f0;
+      color: #bb2170;
+    }
+
+    .verified-badge {
+      background: #e1f7ff;
+      color: #087ea4;
+    }
+
+    .staff-badge {
+      background: #e4f1ff;
+      color: #1769aa;
+    }
+
+    .user-badge {
+      background: #eeeaff;
+      color: #5f4ce0;
+    }
+
+    .intro {
+      margin-top: 28px;
+      padding: 22px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #faf9ff, #f1efff);
+      border: 1px solid #e4defd;
+    }
+
+    .intro-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #7568b7;
+      margin-bottom: 9px;
+      letter-spacing: .5px;
+    }
+
+    .bio {
+      font-size: 19px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      color: #333;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e7e4f7;
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 25px;
+      font-weight: 800;
+      color: #5f4ce0;
+    }
+
+    .stat-label {
+      color: #777;
+      margin-top: 5px;
+      font-size: 13px;
+    }
+
+    .edit-section {
+      margin-top: 28px;
+      background: #fafaff;
+      border-radius: 22px;
+      padding: 22px;
+      border: 1px solid #e8e5f6;
+    }
+
+    .edit-title {
+      color: #5f4ce0;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 14px;
     }
 
     textarea {
       width: 100%;
-      min-height: 110px;
-      padding: 13px;
+      min-height: 135px;
+      padding: 15px;
       border: 1px solid #ccc;
-      border-radius: 11px;
+      border-radius: 14px;
       resize: vertical;
-      font-size: 16px;
+      font-size: 17px;
       outline: none;
     }
 
     textarea:focus {
       border-color: #6c5ce7;
+      box-shadow: 0 0 0 3px rgba(108,92,231,.10);
     }
 
-    button,
-    .link-button {
-      display: block;
+    .save-button,
+    .home-button,
+    .logout-button {
       width: 100%;
-      padding: 14px;
-      margin-top: 15px;
+      display: block;
+      padding: 16px;
+      margin-top: 14px;
       border: none;
-      border-radius: 11px;
-      background: #6c5ce7;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 14px;
       text-align: center;
       text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover,
-    .link-button:hover {
-      background: #5849c4;
+    .save-button {
+      background: #6c5ce7;
+      color: white;
     }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+    .save-button:hover {
+      background: #5747cf;
     }
 
-    .logout {
-      background: #e74c3c;
+    .home-button {
+      background: #eeeaff;
+      color: #5f4ce0;
     }
 
-    .logout:hover {
-      background: #c0392b;
+    .logout-button {
+      background: #ffe4e8;
+      color: #c53350;
     }
 
     #message {
-      text-align: center;
-      margin: 15px 0;
       min-height: 24px;
+      margin-top: 15px;
+      text-align: center;
       line-height: 1.5;
     }
 
@@ -135,7 +309,69 @@
     }
 
     .error {
-      color: #e74c3c;
+      color: #d63050;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6c5ce7;
+      font-size: 20px;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media (max-width: 700px) {
+
+      header {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      nav a {
+        margin: 4px 6px;
+        display: inline-block;
+      }
+
+      .cover {
+        min-height: 200px;
+        padding: 25px 20px;
+      }
+
+      .cover h1 {
+        font-size: 34px;
+      }
+
+      .identity {
+        align-items: flex-start;
+      }
+
+      .avatar {
+        width: 95px;
+        height: 95px;
+        font-size: 44px;
+      }
+
+      .identity-text {
+        padding-top: 58px;
+      }
+
+      .username {
+        font-size: 25px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-body {
+        padding: 22px;
+      }
     }
 
   </style>
@@ -146,125 +382,224 @@
 <body>
 
 
-<div class="box">
+<header>
 
-  <h1>
-    👤 My TeenSpace Profile
-  </h1>
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
 
-  <p class="welcome">
-    Your TeenSpace profile 🌍
-  </p>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="explore.html">Explore</a>
+    <a href="community.html">Community</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+
+</header>
 
 
-  <div id="message">
-    Loading profile...
+<main class="page">
+
+  <div id="loading" class="loading">
+    Loading your profile...
   </div>
 
 
-  <div
-    class="profile"
-    id="profileBox"
+  <section
+    id="profileCard"
+    class="profile-card"
     style="display:none;"
   >
 
+    <div class="cover">
 
-    <div class="field">
-
-      <div class="label">
-        Username
+      <div id="founderLabel" class="founder-label">
+        🌍 TeenSpace Member
       </div>
 
-      <div
-        class="value"
-        id="username"
-      ></div>
+      <h1 id="coverTitle">
+        My TeenSpace
+      </h1>
+
+      <p id="coverSubtitle">
+        Welcome to your profile.
+      </p>
 
     </div>
 
 
-    <div class="field">
+    <div class="profile-body">
 
-      <div class="label">
-        Country
+
+      <div class="identity">
+
+        <div
+          id="avatar"
+          class="avatar"
+        >
+          👤
+        </div>
+
+
+        <div class="identity-text">
+
+          <div
+            id="username"
+            class="username"
+          >
+            TeenSpace User
+          </div>
+
+          <div
+            id="handle"
+            class="handle"
+          >
+            @user
+          </div>
+
+
+          <div
+            id="badges"
+            class="badges"
+          ></div>
+
+        </div>
+
       </div>
 
-      <div
-        class="value"
-        id="country"
-      ></div>
+
+      <div class="intro">
+
+        <div class="intro-title">
+          ABOUT
+        </div>
+
+        <div
+          id="bioDisplay"
+          class="bio"
+        >
+          No bio yet.
+        </div>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <div
+            id="postCount"
+            class="stat-number"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            Posts
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div
+            id="countryDisplay"
+            class="stat-number"
+          >
+            🌍
+          </div>
+
+          <div class="stat-label">
+            Country
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div
+            id="joinDate"
+            class="stat-number"
+          >
+            —
+          </div>
+
+          <div class="stat-label">
+            Joined
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="edit-section">
+
+        <div class="edit-title">
+          ✨ Edit Your Bio
+        </div>
+
+        <textarea
+          id="bioInput"
+          maxlength="300"
+          placeholder="Tell the TeenSpace community about yourself..."
+        ></textarea>
+
+        <button
+          id="saveButton"
+          class="save-button"
+        >
+          Save Profile 💾
+        </button>
+
+        <div id="message"></div>
+
+      </div>
+
+
+      <a
+        href="home.html"
+        class="home-button"
+      >
+        🏠 Back Home
+      </a>
+
+
+      <button
+        id="logoutButton"
+        class="logout-button"
+      >
+        Log Out
+      </button>
+
 
     </div>
 
+  </section>
 
-    <div class="field">
-
-      <div class="label">
-        Email
-      </div>
-
-      <div
-        class="value"
-        id="email"
-      ></div>
-
-    </div>
+</main>
 
 
-    <div class="field">
+<footer>
 
-      <div class="label">
-        Bio
-      </div>
+  © 2026 TeenSpace 🌍 |
+  Made for teens, with safety in mind.
 
-      <textarea
-        id="bio"
-        maxlength="150"
-        placeholder="Tell the TeenSpace community about your interests..."
-      ></textarea>
-
-    </div>
-
-
-    <button id="saveButton">
-      Save Profile 💾
-    </button>
-
-
-  </div>
-
-
-  <!-- IMPORTANT: HOME = home.html -->
-
-  <a
-    class="link-button"
-    href="home.html"
-  >
-    🏠 Home
-  </a>
-
-
-  <button
-    class="logout"
-    id="logoutButton"
-  >
-    Log Out
-  </button>
-
-
-</div>
+</footer>
 
 
 <script>
 
 
-// ==========================================
-// SUPABASE
-// ==========================================
+/* =========================================
+   SUPABASE
+========================================= */
 
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
-
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
@@ -277,48 +612,114 @@ const supabaseClient =
   );
 
 
-// ==========================================
-// ELEMENTS
-// ==========================================
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loading =
+  document.getElementById("loading");
+
+const profileCard =
+  document.getElementById("profileCard");
+
+const usernameElement =
+  document.getElementById("username");
+
+const handleElement =
+  document.getElementById("handle");
+
+const avatarElement =
+  document.getElementById("avatar");
+
+const badgesElement =
+  document.getElementById("badges");
+
+const founderLabel =
+  document.getElementById("founderLabel");
+
+const coverTitle =
+  document.getElementById("coverTitle");
+
+const coverSubtitle =
+  document.getElementById("coverSubtitle");
+
+const bioDisplay =
+  document.getElementById("bioDisplay");
+
+const bioInput =
+  document.getElementById("bioInput");
+
+const countryDisplay =
+  document.getElementById("countryDisplay");
+
+const postCount =
+  document.getElementById("postCount");
+
+const joinDate =
+  document.getElementById("joinDate");
+
+const saveButton =
+  document.getElementById("saveButton");
+
+const logoutButton =
+  document.getElementById("logoutButton");
 
 const message =
   document.getElementById("message");
 
 
-const profileBox =
-  document.getElementById("profileBox");
-
-
-const username =
-  document.getElementById("username");
-
-
-const country =
-  document.getElementById("country");
-
-
-const email =
-  document.getElementById("email");
-
-
-const bio =
-  document.getElementById("bio");
-
-
-const saveButton =
-  document.getElementById("saveButton");
-
-
-const logoutButton =
-  document.getElementById("logoutButton");
-
-
 let currentUser = null;
+let currentUsername = null;
 
 
-// ==========================================
-// LOAD PROFILE
-// ==========================================
+/* =========================================
+   HELPERS
+========================================= */
+
+function showMessage(text, type) {
+
+  message.className = type;
+
+  message.textContent = text;
+
+}
+
+
+function escapeHTML(value) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    value ?? "";
+
+  return div.innerHTML;
+
+}
+
+
+function formatJoinDate(dateString) {
+
+  if (!dateString) {
+    return "—";
+  }
+
+  return new Date(
+    dateString
+  ).toLocaleDateString(
+    undefined,
+    {
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+/* =========================================
+   LOAD PROFILE
+========================================= */
 
 async function loadProfile() {
 
@@ -328,29 +729,18 @@ async function loadProfile() {
       data: {
         user
       },
-      error: userError
+      error: authError
     } =
-      await supabaseClient.auth.getUser();
+    await supabaseClient.auth.getUser();
 
 
     if (
-      userError ||
+      authError ||
       !user
     ) {
 
-      message.className =
-        "error";
-
-      message.textContent =
-        "❌ Please log in first.";
-
-      setTimeout(
-        () => {
-          window.location.href =
-            "login.html";
-        },
-        1200
-      );
+      window.location.href =
+        "login.html";
 
       return;
 
@@ -361,72 +751,284 @@ async function loadProfile() {
       user;
 
 
-    // ======================================
-    // USER INFORMATION
-    // ======================================
+    /*
+      Get username from Supabase Auth metadata.
+      Your current setup already uses this.
+    */
 
-    username.textContent =
+    currentUsername =
       user.user_metadata?.username ||
-      "No username";
+      "";
 
 
-    country.textContent =
-      user.user_metadata?.country ||
-      "No country";
+    if (!currentUsername) {
+
+      showMessage(
+        "Your account does not have a username yet.",
+        "error"
+      );
+
+      loading.style.display =
+        "none";
+
+      profileCard.style.display =
+        "block";
+
+      return;
+
+    }
 
 
-    email.textContent =
-      user.email ||
-      "No email";
-
-
-    // ======================================
-    // LOAD PROFILE USING user-id
-    // ======================================
+    /* =======================================
+       GET PROFILE
+    ======================================= */
 
     const {
       data: profile,
       error: profileError
     } =
-      await supabaseClient
+    await supabaseClient
 
-        .from("profiles")
+      .from("profiles")
 
-        .select(
-          '"user-id", bio'
-        )
+      .select(
+        "username, country, bio, role, badge, theme, premium"
+      )
 
-        .eq(
-          '"user-id"',
-          user.id
-        )
+      .eq(
+        "username",
+        currentUsername
+      )
 
-        .maybeSingle();
+      .maybeSingle();
 
 
     if (profileError) {
 
       console.error(
-        "Profile loading error:",
+        "Profile error:",
         profileError
       );
 
-    }
-
-
-    if (profile) {
-
-      bio.value =
-        profile.bio ||
-        "";
+      throw profileError;
 
     }
 
 
-    message.textContent =
+    const safeUsername =
+      profile?.username ||
+      currentUsername ||
+      "TeenSpace User";
+
+
+    const country =
+      profile?.country ||
+      "Not set";
+
+
+    const bio =
+      profile?.bio ||
       "";
 
-    profileBox.style.display =
+
+    const role =
+      profile?.role ||
+      "user";
+
+
+    const badge =
+      profile?.badge ||
+      "";
+
+
+    const isPremium =
+      profile?.premium === true;
+
+
+    /* =======================================
+       BASIC INFO
+    ======================================= */
+
+    usernameElement.textContent =
+      safeUsername;
+
+    handleElement.textContent =
+      "@" +
+      safeUsername.toLowerCase()
+        .replace(/\s+/g, "_");
+
+
+    bioDisplay.textContent =
+      bio ||
+      "No bio yet.";
+
+
+    bioInput.value =
+      bio;
+
+
+    countryDisplay.textContent =
+      country === "Not set"
+        ? "🌍"
+        : country;
+
+
+    joinDate.textContent =
+      formatJoinDate(
+        user.created_at
+      );
+
+
+    /* =======================================
+       AVATAR
+    ======================================= */
+
+    if (role === "owner") {
+
+      avatarElement.textContent =
+        "👑";
+
+    } else if (role === "staff") {
+
+      avatarElement.textContent =
+        "🛡️";
+
+    } else {
+
+      avatarElement.textContent =
+        "👤";
+
+    }
+
+
+    /* =======================================
+       BADGES
+    ======================================= */
+
+    badgesElement.innerHTML =
+      "";
+
+
+    if (role === "owner") {
+
+      badgesElement.innerHTML += `
+        <span class="badge owner-badge">
+          👑 ${escapeHTML(
+            badge || "TeenSpace Founder"
+          )}
+        </span>
+      `;
+
+    } else if (role === "staff") {
+
+      badgesElement.innerHTML += `
+        <span class="badge staff-badge">
+          🛡️ STAFF
+        </span>
+      `;
+
+    } else {
+
+      badgesElement.innerHTML += `
+        <span class="badge user-badge">
+          👤 MEMBER
+        </span>
+      `;
+
+    }
+
+
+    if (isPremium) {
+
+      badgesElement.innerHTML += `
+        <span class="badge premium-badge">
+          💎 PREMIUM
+        </span>
+      `;
+
+    }
+
+
+    if (role === "owner") {
+
+      badgesElement.innerHTML += `
+        <span class="badge verified-badge">
+          ✅ VERIFIED OWNER
+        </span>
+      `;
+
+      founderLabel.textContent =
+        "👑 TeenSpace Founder";
+
+      coverTitle.textContent =
+        "Welcome, Founder";
+
+      coverSubtitle.textContent =
+        "Building TeenSpace for teens around the world 🌍";
+
+    } else if (role === "staff") {
+
+      founderLabel.textContent =
+        "🛡️ TeenSpace Staff";
+
+      coverTitle.textContent =
+        "Welcome, Staff Member";
+
+      coverSubtitle.textContent =
+        "Helping keep TeenSpace welcoming and safe.";
+
+    } else {
+
+      founderLabel.textContent =
+        "🌍 TeenSpace Member";
+
+      coverTitle.textContent =
+        "My TeenSpace";
+
+      coverSubtitle.textContent =
+        "Your profile, your space.";
+
+    }
+
+
+    /* =======================================
+       LOAD POST COUNT
+    ======================================= */
+
+    const {
+      count,
+      error: countError
+    } =
+    await supabaseClient
+
+      .from("posts")
+
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+
+      .eq(
+        "user_id",
+        user.id
+      );
+
+
+    if (!countError) {
+
+      postCount.textContent =
+        count ?? 0;
+
+    }
+
+
+    loading.style.display =
+      "none";
+
+    profileCard.style.display =
       "block";
 
 
@@ -434,28 +1036,44 @@ async function loadProfile() {
 
     console.error(error);
 
-    message.className =
-      "error";
+    loading.style.display =
+      "none";
 
-    message.textContent =
-      "❌ Could not load your profile.";
+    profileCard.style.display =
+      "block";
+
+    showMessage(
+      "❌ Could not load your profile.",
+      "error"
+    );
 
   }
 
 }
 
 
-// ==========================================
-// SAVE PROFILE
-// ==========================================
+/* =========================================
+   SAVE BIO
+========================================= */
 
 saveButton.addEventListener(
   "click",
   async function() {
 
-    if (!currentUser) {
+    if (!currentUsername) {
+
+      showMessage(
+        "No username found.",
+        "error"
+      );
+
       return;
+
     }
+
+
+    const newBio =
+      bioInput.value.trim();
 
 
     saveButton.disabled =
@@ -465,70 +1083,56 @@ saveButton.addEventListener(
       "Saving...";
 
 
-    message.textContent =
-      "";
-
-
     try {
 
       const {
         error
       } =
-        await supabaseClient
+      await supabaseClient
 
-          .from("profiles")
+        .from("profiles")
 
-          .upsert(
+        .update({
 
-            {
-              "user-id":
-                currentUser.id,
+          bio:
+            newBio
 
-              bio:
-                bio.value.trim()
-            },
+        })
 
-            {
-              onConflict:
-                "user-id"
-            }
-
-          );
+        .eq(
+          "username",
+          currentUsername
+        );
 
 
       if (error) {
 
-        console.error(
-          "Save profile error:",
-          error
-        );
+        console.error(error);
 
-        message.className =
-          "error";
-
-        message.textContent =
-          "❌ Could not save your bio.";
-
-      } else {
-
-        message.className =
-          "success";
-
-        message.textContent =
-          "✅ Profile saved!";
+        throw error;
 
       }
+
+
+      bioDisplay.textContent =
+        newBio ||
+        "No bio yet.";
+
+
+      showMessage(
+        "✅ Profile saved!",
+        "success"
+      );
 
 
     } catch (error) {
 
       console.error(error);
 
-      message.className =
-        "error";
-
-      message.textContent =
-        "❌ Something went wrong.";
+      showMessage(
+        "❌ Could not save your profile.",
+        "error"
+      );
 
     }
 
@@ -543,9 +1147,9 @@ saveButton.addEventListener(
 );
 
 
-// ==========================================
-// LOG OUT
-// ==========================================
+/* =========================================
+   LOG OUT
+========================================= */
 
 logoutButton.addEventListener(
   "click",
@@ -562,20 +1166,19 @@ logoutButton.addEventListener(
 
 
     window.location.href =
-      "login.html";
+      "index.html";
 
   }
 );
 
 
-// ==========================================
-// START
-// ==========================================
+/* =========================================
+   START
+========================================= */
 
 loadProfile();
 
 </script>
-
 
 </body>
 </html>
