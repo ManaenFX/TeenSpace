@@ -1,351 +1,475 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>TeenSpace - Explore</title>
+  <title>Explore TeenSpace</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       background: #f4f7ff;
-      padding: 25px 15px;
+      font-family: Arial, sans-serif;
+      color: #222;
     }
 
-    .box {
-      max-width: 700px;
-      margin: auto;
+    .container {
+      width: min(1050px, 92%);
+      margin: 0 auto;
+      padding: 35px 0 60px;
     }
 
     h1 {
       text-align: center;
-      color: #6c5ce7;
-      margin-bottom: 5px;
+      color: #6655df;
+      font-size: 48px;
+      margin: 0 0 10px;
     }
 
-    .intro {
+    .subtitle {
       text-align: center;
-      color: #666;
-      margin-bottom: 25px;
+      font-size: 22px;
+      color: #555;
+      margin-bottom: 40px;
     }
 
-    .search-area {
+    .search-box {
       background: white;
-      padding: 20px;
-      border-radius: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      margin-bottom: 30px;
     }
 
     input,
     select {
       width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    .profile-card {
-      background: white;
-      padding: 20px;
+      padding: 18px;
       margin-bottom: 15px;
-      border-radius: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
-
-    .username {
-      font-size: 21px;
-      font-weight: bold;
-      color: #6c5ce7;
-    }
-
-    .country {
-      margin-top: 7px;
-      color: #555;
-    }
-
-    .bio {
-      margin-top: 12px;
-      color: #333;
-      line-height: 1.5;
-    }
-
-    .empty {
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      font-size: 20px;
+      outline: none;
       background: white;
-      padding: 25px;
-      border-radius: 18px;
-      text-align: center;
-      color: #666;
     }
 
-    .back {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      margin-top: 20px;
-      border-radius: 10px;
-      background: #6c5ce7;
-      color: white;
-      text-align: center;
-      text-decoration: none;
-      font-weight: bold;
+    input:focus,
+    select:focus {
+      border-color: #6655df;
     }
 
     #message {
       text-align: center;
-      margin: 15px 0;
+      font-size: 20px;
+      margin: 25px 0;
+    }
+
+    .error {
+      color: #ff3366;
+    }
+
+    .loading {
+      color: #6655df;
+    }
+
+    .profiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .profile-card {
+      background: white;
+      padding: 25px;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #eee8ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
+
+    .username {
+      font-size: 24px;
+      font-weight: bold;
+      color: #6655df;
+      margin-bottom: 8px;
+    }
+
+    .country {
+      font-size: 17px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .bio {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .empty {
+      text-align: center;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      color: #666;
+      font-size: 19px;
+    }
+
+    .home-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      background: #6655df;
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      font-size: 23px;
+      font-weight: bold;
+      margin-top: 35px;
+    }
+
+    .home-btn:hover {
+      background: #5747cc;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 34px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .search-box {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="box">
+  <div class="container">
 
-  <h1>🌍 Explore TeenSpace</h1>
+    <h1>🌍 Explore TeenSpace</h1>
 
-  <p class="intro">
-    Discover people around the TeenSpace community.
-  </p>
+    <div class="subtitle">
+      Discover people around the TeenSpace community.
+    </div>
 
-  <div class="search-area">
+    <div class="search-box">
 
-    <input
-      type="text"
-      id="search"
-      placeholder="🔎 Search username..."
-    >
+      <input
+        type="text"
+        id="search"
+        placeholder="🔎 Search username..."
+      >
 
-    <select id="countryFilter">
-      <option value="">🌍 All countries</option>
-      <option value="Nigeria">🇳🇬 Nigeria</option>
-      <option value="Ghana">🇬🇭 Ghana</option>
-      <option value="Kenya">🇰🇪 Kenya</option>
-      <option value="South Africa">🇿🇦 South Africa</option>
-      <option value="United States">🇺🇸 United States</option>
-      <option value="United Kingdom">🇬🇧 United Kingdom</option>
-      <option value="Canada">🇨🇦 Canada</option>
-      <option value="India">🇮🇳 India</option>
-      <option value="Australia">🇦🇺 Australia</option>
-      <option value="Other">🌍 Other</option>
-    </select>
+      <select id="country">
+        <option value="">🌍 All countries</option>
+
+        <option>Nigeria</option>
+        <option>Ghana</option>
+        <option>South Africa</option>
+        <option>Kenya</option>
+        <option>Uganda</option>
+        <option>Tanzania</option>
+        <option>Rwanda</option>
+        <option>Egypt</option>
+        <option>Morocco</option>
+        <option>Algeria</option>
+        <option>Cameroon</option>
+        <option>Senegal</option>
+        <option>Zimbabwe</option>
+        <option>Zambia</option>
+
+        <option>United Kingdom</option>
+        <option>France</option>
+        <option>Germany</option>
+        <option>Italy</option>
+        <option>Spain</option>
+        <option>Portugal</option>
+        <option>Netherlands</option>
+        <option>Belgium</option>
+        <option>Switzerland</option>
+        <option>Sweden</option>
+        <option>Norway</option>
+        <option>Denmark</option>
+        <option>Finland</option>
+        <option>Ireland</option>
+        <option>Poland</option>
+        <option>Austria</option>
+        <option>Greece</option>
+        <option>Romania</option>
+
+        <option>United States</option>
+        <option>Canada</option>
+        <option>Mexico</option>
+        <option>Brazil</option>
+        <option>Argentina</option>
+
+        <option>India</option>
+        <option>China</option>
+        <option>Japan</option>
+        <option>South Korea</option>
+        <option>Australia</option>
+        <option>New Zealand</option>
+      </select>
+
+    </div>
+
+    <div id="message" class="loading">
+      Loading community...
+    </div>
+
+    <div id="profiles" class="profiles"></div>
+
+    <a href="index.html" class="home-btn">
+      🏠 Back Home
+    </a>
 
   </div>
 
-  <div id="message">
-    Loading community...
-  </div>
+  <script>
 
-  <div id="profiles"></div>
+    // =====================================================
+    // SUPABASE SETTINGS
+    // =====================================================
 
-  <a class="back" href="index.html">
-    🏠 Back Home
-  </a>
+    const SUPABASE_URL = "https://gcigveojqwwovitlwtxl.supabase.co/rest/v1/";
 
-</div>
-
-<script>
-
-  const SUPABASE_URL =
-    "https://gcigveojqwwovitlwtxl.supabase.co";
-
-  const SUPABASE_KEY =
-    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const SUPABASE_KEY = "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 
-  const profilesContainer =
-    document.getElementById("profiles");
+    // =====================================================
+    // CONNECT TO SUPABASE
+    // =====================================================
 
-  const message =
-    document.getElementById("message");
-
-  const search =
-    document.getElementById("search");
-
-  const countryFilter =
-    document.getElementById("countryFilter");
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
 
-  let allProfiles = [];
+    // =====================================================
+    // PAGE ELEMENTS
+    // =====================================================
+
+    const profilesContainer =
+      document.getElementById("profiles");
+
+    const message =
+      document.getElementById("message");
+
+    const searchInput =
+      document.getElementById("search");
+
+    const countrySelect =
+      document.getElementById("country");
 
 
-  async function loadProfiles() {
+    // =====================================================
+    // LOAD PROFILES
+    // =====================================================
 
-    message.textContent =
-      "Loading community...";
+    async function loadProfiles() {
 
+      message.className = "loading";
+      message.textContent = "Loading community...";
 
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("profiles")
-      .select("username, country, bio")
-      .order("created_at", {
-        ascending: false
-      });
+      profilesContainer.innerHTML = "";
 
+      try {
 
-    if (error) {
+        const { data, error } =
+          await supabaseClient
+            .from("profiles")
+            .select("username, country, bio")
+            .order("created_at", {
+              ascending: false
+            });
 
-      console.error(error);
+        if (error) {
+          console.error("Supabase error:", error);
+          throw error;
+        }
 
-      message.textContent =
-        "❌ Could not load the community.";
+        displayProfiles(data || []);
 
-      return;
+      } catch (error) {
+
+        console.error(error);
+
+        message.className = "error";
+        message.textContent =
+          "❌ Could not load the community.";
+
+      }
+
     }
 
 
-    allProfiles = data || [];
+    // =====================================================
+    // DISPLAY PROFILES
+    // =====================================================
 
-    displayProfiles(allProfiles);
-  }
+    function displayProfiles(profiles) {
 
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
 
-  function displayProfiles(profiles) {
+      const country =
+        countrySelect.value;
 
-    profilesContainer.innerHTML = "";
+      const filtered =
+        profiles.filter(profile => {
 
+          const username =
+            (profile.username || "")
+              .toLowerCase();
 
-    if (profiles.length === 0) {
+          const matchesUsername =
+            username.includes(search);
+
+          const matchesCountry =
+            !country ||
+            profile.country === country;
+
+          return (
+            matchesUsername &&
+            matchesCountry
+          );
+
+        });
+
 
       message.textContent = "";
 
-      profilesContainer.innerHTML = `
-        <div class="empty">
-          🔎 No profiles found.
-        </div>
-      `;
 
-      return;
-    }
+      if (filtered.length === 0) {
 
+        profilesContainer.innerHTML = `
+          <div class="empty">
+            🌍 No members found yet.
+          </div>
+        `;
 
-    message.textContent =
-      `${profiles.length} profile${profiles.length === 1 ? "" : "s"} found.`;
-
-
-    profiles.forEach(profile => {
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "profile-card";
+        return;
+      }
 
 
-      const username =
-        profile.username || "TeenSpace User";
+      filtered.forEach(profile => {
 
-      const country =
-        profile.country || "Unknown country";
+        const card =
+          document.createElement("div");
 
-      const bio =
-        profile.bio || "No bio yet.";
-
-
-      card.innerHTML = `
-        <div class="username">
-          👤 ${escapeHTML(username)}
-        </div>
-
-        <div class="country">
-          🌍 ${escapeHTML(country)}
-        </div>
-
-        <div class="bio">
-          ${escapeHTML(bio)}
-        </div>
-      `;
+        card.className =
+          "profile-card";
 
 
-      profilesContainer.appendChild(card);
+        const avatar =
+          document.createElement("div");
 
-    });
+        avatar.className =
+          "avatar";
 
-  }
+        avatar.textContent =
+          "👤";
 
-
-  function escapeHTML(text) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent =
-      text;
-
-    return div.innerHTML;
-  }
-
-
-  function filterProfiles() {
-
-    const searchText =
-      search.value
-        .trim()
-        .toLowerCase();
-
-    const selectedCountry =
-      countryFilter.value;
-
-
-    const filtered =
-      allProfiles.filter(profile => {
 
         const username =
-          (profile.username || "")
-            .toLowerCase();
+          document.createElement("div");
 
-        const matchesSearch =
-          username.includes(searchText);
+        username.className =
+          "username";
 
-        const matchesCountry =
-          !selectedCountry ||
-          profile.country === selectedCountry;
+        username.textContent =
+          profile.username || "TeenSpace Member";
 
-        return matchesSearch &&
-               matchesCountry;
+
+        const country =
+          document.createElement("div");
+
+        country.className =
+          "country";
+
+        country.textContent =
+          "🌍 " +
+          (profile.country || "Unknown country");
+
+
+        const bio =
+          document.createElement("div");
+
+        bio.className =
+          "bio";
+
+        bio.textContent =
+          profile.bio ||
+          "No bio yet.";
+
+
+        card.appendChild(avatar);
+        card.appendChild(username);
+        card.appendChild(country);
+        card.appendChild(bio);
+
+        profilesContainer.appendChild(card);
 
       });
 
-
-    displayProfiles(filtered);
-  }
+    }
 
 
-  search.addEventListener(
-    "input",
-    filterProfiles
-  );
+    // =====================================================
+    // SEARCH
+    // =====================================================
 
-  countryFilter.addEventListener(
-    "change",
-    filterProfiles
-  );
+    searchInput.addEventListener(
+      "input",
+      loadProfiles
+    );
+
+    countrySelect.addEventListener(
+      "change",
+      loadProfiles
+    );
 
 
-  loadProfiles();
+    // =====================================================
+    // START
+    // =====================================================
 
-</script>
+    loadProfiles();
+
+  </script>
 
 </body>
 </html>
