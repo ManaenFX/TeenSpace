@@ -48,7 +48,7 @@
         .hero {
             background: white;
             text-align: center;
-            padding: 55px 20px;
+            padding: 55px 20px 35px;
         }
 
         .hero h1 {
@@ -63,35 +63,54 @@
             line-height: 1.5;
         }
 
-        .community {
+        /* BIG CREATE POST AREA */
+
+        .post-area {
             width: 92%;
             max-width: 900px;
-            margin: 40px auto;
-        }
-
-        /* CREATE POST */
-
-        .create-post {
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             text-align: center;
-            margin-bottom: 30px;
         }
 
-        .create-post a {
-            display: inline-block;
+        .post-area h2 {
+            color: #6c5ce7;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .post-area p {
+            color: #666;
+            margin-bottom: 22px;
+            font-size: 17px;
+        }
+
+        .create-post-button {
+            display: block;
+            width: 100%;
             background: #6c5ce7;
             color: white;
             text-decoration: none;
-            padding: 16px 30px;
-            border-radius: 12px;
-            font-size: 20px;
+            padding: 20px;
+            border-radius: 14px;
+            font-size: 23px;
             font-weight: bold;
             box-shadow: 0 6px 18px rgba(108,92,231,0.25);
             transition: 0.2s;
         }
 
-        .create-post a:hover {
+        .create-post-button:hover {
             background: #5849c4;
             transform: translateY(-2px);
+        }
+
+        .community {
+            width: 92%;
+            max-width: 900px;
+            margin: 30px auto 50px;
         }
 
         .notice {
@@ -113,6 +132,7 @@
         .topic h3 {
             color: #6c5ce7;
             margin-bottom: 10px;
+            font-size: 23px;
         }
 
         .topic p {
@@ -125,7 +145,7 @@
             background: #6c5ce7;
             color: white;
             border: none;
-            padding: 11px 20px;
+            padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
@@ -140,7 +160,6 @@
             color: white;
             text-align: center;
             padding: 25px;
-            margin-top: 40px;
         }
 
         @media (max-width: 700px) {
@@ -159,9 +178,12 @@
                 font-size: 34px;
             }
 
-            .create-post a {
-                width: 100%;
-                padding: 16px;
+            .post-area {
+                padding: 22px;
+            }
+
+            .create-post-button {
+                font-size: 20px;
             }
         }
     </style>
@@ -178,11 +200,8 @@
         <nav>
 
             <a href="home.html">Home</a>
-
             <a href="explore.html">Explore</a>
-
             <a href="community.html">Community</a>
-
             <a href="profile.html">Profile</a>
 
         </nav>
@@ -204,18 +223,30 @@
     </section>
 
 
+    <!-- CREATE POST -->
+
+    <section class="post-area">
+
+        <h2>
+            ✍️ Share Something
+        </h2>
+
+        <p>
+            Have something to say? Create a post
+            and share it with the TeenSpace community.
+        </p>
+
+        <a
+            href="post.html"
+            class="create-post-button"
+        >
+            🚀 CREATE A POST
+        </a>
+
+    </section>
+
+
     <main class="community">
-
-
-        <!-- CREATE POST BUTTON -->
-
-        <div class="create-post">
-
-            <a href="post.html">
-                ✍️ Create a Post
-            </a>
-
-        </div>
 
 
         <!-- SAFETY NOTICE -->
