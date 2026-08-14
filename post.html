@@ -17,6 +17,7 @@
 
     body {
       margin: 0;
+      min-height: 100vh;
       background: #f4f7ff;
       color: #222;
     }
@@ -24,7 +25,7 @@
     header {
       background: #6c5ce7;
       color: white;
-      padding: 18px 8%;
+      padding: 20px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -49,80 +50,115 @@
     .container {
       width: 92%;
       max-width: 850px;
-      margin: 60px auto;
+      margin: 50px auto;
     }
 
     .box {
       background: white;
       padding: 35px;
       border-radius: 22px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     }
 
     h1 {
       text-align: center;
-      color: #6352e8;
-      margin-bottom: 30px;
+      color: #6c5ce7;
+      margin-top: 0;
+      margin-bottom: 10px;
     }
 
-    textarea,
-    select {
-      width: 100%;
-      padding: 18px;
-      border: 1px solid #ccc;
-      border-radius: 15px;
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
       font-size: 18px;
-      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #444;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 18px;
+      margin-bottom: 22px;
       outline: none;
+      background: white;
+    }
+
+    select:focus,
+    textarea:focus {
+      border-color: #6c5ce7;
     }
 
     textarea {
-      min-height: 180px;
+      min-height: 220px;
       resize: vertical;
     }
 
-    textarea:focus,
-    select:focus {
-      border-color: #6352e8;
-    }
-
-    button {
+    .publish {
       width: 100%;
       padding: 18px;
       border: none;
-      border-radius: 15px;
-      background: #6352e8;
+      border-radius: 14px;
+      background: #6c5ce7;
       color: white;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #5140d5;
+    .publish:hover {
+      background: #5849c4;
     }
 
-    button:disabled {
-      opacity: 0.6;
+    .publish:disabled {
+      background: #aaa;
       cursor: not-allowed;
     }
 
     #message {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 22px;
       font-size: 18px;
-      line-height: 1.5;
+      min-height: 25px;
     }
 
     .error {
-      color: #ff3366;
+      color: #ff2864;
     }
 
     .success {
-      color: #00a86b;
+      color: #159447;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      color: #6c5ce7;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
     }
 
     @media (max-width: 700px) {
+
       header {
         flex-direction: column;
         gap: 15px;
@@ -133,12 +169,8 @@
         display: inline-block;
       }
 
-      .container {
-        margin: 35px auto;
-      }
-
       .box {
-        padding: 22px;
+        padding: 25px 20px;
       }
     }
   </style>
@@ -162,21 +194,25 @@
   </header>
 
 
-  <div class="container">
+  <main class="container">
 
     <div class="box">
 
-      <h1>💬 Create a Post</h1>
+      <h1>✍️ Create a Post</h1>
 
-      <textarea
-        id="content"
-        placeholder="What's on your mind?"
-      ></textarea>
+      <div class="subtitle">
+        Share something with the TeenSpace community.
+      </div>
+
+
+      <label for="topic">
+        Topic
+      </label>
 
       <select id="topic">
 
         <option value="Around the World">
-          🌍 Around the World
+          🌎 Around the World
         </option>
 
         <option value="Gaming">
@@ -197,22 +233,53 @@
 
       </select>
 
-      <button id="publishButton">
+
+      <label for="content">
+        Your post
+      </label>
+
+      <textarea
+        id="content"
+        placeholder="What's on your mind?"
+      ></textarea>
+
+
+      <button
+        id="publishButton"
+        class="publish"
+      >
         Publish Post 🚀
       </button>
 
+
       <div id="message"></div>
+
+
+      <a
+        href="community.html"
+        class="back"
+      >
+        ← Back to Community
+      </a>
 
     </div>
 
-  </div>
+  </main>
+
+
+  <footer>
+
+    © 2026 TeenSpace 🌍 |
+    Made for teens, with safety in mind.
+
+  </footer>
 
 
   <script>
 
-    // =====================================================
+    // ==========================================
     // SUPABASE
-    // =====================================================
+    // ==========================================
 
     const SUPABASE_URL =
       "https://gcigveojqwwovitlwtxl.supabase.co";
@@ -228,15 +295,15 @@
       );
 
 
-    // =====================================================
+    // ==========================================
     // ELEMENTS
-    // =====================================================
+    // ==========================================
 
-    const content =
-      document.getElementById("content");
-
-    const topic =
+    const topicInput =
       document.getElementById("topic");
+
+    const contentInput =
+      document.getElementById("content");
 
     const publishButton =
       document.getElementById("publishButton");
@@ -245,9 +312,9 @@
       document.getElementById("message");
 
 
-    // =====================================================
+    // ==========================================
     // CHECK LOGIN
-    // =====================================================
+    // ==========================================
 
     async function checkLogin() {
 
@@ -264,45 +331,57 @@
           "index.html";
 
         return null;
-
       }
 
 
       return user;
-
     }
 
 
-    // =====================================================
+    // ==========================================
     // PUBLISH POST
-    // =====================================================
+    // ==========================================
 
     publishButton.addEventListener(
       "click",
       async function() {
 
-        const text =
-          content.value.trim();
+        const content =
+          contentInput.value.trim();
+
+        const topic =
+          topicInput.value;
 
 
-        if (!text) {
+        if (!content) {
 
-          message.className =
-            "error";
+          message.className = "error";
 
           message.textContent =
             "❌ Please write something first.";
 
           return;
-
         }
 
 
-        publishButton.disabled =
-          true;
+        if (content.length > 2000) {
+
+          message.className = "error";
+
+          message.textContent =
+            "❌ Your post is too long. Please keep it under 2000 characters.";
+
+          return;
+        }
+
+
+        publishButton.disabled = true;
 
         publishButton.textContent =
           "Publishing...";
+
+
+        message.className = "";
 
         message.textContent = "";
 
@@ -314,41 +393,34 @@
 
 
           if (!user) {
-
             return;
-
           }
 
 
           // IMPORTANT:
-          // Your existing database uses "user-id"
-          // instead of "user_id".
+          // Your Supabase column is "user-id"
+          // NOT "user_id".
 
-          const {
-            error
-          } =
+          const { error } =
             await supabaseClient
               .from("posts")
-              .insert({
-
-                "user-id": user.id,
-
-                content: text,
-
-                topic: topic.value
-
-              });
+              .insert([
+                {
+                  "user-id": user.id,
+                  content: content,
+                  topic: topic
+                }
+              ]);
 
 
           if (error) {
 
             console.error(
-              "Supabase post error:",
+              "Supabase publish error:",
               error
             );
 
             throw error;
-
           }
 
 
@@ -356,21 +428,18 @@
             "success";
 
           message.textContent =
-            "✅ Post published successfully!";
+            "✅ Your post was published!";
 
 
-          content.value = "";
+          contentInput.value = "";
 
 
-          setTimeout(
-            function() {
+          setTimeout(function() {
 
-              window.location.href =
-                "community.html";
+            window.location.href =
+              "community.html";
 
-            },
-            1000
-          );
+          }, 1000);
 
 
         } catch (error) {
@@ -381,24 +450,22 @@
             "error";
 
           message.textContent =
-            "❌ Could not publish your post.";
+            "❌ Could not publish your post. Check your Supabase posts table permissions.";
 
+          publishButton.disabled =
+            false;
+
+          publishButton.textContent =
+            "Publish Post 🚀";
         }
-
-
-        publishButton.disabled =
-          false;
-
-        publishButton.textContent =
-          "Publish Post 🚀";
 
       }
     );
 
 
-    // =====================================================
+    // ==========================================
     // START
-    // =====================================================
+    // ==========================================
 
     checkLogin();
 
