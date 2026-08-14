@@ -25,10 +25,7 @@
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(circle at top left,#eee8ff 0%,transparent 35%),
-    radial-gradient(circle at bottom right,#dff3ff 0%,transparent 35%),
-    #f4f7ff;
+  background:#f4f7ff;
   color:#222;
 }
 
@@ -63,12 +60,13 @@ nav a{
   text-align:center;
   color:#6c5ce7;
   font-size:40px;
+  margin-bottom:8px;
 }
 
 .subtitle{
   text-align:center;
   color:#666;
-  margin-bottom:25px;
+  margin-bottom:28px;
 }
 
 .card{
@@ -87,7 +85,7 @@ nav a{
 }
 
 .preview{
-  min-height:250px;
+  min-height:310px;
   border-radius:22px;
   padding:25px;
   display:flex;
@@ -96,28 +94,13 @@ nav a{
   overflow:hidden;
   position:relative;
   color:white;
-  background:
-    linear-gradient(
-      135deg,
-      #6c5ce7,
-      #8e74ff,
-      #5b8def
-    );
-}
-
-.preview-bg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
+  background:#6c5ce7;
 }
 
 .preview-overlay{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.28);
+  background:rgba(0,0,0,.18);
   z-index:1;
 }
 
@@ -127,18 +110,23 @@ nav a{
 }
 
 .preview-avatar{
-  width:90px;
-  height:90px;
+  width:95px;
+  height:95px;
   border-radius:50%;
   object-fit:cover;
   border:5px solid rgba(255,255,255,.9);
   background:white;
 }
 
+.preview-fallback{
+  font-size:70px;
+}
+
 .preview-name{
   margin-top:12px;
-  font-size:29px;
+  font-size:30px;
   font-weight:bold;
+  word-break:break-word;
 }
 
 .preview-badge{
@@ -148,40 +136,62 @@ nav a{
   border-radius:999px;
   background:rgba(255,255,255,.20);
   border:1px solid rgba(255,255,255,.35);
-  backdrop-filter:blur(8px);
   font-weight:bold;
+}
+
+.preview-post{
+  margin-top:18px;
+  padding:15px;
+  border-radius:15px;
+  background:#eeeaff;
+  color:#222;
+  line-height:1.5;
 }
 
 .preview-audio{
   width:100%;
+  margin-top:14px;
+}
+
+label{
+  display:block;
   margin-top:15px;
+  margin-bottom:6px;
+  font-weight:bold;
+  color:#444;
 }
 
 input[type="file"],
-select{
+select,
+input[type="color"]{
   width:100%;
-  margin-top:10px;
-  padding:13px;
+  padding:12px;
   border:1px solid #ccc;
   border-radius:12px;
-  font-size:16px;
   background:white;
+  font-size:16px;
+}
+
+input[type="color"]{
+  height:50px;
+  padding:5px;
+  cursor:pointer;
+}
+
+.help{
+  margin-top:7px;
+  color:#777;
+  font-size:13px;
+  line-height:1.5;
 }
 
 .locked{
-  padding:14px;
+  padding:15px;
   border-radius:14px;
   background:#fff5fb;
   color:#b52270;
   border:1px solid #f0c8df;
-  margin-top:10px;
   line-height:1.5;
-}
-
-.help{
-  margin-top:8px;
-  color:#777;
-  font-size:13px;
 }
 
 .save{
@@ -189,7 +199,7 @@ select{
   padding:17px;
   border:none;
   border-radius:14px;
-  background:#6c5ce7;
+  background:linear-gradient(135deg,#6c5ce7,#8e74ff);
   color:white;
   font-size:20px;
   font-weight:bold;
@@ -197,7 +207,7 @@ select{
 }
 
 .save:hover{
-  background:#5747cf;
+  background:linear-gradient(135deg,#5849c4,#7962e6);
 }
 
 .save:disabled{
@@ -209,6 +219,7 @@ select{
   min-height:24px;
   text-align:center;
   margin-top:15px;
+  line-height:1.5;
 }
 
 .success{
@@ -267,262 +278,315 @@ footer{
 
 <header>
 
-<div class="logo">
-🌍 TeenSpace
-</div>
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
 
-<nav>
-
-<a href="home.html">Home</a>
-<a href="explore.html">Explore</a>
-<a href="community.html">Community</a>
-<a href="profile.html">Profile</a>
-
-</nav>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="community.html">Community</a>
+    <a href="explore.html">Explore</a>
+    <a href="profile.html">Profile</a>
+  </nav>
 
 </header>
 
 
 <main class="page">
 
-<h1 class="title">
-🎨 Customize Your Profile
-</h1>
+  <h1 class="title">
+    🎨 Customize Your Profile
+  </h1>
 
-<p class="subtitle">
-Make your TeenSpace profile yours.
-</p>
-
-
-<div class="card">
-
-<div class="section-title">
-👀 Live Preview
-</div>
-
-<div id="preview" class="preview">
-
-<div class="preview-overlay"></div>
-
-<div class="preview-content">
-
-<img
-id="previewAvatar"
-class="preview-avatar"
-alt="Profile preview"
-src=""
-style="display:none;"
->
-
-<div
-id="previewAvatarFallback"
-style="font-size:70px;"
->
-👤
-</div>
-
-<div
-id="previewName"
-class="preview-name"
->
-TeenSpace User
-</div>
-
-<div
-id="previewBadge"
-class="preview-badge"
->
-🌍 TeenSpace Member
-</div>
-
-<div id="previewAudioBox"></div>
-
-</div>
-
-</div>
-
-</div>
+  <p class="subtitle">
+    Make your TeenSpace profile yours.
+  </p>
 
 
-<div class="card">
+  <div class="card">
 
-<div class="section-title">
-👤 Profile Picture
-</div>
+    <div class="section-title">
+      👀 Live Preview
+    </div>
 
-<input
-type="file"
-id="avatarInput"
-accept="image/jpeg,image/png,image/webp"
->
+    <div
+      id="preview"
+      class="preview"
+    >
 
-<div class="help">
-Maximum 5 MB.
-</div>
+      <div class="preview-overlay"></div>
 
-</div>
+      <div class="preview-content">
 
+        <div
+          id="previewAvatarFallback"
+          class="preview-fallback"
+        >
+          👤
+        </div>
 
-<div class="card">
+        <img
+          id="previewAvatar"
+          class="preview-avatar"
+          alt="Profile preview"
+          style="display:none;"
+        >
 
-<div class="section-title">
-🎨 Profile Font
-</div>
+        <div
+          id="previewName"
+          class="preview-name"
+        >
+          TeenSpace User
+        </div>
 
-<select id="fontStyle">
+        <div
+          id="previewBadge"
+          class="preview-badge"
+        >
+          🌍 TeenSpace Member
+        </div>
 
-<option value="Arial">
-Clean
-</option>
+        <div
+          id="previewPost"
+          class="preview-post"
+        >
+          Hello from TeenSpace! 👋
+        </div>
 
-<option value="Trebuchet MS">
-Rounded
-</option>
+        <div id="previewAudioBox"></div>
 
-<option value="Georgia">
-Classic
-</option>
+      </div>
 
-<option value="Verdana">
-Simple
-</option>
+    </div>
 
-<option value="Courier New">
-Typewriter
-</option>
-
-</select>
-
-</div>
-
-
-<div class="card">
-
-<div class="section-title">
-🎵 Profile Music
-</div>
-
-<div id="musicArea">
-
-</div>
-
-</div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
 
-<div class="section-title">
-🎬 Live Wallpaper
-</div>
-
-<div id="wallpaperArea">
-
-</div>
-
-</div>
+    <div class="section-title">
+      🎨 Premium Appearance
+    </div>
 
 
-<div class="card">
+    <label for="themeColor">
+      Profile colour
+    </label>
 
-<button
-id="saveButton"
-class="save"
->
-Save Customization 💾
-</button>
-
-<div id="status"></div>
-
-</div>
+    <input
+      type="color"
+      id="themeColor"
+      value="#6c5ce7"
+    >
 
 
-<a
-class="back"
-href="profile.html"
->
-← Back to Profile
-</a>
+    <label for="nameColor">
+      Name colour
+    </label>
 
+    <input
+      type="color"
+      id="nameColor"
+      value="#5f4ce0"
+    >
+
+
+    <label for="messageColor">
+      Message card colour
+    </label>
+
+    <input
+      type="color"
+      id="messageColor"
+      value="#eeeaff"
+    >
+
+
+    <label for="fontStyle">
+      Font
+    </label>
+
+    <select id="fontStyle">
+
+      <option value="Arial">
+        Clean
+      </option>
+
+      <option value="Trebuchet MS">
+        Rounded
+      </option>
+
+      <option value="Georgia">
+        Classic
+      </option>
+
+      <option value="Verdana">
+        Simple
+      </option>
+
+      <option value="Courier New">
+        Typewriter
+      </option>
+
+      <option value="Tahoma">
+        Modern
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+      👤 Profile Picture
+    </div>
+
+    <input
+      type="file"
+      id="avatarInput"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <div class="help">
+      Maximum 5 MB.
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+      🎵 Profile Music
+    </div>
+
+    <div id="musicArea"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+      🎬 Live Wallpaper
+    </div>
+
+    <div id="wallpaperArea"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <button
+      id="saveButton"
+      class="save"
+    >
+      Save Customization 💾
+    </button>
+
+    <div id="status"></div>
+
+  </div>
+
+
+  <a
+    class="back"
+    href="profile.html"
+  >
+    ← Back to Profile
+  </a>
 
 </main>
 
 
 <footer>
 
-© 2026 TeenSpace 🌍 |
-Made for teens, with safety in mind.
+  © 2026 TeenSpace 🌍 |
+  Made for teens, with safety in mind.
 
 </footer>
 
 
 <script>
 
+/* =========================================
+   SUPABASE
+========================================= */
+
 const SUPABASE_URL =
-"https://gcigveojqwwovitlwtxl.supabase.co";
+  "https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true
+      }
     }
-  }
-);
+  );
 
 
-const avatarInput =
-document.getElementById("avatarInput");
-
-const fontStyle =
-document.getElementById("fontStyle");
-
-const saveButton =
-document.getElementById("saveButton");
-
-const status =
-document.getElementById("status");
+/* =========================================
+   ELEMENTS
+========================================= */
 
 const preview =
-document.getElementById("preview");
-
-const previewAvatar =
-document.getElementById("previewAvatar");
-
-const previewAvatarFallback =
-document.getElementById(
-  "previewAvatarFallback"
-);
+  document.getElementById("preview");
 
 const previewName =
-document.getElementById(
-  "previewName"
-);
+  document.getElementById("previewName");
 
 const previewBadge =
-document.getElementById(
-  "previewBadge"
-);
+  document.getElementById("previewBadge");
+
+const previewPost =
+  document.getElementById("previewPost");
+
+const previewAvatar =
+  document.getElementById("previewAvatar");
+
+const previewAvatarFallback =
+  document.getElementById("previewAvatarFallback");
 
 const previewAudioBox =
-document.getElementById(
-  "previewAudioBox"
-);
+  document.getElementById("previewAudioBox");
+
+const themeColor =
+  document.getElementById("themeColor");
+
+const nameColor =
+  document.getElementById("nameColor");
+
+const messageColor =
+  document.getElementById("messageColor");
+
+const fontStyle =
+  document.getElementById("fontStyle");
+
+const avatarInput =
+  document.getElementById("avatarInput");
 
 const musicArea =
-document.getElementById(
-  "musicArea"
-);
+  document.getElementById("musicArea");
 
 const wallpaperArea =
-document.getElementById(
-  "wallpaperArea"
-);
+  document.getElementById("wallpaperArea");
+
+const saveButton =
+  document.getElementById("saveButton");
+
+const status =
+  document.getElementById("status");
 
 
 let currentUser = null;
@@ -534,10 +598,28 @@ let selectedWallpaper = null;
 
 
 /* =========================================
+   STATUS
+========================================= */
+
+function showStatus(
+  text,
+  type
+){
+
+  status.className =
+    type || "";
+
+  status.textContent =
+    text;
+
+}
+
+
+/* =========================================
    LOAD USER
 ========================================= */
 
-async function loadUser(){
+async function getCurrentUser(){
 
   const {
     data:{
@@ -568,13 +650,97 @@ async function loadUser(){
 
 
 /* =========================================
+   APPLY PREVIEW
+========================================= */
+
+function updatePreview(){
+
+  preview.style.background =
+    themeColor.value;
+
+
+  previewName.style.color =
+    nameColor.value;
+
+
+  previewName.style.fontFamily =
+    fontStyle.value;
+
+
+  previewPost.style.background =
+    messageColor.value;
+
+
+  if(profile){
+
+    if(profile.role === "owner"){
+
+      previewBadge.textContent =
+        "👑 " +
+        (
+          profile.badge ||
+          "TEENSPACE FOUNDER"
+        );
+
+    }else if(
+      profile.role === "staff"
+    ){
+
+      previewBadge.textContent =
+        "🛡️ STAFF";
+
+    }else if(
+      profile.premium === true
+    ){
+
+      previewBadge.textContent =
+        "💎 PREMIUM";
+
+    }else{
+
+      previewBadge.textContent =
+        "🌍 TeenSpace Member";
+
+    }
+
+  }
+
+}
+
+
+/* =========================================
+   COLOR EVENTS
+========================================= */
+
+themeColor.addEventListener(
+  "input",
+  updatePreview
+);
+
+nameColor.addEventListener(
+  "input",
+  updatePreview
+);
+
+messageColor.addEventListener(
+  "input",
+  updatePreview
+);
+
+fontStyle.addEventListener(
+  "change",
+  updatePreview
+);
+
+
+/* =========================================
    LOAD PROFILE
 ========================================= */
 
 async function loadProfile(){
 
   const user =
-    await loadUser();
+    await getCurrentUser();
 
 
   if(!user){
@@ -599,12 +765,15 @@ async function loadProfile(){
       avatar_url,
       profile_music_url,
       profile_wallpaper_url,
-      font_style
+      font_style,
+      theme_color,
+      name_color,
+      message_color
       `
     )
 
     .eq(
-      '"user-id"',
+      "user-id",
       user.id
     )
 
@@ -615,11 +784,10 @@ async function loadProfile(){
 
     console.error(error);
 
-    status.className =
-      "error";
-
-    status.textContent =
-      "❌ Could not load profile.";
+    showStatus(
+      "❌ Could not load profile.",
+      "error"
+    );
 
     return;
 
@@ -635,83 +803,116 @@ async function loadProfile(){
     "TeenSpace User";
 
 
+  themeColor.value =
+    profile.theme_color ||
+    "#6c5ce7";
+
+
+  nameColor.value =
+    profile.name_color ||
+    "#5f4ce0";
+
+
+  messageColor.value =
+    profile.message_color ||
+    "#eeeaff";
+
+
   fontStyle.value =
     profile.font_style ||
     "Arial";
 
 
-  applyRoleStyle();
+  updatePreview();
 
 
-  setupPremiumSections();
-
+  /* AVATAR UPLOAD AREA */
 
   avatarInput.value =
     "";
 
 
-/* Existing avatar can't be directly
-   read from a private bucket as a normal URL.
-   New uploads are previewed locally.
-*/
+  /* MUSIC AREA */
 
-}
+  if(profile.premium === true){
+
+    musicArea.innerHTML = `
+
+      <input
+        type="file"
+        id="musicInput"
+        accept="audio/mpeg,audio/mp3,audio/wav,audio/ogg,audio/webm"
+      >
+
+      <div class="help">
+        Maximum 10 MB.
+      </div>
+
+    `;
 
 
-/* =========================================
-   ROLE / BADGES
-========================================= */
-
-function applyRoleStyle(){
-
-  previewName.style.fontFamily =
-    fontStyle.value;
-
-
-  if(profile.role === "owner"){
-
-    previewBadge.textContent =
-      "👑 " +
-      (
-        profile.badge ||
-        "TEENSPACE FOUNDER"
+    const musicInput =
+      document.getElementById(
+        "musicInput"
       );
 
-  }else if(
-    profile.role === "staff"
-  ){
 
-    previewBadge.textContent =
-      "🛡️ STAFF";
+    musicInput.addEventListener(
+      "change",
+      function(){
 
-  }else if(
-    profile.premium === true
-  ){
+        selectedMusic =
+          musicInput.files[0] ||
+          null;
 
-    previewBadge.textContent =
-      "💎 PREMIUM";
+
+        if(!selectedMusic){
+          return;
+        }
+
+
+        if(
+          selectedMusic.size >
+          10 * 1024 * 1024
+        ){
+
+          showStatus(
+            "❌ Music must be 10 MB or smaller.",
+            "error"
+          );
+
+          musicInput.value =
+            "";
+
+          selectedMusic =
+            null;
+
+          return;
+
+        }
+
+
+        const url =
+          URL.createObjectURL(
+            selectedMusic
+          );
+
+
+        previewAudioBox.innerHTML = `
+
+          <audio
+            class="preview-audio"
+            src="${url}"
+            controls
+          ></audio>
+
+        `;
+
+      }
+    );
+
 
   }else{
-
-    previewBadge.textContent =
-      "🌍 TeenSpace Member";
-
-  }
-
-}
-
-
-/* =========================================
-   PREMIUM OPTIONS
-========================================= */
-
-function setupPremiumSections(){
-
-  const premium =
-    profile.premium === true;
-
-
-  if(!premium){
 
     musicArea.innerHTML = `
 
@@ -721,13 +922,140 @@ function setupPremiumSections(){
 
         <br><br>
 
-        Your 5-day Premium trial/package system
-        can unlock this later.
+        Your Premium trial/package system can
+        unlock this feature.
 
       </div>
 
     `;
 
+  }
+
+
+  /* WALLPAPER */
+
+  if(profile.premium === true){
+
+    wallpaperArea.innerHTML = `
+
+      <input
+        type="file"
+        id="wallpaperInput"
+        accept="video/mp4,video/webm"
+      >
+
+      <div class="help">
+        Maximum 25 MB.
+      </div>
+
+    `;
+
+
+    const wallpaperInput =
+      document.getElementById(
+        "wallpaperInput"
+      );
+
+
+    wallpaperInput.addEventListener(
+      "change",
+      function(){
+
+        selectedWallpaper =
+          wallpaperInput.files[0] ||
+          null;
+
+
+        if(!selectedWallpaper){
+          return;
+        }
+
+
+        if(
+          selectedWallpaper.size >
+          25 * 1024 * 1024
+        ){
+
+          showStatus(
+            "❌ Wallpaper must be 25 MB or smaller.",
+            "error"
+          );
+
+          wallpaperInput.value =
+            "";
+
+          selectedWallpaper =
+            null;
+
+          return;
+
+        }
+
+
+        const oldVideo =
+          document.getElementById(
+            "previewWallpaper"
+          );
+
+
+        if(oldVideo){
+          oldVideo.remove();
+        }
+
+
+        const video =
+          document.createElement(
+            "video"
+          );
+
+
+        video.id =
+          "previewWallpaper";
+
+        video.src =
+          URL.createObjectURL(
+            selectedWallpaper
+          );
+
+        video.autoplay =
+          true;
+
+        video.loop =
+          true;
+
+        video.muted =
+          true;
+
+        video.playsInline =
+          true;
+
+
+        video.style.position =
+          "absolute";
+
+        video.style.inset =
+          "0";
+
+        video.style.width =
+          "100%";
+
+        video.style.height =
+          "100%";
+
+        video.style.objectFit =
+          "cover";
+
+        video.style.zIndex =
+          "0";
+
+
+        preview.prepend(video);
+
+      }
+    );
+
+
+  }else{
 
     wallpaperArea.innerHTML = `
 
@@ -743,188 +1071,7 @@ function setupPremiumSections(){
 
     `;
 
-
-    return;
-
   }
-
-
-  musicArea.innerHTML = `
-
-    <input
-      type="file"
-      id="musicInput"
-      accept="audio/mpeg,audio/mp3,audio/wav,audio/ogg,audio/webm"
-    >
-
-    <div class="help">
-      Maximum 10 MB.
-    </div>
-
-  `;
-
-
-  wallpaperArea.innerHTML = `
-
-    <input
-      type="file"
-      id="wallpaperInput"
-      accept="video/mp4,video/webm"
-    >
-
-    <div class="help">
-      Maximum 25 MB.
-    </div>
-
-  `;
-
-
-  const musicInput =
-    document.getElementById(
-      "musicInput"
-    );
-
-  const wallpaperInput =
-    document.getElementById(
-      "wallpaperInput"
-    );
-
-
-  musicInput.addEventListener(
-    "change",
-    function(){
-
-      selectedMusic =
-        musicInput.files[0] ||
-        null;
-
-
-      if(!selectedMusic){
-        return;
-      }
-
-
-      if(
-        selectedMusic.size >
-        10 * 1024 * 1024
-      ){
-
-        showStatus(
-          "❌ Music must be 10 MB or smaller.",
-          "error"
-        );
-
-        musicInput.value = "";
-        selectedMusic = null;
-
-        return;
-
-      }
-
-
-      const url =
-        URL.createObjectURL(
-          selectedMusic
-        );
-
-
-      previewAudioBox.innerHTML = `
-
-        <audio
-          class="preview-audio"
-          src="${url}"
-          controls
-        ></audio>
-
-      `;
-
-    }
-  );
-
-
-  wallpaperInput.addEventListener(
-    "change",
-    function(){
-
-      selectedWallpaper =
-        wallpaperInput.files[0] ||
-        null;
-
-
-      if(!selectedWallpaper){
-        return;
-      }
-
-
-      if(
-        selectedWallpaper.size >
-        25 * 1024 * 1024
-      ){
-
-        showStatus(
-          "❌ Wallpaper must be 25 MB or smaller.",
-          "error"
-        );
-
-        wallpaperInput.value = "";
-        selectedWallpaper = null;
-
-        return;
-
-      }
-
-
-      const url =
-        URL.createObjectURL(
-          selectedWallpaper
-        );
-
-
-      const oldVideo =
-        document.getElementById(
-          "previewWallpaper"
-        );
-
-
-      if(oldVideo){
-        oldVideo.remove();
-      }
-
-
-      const video =
-        document.createElement(
-          "video"
-        );
-
-
-      video.id =
-        "previewWallpaper";
-
-      video.className =
-        "preview-bg";
-
-      video.src =
-        url;
-
-      video.autoplay =
-        true;
-
-      video.loop =
-        true;
-
-      video.muted =
-        true;
-
-      video.playsInline =
-        true;
-
-
-      preview.prepend(
-        video
-      );
-
-    }
-  );
 
 }
 
@@ -957,42 +1104,27 @@ avatarInput.addEventListener(
         "error"
       );
 
-      avatarInput.value = "";
-      selectedAvatar = null;
+      avatarInput.value =
+        "";
+
+      selectedAvatar =
+        null;
 
       return;
 
     }
 
 
-    const url =
+    previewAvatar.src =
       URL.createObjectURL(
         selectedAvatar
       );
-
-
-    previewAvatar.src =
-      url;
 
     previewAvatar.style.display =
       "block";
 
     previewAvatarFallback.style.display =
       "none";
-
-  }
-);
-
-
-/* =========================================
-   FONT PREVIEW
-========================================= */
-
-fontStyle.addEventListener(
-  "change",
-  function(){
-
-    applyRoleStyle();
 
   }
 );
@@ -1043,7 +1175,6 @@ async function uploadFile(
       {
         contentType:
           file.type,
-
         upsert:false
       }
     );
@@ -1060,7 +1191,7 @@ async function uploadFile(
 
 
 /* =========================================
-   SAVE
+   SAVE CUSTOMIZATION
 ========================================= */
 
 saveButton.addEventListener(
@@ -1075,7 +1206,6 @@ saveButton.addEventListener(
 
 
     try{
-
 
       let avatarPath =
         profile.avatar_url ||
@@ -1104,7 +1234,7 @@ saveButton.addEventListener(
       }
 
 
-      /* PREMIUM FILES */
+      /* PREMIUM */
 
       if(
         profile.premium === true
@@ -1136,7 +1266,7 @@ saveButton.addEventListener(
       }
 
 
-      /* UPDATE PROFILE */
+      /* DATABASE */
 
       const {
         error
@@ -1157,12 +1287,21 @@ saveButton.addEventListener(
             wallpaperPath,
 
           font_style:
-            fontStyle.value
+            fontStyle.value,
+
+          theme_color:
+            themeColor.value,
+
+          name_color:
+            nameColor.value,
+
+          message_color:
+            messageColor.value
 
         })
 
         .eq(
-          '"user-id"',
+          "user-id",
           currentUser.id
         );
 
@@ -1184,20 +1323,36 @@ saveButton.addEventListener(
       profile.font_style =
         fontStyle.value;
 
+      profile.theme_color =
+        themeColor.value;
+
+      profile.name_color =
+        nameColor.value;
+
+      profile.message_color =
+        messageColor.value;
+
 
       showStatus(
-        "✅ Profile customization saved!",
+        "✅ Customization saved!",
         "success"
       );
 
 
     }catch(error){
 
-      console.error(error);
+      console.error(
+        "Customization error:",
+        error
+      );
+
 
       showStatus(
         "❌ " +
-        error.message,
+        (
+          error.message ||
+          "Could not save customization."
+        ),
         "error"
       );
 
@@ -1215,24 +1370,6 @@ saveButton.addEventListener(
 
 
 /* =========================================
-   STATUS
-========================================= */
-
-function showStatus(
-  text,
-  type
-){
-
-  status.className =
-    type || "";
-
-  status.textContent =
-    text;
-
-}
-
-
-/* =========================================
    START
 ========================================= */
 
@@ -1241,6 +1378,5 @@ loadProfile();
 </script>
 
 </body>
-
 </html>
 ```
