@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -19,246 +19,197 @@
 
 body {
     margin: 0;
-    background: linear-gradient(135deg, #f4f7ff, #eee8ff);
-    color: #222;
+    background: linear-gradient(135deg,#f4f7ff,#eee8ff);
+    color:#222;
 }
 
-
-/* HEADER */
 
 header {
-    background: #6c5ce7;
-    color: white;
-    padding: 20px 8%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background:#6c5ce7;
+    color:white;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
+
 
 .logo {
-    font-size: 28px;
-    font-weight: bold;
+    font-size:28px;
+    font-weight:bold;
 }
+
 
 nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 16px;
-    font-weight: bold;
+    color:white;
+    text-decoration:none;
+    margin-left:16px;
+    font-weight:bold;
 }
 
-nav a:hover {
-    text-decoration: underline;
-}
-
-
-/* HERO */
-
-.hero {
-    text-align: center;
-    padding: 45px 20px 25px;
-}
-
-.hero h1 {
-    color: #6c5ce7;
-    font-size: 42px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    color: #666;
-    font-size: 18px;
-}
-
-
-/* MAIN */
 
 .container {
-    width: 92%;
-    max-width: 800px;
-    margin: 20px auto 60px;
+    width:92%;
+    max-width:800px;
+    margin:30px auto;
 }
 
 
-/* CREATE POST */
+.hero {
+    text-align:center;
+    padding:40px 20px;
+}
+
+
+.hero h1 {
+    color:#6c5ce7;
+    font-size:42px;
+}
+
 
 .create-post {
-    display: block;
-    width: 100%;
-    background: #6c5ce7;
-    color: white;
-    text-decoration: none;
-    text-align: center;
-    padding: 19px;
-    border-radius: 16px;
-    font-size: 21px;
-    font-weight: bold;
-    margin-bottom: 28px;
-    box-shadow: 0 7px 20px rgba(108,92,231,0.25);
+    display:block;
+    background:#6c5ce7;
+    color:white;
+    text-align:center;
+    text-decoration:none;
+    padding:18px;
+    border-radius:16px;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:25px;
 }
 
-.create-post:hover {
-    background: #5849c4;
-}
-
-
-/* POST CARD */
 
 .post {
-    background: white;
-    border-radius: 20px;
-    padding: 23px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    border-left: 6px solid #6c5ce7;
+
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
 }
+
 
 .post-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
 }
+
 
 .username {
-    color: #6c5ce7;
-    font-size: 20px;
-    font-weight: bold;
+
+    color:#6c5ce7;
+    font-size:20px;
+    font-weight:bold;
+
 }
+
+
+.badge {
+
+    padding:5px 10px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+    font-weight:bold;
+
+}
+
+
+.owner {
+
+    background:#ffb000;
+
+}
+
+
+.staff {
+
+    background:#0984e3;
+
+}
+
+
+.premium {
+
+    background:#e84393;
+
+}
+
 
 .message {
-    margin-top: 16px;
-    font-size: 18px;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+
+    margin-top:15px;
+    font-size:18px;
+    line-height:1.6;
+
 }
+
 
 .time {
-    margin-top: 14px;
-    color: #999;
-    font-size: 13px;
+
+    margin-top:15px;
+    color:#888;
+    font-size:13px;
+
 }
 
-
-/* BUTTONS */
 
 .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 18px;
+
+    margin-top:15px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+
 }
+
 
 .action-btn {
-    border: none;
-    padding: 9px 13px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-weight: bold;
-    background: #eeeaff;
-    color: #5a49c7;
+
+    padding:9px 14px;
+    border:none;
+    border-radius:10px;
+    background:#eeeaff;
+    color:#6c5ce7;
+    font-weight:bold;
+    cursor:pointer;
+
 }
 
-.action-btn:hover {
-    background: #ddd6ff;
-}
 
 .delete-btn {
-    background: #ffe7eb;
-    color: #d63050;
+
+    background:#ffe1e7;
+    color:#d63050;
+
 }
 
-.delete-btn:hover {
-    background: #ffd4dc;
-}
-
-
-/* EDIT BOX */
-
-.edit-box {
-    margin-top: 15px;
-}
-
-.edit-box textarea {
-    width: 100%;
-    min-height: 120px;
-    padding: 14px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    font-size: 17px;
-    resize: vertical;
-}
-
-.save-btn {
-    margin-top: 8px;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 9px;
-    background: #6c5ce7;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-
-/* QUOTE */
-
-.quote {
-    margin-top: 15px;
-    padding: 14px;
-    border-left: 4px solid #6c5ce7;
-    background: #f5f2ff;
-    color: #666;
-    border-radius: 8px;
-}
-
-
-/* EMPTY / LOADING */
 
 .status {
-    background: white;
-    padding: 30px;
-    border-radius: 18px;
-    text-align: center;
-    color: #666;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+
+    background:white;
+    padding:30px;
+    text-align:center;
+    border-radius:20px;
+
 }
 
-
-/* FOOTER */
 
 footer {
-    background: #222;
-    color: white;
-    text-align: center;
-    padding: 25px;
-}
 
-
-/* MOBILE */
-
-@media (max-width: 700px) {
-
-    header {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    nav a {
-        margin: 5px;
-        display: inline-block;
-    }
-
-    .hero h1 {
-        font-size: 33px;
-    }
-
-    .post {
-        padding: 20px;
-    }
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:25px;
 
 }
+
 
 </style>
 
@@ -270,58 +221,50 @@ footer {
 
 <header>
 
-    <div class="logo">
-        🌍 TeenSpace
-    </div>
-
-    <nav>
-
-        <a href="home.html">Home</a>
-
-        <a href="explore.html">Explore</a>
-
-        <a href="community.html">Community</a>
-
-        <a href="profile.html">Profile</a>
-
-    </nav>
-
-</header>
+<div class="logo">
+🌍 TeenSpace
+</div>
 
 
+<nav>
 
-<section class="hero">
+<a href="home.html">Home</a>
 
-    <h1>
-        💬 TeenSpace Community
-    </h1>
+<a href="explore.html">Explore</a>
 
-    <p>
-        Share, reply and connect with the TeenSpace community.
-    </p>
+<a href="community.html">Community</a>
+
+<a href="profile.html">Profile</a>
+
+</nav>
+    <section class="hero">
+
+<h1>
+💬 TeenSpace Community
+</h1>
+
+<p>
+Share, connect and build the TeenSpace world 🌍
+</p>
 
 </section>
-
 
 
 <main class="container">
 
 
-    <a
-        href="post.html"
-        class="create-post"
-    >
-        ✍️ Create a Post
-    </a>
+<a href="post.html" class="create-post">
+✍️ Create a Post
+</a>
 
 
-    <div id="posts">
+<div id="posts">
 
-        <div class="status">
-            Loading posts...
-        </div>
+<div class="status">
+Loading posts...
+</div>
 
-    </div>
+</div>
 
 
 </main>
@@ -330,8 +273,8 @@ footer {
 
 <footer>
 
-    © 2026 TeenSpace 🌍 |
-    Made for teens, with safety in mind.
+© 2026 TeenSpace 🌍 |
+Made for teens, with safety in mind.
 
 </footer>
 
@@ -340,520 +283,529 @@ footer {
 <script>
 
 
-/* SUPABASE */
-
 const SUPABASE_URL =
-    "https://gcigveojqwwovitlwtxl.supabase.co";
+"https://gcigveojqwwovitlwtxl.supabase.co";
+
 
 const SUPABASE_KEY =
-    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
 
 
 const postsContainer =
-    document.getElementById("posts");
+document.getElementById("posts");
 
 
 let currentUser = null;
 
 
-/* CHECK USER */
 
-async function getCurrentUser() {
+async function getCurrentUser(){
 
-    const {
-        data: {
-            user
-        }
-    } =
-    await supabaseClient.auth.getUser();
+const {
+data:{
+user
+}
+}
+=
+await supabaseClient.auth.getUser();
 
-    currentUser = user;
+
+currentUser = user;
 
 }
 
 
-/* ESCAPE HTML */
 
-function escapeHTML(text) {
 
-    const div =
-        document.createElement("div");
+function formatTime(time){
 
-    div.textContent = text;
-
-    return div.innerHTML;
+return new Date(time)
+.toLocaleString();
 
 }
 
 
-/* TIME */
 
-function formatTime(dateString) {
 
-    const date =
-        new Date(dateString);
 
-    return date.toLocaleString();
+async function loadPosts(){
+
+
+const {
+data,
+error
+}
+
+=
+await supabaseClient
+
+.from("posts")
+
+.select(`
+
+id,
+user_id,
+content,
+created_at,
+
+profiles(
+
+username,
+role,
+badge,
+premium,
+theme
+
+)
+
+`)
+
+.order(
+
+"created_at",
+
+{
+ascending:false
+}
+
+);
+
+
+
+if(error){
+
+console.log(error);
+
+
+postsContainer.innerHTML = `
+
+<div class="status">
+
+❌ Could not load posts.
+
+</div>
+
+`;
+
+return;
 
 }
 
 
-/* LOAD POSTS */
 
-async function loadPosts() {
 
+if(!data.length){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
 
-        .from("posts")
+postsContainer.innerHTML = `
 
-        .select(`
-            id,
-            user_id,
-            content,
-            created_at,
-            profiles (
-                username
-            )
-        `)
+<div class="status">
 
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
+🌟 No posts yet.
 
+Be the first!
 
-    if (error) {
+</div>
 
-        console.error(error);
+`;
 
-        postsContainer.innerHTML = `
 
-            <div class="status">
+return;
 
-                ❌ Could not load posts.
+}
 
-            </div>
 
-        `;
 
-        return;
+postsContainer.innerHTML="";
 
-    }
 
 
-    if (!data || data.length === 0) {
+data.forEach(post=>{
 
-        postsContainer.innerHTML = `
 
-            <div class="status">
+const profile =
+post.profiles || {};
 
-                🌟 No posts yet.
 
-                <br><br>
 
-                Be the first person to post!
+const username =
+profile.username ||
+"TeenSpace User";
 
-            </div>
 
-        `;
 
-        return;
+const role =
+profile.role ||
+"user";
 
-    }
 
 
-    postsContainer.innerHTML = "";
+const badge =
+profile.badge ||
+"";
 
 
-    data.forEach(post => {
+let badgeHTML = "";
 
 
-        const username =
-            post.profiles?.username ||
-            "TeenSpace User";
 
+if(role==="owner"){
 
-        const card =
-            document.createElement("div");
 
-        card.className = "post";
+badgeHTML = `
 
+<span class="badge owner">
 
-        const header =
-            document.createElement("div");
+👑 ${badge || "OWNER"}
 
-        header.className =
-            "post-header";
+</span>
 
+`;
 
-        const name =
-            document.createElement("div");
+}
 
-        name.className =
-            "username";
 
+else if(role==="staff"){
 
-        name.textContent =
-            "👤 " + username;
 
+badgeHTML = `
 
-        header.appendChild(name);
+<span class="badge staff">
 
+🛡️ STAFF
 
-        card.appendChild(header);
+</span>
 
+`;
 
-        const message =
-            document.createElement("div");
+}
 
-        message.className =
-            "message";
 
 
-        message.textContent =
-            post.content;
+else if(profile.premium){
 
 
-        card.appendChild(message);
+badgeHTML = `
 
+<span class="badge premium">
 
-        const time =
-            document.createElement("div");
+💎 PREMIUM
 
-        time.className =
-            "time";
+</span>
 
+`;
 
-        time.textContent =
-            formatTime(
-                post.created_at
-            );
+}
 
 
-        card.appendChild(time);
 
 
-        /* ACTIONS */
 
-        const actions =
-            document.createElement("div");
+const card =
+document.createElement("div");
 
-        actions.className =
-            "actions";
 
+card.className =
+"post";
 
-        /* QUOTE */
 
-        const quoteButton =
-            document.createElement("button");
 
-        quoteButton.className =
-            "action-btn";
 
-        quoteButton.textContent =
-            "💬 Quote";
+card.innerHTML = `
 
 
-        quoteButton.onclick =
-            function() {
+<div class="post-header">
 
-                const quoteText =
-                    "> " +
-                    username +
-                    ": " +
-                    post.content;
 
+<div class="username">
 
-                window.location.href =
-                    "post.html?quote=" +
-                    encodeURIComponent(
-                        quoteText
-                    );
+👤 ${username}
 
-            };
+${badgeHTML}
 
+</div>
 
-        actions.appendChild(
-            quoteButton
-        );
 
+</div>
 
-        /* OWN POST BUTTONS */
 
-        if (
-            currentUser &&
-            currentUser.id === post.user_id
-        ) {
 
+<div class="message">
 
-            /* EDIT */
+${escapeHTML(post.content)}
 
-            const editButton =
-                document.createElement("button");
+</div>
 
-            editButton.className =
-                "action-btn";
 
-            editButton.textContent =
-                "✏️ Edit";
 
+<div class="time">
 
-            editButton.onclick =
-                function() {
+${formatTime(post.created_at)}
 
-                    openEdit(
-                        card,
-                        post
-                    );
+</div>
 
-                };
 
 
-            actions.appendChild(
-                editButton
-            );
+<div class="actions">
 
 
-            /* DELETE */
+<button class="action-btn"
+onclick="quotePost('${username}','${post.content.replace(/'/g,"\\'")}')">
 
-            const deleteButton =
-                document.createElement("button");
+💬 Quote
 
-            deleteButton.className =
-                "action-btn delete-btn";
+</button>
 
-            deleteButton.textContent =
-                "🗑️ Delete";
 
+${
+currentUser &&
+currentUser.id === post.user_id
 
-            deleteButton.onclick =
-                function() {
+?
 
-                    deletePost(
-                        post.id
-                    );
+`
 
-                };
+<button class="action-btn"
+onclick="editPost('${post.id}','${post.content.replace(/'/g,"\\'")}')">
 
+✏️ Edit
 
-            actions.appendChild(
-                deleteButton
-            );
+</button>
 
-        }
 
+<button class="action-btn delete-btn"
+onclick="deletePost('${post.id}')">
 
-        card.appendChild(actions);
+🗑️ Delete
 
+</button>
 
-        postsContainer.appendChild(card);
+`
 
+:
 
-    });
+""
+
+}
+
+
+</div>
+
+
+`;
+
+
+
+postsContainer.appendChild(card);
+
+
+});
+
+
+}
+
+function escapeHTML(text){
+
+const div =
+document.createElement("div");
+
+div.textContent = text;
+
+return div.innerHTML;
+
+}
+
+
+
+
+async function editPost(id, oldContent){
+
+
+const newContent =
+prompt(
+"Edit your post:",
+oldContent
+);
+
+
+if(!newContent || newContent.trim()===""){
+
+return;
+
+}
+
+
+
+const {
+error
+}
+
+=
+await supabaseClient
+
+.from("posts")
+
+.update({
+
+content:newContent,
+
+edited:true
+
+})
+
+.eq(
+
+"id",
+
+id
+
+);
+
+
+
+if(error){
+
+alert(
+"Could not edit post"
+);
+
+console.log(error);
+
+return;
+
+}
+
+
+
+loadPosts();
 
 
 }
 
 
-/* EDIT */
-
-function openEdit(card, post) {
 
 
-    const oldMessage =
-        card.querySelector(".message");
+
+async function deletePost(id){
 
 
-    const oldActions =
-        card.querySelector(".actions");
+const confirmDelete =
+confirm(
+"Delete this post?"
+);
 
 
-    oldMessage.style.display =
-        "none";
 
-    oldActions.style.display =
-        "none";
+if(!confirmDelete){
 
-
-    const editBox =
-        document.createElement("div");
-
-    editBox.className =
-        "edit-box";
-
-
-    const textarea =
-        document.createElement("textarea");
-
-    textarea.value =
-        post.content;
-
-
-    const save =
-        document.createElement("button");
-
-    save.className =
-        "save-btn";
-
-    save.textContent =
-        "Save Changes";
-
-
-    save.onclick =
-        async function() {
-
-
-            const newContent =
-                textarea.value.trim();
-
-
-            if (!newContent) {
-
-                alert(
-                    "Post cannot be empty."
-                );
-
-                return;
-
-            }
-
-
-            const {
-                error
-            } =
-            await supabaseClient
-
-                .from("posts")
-
-                .update({
-
-                    content:
-                        newContent
-
-                })
-
-                .eq(
-                    "id",
-                    post.id
-                );
-
-
-            if (error) {
-
-                console.error(error);
-
-                alert(
-                    "Could not edit post."
-                );
-
-                return;
-
-            }
-
-
-            loadPosts();
-
-        };
-
-
-    editBox.appendChild(
-        textarea
-    );
-
-
-    editBox.appendChild(
-        save
-    );
-
-
-    card.appendChild(
-        editBox
-    );
+return;
 
 }
 
 
-/* DELETE */
 
-async function deletePost(postId) {
+const {
+error
+}
 
+=
+await supabaseClient
 
-    const confirmed =
-        confirm(
-            "Delete this post?"
-        );
+.from("posts")
 
+.delete()
 
-    if (!confirmed) {
+.eq(
 
-        return;
+"id",
 
-    }
+id
 
-
-    const {
-        error
-    } =
-    await supabaseClient
-
-        .from("posts")
-
-        .delete()
-
-        .eq(
-            "id",
-            postId
-        );
+);
 
 
-    if (error) {
 
-        console.error(error);
+if(error){
 
-        alert(
-            "Could not delete post."
-        );
+alert(
+"Could not delete post"
+);
 
-        return;
+console.log(error);
 
-    }
-
-
-    loadPosts();
+return;
 
 }
 
 
-/* START */
 
-async function start() {
+loadPosts();
 
-    await getCurrentUser();
-
-    await loadPosts();
 
 }
+
+
+
+
+
+function quotePost(username,message){
+
+
+const quote =
+
+"> " +
+username +
+": " +
+message;
+
+
+
+window.location.href =
+
+"post.html?quote=" +
+
+encodeURIComponent(
+quote
+);
+
+
+}
+
+
+
+
+
+
+async function start(){
+
+
+await getCurrentUser();
+
+
+await loadPosts();
+
+
+}
+
 
 
 start();
+
+
 
 </script>
 
 
 </body>
+
 </html>
 
+</header>
