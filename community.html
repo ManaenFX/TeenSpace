@@ -38,22 +38,42 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
 
     .logo {
       font-size: 28px;
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 16px;
+      padding: 9px 11px;
+      border-radius: 10px;
       font-weight: bold;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      background: rgba(255,255,255,.14);
+    }
+
+    .customize-nav {
+      background: rgba(255,255,255,.20);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+
+    .premium-nav {
+      background: rgba(255,220,100,.20);
+      border: 1px solid rgba(255,240,160,.45);
     }
 
     .hero {
@@ -270,9 +290,12 @@
         gap: 14px;
       }
 
+      nav {
+        justify-content: center;
+      }
+
       nav a {
-        margin: 4px 6px;
-        display: inline-block;
+        margin: 3px;
       }
 
       .hero h1 {
@@ -303,11 +326,39 @@
     🌍 TeenSpace
   </div>
 
+
   <nav>
-    <a href="home.html">Home</a>
-    <a href="explore.html">Explore</a>
-    <a href="community.html">Community</a>
-    <a href="profile.html">Profile</a>
+
+    <a href="home.html">
+      Home
+    </a>
+
+    <a href="explore.html">
+      Explore
+    </a>
+
+    <a href="community.html">
+      Community
+    </a>
+
+    <a href="profile.html">
+      Profile
+    </a>
+
+    <a
+      href="customize.html"
+      class="customize-nav"
+    >
+      ✨ Customize
+    </a>
+
+    <a
+      href="premium.html"
+      class="premium-nav"
+    >
+      💎 Premium
+    </a>
+
   </nav>
 
 </header>
@@ -451,8 +502,6 @@ async function loadPosts() {
   `;
 
 
-  /* GET POSTS */
-
   const {
     data: posts,
     error: postsError
@@ -507,8 +556,6 @@ async function loadPosts() {
   }
 
 
-  /* GET USER IDS */
-
   const userIds =
     [
       ...new Set(
@@ -518,8 +565,6 @@ async function loadPosts() {
       )
     ];
 
-
-  /* GET PROFILES */
 
   let profiles = [];
 
@@ -561,8 +606,6 @@ async function loadPosts() {
   }
 
 
-  /* PROFILE MAP */
-
   const profileMap =
     new Map();
 
@@ -579,8 +622,6 @@ async function loadPosts() {
 
   postsContainer.innerHTML = "";
 
-
-  /* DISPLAY */
 
   posts.forEach(post => {
 
@@ -619,8 +660,6 @@ async function loadPosts() {
       card.classList.add("post-staff");
     }
 
-
-    /* BADGES */
 
     let badgeHTML = "";
 
@@ -740,8 +779,6 @@ async function loadPosts() {
     `;
 
 
-    /* QUOTE */
-
     const quoteButton =
       card.querySelector(
         ".quote-button"
@@ -769,8 +806,6 @@ async function loadPosts() {
     );
 
 
-    /* EDIT */
-
     const editButton =
       card.querySelector(
         ".edit-button"
@@ -793,8 +828,6 @@ async function loadPosts() {
 
     }
 
-
-    /* DELETE */
 
     const deleteButton =
       card.querySelector(
@@ -841,7 +874,6 @@ function openEdit(
       ".message"
     );
 
-
   const actions =
     card.querySelector(
       ".actions"
@@ -856,7 +888,9 @@ function openEdit(
 
 
   const editArea =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
 
   editArea.className =
@@ -864,7 +898,9 @@ function openEdit(
 
 
   const textarea =
-    document.createElement("textarea");
+    document.createElement(
+      "textarea"
+    );
 
 
   textarea.value =
@@ -872,12 +908,13 @@ function openEdit(
 
 
   const saveButton =
-    document.createElement("button");
+    document.createElement(
+      "button"
+    );
 
 
   saveButton.className =
     "save-edit";
-
 
   saveButton.textContent =
     "Save Changes";
