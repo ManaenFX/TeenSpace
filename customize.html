@@ -1,0 +1,1246 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Customize Profile | TeenSpace 🌍</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#eee8ff 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#dff3ff 0%,transparent 35%),
+    #f4f7ff;
+  color:#222;
+}
+
+header{
+  background:#6c5ce7;
+  color:white;
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:15px;
+  font-weight:bold;
+}
+
+.page{
+  width:92%;
+  max-width:850px;
+  margin:35px auto 60px;
+}
+
+.title{
+  text-align:center;
+  color:#6c5ce7;
+  font-size:40px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#666;
+  margin-bottom:25px;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  border-radius:24px;
+  box-shadow:0 10px 35px rgba(0,0,0,.08);
+  margin-bottom:22px;
+}
+
+.section-title{
+  font-size:21px;
+  font-weight:bold;
+  color:#5f4ce0;
+  margin-bottom:12px;
+}
+
+.preview{
+  min-height:250px;
+  border-radius:22px;
+  padding:25px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:hidden;
+  position:relative;
+  color:white;
+  background:
+    linear-gradient(
+      135deg,
+      #6c5ce7,
+      #8e74ff,
+      #5b8def
+    );
+}
+
+.preview-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.preview-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.28);
+  z-index:1;
+}
+
+.preview-content{
+  position:relative;
+  z-index:2;
+}
+
+.preview-avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  border:5px solid rgba(255,255,255,.9);
+  background:white;
+}
+
+.preview-name{
+  margin-top:12px;
+  font-size:29px;
+  font-weight:bold;
+}
+
+.preview-badge{
+  display:inline-block;
+  margin-top:8px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.20);
+  border:1px solid rgba(255,255,255,.35);
+  backdrop-filter:blur(8px);
+  font-weight:bold;
+}
+
+.preview-audio{
+  width:100%;
+  margin-top:15px;
+}
+
+input[type="file"],
+select{
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:12px;
+  font-size:16px;
+  background:white;
+}
+
+.locked{
+  padding:14px;
+  border-radius:14px;
+  background:#fff5fb;
+  color:#b52270;
+  border:1px solid #f0c8df;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+.help{
+  margin-top:8px;
+  color:#777;
+  font-size:13px;
+}
+
+.save{
+  width:100%;
+  padding:17px;
+  border:none;
+  border-radius:14px;
+  background:#6c5ce7;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.save:hover{
+  background:#5747cf;
+}
+
+.save:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+#status{
+  min-height:24px;
+  text-align:center;
+  margin-top:15px;
+}
+
+.success{
+  color:#159447;
+}
+
+.error{
+  color:#d63050;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  color:#6c5ce7;
+  text-decoration:none;
+  font-weight:bold;
+  margin-top:18px;
+}
+
+footer{
+  background:#222;
+  color:white;
+  padding:25px;
+  text-align:center;
+}
+
+@media(max-width:700px){
+
+  header{
+    flex-direction:column;
+    gap:14px;
+  }
+
+  nav a{
+    display:inline-block;
+    margin:4px 6px;
+  }
+
+  .title{
+    font-size:33px;
+  }
+
+  .page{
+    width:94%;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+🌍 TeenSpace
+</div>
+
+<nav>
+
+<a href="home.html">Home</a>
+<a href="explore.html">Explore</a>
+<a href="community.html">Community</a>
+<a href="profile.html">Profile</a>
+
+</nav>
+
+</header>
+
+
+<main class="page">
+
+<h1 class="title">
+🎨 Customize Your Profile
+</h1>
+
+<p class="subtitle">
+Make your TeenSpace profile yours.
+</p>
+
+
+<div class="card">
+
+<div class="section-title">
+👀 Live Preview
+</div>
+
+<div id="preview" class="preview">
+
+<div class="preview-overlay"></div>
+
+<div class="preview-content">
+
+<img
+id="previewAvatar"
+class="preview-avatar"
+alt="Profile preview"
+src=""
+style="display:none;"
+>
+
+<div
+id="previewAvatarFallback"
+style="font-size:70px;"
+>
+👤
+</div>
+
+<div
+id="previewName"
+class="preview-name"
+>
+TeenSpace User
+</div>
+
+<div
+id="previewBadge"
+class="preview-badge"
+>
+🌍 TeenSpace Member
+</div>
+
+<div id="previewAudioBox"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+👤 Profile Picture
+</div>
+
+<input
+type="file"
+id="avatarInput"
+accept="image/jpeg,image/png,image/webp"
+>
+
+<div class="help">
+Maximum 5 MB.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+🎨 Profile Font
+</div>
+
+<select id="fontStyle">
+
+<option value="Arial">
+Clean
+</option>
+
+<option value="Trebuchet MS">
+Rounded
+</option>
+
+<option value="Georgia">
+Classic
+</option>
+
+<option value="Verdana">
+Simple
+</option>
+
+<option value="Courier New">
+Typewriter
+</option>
+
+</select>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+🎵 Profile Music
+</div>
+
+<div id="musicArea">
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+🎬 Live Wallpaper
+</div>
+
+<div id="wallpaperArea">
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<button
+id="saveButton"
+class="save"
+>
+Save Customization 💾
+</button>
+
+<div id="status"></div>
+
+</div>
+
+
+<a
+class="back"
+href="profile.html"
+>
+← Back to Profile
+</a>
+
+
+</main>
+
+
+<footer>
+
+© 2026 TeenSpace 🌍 |
+Made for teens, with safety in mind.
+
+</footer>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://gcigveojqwwovitlwtxl.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true
+    }
+  }
+);
+
+
+const avatarInput =
+document.getElementById("avatarInput");
+
+const fontStyle =
+document.getElementById("fontStyle");
+
+const saveButton =
+document.getElementById("saveButton");
+
+const status =
+document.getElementById("status");
+
+const preview =
+document.getElementById("preview");
+
+const previewAvatar =
+document.getElementById("previewAvatar");
+
+const previewAvatarFallback =
+document.getElementById(
+  "previewAvatarFallback"
+);
+
+const previewName =
+document.getElementById(
+  "previewName"
+);
+
+const previewBadge =
+document.getElementById(
+  "previewBadge"
+);
+
+const previewAudioBox =
+document.getElementById(
+  "previewAudioBox"
+);
+
+const musicArea =
+document.getElementById(
+  "musicArea"
+);
+
+const wallpaperArea =
+document.getElementById(
+  "wallpaperArea"
+);
+
+
+let currentUser = null;
+let profile = null;
+
+let selectedAvatar = null;
+let selectedMusic = null;
+let selectedWallpaper = null;
+
+
+/* =========================================
+   LOAD USER
+========================================= */
+
+async function loadUser(){
+
+  const {
+    data:{
+      user
+    },
+    error
+  } =
+  await supabaseClient.auth.getUser();
+
+
+  if(error || !user){
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
+  }
+
+
+  currentUser =
+    user;
+
+
+  return user;
+
+}
+
+
+/* =========================================
+   LOAD PROFILE
+========================================= */
+
+async function loadProfile(){
+
+  const user =
+    await loadUser();
+
+
+  if(!user){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .from("profiles")
+
+    .select(
+      `
+      username,
+      role,
+      badge,
+      premium,
+      avatar_url,
+      profile_music_url,
+      profile_wallpaper_url,
+      font_style
+      `
+    )
+
+    .eq(
+      '"user-id"',
+      user.id
+    )
+
+    .maybeSingle();
+
+
+  if(error){
+
+    console.error(error);
+
+    status.className =
+      "error";
+
+    status.textContent =
+      "❌ Could not load profile.";
+
+    return;
+
+  }
+
+
+  profile =
+    data || {};
+
+
+  previewName.textContent =
+    profile.username ||
+    "TeenSpace User";
+
+
+  fontStyle.value =
+    profile.font_style ||
+    "Arial";
+
+
+  applyRoleStyle();
+
+
+  setupPremiumSections();
+
+
+  avatarInput.value =
+    "";
+
+
+/* Existing avatar can't be directly
+   read from a private bucket as a normal URL.
+   New uploads are previewed locally.
+*/
+
+}
+
+
+/* =========================================
+   ROLE / BADGES
+========================================= */
+
+function applyRoleStyle(){
+
+  previewName.style.fontFamily =
+    fontStyle.value;
+
+
+  if(profile.role === "owner"){
+
+    previewBadge.textContent =
+      "👑 " +
+      (
+        profile.badge ||
+        "TEENSPACE FOUNDER"
+      );
+
+  }else if(
+    profile.role === "staff"
+  ){
+
+    previewBadge.textContent =
+      "🛡️ STAFF";
+
+  }else if(
+    profile.premium === true
+  ){
+
+    previewBadge.textContent =
+      "💎 PREMIUM";
+
+  }else{
+
+    previewBadge.textContent =
+      "🌍 TeenSpace Member";
+
+  }
+
+}
+
+
+/* =========================================
+   PREMIUM OPTIONS
+========================================= */
+
+function setupPremiumSections(){
+
+  const premium =
+    profile.premium === true;
+
+
+  if(!premium){
+
+    musicArea.innerHTML = `
+
+      <div class="locked">
+
+        💎 Profile music is a Premium feature.
+
+        <br><br>
+
+        Your 5-day Premium trial/package system
+        can unlock this later.
+
+      </div>
+
+    `;
+
+
+    wallpaperArea.innerHTML = `
+
+      <div class="locked">
+
+        🎬 Live wallpaper is a Premium feature.
+
+        <br><br>
+
+        Upgrade to unlock animated profile backgrounds.
+
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+  musicArea.innerHTML = `
+
+    <input
+      type="file"
+      id="musicInput"
+      accept="audio/mpeg,audio/mp3,audio/wav,audio/ogg,audio/webm"
+    >
+
+    <div class="help">
+      Maximum 10 MB.
+    </div>
+
+  `;
+
+
+  wallpaperArea.innerHTML = `
+
+    <input
+      type="file"
+      id="wallpaperInput"
+      accept="video/mp4,video/webm"
+    >
+
+    <div class="help">
+      Maximum 25 MB.
+    </div>
+
+  `;
+
+
+  const musicInput =
+    document.getElementById(
+      "musicInput"
+    );
+
+  const wallpaperInput =
+    document.getElementById(
+      "wallpaperInput"
+    );
+
+
+  musicInput.addEventListener(
+    "change",
+    function(){
+
+      selectedMusic =
+        musicInput.files[0] ||
+        null;
+
+
+      if(!selectedMusic){
+        return;
+      }
+
+
+      if(
+        selectedMusic.size >
+        10 * 1024 * 1024
+      ){
+
+        showStatus(
+          "❌ Music must be 10 MB or smaller.",
+          "error"
+        );
+
+        musicInput.value = "";
+        selectedMusic = null;
+
+        return;
+
+      }
+
+
+      const url =
+        URL.createObjectURL(
+          selectedMusic
+        );
+
+
+      previewAudioBox.innerHTML = `
+
+        <audio
+          class="preview-audio"
+          src="${url}"
+          controls
+        ></audio>
+
+      `;
+
+    }
+  );
+
+
+  wallpaperInput.addEventListener(
+    "change",
+    function(){
+
+      selectedWallpaper =
+        wallpaperInput.files[0] ||
+        null;
+
+
+      if(!selectedWallpaper){
+        return;
+      }
+
+
+      if(
+        selectedWallpaper.size >
+        25 * 1024 * 1024
+      ){
+
+        showStatus(
+          "❌ Wallpaper must be 25 MB or smaller.",
+          "error"
+        );
+
+        wallpaperInput.value = "";
+        selectedWallpaper = null;
+
+        return;
+
+      }
+
+
+      const url =
+        URL.createObjectURL(
+          selectedWallpaper
+        );
+
+
+      const oldVideo =
+        document.getElementById(
+          "previewWallpaper"
+        );
+
+
+      if(oldVideo){
+        oldVideo.remove();
+      }
+
+
+      const video =
+        document.createElement(
+          "video"
+        );
+
+
+      video.id =
+        "previewWallpaper";
+
+      video.className =
+        "preview-bg";
+
+      video.src =
+        url;
+
+      video.autoplay =
+        true;
+
+      video.loop =
+        true;
+
+      video.muted =
+        true;
+
+      video.playsInline =
+        true;
+
+
+      preview.prepend(
+        video
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   AVATAR PREVIEW
+========================================= */
+
+avatarInput.addEventListener(
+  "change",
+  function(){
+
+    selectedAvatar =
+      avatarInput.files[0] ||
+      null;
+
+
+    if(!selectedAvatar){
+      return;
+    }
+
+
+    if(
+      selectedAvatar.size >
+      5 * 1024 * 1024
+    ){
+
+      showStatus(
+        "❌ Profile picture must be 5 MB or smaller.",
+        "error"
+      );
+
+      avatarInput.value = "";
+      selectedAvatar = null;
+
+      return;
+
+    }
+
+
+    const url =
+      URL.createObjectURL(
+        selectedAvatar
+      );
+
+
+    previewAvatar.src =
+      url;
+
+    previewAvatar.style.display =
+      "block";
+
+    previewAvatarFallback.style.display =
+      "none";
+
+  }
+);
+
+
+/* =========================================
+   FONT PREVIEW
+========================================= */
+
+fontStyle.addEventListener(
+  "change",
+  function(){
+
+    applyRoleStyle();
+
+  }
+);
+
+
+/* =========================================
+   UPLOAD FILE
+========================================= */
+
+async function uploadFile(
+  bucket,
+  folder,
+  file
+){
+
+  const extension =
+    file.name.includes(".")
+      ? file.name
+          .split(".")
+          .pop()
+          .toLowerCase()
+      : "bin";
+
+
+  const path =
+    currentUser.id +
+    "/" +
+    folder +
+    "/" +
+    crypto.randomUUID() +
+    "." +
+    extension;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .storage
+
+    .from(bucket)
+
+    .upload(
+      path,
+      file,
+      {
+        contentType:
+          file.type,
+
+        upsert:false
+      }
+    );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  return data.path;
+
+}
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+saveButton.addEventListener(
+  "click",
+  async function(){
+
+    saveButton.disabled =
+      true;
+
+    saveButton.textContent =
+      "Saving...";
+
+
+    try{
+
+
+      let avatarPath =
+        profile.avatar_url ||
+        null;
+
+      let musicPath =
+        profile.profile_music_url ||
+        null;
+
+      let wallpaperPath =
+        profile.profile_wallpaper_url ||
+        null;
+
+
+      /* AVATAR */
+
+      if(selectedAvatar){
+
+        avatarPath =
+          await uploadFile(
+            "profile-avatars",
+            "avatars",
+            selectedAvatar
+          );
+
+      }
+
+
+      /* PREMIUM FILES */
+
+      if(
+        profile.premium === true
+      ){
+
+        if(selectedMusic){
+
+          musicPath =
+            await uploadFile(
+              "profile-music",
+              "music",
+              selectedMusic
+            );
+
+        }
+
+
+        if(selectedWallpaper){
+
+          wallpaperPath =
+            await uploadFile(
+              "profile-wallpapers",
+              "wallpapers",
+              selectedWallpaper
+            );
+
+        }
+
+      }
+
+
+      /* UPDATE PROFILE */
+
+      const {
+        error
+      } =
+      await supabaseClient
+
+        .from("profiles")
+
+        .update({
+
+          avatar_url:
+            avatarPath,
+
+          profile_music_url:
+            musicPath,
+
+          profile_wallpaper_url:
+            wallpaperPath,
+
+          font_style:
+            fontStyle.value
+
+        })
+
+        .eq(
+          '"user-id"',
+          currentUser.id
+        );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      profile.avatar_url =
+        avatarPath;
+
+      profile.profile_music_url =
+        musicPath;
+
+      profile.profile_wallpaper_url =
+        wallpaperPath;
+
+      profile.font_style =
+        fontStyle.value;
+
+
+      showStatus(
+        "✅ Profile customization saved!",
+        "success"
+      );
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showStatus(
+        "❌ " +
+        error.message,
+        "error"
+      );
+
+    }
+
+
+    saveButton.disabled =
+      false;
+
+    saveButton.textContent =
+      "Save Customization 💾";
+
+  }
+);
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function showStatus(
+  text,
+  type
+){
+
+  status.className =
+    type || "";
+
+  status.textContent =
+    text;
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
+```
