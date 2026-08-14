@@ -11,6 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -85,7 +86,12 @@
       overflow: hidden;
       padding: 35px 30px;
       color: white;
-      background: linear-gradient(135deg,#5d49d8,#806cf0,#5f90e8);
+      background: linear-gradient(
+        135deg,
+        #5d49d8,
+        #806cf0,
+        #5f90e8
+      );
     }
 
     #wallpaperVideo {
@@ -153,7 +159,11 @@
       width: 135px;
       height: 135px;
       border-radius: 50%;
-      background: linear-gradient(135deg,#fff,#eee8ff);
+      background: linear-gradient(
+        135deg,
+        #fff,
+        #eee8ff
+      );
       border: 7px solid white;
       box-shadow: 0 12px 30px rgba(0,0,0,.18);
       display: flex;
@@ -246,14 +256,16 @@
       white-space: pre-wrap;
     }
 
-    /* MUSIC */
-
     .music-card {
       display: none;
       margin-top: 22px;
       padding: 20px;
       border-radius: 20px;
-      background: linear-gradient(135deg,#fff4fb,#f5f1ff);
+      background: linear-gradient(
+        135deg,
+        #fff4fb,
+        #f5f1ff
+      );
       border: 1px solid #f0d7ea;
     }
 
@@ -274,11 +286,9 @@
       width: 100%;
     }
 
-    /* STATS */
-
     .stats {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 14px;
       margin-top: 22px;
     }
@@ -292,7 +302,7 @@
     }
 
     .stat-number {
-      font-size: 25px;
+      font-size: 22px;
       font-weight: 800;
       color: #5f4ce0;
       word-break: break-word;
@@ -304,8 +314,6 @@
       font-size: 13px;
     }
 
-    /* CUSTOMIZE */
-
     .customize-button {
       display: block;
       width: 100%;
@@ -316,16 +324,22 @@
       text-decoration: none;
       font-size: 20px;
       font-weight: bold;
-      background: linear-gradient(135deg,#6c5ce7,#8e74ff);
+      background: linear-gradient(
+        135deg,
+        #6c5ce7,
+        #8e74ff
+      );
       color: white;
       box-shadow: 0 8px 22px rgba(108,92,231,.22);
     }
 
     .customize-button:hover {
-      background: linear-gradient(135deg,#5849c4,#7962e6);
+      background: linear-gradient(
+        135deg,
+        #5849c4,
+        #7962e6
+      );
     }
-
-    /* EDIT */
 
     .edit-section {
       margin-top: 28px;
@@ -419,7 +433,13 @@
       padding: 25px;
     }
 
-    @media (max-width:700px) {
+    @media (max-width: 850px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
 
       header {
         flex-direction: column;
@@ -480,13 +500,21 @@
 
   <nav>
 
-    <a href="home.html">Home</a>
+    <a href="home.html">
+      Home
+    </a>
 
-    <a href="explore.html">Explore</a>
+    <a href="explore.html">
+      Explore
+    </a>
 
-    <a href="community.html">Community</a>
+    <a href="community.html">
+      Community
+    </a>
 
-    <a href="profile.html">Profile</a>
+    <a href="profile.html">
+      Profile
+    </a>
 
     <a
       href="customize.html"
@@ -520,6 +548,7 @@
 
     <div class="cover">
 
+
       <video
         id="wallpaperVideo"
         autoplay
@@ -528,9 +557,12 @@
         playsinline
       ></video>
 
+
       <div class="cover-overlay"></div>
 
+
       <div class="cover-content">
+
 
         <div
           id="founderLabel"
@@ -539,15 +571,19 @@
           🌍 TeenSpace Member
         </div>
 
+
         <h1 id="coverTitle">
           My TeenSpace
         </h1>
+
 
         <p id="coverSubtitle">
           Your profile, your space.
         </p>
 
+
       </div>
+
 
     </div>
 
@@ -593,14 +629,17 @@
 
         </div>
 
+
       </div>
 
 
       <div class="intro">
 
+
         <div class="intro-title">
           ABOUT
         </div>
+
 
         <div
           id="bioDisplay"
@@ -608,6 +647,7 @@
         >
           No bio yet.
         </div>
+
 
       </div>
 
@@ -617,19 +657,23 @@
         class="music-card"
       >
 
+
         <div class="music-title">
           🎵 Profile Music
         </div>
 
+
         <div class="music-subtitle">
           Tap ▶️ to play this profile's music.
         </div>
+
 
         <audio
           id="profileMusic"
           controls
           preload="metadata"
         ></audio>
+
 
       </div>
 
@@ -685,10 +729,24 @@
         </div>
 
 
+        <div class="stat">
+
+          <div
+            id="genderDisplay"
+            class="stat-number"
+          >
+            —
+          </div>
+
+          <div class="stat-label">
+            Gender
+          </div>
+
+        </div>
+
+
       </div>
 
-
-      <!-- PERMANENT CUSTOMIZE BUTTON -->
 
       <a
         href="customize.html"
@@ -745,7 +803,9 @@
 
     </div>
 
+
   </section>
+
 
 </main>
 
@@ -764,6 +824,7 @@
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
 
+
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
@@ -773,9 +834,9 @@ const supabaseClient =
     SUPABASE_URL,
     SUPABASE_KEY,
     {
-      auth:{
-        persistSession:true,
-        autoRefreshToken:true
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true
       }
     }
   );
@@ -817,6 +878,9 @@ const bioInput =
 const countryDisplay =
   document.getElementById("countryDisplay");
 
+const genderDisplay =
+  document.getElementById("genderDisplay");
+
 const postCount =
   document.getElementById("postCount");
 
@@ -852,13 +916,13 @@ let currentUsername = "";
 async function getSignedUrl(
   bucket,
   path
-){
+) {
 
-  if(!path){
+  if (!path) {
     return null;
   }
 
-  try{
+  try {
 
     const {
       data,
@@ -873,25 +937,18 @@ async function getSignedUrl(
       );
 
 
-    if(error){
-
-      console.error(
-        "Storage signed URL error:",
-        bucket,
-        path,
-        error
-      );
-
+    if (error) {
       throw error;
     }
 
 
     return data.signedUrl;
 
-  }catch(error){
+  } catch (error) {
 
     console.error(
-      "Storage access failed:",
+      "Storage error:",
+      bucket,
       error
     );
 
@@ -903,19 +960,19 @@ async function getSignedUrl(
 
 
 /* =========================================
-   ROLE
+   ROLE DISPLAY
 ========================================= */
 
 function applyRole(
   role,
   badge,
   premium
-){
+) {
 
   badges.innerHTML = "";
 
 
-  if(role === "owner"){
+  if (role === "owner") {
 
     founderLabel.textContent =
       "👑 TeenSpace Founder";
@@ -927,9 +984,7 @@ function applyRole(
       "Building TeenSpace for teens around the world 🌍";
 
 
-    if(
-      !avatar.querySelector("img")
-    ){
+    if (!avatar.querySelector("img")) {
       avatar.textContent = "👑";
     }
 
@@ -950,7 +1005,7 @@ function applyRole(
     `;
 
 
-  }else if(role === "staff"){
+  } else if (role === "staff") {
 
     founderLabel.textContent =
       "🛡️ TeenSpace Staff";
@@ -962,9 +1017,7 @@ function applyRole(
       "Helping keep TeenSpace welcoming and safe.";
 
 
-    if(
-      !avatar.querySelector("img")
-    ){
+    if (!avatar.querySelector("img")) {
       avatar.textContent = "🛡️";
     }
 
@@ -978,7 +1031,7 @@ function applyRole(
     `;
 
 
-  }else{
+  } else {
 
     founderLabel.textContent =
       "🌍 TeenSpace Member";
@@ -990,9 +1043,7 @@ function applyRole(
       "Your profile, your space.";
 
 
-    if(
-      !avatar.querySelector("img")
-    ){
+    if (!avatar.querySelector("img")) {
       avatar.textContent = "👤";
     }
 
@@ -1008,7 +1059,7 @@ function applyRole(
   }
 
 
-  if(premium){
+  if (premium) {
 
     badges.innerHTML += `
 
@@ -1024,28 +1075,56 @@ function applyRole(
 
 
 /* =========================================
+   GENDER DISPLAY
+========================================= */
+
+function displayGender(
+  gender
+) {
+
+  if (gender === "Male") {
+
+    genderDisplay.textContent =
+      "♂ Male";
+
+  } else if (gender === "Female") {
+
+    genderDisplay.textContent =
+      "♀ Female";
+
+  } else {
+
+    genderDisplay.textContent =
+      "—";
+
+  }
+
+}
+
+
+/* =========================================
    LOAD PROFILE
 ========================================= */
 
-async function loadProfile(){
+async function loadProfile() {
 
-  try{
+  try {
 
     const {
-      data:{
+      data: {
         user
       },
-      error:authError
+      error: authError
     } =
     await supabaseClient
       .auth
       .getUser();
 
 
-    if(
+    if (
       authError ||
       !user
-    ){
+    ) {
 
       window.location.href =
         "login.html";
@@ -1060,7 +1139,7 @@ async function loadProfile(){
       "";
 
 
-    if(!currentUsername){
+    if (!currentUsername) {
 
       throw new Error(
         "No username is attached to this account."
@@ -1070,15 +1149,15 @@ async function loadProfile(){
 
 
     const {
-      data:profile,
-      error:profileError
+      data: profile,
+      error: profileError
     } =
     await supabaseClient
 
       .from("profiles")
 
       .select(
-        "username,country,bio,role,badge,premium,avatar_url,profile_music_url,profile_wallpaper_url,font_style"
+        "username,country,gender,bio,role,badge,premium,avatar_url,profile_music_url,profile_wallpaper_url,font_style"
       )
 
       .eq(
@@ -1089,10 +1168,8 @@ async function loadProfile(){
       .maybeSingle();
 
 
-    if(profileError){
-
+    if (profileError) {
       throw profileError;
-
     }
 
 
@@ -1109,7 +1186,7 @@ async function loadProfile(){
       "@" +
       username.textContent
         .toLowerCase()
-        .replace(/\s+/g,"_");
+        .replace(/\s+/g, "_");
 
 
     bioDisplay.textContent =
@@ -1127,6 +1204,12 @@ async function loadProfile(){
       "🌍";
 
 
+    displayGender(
+      data.gender ||
+      ""
+    );
+
+
     joinDate.textContent =
       user.created_at
         ? new Date(
@@ -1134,16 +1217,25 @@ async function loadProfile(){
           ).toLocaleDateString(
             undefined,
             {
-              month:"short",
-              year:"numeric"
+              month: "short",
+              year: "numeric"
             }
           )
         : "—";
 
 
+    applyRole(
+      data.role ||
+      "user",
+      data.badge ||
+      "",
+      data.premium === true
+    );
+
+
     /* FONT */
 
-    if(data.font_style){
+    if (data.font_style) {
 
       document.body.style.fontFamily =
         data.font_style;
@@ -1151,18 +1243,9 @@ async function loadProfile(){
     }
 
 
-    /* ROLE */
-
-    applyRole(
-      data.role || "user",
-      data.badge || "",
-      data.premium === true
-    );
-
-
     /* AVATAR */
 
-    if(data.avatar_url){
+    if (data.avatar_url) {
 
       const avatarUrl =
         await getSignedUrl(
@@ -1171,7 +1254,7 @@ async function loadProfile(){
         );
 
 
-      if(avatarUrl){
+      if (avatarUrl) {
 
         avatar.innerHTML = `
 
@@ -1189,7 +1272,7 @@ async function loadProfile(){
 
     /* MUSIC */
 
-    if(data.profile_music_url){
+    if (data.profile_music_url) {
 
       const musicUrl =
         await getSignedUrl(
@@ -1198,7 +1281,7 @@ async function loadProfile(){
         );
 
 
-      if(musicUrl){
+      if (musicUrl) {
 
         profileMusic.src =
           musicUrl;
@@ -1206,42 +1289,16 @@ async function loadProfile(){
         musicCard.style.display =
           "block";
 
-
         profileMusic.load();
 
-
-        profileMusic.addEventListener(
-          "error",
-          function(){
-
-            console.error(
-              "Audio could not be loaded."
-            );
-
-          },
-          {
-            once:true
-          }
-        );
-
-      }else{
-
-        musicCard.style.display =
-          "none";
-
       }
-
-    }else{
-
-      musicCard.style.display =
-        "none";
 
     }
 
 
     /* WALLPAPER */
 
-    if(data.profile_wallpaper_url){
+    if (data.profile_wallpaper_url) {
 
       const wallpaperUrl =
         await getSignedUrl(
@@ -1250,7 +1307,7 @@ async function loadProfile(){
         );
 
 
-      if(wallpaperUrl){
+      if (wallpaperUrl) {
 
         wallpaperVideo.src =
           wallpaperUrl;
@@ -1269,7 +1326,7 @@ async function loadProfile(){
 
     const {
       count,
-      error:countError
+      error: countError
     } =
     await supabaseClient
 
@@ -1278,8 +1335,8 @@ async function loadProfile(){
       .select(
         "id",
         {
-          count:"exact",
-          head:true
+          count: "exact",
+          head: true
         }
       )
 
@@ -1289,7 +1346,7 @@ async function loadProfile(){
       );
 
 
-    if(!countError){
+    if (!countError) {
 
       postCount.textContent =
         count ?? 0;
@@ -1300,11 +1357,12 @@ async function loadProfile(){
     loading.style.display =
       "none";
 
+
     profileCard.style.display =
       "block";
 
 
-  }catch(error){
+  } catch (error) {
 
     console.error(
       "PROFILE ERROR:",
@@ -1314,6 +1372,7 @@ async function loadProfile(){
 
     loading.style.display =
       "none";
+
 
     profileCard.style.display =
       "block";
@@ -1339,12 +1398,10 @@ async function loadProfile(){
 
 saveButton.addEventListener(
   "click",
-  async function(){
+  async function() {
 
-    if(!currentUsername){
-
+    if (!currentUsername) {
       return;
-
     }
 
 
@@ -1359,7 +1416,7 @@ saveButton.addEventListener(
       "Saving...";
 
 
-    try{
+    try {
 
       const {
         error
@@ -1369,9 +1426,7 @@ saveButton.addEventListener(
         .from("profiles")
 
         .update({
-
-          bio:newBio
-
+          bio: newBio
         })
 
         .eq(
@@ -1380,10 +1435,8 @@ saveButton.addEventListener(
         );
 
 
-      if(error){
-
+      if (error) {
         throw error;
-
       }
 
 
@@ -1398,7 +1451,7 @@ saveButton.addEventListener(
       );
 
 
-    }catch(error){
+    } catch (error) {
 
       console.error(error);
 
@@ -1426,13 +1479,13 @@ saveButton.addEventListener(
 
 
 /* =========================================
-   MESSAGE
+   SHOW MESSAGE
 ========================================= */
 
 function showMessage(
   text,
   type
-){
+) {
 
   message.className =
     type || "";
@@ -1449,7 +1502,7 @@ function showMessage(
 
 logoutButton.addEventListener(
   "click",
-  async function(){
+  async function() {
 
     logoutButton.disabled =
       true;
