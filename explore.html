@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,7 +162,7 @@
     "https://gcigveojqwwovitlwtxl.supabase.co";
 
   const SUPABASE_KEY =
-    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7Y";
+    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
   const supabaseClient =
     window.supabase.createClient(
@@ -203,15 +204,16 @@
       });
 
 
-   if (error) {
+    if (error) {
 
-  console.error("SUPABASE ERROR:", error);
+      console.error(error);
 
-  message.textContent =
-    "❌ " + error.message;
+      message.textContent =
+        "❌ Could not load the community.";
 
-  return;
-}
+      return;
+    }
+
 
     allProfiles = data || [];
 
