@@ -63,6 +63,7 @@
       font-size: 18px;
       font-weight: bold;
       color: #222;
+      word-break: break-word;
     }
 
     textarea {
@@ -92,6 +93,11 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .logout {
       background: #e74c3c;
     }
@@ -100,6 +106,7 @@
       text-align: center;
       margin: 15px 0;
       line-height: 1.5;
+      min-height: 24px;
     }
   </style>
 </head>
@@ -135,6 +142,7 @@
 
     <div class="field">
       <div class="label">Bio</div>
+
       <textarea
         id="bio"
         maxlength="150"
@@ -160,6 +168,10 @@
 
 <script>
 
+  // =========================
+  // SUPABASE
+  // =========================
+
   const SUPABASE_URL =
     "https://gcigveojqwwovitlwtxl.supabase.co";
 
@@ -172,6 +184,10 @@
       SUPABASE_KEY
     );
 
+
+  // =========================
+  // ELEMENTS
+  // =========================
 
   const message =
     document.getElementById("message");
@@ -201,106 +217,192 @@
   let currentUser = null;
 
 
+  // =========================
+  // LOAD PROFILE
+  // =========================
+
   async function loadProfile() {
 
-    const {
-      data: { user },
-      error: userError
-    } = await supabaseClient.auth.getUser();
+    try {
+
+      const {
+        data: { user },
+        error: userError
+      } = await supabaseClient.auth.getUser();
 
 
-    if (userError || !user) {
+      if (userError || !user) {
 
-      message.textContent =
-        "❌ Please log in first.";
+        message.textContent =
+          "❌ Please log in first.";
 
-      setTimeout(() => {
-        window.location.href = "login.html";
-      }, 1500);
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
 
-      return;
-    }
-
-
-    currentUser = user;
+        return;
+      }
 
 
-    username.textContent =
-      user.user_metadata?.username || "No username";
-
-    country.textContent =
-      user.user_metadata?.country || "No country";
-
-    email.textContent =
-      user.email || "No email";
+      currentUser = user;
 
 
-    const {
-      data: profile,
-      error
-    } = await supabaseClient
-      .from("profiles")
-      .select("bio")
-      .eq("user-id", user.id)
-      .maybeSingle();
+      // User information
+      username.textContent =
+        user.user_metadata?.username || "No username";
+
+      country.textContent =
+        user.user_metadata?.country || "No country";
+
+      email.textContent =
+        user.email || "No email";
 
 
-    if (!error && profile) {
-      bio.value = profile.bio || "";
-    }
+      // =========================
+      // LOAD BIO
+      // =========================
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select("bio")
+        .eq("user_id", user.id)
+        .maybeSingle();
 
 
-    message.textContent = "";
-    profileBox.style.display = "block";
-  }
+      if (profileError) {
+
+        console.error(
+          "Profile loading error:",
+          profileError
+        );
+
+      } else if (profile) {
+
+        bio.value =
+          profile.bio || "";
+
+      }
 
 
-  saveButton.addEventListener("click", async function() {
+      message.textContent = "";
 
-    if (!currentUser) return;
+      profileBox.style.display =
+        "block";
 
-    saveButton.disabled = true;
-    saveButton.textContent = "Saving...";
-
-    const {
-      error
-    } = await supabaseClient
-      .from("profiles")
-      .update({
-        bio: bio.value.trim()
-      })
-      .eq("user-id", currentUser.id);
-
-
-    if (error) {
-
-      message.textContent =
-        "❌ Could not save your bio.";
+    } catch (error) {
 
       console.error(error);
 
-    } else {
-
       message.textContent =
-        "✅ Profile saved!";
+        "❌ Could not load your profile.";
 
     }
 
-
-    saveButton.disabled = false;
-    saveButton.textContent =
-      "Save Profile 💾";
-  });
+  }
 
 
-  logoutButton.addEventListener("click", async function() {
+  // =========================
+  // SAVE PROFILE
+  // =========================
 
-    await supabaseClient.auth.signOut();
+  saveButton.addEventListener(
+    "click",
+    async function() {
 
-    window.location.href =
-      "login.html";
-  });
+      if (!currentUser) return;
 
+
+      saveButton.disabled = true;
+
+      saveButton.textContent =
+        "Saving...";
+
+      message.textContent = "";
+
+
+      try {
+
+        const {
+          error
+        } = await supabaseClient
+          .from("profiles")
+          .upsert(
+            {
+              user_id: currentUser.id,
+              bio: bio.value.trim()
+            },
+            {
+              onConflict: "user_id"
+            }
+          );
+
+
+        if (error) {
+
+          console.error(
+            "Save profile error:",
+            error
+          );
+
+          message.textContent =
+            "❌ Could not save your bio.";
+
+        } else {
+
+          message.textContent =
+            "✅ Profile saved!";
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "❌ Something went wrong.";
+
+      }
+
+
+      saveButton.disabled = false;
+
+      saveButton.textContent =
+        "Save Profile 💾";
+
+    }
+  );
+
+
+  // =========================
+  // LOG OUT
+  // =========================
+
+  logoutButton.addEventListener(
+    "click",
+    async function() {
+
+      logoutButton.disabled = true;
+
+      logoutButton.textContent =
+        "Logging out...";
+
+
+      await supabaseClient.auth.signOut();
+
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+  // =========================
+  // START
+  // =========================
 
   loadProfile();
 
@@ -308,4 +410,4 @@
 
 </body>
 </html>
-```
+
