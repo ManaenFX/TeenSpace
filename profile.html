@@ -5,11 +5,16 @@
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>My Profile | TeenSpace 🌍</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
   <style>
 
@@ -17,6 +22,7 @@
       box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
+
 
     body {
       margin: 0;
@@ -28,6 +34,7 @@
       color: #222;
     }
 
+
     header {
       background: #6c5ce7;
       color: white;
@@ -38,11 +45,13 @@
       gap: 20px;
     }
 
+
     .logo {
       font-size: 28px;
       font-weight: bold;
       white-space: nowrap;
     }
+
 
     nav {
       display: flex;
@@ -50,6 +59,7 @@
       flex-wrap: wrap;
       gap: 8px;
     }
+
 
     nav a {
       color: white;
@@ -59,25 +69,30 @@
       font-weight: bold;
     }
 
+
     nav a:hover {
       background: rgba(255,255,255,.14);
     }
+
 
     .customize-nav {
       background: rgba(255,255,255,.20);
       border: 1px solid rgba(255,255,255,.35);
     }
 
+
     .premium-nav {
       background: rgba(255,220,100,.20);
       border: 1px solid rgba(255,240,160,.45);
     }
+
 
     .page {
       width: 92%;
       max-width: 900px;
       margin: 45px auto 60px;
     }
+
 
     .profile-card {
       background: white;
@@ -86,19 +101,22 @@
       box-shadow: 0 18px 50px rgba(70,50,150,.16);
     }
 
+
     .cover {
       min-height: 310px;
       position: relative;
       overflow: hidden;
       padding: 35px 30px;
       color: white;
-      background: linear-gradient(
-        135deg,
-        #5d49d8,
-        #806cf0,
-        #5f90e8
-      );
+      background:
+        linear-gradient(
+          135deg,
+          #5d49d8,
+          #806cf0,
+          #5f90e8
+        );
     }
+
 
     #wallpaperVideo {
       position: absolute;
@@ -109,6 +127,7 @@
       display: none;
       z-index: 0;
     }
+
 
     .cover-overlay {
       position: absolute;
@@ -121,10 +140,12 @@
       z-index: 1;
     }
 
+
     .cover-content {
       position: relative;
       z-index: 2;
     }
+
 
     .founder-label {
       display: inline-block;
@@ -136,10 +157,12 @@
       font-weight: bold;
     }
 
+
     .cover h1 {
       margin: 30px 0 8px;
       font-size: 46px;
     }
+
 
     .cover p {
       margin: 0;
@@ -148,9 +171,11 @@
       max-width: 700px;
     }
 
+
     .profile-body {
       padding: 30px;
     }
+
 
     .identity {
       display: flex;
@@ -161,15 +186,17 @@
       z-index: 3;
     }
 
+
     .avatar {
       width: 135px;
       height: 135px;
       border-radius: 50%;
-      background: linear-gradient(
-        135deg,
-        #fff,
-        #eee8ff
-      );
+      background:
+        linear-gradient(
+          135deg,
+          #fff,
+          #eee8ff
+        );
       border: 7px solid white;
       box-shadow: 0 12px 30px rgba(0,0,0,.18);
       display: flex;
@@ -180,15 +207,18 @@
       font-size: 60px;
     }
 
+
     .avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
+
     .identity-text {
       padding-top: 65px;
     }
+
 
     .username {
       font-size: 34px;
@@ -197,10 +227,12 @@
       word-break: break-word;
     }
 
+
     .handle {
       color: #777;
       margin-top: 5px;
     }
+
 
     .badges {
       display: flex;
@@ -209,6 +241,7 @@
       margin-top: 12px;
     }
 
+
     .badge {
       padding: 8px 12px;
       border-radius: 999px;
@@ -216,30 +249,42 @@
       font-weight: bold;
     }
 
+
     .owner-badge {
       background: #fff1b8;
       color: #946c00;
     }
+
 
     .staff-badge {
       background: #e2efff;
       color: #1869a7;
     }
 
+
     .premium-badge {
       background: #ffe1f1;
       color: #b52270;
     }
+
+
+    .trial-badge {
+      background: #fff0b8;
+      color: #946c00;
+    }
+
 
     .verified-badge {
       background: #e4f8ff;
       color: #087796;
     }
 
+
     .member-badge {
       background: #eeeaff;
       color: #5f4ce0;
     }
+
 
     .intro {
       margin-top: 25px;
@@ -249,6 +294,7 @@
       border: 1px solid #e5e1fa;
     }
 
+
     .intro-title {
       font-size: 13px;
       font-weight: bold;
@@ -256,24 +302,28 @@
       margin-bottom: 8px;
     }
 
+
     .bio {
       font-size: 19px;
       line-height: 1.65;
       white-space: pre-wrap;
     }
 
+
     .music-card {
       display: none;
       margin-top: 22px;
       padding: 20px;
       border-radius: 20px;
-      background: linear-gradient(
-        135deg,
-        #fff4fb,
-        #f5f1ff
-      );
+      background:
+        linear-gradient(
+          135deg,
+          #fff4fb,
+          #f5f1ff
+        );
       border: 1px solid #f0d7ea;
     }
+
 
     .music-title {
       font-weight: bold;
@@ -282,15 +332,30 @@
       margin-bottom: 10px;
     }
 
+
     .music-subtitle {
       color: #777;
       font-size: 13px;
       margin-bottom: 12px;
     }
 
+
     .music-card audio {
       width: 100%;
     }
+
+
+    .premium-status {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fff8df;
+      color: #8b6900;
+      border: 1px solid #f0dd91;
+      font-weight: bold;
+    }
+
 
     .stats {
       display: grid;
@@ -298,6 +363,7 @@
       gap: 14px;
       margin-top: 22px;
     }
+
 
     .stat {
       background: white;
@@ -307,6 +373,7 @@
       text-align: center;
     }
 
+
     .stat-number {
       font-size: 22px;
       font-weight: 800;
@@ -314,11 +381,13 @@
       word-break: break-word;
     }
 
+
     .stat-label {
       color: #777;
       margin-top: 5px;
       font-size: 13px;
     }
+
 
     .customize-button {
       display: block;
@@ -330,22 +399,27 @@
       text-decoration: none;
       font-size: 20px;
       font-weight: bold;
-      background: linear-gradient(
-        135deg,
-        #6c5ce7,
-        #8e74ff
-      );
+      background:
+        linear-gradient(
+          135deg,
+          #6c5ce7,
+          #8e74ff
+        );
       color: white;
-      box-shadow: 0 8px 22px rgba(108,92,231,.22);
+      box-shadow:
+        0 8px 22px rgba(108,92,231,.22);
     }
 
+
     .customize-button:hover {
-      background: linear-gradient(
-        135deg,
-        #5849c4,
-        #7962e6
-      );
+      background:
+        linear-gradient(
+          135deg,
+          #5849c4,
+          #7962e6
+        );
     }
+
 
     .edit-section {
       margin-top: 28px;
@@ -355,12 +429,14 @@
       border: 1px solid #e8e5f6;
     }
 
+
     .edit-title {
       font-weight: bold;
       color: #5f4ce0;
       font-size: 20px;
       margin-bottom: 14px;
     }
+
 
     textarea {
       width: 100%;
@@ -373,10 +449,13 @@
       outline: none;
     }
 
+
     textarea:focus {
       border-color: #6c5ce7;
-      box-shadow: 0 0 0 3px rgba(108,92,231,.10);
+      box-shadow:
+        0 0 0 3px rgba(108,92,231,.10);
     }
+
 
     .save-button,
     .home-button,
@@ -393,22 +472,26 @@
       text-decoration: none;
     }
 
+
     .save-button {
       border: none;
       background: #6c5ce7;
       color: white;
     }
 
+
     .home-button {
       background: #eeeaff;
       color: #5f4ce0;
     }
+
 
     .logout-button {
       border: none;
       background: #ffe4e8;
       color: #c53350;
     }
+
 
     #message {
       min-height: 24px;
@@ -417,13 +500,16 @@
       line-height: 1.5;
     }
 
+
     .success {
       color: #159447;
     }
 
+
     .error {
       color: #d63050;
     }
+
 
     .loading {
       text-align: center;
@@ -432,12 +518,14 @@
       font-size: 20px;
     }
 
+
     footer {
       background: #222;
       color: white;
       text-align: center;
       padding: 25px;
     }
+
 
     @media (max-width: 850px) {
 
@@ -446,6 +534,7 @@
       }
 
     }
+
 
     @media (max-width: 700px) {
 
@@ -507,15 +596,24 @@
     🌍 TeenSpace
   </div>
 
+
   <nav>
 
-    <a href="home.html">Home</a>
+    <a href="home.html">
+      Home
+    </a>
 
-    <a href="explore.html">Explore</a>
+    <a href="explore.html">
+      Explore
+    </a>
 
-    <a href="community.html">Community</a>
+    <a href="community.html">
+      Community
+    </a>
 
-    <a href="profile.html">Profile</a>
+    <a href="profile.html">
+      Profile
+    </a>
 
     <a
       href="customize.html"
@@ -556,6 +654,7 @@
 
     <div class="cover">
 
+
       <video
         id="wallpaperVideo"
         autoplay
@@ -564,9 +663,12 @@
         playsinline
       ></video>
 
+
       <div class="cover-overlay"></div>
 
+
       <div class="cover-content">
+
 
         <div
           id="founderLabel"
@@ -575,15 +677,19 @@
           🌍 TeenSpace Member
         </div>
 
+
         <h1 id="coverTitle">
           My TeenSpace
         </h1>
+
 
         <p id="coverSubtitle">
           Your profile, your space.
         </p>
 
+
       </div>
+
 
     </div>
 
@@ -604,12 +710,14 @@
 
         <div class="identity-text">
 
+
           <div
             id="username"
             class="username"
           >
             TeenSpace User
           </div>
+
 
           <div
             id="handle"
@@ -618,21 +726,32 @@
             @user
           </div>
 
+
           <div
             id="badges"
             class="badges"
           ></div>
 
+
         </div>
+
 
       </div>
 
 
+      <div
+        id="premiumStatus"
+        class="premium-status"
+      ></div>
+
+
       <div class="intro">
+
 
         <div class="intro-title">
           ABOUT
         </div>
+
 
         <div
           id="bioDisplay"
@@ -640,6 +759,7 @@
         >
           No bio yet.
         </div>
+
 
       </div>
 
@@ -649,19 +769,23 @@
         class="music-card"
       >
 
+
         <div class="music-title">
           🎵 Profile Music
         </div>
 
+
         <div class="music-subtitle">
           Tap ▶️ to play this profile's music.
         </div>
+
 
         <audio
           id="profileMusic"
           controls
           preload="metadata"
         ></audio>
+
 
       </div>
 
@@ -746,6 +870,7 @@
 
       <div class="edit-section">
 
+
         <div class="edit-title">
           ✨ Edit Your Bio
         </div>
@@ -768,6 +893,7 @@
 
         <div id="message"></div>
 
+
       </div>
 
 
@@ -788,6 +914,7 @@
 
 
     </div>
+
 
   </section>
 
@@ -853,6 +980,9 @@ const coverTitle =
 const coverSubtitle =
   document.getElementById("coverSubtitle");
 
+const premiumStatus =
+  document.getElementById("premiumStatus");
+
 const bioDisplay =
   document.getElementById("bioDisplay");
 
@@ -894,6 +1024,72 @@ let currentUsername = "";
 
 
 /* =========================================
+   TRIAL HELPERS
+========================================= */
+
+function trialIsActive(
+  trialStartedAt
+) {
+
+  if (!trialStartedAt) {
+    return false;
+  }
+
+
+  const started =
+    new Date(
+      trialStartedAt
+    ).getTime();
+
+
+  const expires =
+    started +
+    (
+      5 *
+      24 *
+      60 *
+      60 *
+      1000
+    );
+
+
+  return Date.now() < expires;
+
+}
+
+
+function getEffectivePremium(
+  profile
+) {
+
+  if (
+    profile.premium_status ===
+    "premium"
+  ) {
+
+    return true;
+
+  }
+
+
+  if (
+    profile.premium_status ===
+    "trial"
+  ) {
+
+    return trialIsActive(
+      profile.trial_started_at
+    );
+
+  }
+
+
+  return false;
+
+}
+
+
+/* =========================================
    STORAGE
 ========================================= */
 
@@ -905,6 +1101,7 @@ async function getSignedUrl(
   if (!path) {
     return null;
   }
+
 
   try {
 
@@ -944,13 +1141,44 @@ async function getSignedUrl(
 
 
 /* =========================================
-   ROLE
+   GENDER
+========================================= */
+
+function displayGender(
+  gender
+) {
+
+  if (gender === "Male") {
+
+    genderDisplay.textContent =
+      "♂ Male";
+
+  } else if (
+    gender === "Female"
+  ) {
+
+    genderDisplay.textContent =
+      "♀ Female";
+
+  } else {
+
+    genderDisplay.textContent =
+      "—";
+
+  }
+
+}
+
+
+/* =========================================
+   ROLE + PREMIUM
 ========================================= */
 
 function applyRole(
   role,
   badge,
-  premium
+  effectivePremium,
+  premiumStatus
 ) {
 
   badges.innerHTML = "";
@@ -989,7 +1217,9 @@ function applyRole(
     `;
 
 
-  } else if (role === "staff") {
+  } else if (
+    role === "staff"
+  ) {
 
     founderLabel.textContent =
       "🛡️ TeenSpace Staff";
@@ -1043,15 +1273,32 @@ function applyRole(
   }
 
 
-  if (premium) {
+  if (effectivePremium) {
 
-    badges.innerHTML += `
+    if (
+      premiumStatus ===
+      "trial"
+    ) {
 
-      <span class="badge premium-badge">
-        💎 PREMIUM
-      </span>
+      badges.innerHTML += `
 
-    `;
+        <span class="badge trial-badge">
+          ✨ PREMIUM TRIAL
+        </span>
+
+      `;
+
+    } else {
+
+      badges.innerHTML += `
+
+        <span class="badge premium-badge">
+          💎 PREMIUM
+        </span>
+
+      `;
+
+    }
 
   }
 
@@ -1059,29 +1306,80 @@ function applyRole(
 
 
 /* =========================================
-   GENDER
+   APPLY PREMIUM STYLE
 ========================================= */
 
-function displayGender(
-  gender
+function applyAppearance(
+  profile,
+  effectivePremium
 ) {
 
-  if (gender === "Male") {
+  const defaultTheme =
+    "#6c5ce7";
 
-    genderDisplay.textContent =
-      "♂ Male";
+  const defaultName =
+    "#5f4ce0";
 
-  } else if (gender === "Female") {
+  const defaultMessage =
+    "#eeeaff";
 
-    genderDisplay.textContent =
-      "♀ Female";
 
-  } else {
+  const themeColor =
+    effectivePremium
+      ? (
+          profile.theme_color ||
+          defaultTheme
+        )
+      : defaultTheme;
 
-    genderDisplay.textContent =
-      "—";
 
-  }
+  const nameColor =
+    effectivePremium
+      ? (
+          profile.name_color ||
+          defaultName
+        )
+      : defaultName;
+
+
+  const messageColor =
+    effectivePremium
+      ? (
+          profile.message_color ||
+          defaultMessage
+        )
+      : defaultMessage;
+
+
+  const fontStyle =
+    effectivePremium
+      ? (
+          profile.font_style ||
+          "Arial"
+        )
+      : "Arial";
+
+
+  document.body.style.fontFamily =
+    fontStyle;
+
+
+  username.style.color =
+    nameColor;
+
+
+  document.documentElement.style
+    .setProperty(
+      "--profile-theme",
+      themeColor
+    );
+
+
+  document.documentElement.style
+    .setProperty(
+      "--profile-message",
+      messageColor
+    );
 
 }
 
@@ -1141,7 +1439,7 @@ async function loadProfile() {
       .from("profiles")
 
       .select(
-        "username,country,gender,bio,role,badge,premium,avatar_url,profile_music_url,profile_wallpaper_url,font_style"
+        "username,country,gender,bio,role,badge,premium,premium_status,trial_started_at,avatar_url,profile_music_url,profile_wallpaper_url,font_style,theme_color,name_color,message_color"
       )
 
       .eq(
@@ -1159,6 +1457,12 @@ async function loadProfile() {
 
     const data =
       profile || {};
+
+
+    const effectivePremium =
+      getEffectivePremium(
+        data
+      );
 
 
     username.textContent =
@@ -1208,40 +1512,93 @@ async function loadProfile() {
         : "—";
 
 
-    if (data.font_style) {
-
-      document.body.style.fontFamily =
-        data.font_style;
-
-    }
-
-
     applyRole(
       data.role ||
       "user",
       data.badge ||
       "",
-      data.premium === true
+      effectivePremium,
+      data.premium_status ||
+      "free"
     );
+
+
+    applyAppearance(
+      data,
+      effectivePremium
+    );
+
+
+    /* EXPIRED / FREE STATE */
+
+    if (
+      data.premium_status ===
+      "trial" &&
+      !effectivePremium
+    ) {
+
+      premiumStatus.style.display =
+        "block";
+
+      premiumStatus.textContent =
+        "Your 5-day Premium trial has ended. Premium extras are locked.";
+
+    } else if (
+      effectivePremium &&
+      data.premium_status ===
+      "trial"
+    ) {
+
+      const expires =
+        new Date(
+          new Date(
+            data.trial_started_at
+          ).getTime() +
+          5 *
+          24 *
+          60 *
+          60 *
+          1000
+        );
+
+
+      premiumStatus.style.display =
+        "block";
+
+      premiumStatus.textContent =
+        "✨ Premium trial active until " +
+        expires.toLocaleDateString();
+
+    } else if (
+      effectivePremium
+    ) {
+
+      premiumStatus.style.display =
+        "block";
+
+      premiumStatus.textContent =
+        "💎 Premium is active on this account.";
+
+    }
 
 
     /* AVATAR */
 
     if (data.avatar_url) {
 
-      const url =
+      const avatarUrl =
         await getSignedUrl(
           "profile-avatars",
           data.avatar_url
         );
 
 
-      if (url) {
+      if (avatarUrl) {
 
         avatar.innerHTML = `
 
           <img
-            src="${url}"
+            src="${avatarUrl}"
             alt="Profile picture"
           >
 
@@ -1254,19 +1611,22 @@ async function loadProfile() {
 
     /* MUSIC */
 
-    if (data.profile_music_url) {
+    if (
+      effectivePremium &&
+      data.profile_music_url
+    ) {
 
-      const url =
+      const musicUrl =
         await getSignedUrl(
           "profile-music",
           data.profile_music_url
         );
 
 
-      if (url) {
+      if (musicUrl) {
 
         profileMusic.src =
-          url;
+          musicUrl;
 
         musicCard.style.display =
           "block";
@@ -1280,19 +1640,22 @@ async function loadProfile() {
 
     /* WALLPAPER */
 
-    if (data.profile_wallpaper_url) {
+    if (
+      effectivePremium &&
+      data.profile_wallpaper_url
+    ) {
 
-      const url =
+      const wallpaperUrl =
         await getSignedUrl(
           "profile-wallpapers",
           data.profile_wallpaper_url
         );
 
 
-      if (url) {
+      if (wallpaperUrl) {
 
         wallpaperVideo.src =
-          url;
+          wallpaperUrl;
 
         wallpaperVideo.style.display =
           "block";
