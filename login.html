@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TeenSpace - Login</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f7ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 450px;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #6c5ce7;
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      text-align: center;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .password-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .password-row input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .show-button {
+      width: 70px;
+      margin-top: 7px;
+      border: none;
+      border-radius: 8px;
+      background: #ddd;
+      cursor: pointer;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 8px;
+      background: #6c5ce7;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .links a {
+      color: #6c5ce7;
+      text-decoration: none;
+    }
+
+    .privacy {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>👋 Welcome Back</h1>
+
+    <p class="intro">
+      Log in to your TeenSpace account.
+    </p>
+
+    <form id="loginForm">
+
+      <label for="email">Email</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+      >
+
+
+      <label for="password">Password</label>
+
+      <div class="password-row">
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+        >
+
+        <button
+          type="button"
+          class="show-button"
+          id="togglePassword"
+        >
+          Show
+        </button>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="login-button"
+        id="loginButton"
+      >
+        Login 🚀
+      </button>
+
+    </form>
+
+
+    <div id="message"></div>
+
+
+    <div class="links">
+      Don't have an account?
+      <a href="join.html">Join TeenSpace</a>
+    </div>
+
+
+    <div class="links">
+      <a href="index.html">← Back to TeenSpace</a>
+    </div>
+
+
+    <p class="privacy">
+      🛡️ Keep your password private.
+    </p>
+
+  </div>
+
+
+  <script>
+
+    // =========================
+    // SUPABASE
+    // =========================
+
+    const SUPABASE_URL =
+      "https://gcigveojqwwovitlwtxl.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // =========================
+    // ELEMENTS
+    // =========================
+
+    const form =
+      document.getElementById("loginForm");
+
+    const message =
+      document.getElementById("message");
+
+    const button =
+      document.getElementById("loginButton");
+
+    const password =
+      document.getElementById("password");
+
+    const togglePassword =
+      document.getElementById("togglePassword");
+
+
+    // =========================
+    // SHOW / HIDE PASSWORD
+    // =========================
+
+    togglePassword.addEventListener("click", function() {
+
+      if (password.type === "password") {
+
+        password.type = "text";
+        togglePassword.textContent = "Hide";
+
+      } else {
+
+        password.type = "password";
+        togglePassword.textContent = "Show";
+
+      }
+
+    });
+
+
+    // =========================
+    // LOGIN
+    // =========================
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const passwordValue =
+        password.value;
+
+
+      button.disabled = true;
+      button.textContent = "Logging in...";
+
+      message.textContent = "";
+
+
+      try {
+
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+            password: passwordValue
+
+          });
+
+
+        if (error) {
+
+          message.textContent =
+            "❌ " + error.message;
+
+          button.disabled = false;
+          button.textContent =
+            "Login 🚀";
+
+          return;
+        }
+
+
+        message.textContent =
+          "🎉 Login successful!";
+
+
+        button.textContent =
+          "Logged In ✓";
+
+
+        // Temporary destination
+        setTimeout(function() {
+
+          window.location.href =
+            "index.html";
+
+        }, 1000);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "❌ Something went wrong. Please try again.";
+
+        button.disabled = false;
+        button.textContent =
+          "Login 🚀";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
