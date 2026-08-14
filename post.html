@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,6 +10,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
 
 *{
@@ -16,24 +18,31 @@ box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
+
 body{
+
 margin:0;
 background:#f4f7ff;
 color:#222;
+
 }
 
 
 .container{
+
 width:92%;
 max-width:700px;
 margin:50px auto;
+
 }
 
 
 h1{
+
 text-align:center;
 color:#6c5ce7;
 font-size:40px;
+
 }
 
 
@@ -41,28 +50,20 @@ font-size:40px;
 
 background:white;
 padding:30px;
-border-radius:20px;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
-
-}
-
-
-textarea,
-select{
-
-width:100%;
-padding:18px;
-margin-bottom:20px;
-border-radius:12px;
-border:1px solid #ccc;
-font-size:18px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
 
 }
 
 
 textarea{
 
+width:100%;
 height:180px;
+padding:20px;
+border-radius:15px;
+border:1px solid #ccc;
+font-size:18px;
 resize:none;
 
 }
@@ -71,12 +72,13 @@ resize:none;
 button{
 
 width:100%;
+margin-top:20px;
 padding:18px;
 background:#6c5ce7;
 color:white;
 border:none;
-border-radius:12px;
-font-size:20px;
+border-radius:15px;
+font-size:22px;
 font-weight:bold;
 cursor:pointer;
 
@@ -90,7 +92,8 @@ background:#5849c4;
 }
 
 
-#message{
+
+.message{
 
 text-align:center;
 margin-top:20px;
@@ -99,13 +102,17 @@ font-size:18px;
 }
 
 
-.error{
-color:#ff3366;
+.success{
+
+color:green;
+
 }
 
 
-.success{
-color:green;
+.error{
+
+color:#ff3366;
+
 }
 
 
@@ -114,9 +121,9 @@ color:green;
 display:block;
 text-align:center;
 margin-top:25px;
-text-decoration:none;
 color:#6c5ce7;
 font-weight:bold;
+text-decoration:none;
 
 }
 
@@ -133,66 +140,41 @@ font-weight:bold;
 
 
 <h1>
-✍️ Create Post
+✍️ Create a Post
 </h1>
 
 
 <div class="card">
 
 
-<select id="topic">
-
-<option value="Around the World">
-🌎 Around the World
-</option>
-
-<option value="Gaming">
-🎮 Gaming
-</option>
-
-<option value="Creativity">
-🎨 Creativity
-</option>
-
-<option value="School">
-📚 School & Learning
-</option>
-
-<option value="Ideas">
-💡 Ideas & Projects
-</option>
-
-</select>
-
-
-
-<textarea
+<textarea 
 id="content"
-placeholder="What do you want to share?"
+placeholder="Share something with TeenSpace..."
 ></textarea>
 
 
-
-<button id="postBtn">
+<button onclick="createPost()">
 
 Publish Post 🚀
 
 </button>
 
 
-<div id="message"></div>
+<div id="message" class="message"></div>
 
 
 </div>
 
 
+<a href="community.html" class="back">
 
-<a class="back" href="community.html">
 ← Back to Community
+
 </a>
 
 
 </div>
+
 
 
 
@@ -207,7 +189,8 @@ const SUPABASE_KEY =
 "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 
-const supabaseClient =
+
+const supabase =
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
@@ -215,16 +198,11 @@ SUPABASE_KEY
 
 
 
+async function createPost(){
+
+
 const content =
-document.getElementById("content");
-
-
-const topic =
-document.getElementById("topic");
-
-
-const button =
-document.getElementById("postBtn");
+document.getElementById("content").value.trim();
 
 
 const message =
@@ -232,36 +210,72 @@ document.getElementById("message");
 
 
 
+if(!content){
 
-async function createPost(){
+message.className="message error";
 
+message.textContent=
+"Please write something first.";
 
-button.disabled=true;
+return;
 
-button.textContent=
-"Publishing...";
+}
 
-
-
-try{
 
 
 const {
-
 data:{
 user
 }
 
 }
 =
-await supabaseClient.auth.getUser();
+await supabase.auth.getUser();
 
 
 
 if(!user){
 
 
-window.location.href="index.html";
+message.className="message error";
+
+message.textContent=
+"You need to login first.";
+
+return;
+
+}
+
+
+
+
+const {error}=
+
+await supabase
+
+.from("posts")
+
+.insert({
+
+user_id:user.id,
+
+content:content
+
+});
+
+
+
+
+if(error){
+
+
+console.log(error);
+
+
+message.className="message error";
+
+message.textContent=
+"❌ Could not publish post.";
 
 return;
 
@@ -270,101 +284,30 @@ return;
 
 
 
-const postText =
-content.value.trim();
-
-
-
-if(!postText){
-
-
-throw new Error(
-"Write something first."
-);
-
-
-}
-
-
-
-const {error}=
-
-await supabaseClient
-
-.from("posts")
-
-.insert({
-
-user_id:user.id,
-
-content:postText,
-
-topic:topic.value
-
-});
-
-
-
-if(error){
-
-throw error;
-
-}
-
-
-
-message.className="success";
+message.className="message success";
 
 message.textContent=
 "✅ Post published!";
 
 
+document.getElementById("content").value="";
+
+
+
 setTimeout(()=>{
 
-window.location.href=
-"community.html";
+window.location.href="community.html";
 
-},1200);
-
-
-
-}
-
-catch(error){
-
-
-console.log(error);
-
-
-message.className="error";
-
-message.textContent=
-"❌ "+error.message;
+},1500);
 
 
 
 }
-
-
-button.disabled=false;
-
-button.textContent=
-"Publish Post 🚀";
-
-
-}
-
-
-
-button.addEventListener(
-"click",
-createPost
-);
-
 
 
 </script>
 
 
 </body>
+
 </html>
