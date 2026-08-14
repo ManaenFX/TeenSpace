@@ -205,10 +205,10 @@
 
    if (error) {
 
-  console.error(error);
+  console.error("SUPABASE ERROR:", error);
 
   message.textContent =
-    "❌ Could not load the community.";
+    "❌ " + error.message;
 
   return;
 }
