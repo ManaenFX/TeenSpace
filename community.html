@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -10,217 +10,253 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
 
-*{
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #f4f7ff, #eee8ff);
+    color: #222;
 }
 
 
-body{
+/* HEADER */
 
-margin:0;
-background:linear-gradient(
-135deg,
-#f4f7ff,
-#eee8ff
-);
+header {
+    background: #6c5ce7;
+    color: white;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-color:#222;
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
 
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 16px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
 }
 
 
+/* HERO */
 
-header{
+.hero {
+    text-align: center;
+    padding: 45px 20px 25px;
+}
 
-background:#6c5ce7;
-color:white;
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
+.hero h1 {
+    color: #6c5ce7;
+    font-size: 42px;
+    margin-bottom: 10px;
+}
 
+.hero p {
+    color: #666;
+    font-size: 18px;
 }
 
 
+/* MAIN */
 
-.logo{
-
-font-size:28px;
-font-weight:bold;
-
+.container {
+    width: 92%;
+    max-width: 800px;
+    margin: 20px auto 60px;
 }
 
 
+/* CREATE POST */
 
-nav a{
+.create-post {
+    display: block;
+    width: 100%;
+    background: #6c5ce7;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 19px;
+    border-radius: 16px;
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 28px;
+    box-shadow: 0 7px 20px rgba(108,92,231,0.25);
+}
 
-color:white;
-text-decoration:none;
-margin-left:15px;
-font-weight:bold;
-
+.create-post:hover {
+    background: #5849c4;
 }
 
 
+/* POST CARD */
 
-.hero{
+.post {
+    background: white;
+    border-radius: 20px;
+    padding: 23px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border-left: 6px solid #6c5ce7;
+}
 
-text-align:center;
-padding:45px 20px;
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
 
+.username {
+    color: #6c5ce7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.message {
+    margin-top: 16px;
+    font-size: 18px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.time {
+    margin-top: 14px;
+    color: #999;
+    font-size: 13px;
 }
 
 
+/* BUTTONS */
 
-.hero h1{
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+}
 
-color:#6c5ce7;
-font-size:42px;
+.action-btn {
+    border: none;
+    padding: 9px 13px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #eeeaff;
+    color: #5a49c7;
+}
 
+.action-btn:hover {
+    background: #ddd6ff;
+}
+
+.delete-btn {
+    background: #ffe7eb;
+    color: #d63050;
+}
+
+.delete-btn:hover {
+    background: #ffd4dc;
 }
 
 
+/* EDIT BOX */
 
-.hero p{
+.edit-box {
+    margin-top: 15px;
+}
 
-color:#555;
-font-size:18px;
+.edit-box textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 17px;
+    resize: vertical;
+}
 
+.save-btn {
+    margin-top: 8px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 9px;
+    background: #6c5ce7;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 
+/* QUOTE */
 
-.container{
-
-width:92%;
-max-width:800px;
-margin:auto;
-
+.quote {
+    margin-top: 15px;
+    padding: 14px;
+    border-left: 4px solid #6c5ce7;
+    background: #f5f2ff;
+    color: #666;
+    border-radius: 8px;
 }
 
 
+/* EMPTY / LOADING */
 
-.create{
-
-background:#6c5ce7;
-color:white;
-text-decoration:none;
-display:block;
-text-align:center;
-padding:18px;
-border-radius:15px;
-font-size:22px;
-font-weight:bold;
-margin-bottom:30px;
-
+.status {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    text-align: center;
+    color: #666;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
 
+/* FOOTER */
 
-.create:hover{
-
-background:#5849c4;
-
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 25px;
 }
 
 
+/* MOBILE */
 
+@media (max-width: 700px) {
 
-.post{
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
 
-background:white;
-padding:25px;
-border-radius:20px;
-margin-bottom:20px;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
+    nav a {
+        margin: 5px;
+        display: inline-block;
+    }
 
-}
+    .hero h1 {
+        font-size: 33px;
+    }
 
-
-
-.username{
-
-font-size:20px;
-font-weight:bold;
-color:#6c5ce7;
-
-}
-
-
-
-.badge{
-
-background:#ffd700;
-padding:5px 10px;
-border-radius:20px;
-font-size:12px;
-margin-left:8px;
-
-}
-
-
-
-.message{
-
-margin-top:15px;
-font-size:18px;
-line-height:1.5;
-
-}
-
-
-
-.time{
-
-margin-top:15px;
-color:#888;
-font-size:14px;
-
-}
-
-
-
-.loading{
-
-text-align:center;
-color:#6c5ce7;
-font-size:20px;
-
-}
-
-
-
-footer{
-
-background:#222;
-color:white;
-text-align:center;
-padding:25px;
-margin-top:50px;
-
-}
-
-
-
-@media(max-width:700px){
-
-header{
-
-flex-direction:column;
-gap:15px;
-
-}
-
-
-.hero h1{
-
-font-size:32px;
-
-}
+    .post {
+        padding: 20px;
+    }
 
 }
 
@@ -229,260 +265,595 @@ font-size:32px;
 </head>
 
 
-
 <body>
-
 
 
 <header>
 
+    <div class="logo">
+        🌍 TeenSpace
+    </div>
 
-<div class="logo">
-🌍 TeenSpace
-</div>
+    <nav>
 
+        <a href="home.html">Home</a>
 
-<nav>
+        <a href="explore.html">Explore</a>
 
-<a href="home.html">Home</a>
-<a href="explore.html">Explore</a>
-<a href="community.html">Community</a>
-<a href="profile.html">Profile</a>
+        <a href="community.html">Community</a>
 
-</nav>
+        <a href="profile.html">Profile</a>
 
+    </nav>
 
 </header>
 
 
 
-
 <section class="hero">
 
+    <h1>
+        💬 TeenSpace Community
+    </h1>
 
-<h1>
-💬 TeenSpace Community
-</h1>
-
-
-<p>
-Share messages and connect with everyone.
-</p>
-
+    <p>
+        Share, reply and connect with the TeenSpace community.
+    </p>
 
 </section>
 
 
 
+<main class="container">
 
 
-<div class="container">
+    <a
+        href="post.html"
+        class="create-post"
+    >
+        ✍️ Create a Post
+    </a>
 
 
+    <div id="posts">
 
-<a href="post.html" class="create">
+        <div class="status">
+            Loading posts...
+        </div>
 
-✍️ Create a Post
-
-</a>
-
-
-
-<div id="posts">
-
-<div class="loading">
-
-Loading messages...
-
-</div>
-
-</div>
+    </div>
 
 
-
-</div>
-
+</main>
 
 
 
 <footer>
 
-© 2026 TeenSpace 🌍
+    © 2026 TeenSpace 🌍 |
+    Made for teens, with safety in mind.
 
 </footer>
-
-
 
 
 
 <script>
 
 
-const SUPABASE_URL =
-"https://gcigveojqwwovitlwtxl.supabase.co";
+/* SUPABASE */
 
+const SUPABASE_URL =
+    "https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
-
+    "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 
 const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-
-const postsBox =
-document.getElementById("posts");
-
+const postsContainer =
+    document.getElementById("posts");
 
 
-
-async function loadPosts(){
-
-
-const {data,error}=
-
-await supabaseClient
-
-.from("posts")
-
-.select(`
-content,
-created_at,
-user_id
-`)
-
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+let currentUser = null;
 
 
+/* CHECK USER */
 
-if(error){
+async function getCurrentUser() {
 
-postsBox.innerHTML=
+    const {
+        data: {
+            user
+        }
+    } =
+    await supabaseClient.auth.getUser();
 
-"❌ Could not load posts";
-
-console.log(error);
-
-return;
+    currentUser = user;
 
 }
 
 
+/* ESCAPE HTML */
 
-if(data.length===0){
+function escapeHTML(text) {
 
-postsBox.innerHTML=
+    const div =
+        document.createElement("div");
 
-"No posts yet. Be the first! 🚀";
+    div.textContent = text;
 
-return;
-
-}
-
-
-
-let html="";
-
-
-
-for(let post of data){
-
-
-
-let username="TeenSpace User";
-
-
-
-const {data:profile}=
-
-await supabaseClient
-
-.from("profiles")
-
-.select("username")
-
-.eq(
-"id",
-post.user_id
-)
-
-.single();
-
-
-
-if(profile){
-
-username=profile.username;
+    return div.innerHTML;
 
 }
 
 
+/* TIME */
 
-html += `
+function formatTime(dateString) {
 
+    const date =
+        new Date(dateString);
 
-<div class="post">
-
-
-<div class="username">
-
-👤 ${username}
-
-</div>
-
-
-
-<div class="message">
-
-${post.content}
-
-</div>
-
-
-
-<div class="time">
-
-${new Date(post.created_at)
-.toLocaleString()}
-
-</div>
-
-
-
-</div>
-
-
-`;
+    return date.toLocaleString();
 
 }
 
 
+/* LOAD POSTS */
 
-postsBox.innerHTML=html;
+async function loadPosts() {
 
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+        .from("posts")
+
+        .select(`
+            id,
+            user_id,
+            content,
+            created_at,
+            profiles (
+                username
+            )
+        `)
+
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        postsContainer.innerHTML = `
+
+            <div class="status">
+
+                ❌ Could not load posts.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        postsContainer.innerHTML = `
+
+            <div class="status">
+
+                🌟 No posts yet.
+
+                <br><br>
+
+                Be the first person to post!
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    postsContainer.innerHTML = "";
+
+
+    data.forEach(post => {
+
+
+        const username =
+            post.profiles?.username ||
+            "TeenSpace User";
+
+
+        const card =
+            document.createElement("div");
+
+        card.className = "post";
+
+
+        const header =
+            document.createElement("div");
+
+        header.className =
+            "post-header";
+
+
+        const name =
+            document.createElement("div");
+
+        name.className =
+            "username";
+
+
+        name.textContent =
+            "👤 " + username;
+
+
+        header.appendChild(name);
+
+
+        card.appendChild(header);
+
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "message";
+
+
+        message.textContent =
+            post.content;
+
+
+        card.appendChild(message);
+
+
+        const time =
+            document.createElement("div");
+
+        time.className =
+            "time";
+
+
+        time.textContent =
+            formatTime(
+                post.created_at
+            );
+
+
+        card.appendChild(time);
+
+
+        /* ACTIONS */
+
+        const actions =
+            document.createElement("div");
+
+        actions.className =
+            "actions";
+
+
+        /* QUOTE */
+
+        const quoteButton =
+            document.createElement("button");
+
+        quoteButton.className =
+            "action-btn";
+
+        quoteButton.textContent =
+            "💬 Quote";
+
+
+        quoteButton.onclick =
+            function() {
+
+                const quoteText =
+                    "> " +
+                    username +
+                    ": " +
+                    post.content;
+
+
+                window.location.href =
+                    "post.html?quote=" +
+                    encodeURIComponent(
+                        quoteText
+                    );
+
+            };
+
+
+        actions.appendChild(
+            quoteButton
+        );
+
+
+        /* OWN POST BUTTONS */
+
+        if (
+            currentUser &&
+            currentUser.id === post.user_id
+        ) {
+
+
+            /* EDIT */
+
+            const editButton =
+                document.createElement("button");
+
+            editButton.className =
+                "action-btn";
+
+            editButton.textContent =
+                "✏️ Edit";
+
+
+            editButton.onclick =
+                function() {
+
+                    openEdit(
+                        card,
+                        post
+                    );
+
+                };
+
+
+            actions.appendChild(
+                editButton
+            );
+
+
+            /* DELETE */
+
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.className =
+                "action-btn delete-btn";
+
+            deleteButton.textContent =
+                "🗑️ Delete";
+
+
+            deleteButton.onclick =
+                function() {
+
+                    deletePost(
+                        post.id
+                    );
+
+                };
+
+
+            actions.appendChild(
+                deleteButton
+            );
+
+        }
+
+
+        card.appendChild(actions);
+
+
+        postsContainer.appendChild(card);
+
+
+    });
 
 
 }
 
 
+/* EDIT */
 
-loadPosts();
+function openEdit(card, post) {
 
 
+    const oldMessage =
+        card.querySelector(".message");
+
+
+    const oldActions =
+        card.querySelector(".actions");
+
+
+    oldMessage.style.display =
+        "none";
+
+    oldActions.style.display =
+        "none";
+
+
+    const editBox =
+        document.createElement("div");
+
+    editBox.className =
+        "edit-box";
+
+
+    const textarea =
+        document.createElement("textarea");
+
+    textarea.value =
+        post.content;
+
+
+    const save =
+        document.createElement("button");
+
+    save.className =
+        "save-btn";
+
+    save.textContent =
+        "Save Changes";
+
+
+    save.onclick =
+        async function() {
+
+
+            const newContent =
+                textarea.value.trim();
+
+
+            if (!newContent) {
+
+                alert(
+                    "Post cannot be empty."
+                );
+
+                return;
+
+            }
+
+
+            const {
+                error
+            } =
+            await supabaseClient
+
+                .from("posts")
+
+                .update({
+
+                    content:
+                        newContent
+
+                })
+
+                .eq(
+                    "id",
+                    post.id
+                );
+
+
+            if (error) {
+
+                console.error(error);
+
+                alert(
+                    "Could not edit post."
+                );
+
+                return;
+
+            }
+
+
+            loadPosts();
+
+        };
+
+
+    editBox.appendChild(
+        textarea
+    );
+
+
+    editBox.appendChild(
+        save
+    );
+
+
+    card.appendChild(
+        editBox
+    );
+
+}
+
+
+/* DELETE */
+
+async function deletePost(postId) {
+
+
+    const confirmed =
+        confirm(
+            "Delete this post?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+
+        .from("posts")
+
+        .delete()
+
+        .eq(
+            "id",
+            postId
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not delete post."
+        );
+
+        return;
+
+    }
+
+
+    loadPosts();
+
+}
+
+
+/* START */
+
+async function start() {
+
+    await getCurrentUser();
+
+    await loadPosts();
+
+}
+
+
+start();
 
 </script>
 
 
 </body>
-
 </html>
+
