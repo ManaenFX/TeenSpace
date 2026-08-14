@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TeenSpace - Explore</title>
+  <title>TeenSpace - Explore 🌍</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -22,43 +23,69 @@
     }
 
     header {
+      background: #6c5ce7;
+      color: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 18px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
       text-align: center;
-      padding: 45px 20px 30px;
+      background: white;
+      padding: 50px 20px 35px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 48px;
+    .hero h1 {
       color: #6352e8;
+      font-size: 44px;
+      margin: 0 0 12px;
     }
 
-    header p {
-      font-size: 20px;
+    .hero p {
       color: #555;
-      margin-top: 12px;
+      font-size: 19px;
     }
 
     .container {
       width: 92%;
-      max-width: 1200px;
-      margin: 20px auto;
+      max-width: 1100px;
+      margin: 30px auto 50px;
     }
 
     .search-box {
       background: white;
-      padding: 28px;
-      border-radius: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 25px;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
     }
 
     input,
     select {
       width: 100%;
-      padding: 18px;
-      margin-bottom: 16px;
+      padding: 17px;
+      margin-bottom: 14px;
       border: 1px solid #ccc;
-      border-radius: 15px;
-      font-size: 18px;
+      border-radius: 14px;
+      font-size: 17px;
       outline: none;
       background: white;
     }
@@ -66,18 +93,17 @@
     input:focus,
     select:focus {
       border-color: #6352e8;
-      box-shadow: 0 0 0 3px rgba(99,82,232,0.12);
     }
 
     #message {
       text-align: center;
-      font-size: 18px;
-      margin: 28px 0;
-      min-height: 28px;
+      margin: 20px 0;
+      min-height: 25px;
+      font-size: 17px;
     }
 
     .error {
-      color: #ff2864;
+      color: #e74c3c;
     }
 
     .success {
@@ -87,65 +113,60 @@
     #profiles {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 25px;
+      gap: 22px;
     }
 
     .profile-card {
       background: white;
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      border: 1px solid rgba(99,82,232,0.08);
-      min-height: 250px;
+      padding: 25px;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
     }
 
     .profile-top {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
+      gap: 15px;
+      margin-bottom: 18px;
     }
 
     .avatar {
-      width: 72px;
-      height: 72px;
-      flex-shrink: 0;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
       background: linear-gradient(135deg, #6352e8, #8c7cff);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
+      font-size: 27px;
       font-weight: bold;
-      box-shadow: 0 6px 15px rgba(99,82,232,0.25);
+      flex-shrink: 0;
     }
 
     .username {
-      font-size: 23px;
-      font-weight: bold;
       color: #6352e8;
+      font-size: 22px;
+      font-weight: bold;
       word-break: break-word;
     }
 
-    .member-label {
+    .member {
       color: #999;
       font-size: 13px;
       margin-top: 4px;
     }
 
-    .country-box {
-      background: #f6f5ff;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 16px;
-      margin-bottom: 14px;
+    .country {
+      background: #f3f1ff;
+      padding: 12px;
+      border-radius: 11px;
+      margin-bottom: 15px;
     }
 
     .bio-title {
-      font-size: 13px;
       color: #888;
+      font-size: 12px;
       font-weight: bold;
       margin-bottom: 5px;
     }
@@ -157,515 +178,562 @@
     }
 
     .empty {
-      text-align: center;
       background: white;
       padding: 40px 20px;
       border-radius: 20px;
+      text-align: center;
       color: #666;
       grid-column: 1 / -1;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     }
 
-    .home-button {
-      display: block;
-      width: 92%;
-      max-width: 1200px;
-      margin: 35px auto;
-      padding: 20px;
-      background: #6352e8;
+    footer {
+      background: #222;
       color: white;
-      text-decoration: none;
       text-align: center;
-      border-radius: 18px;
-      font-size: 22px;
-      font-weight: bold;
+      padding: 25px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
 
-      header h1 {
-        font-size: 34px;
+      header {
+        flex-direction: column;
+        gap: 15px;
       }
 
-      header p {
-        font-size: 17px;
+      nav a {
+        margin: 5px;
+        display: inline-block;
+      }
+
+      .hero h1 {
+        font-size: 34px;
       }
 
       .container {
         width: 94%;
       }
-
-      .search-box {
-        padding: 20px;
-      }
-
-      .profile-card {
-        padding: 22px;
-      }
-
     }
   </style>
 </head>
 
+
 <body>
 
-  <header>
-
-    <h1>🌍 Explore TeenSpace</h1>
+<header>
+
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
+
+  <nav>
 
-    <p>
-      Discover people around the TeenSpace community.
-    </p>
+    <!-- HOME = home.html -->
+    <a href="home.html">Home</a>
 
-  </header>
+    <a href="explore.html">Explore</a>
 
+    <a href="community.html">Community</a>
 
-  <main class="container">
+    <a href="profile.html">Profile</a>
 
-    <section class="search-box">
+  </nav>
 
-      <input
-        type="text"
-        id="search"
-        placeholder="🔎 Search username..."
-        autocomplete="off"
-      >
+</header>
 
-      <select id="country">
 
-        <option value="">
-          🌍 All countries
-        </option>
+<section class="hero">
 
-        <option>Nigeria</option>
-        <option>Ghana</option>
-        <option>South Africa</option>
-        <option>Kenya</option>
-        <option>Uganda</option>
-        <option>Tanzania</option>
-        <option>Rwanda</option>
-        <option>Egypt</option>
-        <option>Morocco</option>
-        <option>Algeria</option>
-        <option>Zimbabwe</option>
-        <option>Zambia</option>
-        <option>Cameroon</option>
-        <option>Ethiopia</option>
+  <h1>🌍 Explore TeenSpace</h1>
 
-        <option>United Kingdom</option>
-        <option>Ireland</option>
-        <option>France</option>
-        <option>Germany</option>
-        <option>Spain</option>
-        <option>Italy</option>
-        <option>Portugal</option>
-        <option>Netherlands</option>
-        <option>Belgium</option>
-        <option>Switzerland</option>
-        <option>Austria</option>
-        <option>Sweden</option>
-        <option>Norway</option>
-        <option>Denmark</option>
-        <option>Finland</option>
-        <option>Poland</option>
-        <option>Greece</option>
-        <option>Ukraine</option>
+  <p>
+    Discover people around the TeenSpace community.
+  </p>
 
-        <option>United States</option>
-        <option>Canada</option>
-        <option>Brazil</option>
-        <option>Mexico</option>
-        <option>Argentina</option>
+</section>
 
-        <option>India</option>
-        <option>China</option>
-        <option>Japan</option>
-        <option>South Korea</option>
-        <option>Philippines</option>
-        <option>Indonesia</option>
-        <option>Malaysia</option>
-        <option>Singapore</option>
 
-        <option>Australia</option>
-        <option>New Zealand</option>
+<main class="container">
 
-      </select>
+  <section class="search-box">
 
-    </section>
+    <input
+      type="text"
+      id="search"
+      placeholder="🔎 Search username..."
+      autocomplete="off"
+    >
 
+    <select id="country">
 
-    <div id="message">
-      Loading community...
-    </div>
+      <option value="">
+        🌍 All countries
+      </option>
 
+      <option>Nigeria</option>
+      <option>Ghana</option>
+      <option>South Africa</option>
+      <option>Kenya</option>
+      <option>Uganda</option>
+      <option>Tanzania</option>
+      <option>Rwanda</option>
+      <option>Egypt</option>
+      <option>Morocco</option>
+      <option>Algeria</option>
+      <option>Zimbabwe</option>
+      <option>Zambia</option>
+      <option>Cameroon</option>
+      <option>Ethiopia</option>
 
-    <section id="profiles"></section>
+      <option>United Kingdom</option>
+      <option>Ireland</option>
+      <option>France</option>
+      <option>Germany</option>
+      <option>Spain</option>
+      <option>Italy</option>
+      <option>Portugal</option>
+      <option>Netherlands</option>
+      <option>Belgium</option>
+      <option>Switzerland</option>
+      <option>Austria</option>
+      <option>Sweden</option>
+      <option>Norway</option>
+      <option>Denmark</option>
+      <option>Finland</option>
+      <option>Poland</option>
+      <option>Greece</option>
+      <option>Ukraine</option>
 
-  </main>
+      <option>United States</option>
+      <option>Canada</option>
+      <option>Brazil</option>
+      <option>Mexico</option>
+      <option>Argentina</option>
 
+      <option>India</option>
+      <option>China</option>
+      <option>Japan</option>
+      <option>South Korea</option>
+      <option>Philippines</option>
+      <option>Indonesia</option>
+      <option>Malaysia</option>
+      <option>Singapore</option>
 
-  <a class="home-button" href="index.html">
-    🏠 Back Home
-  </a>
+      <option>Australia</option>
+      <option>New Zealand</option>
 
+    </select>
 
-  <script>
+  </section>
 
-    // ==========================================
-    // SUPABASE
-    // ==========================================
 
-    const SUPABASE_URL =
-      "https://gcigveojqwwovitlwtxl.supabase.co";
+  <div id="message">
+    Loading community...
+  </div>
 
-    const SUPABASE_KEY =
-      "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+  <section id="profiles"></section>
 
+</main>
 
-    // ==========================================
-    // ELEMENTS
-    // ==========================================
 
-    const profilesContainer =
-      document.getElementById("profiles");
+<footer>
 
-    const message =
-      document.getElementById("message");
+  © 2026 TeenSpace 🌍 |
+  Made for teens, with safety in mind.
 
-    const searchInput =
-      document.getElementById("search");
+</footer>
 
-    const countrySelect =
-      document.getElementById("country");
 
+<script>
 
-    let allProfiles = [];
+// ==========================================
+// SUPABASE
+// ==========================================
 
+const SUPABASE_URL =
+  "https://gcigveojqwwovitlwtxl.supabase.co";
 
-    // ==========================================
-    // LOAD PROFILES
-    // ==========================================
+const SUPABASE_KEY =
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
-    async function loadProfiles() {
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-      message.className = "";
 
-      message.textContent =
-        "Loading community...";
+// ==========================================
+// ELEMENTS
+// ==========================================
 
-      profilesContainer.innerHTML = "";
+const profilesContainer =
+  document.getElementById("profiles");
 
+const message =
+  document.getElementById("message");
 
-      try {
+const searchInput =
+  document.getElementById("search");
 
-        const {
-          data,
-          error
-        } = await supabaseClient
-          .from("profiles")
-          .select('"user-id", username, country, bio');
+const countrySelect =
+  document.getElementById("country");
 
 
-        if (error) {
+// ==========================================
+// LOAD PROFILES
+// ==========================================
 
-          console.error(
-            "Supabase error:",
-            error
-          );
+async function loadProfiles() {
 
-          message.className =
-            "error";
+  message.className = "";
 
-          message.textContent =
-            "❌ Could not load the community.";
+  message.textContent =
+    "Loading community...";
 
-          return;
+  profilesContainer.innerHTML = "";
 
-        }
 
+  try {
 
-        // ==========================================
-        // REMOVE DUPLICATE USER IDS
-        // ==========================================
+    const {
+      data: profiles,
+      error
+    } =
+      await supabaseClient
 
-        const uniqueProfiles =
-          new Map();
+        .from("profiles")
 
-
-        for (const profile of (data || [])) {
-
-          const userId =
-            profile["user-id"];
-
-
-          if (!userId) {
-            continue;
-          }
-
-
-          // Keep only ONE profile
-          // for each "user-id"
-
-          uniqueProfiles.set(
-            userId,
-            profile
-          );
-
-        }
-
-
-        allProfiles =
-          Array.from(
-            uniqueProfiles.values()
-          );
-
-
-        message.className =
-          "success";
-
-        message.textContent =
-          `✅ ${allProfiles.length} member(s) found`;
-
-
-        displayProfiles();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.className =
-          "error";
-
-        message.textContent =
-          "❌ Could not connect to TeenSpace.";
-
-      }
-
-    }
-
-
-    // ==========================================
-    // DISPLAY PROFILES
-    // ==========================================
-
-    function displayProfiles() {
-
-      const search =
-        searchInput.value
-          .trim()
-          .toLowerCase();
-
-
-      const selectedCountry =
-        countrySelect.value;
-
-
-      const filtered =
-        allProfiles.filter(profile => {
-
-          const username =
-            (profile.username || "")
-              .toLowerCase();
-
-
-          const country =
-            profile.country || "";
-
-
-          const matchesSearch =
-            username.includes(search);
-
-
-          const matchesCountry =
-            !selectedCountry ||
-            country === selectedCountry;
-
-
-          return (
-            matchesSearch &&
-            matchesCountry
-          );
-
-        });
-
-
-      profilesContainer.innerHTML = "";
-
-
-      if (filtered.length === 0) {
-
-        profilesContainer.innerHTML = `
-
-          <div class="empty">
-
-            <div style="font-size:40px;">
-              😕
-            </div>
-
-            <h2>
-              No members found
-            </h2>
-
-            <p>
-              Try another username or country.
-            </p>
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      filtered.forEach(profile => {
-
-        const card =
-          document.createElement("div");
-
-        card.className =
-          "profile-card";
-
-
-        const username =
-          profile.username ||
-          "TeenSpace Member";
-
-
-        const country =
-          profile.country ||
-          "Country not set";
-
-
-        const bio =
-          profile.bio ||
-          "No bio yet.";
-
-
-        const firstLetter =
-          username
-            .charAt(0)
-            .toUpperCase();
-
-
-        card.innerHTML = `
-
-          <div class="profile-top">
-
-            <div class="avatar">
-              ${escapeHTML(firstLetter)}
-            </div>
-
-            <div>
-
-              <div class="username">
-                ${escapeHTML(username)}
-              </div>
-
-              <div class="member-label">
-                TeenSpace Member
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="country-box">
-
-            🌍 ${escapeHTML(country)}
-
-          </div>
-
-
-          <div class="bio-title">
-            ABOUT
-          </div>
-
-
-          <div class="bio">
-
-            ${escapeHTML(bio)}
-
-          </div>
-
-        `;
-
-
-        profilesContainer.appendChild(card);
-
-      });
-
-    }
-
-
-    // ==========================================
-    // SEARCH
-    // ==========================================
-
-    searchInput.addEventListener(
-      "input",
-      displayProfiles
-    );
-
-
-    countrySelect.addEventListener(
-      "change",
-      displayProfiles
-    );
-
-
-    // ==========================================
-    // SECURITY
-    // ==========================================
-
-    function escapeHTML(value) {
-
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
+        .select(
+          '"user-id", username, country, bio'
         );
 
+
+    if (error) {
+
+      console.error(
+        "Supabase error:",
+        error
+      );
+
+      message.className =
+        "error";
+
+      message.textContent =
+        "❌ Could not load profiles.";
+
+      return;
+
     }
 
 
-    // ==========================================
-    // START
-    // ==========================================
+    const uniqueProfiles = [];
 
-    loadProfiles();
+    const seenUserIds =
+      new Set();
 
-  </script>
+
+    for (
+      const profile
+      of (profiles || [])
+    ) {
+
+      const userId =
+        profile["user-id"];
+
+
+      if (
+        userId &&
+        !seenUserIds.has(userId)
+      ) {
+
+        seenUserIds.add(userId);
+
+        uniqueProfiles.push(
+          profile
+        );
+
+      }
+
+    }
+
+
+    window.allProfiles =
+      uniqueProfiles;
+
+
+    message.className =
+      "success";
+
+    message.textContent =
+      `✅ ${uniqueProfiles.length} member(s) found`;
+
+
+    displayProfiles();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.className =
+      "error";
+
+    message.textContent =
+      "❌ Could not connect to TeenSpace.";
+
+  }
+
+}
+
+
+// ==========================================
+// DISPLAY
+// ==========================================
+
+function displayProfiles() {
+
+  const profiles =
+    window.allProfiles || [];
+
+
+  const search =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+
+  const selectedCountry =
+    countrySelect.value;
+
+
+  const filtered =
+    profiles.filter(profile => {
+
+      const username =
+        (
+          profile.username || ""
+        )
+        .toLowerCase();
+
+
+      const profileCountry =
+        profile.country || "";
+
+
+      const matchesUsername =
+        username.includes(search);
+
+
+      const matchesCountry =
+        !selectedCountry ||
+        profileCountry === selectedCountry;
+
+
+      return (
+        matchesUsername &&
+        matchesCountry
+      );
+
+    });
+
+
+  profilesContainer.innerHTML =
+    "";
+
+
+  if (
+    filtered.length === 0
+  ) {
+
+    profilesContainer.innerHTML = `
+
+      <div class="empty">
+
+        <div style="font-size:40px;">
+          😕
+        </div>
+
+        <h2>
+          No members found
+        </h2>
+
+        <p>
+          Try another username or country.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  filtered.forEach(
+    profile => {
+
+      const username =
+        profile.username ||
+        "TeenSpace Member";
+
+
+      const country =
+        profile.country ||
+        "Country not set";
+
+
+      const bio =
+        profile.bio ||
+        "No bio yet.";
+
+
+      const firstLetter =
+        username
+          .charAt(0)
+          .toUpperCase();
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "profile-card";
+
+
+      card.innerHTML = `
+
+        <div class="profile-top">
+
+          <div class="avatar">
+
+            ${escapeHTML(
+              firstLetter
+            )}
+
+          </div>
+
+
+          <div>
+
+            <div class="username">
+
+              ${escapeHTML(
+                username
+              )}
+
+            </div>
+
+            <div class="member">
+
+              TeenSpace Member
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="country">
+
+          🌍 ${escapeHTML(
+            country
+          )}
+
+        </div>
+
+
+        <div class="bio-title">
+          ABOUT
+        </div>
+
+
+        <div class="bio">
+
+          ${escapeHTML(
+            bio
+          )}
+
+        </div>
+
+      `;
+
+
+      profilesContainer.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+searchInput.addEventListener(
+  "input",
+  displayProfiles
+);
+
+
+countrySelect.addEventListener(
+  "change",
+  displayProfiles
+);
+
+
+// ==========================================
+// SECURITY
+// ==========================================
+
+function escapeHTML(value) {
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+// ==========================================
+// START
+// ==========================================
+
+loadProfiles();
+
+</script>
 
 </body>
 </html>
+
