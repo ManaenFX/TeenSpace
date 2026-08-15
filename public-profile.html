@@ -1,0 +1,1032 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Profile | TeenSpace 🌍</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f3ff;
+      color: #222;
+    }
+
+    header {
+      background: #5d48d8;
+      color: white;
+      padding: 15px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,.15);
+    }
+
+    .page {
+      width: 94%;
+      max-width: 1350px;
+      margin: 25px auto 60px;
+    }
+
+    /* PROFILE COVER */
+
+    .profile-card {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(50,35,120,.13);
+    }
+
+    .cover {
+      height: 380px;
+      background:
+        linear-gradient(
+          rgba(35,20,70,.65),
+          rgba(35,20,70,.72)
+        ),
+        linear-gradient(
+          135deg,
+          #6c5ce7,
+          #32205f
+        );
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      padding: 38px 45px;
+      color: white;
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.35);
+      font-size: 19px;
+      font-weight: bold;
+      backdrop-filter: blur(5px);
+    }
+
+    .cover-title {
+      margin-top: 55px;
+      font-size: 60px;
+      font-weight: 800;
+    }
+
+    .cover-subtitle {
+      margin-top: 15px;
+      font-size: 25px;
+    }
+
+    /* PROFILE INFO */
+
+    .profile-info {
+      padding: 0 45px 35px;
+      position: relative;
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+      margin-top: -75px;
+      position: relative;
+    }
+
+    .avatar {
+      width: 205px;
+      height: 205px;
+      border-radius: 50%;
+      background: white;
+      border: 9px solid white;
+      box-shadow: 0 10px 25px rgba(0,0,0,.16);
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .default-avatar {
+      font-size: 85px;
+    }
+
+    .identity {
+      padding-top: 80px;
+    }
+
+    .username {
+      font-size: 52px;
+      font-weight: 800;
+      color: #e84b50;
+      margin-bottom: 8px;
+      word-break: break-word;
+    }
+
+    .handle {
+      color: #777;
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .badge {
+      padding: 10px 17px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .founder {
+      background: #fff0b5;
+      color: #946d00;
+    }
+
+    .staff {
+      background: #dff1ff;
+      color: #176c9e;
+    }
+
+    .member {
+      background: #eeeaff;
+      color: #5d48d8;
+    }
+
+    .premium {
+      background: #ffe0ef;
+      color: #c02873;
+    }
+
+    .verified {
+      background: #def6ff;
+      color: #08759c;
+    }
+
+    /* ACTIONS */
+
+    .profile-actions {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .profile-btn {
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 13px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .message-btn {
+      background: #6c5ce7;
+      color: white;
+    }
+
+    .message-btn:hover {
+      background: #5543c8;
+    }
+
+    .back-btn {
+      background: #eeeaff;
+      color: #5d48d8;
+    }
+
+    .back-btn:hover {
+      background: #ddd6ff;
+    }
+
+    /* PREMIUM NOTICE */
+
+    .premium-notice {
+      margin-top: 28px;
+      padding: 20px 25px;
+      border: 1px solid #f1d57b;
+      border-radius: 18px;
+      background: #fff9df;
+      color: #946d00;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* CONTENT */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 25px;
+    }
+
+    .info-card {
+      background: #faf9ff;
+      border: 1px solid #e4defe;
+      border-radius: 22px;
+      padding: 25px;
+    }
+
+    .info-card h2 {
+      margin: 0 0 15px;
+      color: #6c5ce7;
+      font-size: 23px;
+    }
+
+    .bio {
+      color: #555;
+      font-size: 18px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .country {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .join-date {
+      margin-top: 12px;
+      color: #777;
+      font-size: 15px;
+    }
+
+    .loading,
+    .error,
+    .not-found {
+      background: white;
+      border-radius: 20px;
+      padding: 50px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .error {
+      color: #d63050;
+    }
+
+    .not-found {
+      color: #666;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media(max-width: 800px) {
+
+      .cover {
+        height: 310px;
+        padding: 25px;
+      }
+
+      .cover-title {
+        font-size: 40px;
+        margin-top: 45px;
+      }
+
+      .cover-subtitle {
+        font-size: 18px;
+      }
+
+      .profile-info {
+        padding: 0 22px 30px;
+      }
+
+      .profile-top {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: -65px;
+      }
+
+      .avatar {
+        width: 150px;
+        height: 150px;
+      }
+
+      .identity {
+        padding-top: 0;
+      }
+
+      .username {
+        font-size: 38px;
+      }
+
+      .handle {
+        font-size: 20px;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media(max-width: 500px) {
+
+      header {
+        flex-direction: column;
+      }
+
+      .cover {
+        height: 280px;
+      }
+
+      .cover-badge {
+        font-size: 15px;
+        padding: 10px 14px;
+      }
+
+      .cover-title {
+        font-size: 32px;
+      }
+
+      .avatar {
+        width: 125px;
+        height: 125px;
+        border-width: 6px;
+      }
+
+      .username {
+        font-size: 32px;
+      }
+
+      .profile-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
+
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="explore.html">Explore</a>
+    <a href="community.html">Community</a>
+    <a href="profile.html">My Profile</a>
+    <a href="premium.html">💎 Premium</a>
+  </nav>
+
+</header>
+
+
+<main class="page">
+
+  <div id="loading" class="loading">
+    Loading profile... 🌍
+  </div>
+
+
+  <section
+    id="profileCard"
+    class="profile-card"
+    style="display:none;"
+  >
+
+    <!-- COVER -->
+
+    <div
+      id="cover"
+      class="cover"
+    >
+
+      <div
+        id="coverBadge"
+        class="cover-badge"
+      >
+        🌍 TeenSpace Member
+      </div>
+
+      <div
+        id="coverTitle"
+        class="cover-title"
+      >
+        Welcome!
+      </div>
+
+      <div
+        id="coverSubtitle"
+        class="cover-subtitle"
+      >
+        Connecting with teens around the world 🌍
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE INFORMATION -->
+
+    <div class="profile-info">
+
+      <div class="profile-top">
+
+        <div class="avatar">
+
+          <img
+            id="avatarImage"
+            src=""
+            alt="Profile picture"
+            style="display:none;"
+          >
+
+          <div
+            id="defaultAvatar"
+            class="default-avatar"
+          >
+            👤
+          </div>
+
+        </div>
+
+
+        <div class="identity">
+
+          <div
+            id="username"
+            class="username"
+          >
+            TeenSpace Member
+          </div>
+
+          <div
+            id="handle"
+            class="handle"
+          >
+            @teenspace
+          </div>
+
+          <div
+            id="badges"
+            class="badges"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PUBLIC ACTIONS ONLY -->
+
+      <div class="profile-actions">
+
+        <a
+          id="messageButton"
+          class="profile-btn message-btn"
+          href="#"
+        >
+          💬 Private Message
+        </a>
+
+        <a
+          href="explore.html"
+          class="profile-btn back-btn"
+        >
+          ← Back to Explore
+        </a>
+
+      </div>
+
+
+      <div
+        id="premiumNotice"
+        class="premium-notice"
+        style="display:none;"
+      >
+        💎 Premium is active on this account.
+      </div>
+
+
+      <!-- PUBLIC INFORMATION -->
+
+      <div class="content-grid">
+
+        <div class="info-card">
+
+          <h2>
+            📝 About
+          </h2>
+
+          <div
+            id="bio"
+            class="bio"
+          >
+            No bio yet.
+          </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <h2>
+            🌍 Location
+          </h2>
+
+          <div
+            id="country"
+            class="country"
+          >
+            Country not provided.
+          </div>
+
+          <div
+            id="joinDate"
+            class="join-date"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div
+    id="notFound"
+    class="not-found"
+    style="display:none;"
+  >
+    👤 This profile could not be found.
+    <br><br>
+    <a href="explore.html">
+      Go back to Explore
+    </a>
+  </div>
+
+</main>
+
+
+<footer>
+  © 2026 TeenSpace 🌍 |
+  Made for teens, with safety in mind.
+</footer>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://gcigveojqwwovitlwtxl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true
+      }
+    }
+  );
+
+
+const loading =
+  document.getElementById("loading");
+
+const profileCard =
+  document.getElementById("profileCard");
+
+const notFound =
+  document.getElementById("notFound");
+
+const username =
+  document.getElementById("username");
+
+const handle =
+  document.getElementById("handle");
+
+const bio =
+  document.getElementById("bio");
+
+const country =
+  document.getElementById("country");
+
+const joinDate =
+  document.getElementById("joinDate");
+
+const badges =
+  document.getElementById("badges");
+
+const premiumNotice =
+  document.getElementById("premiumNotice");
+
+const messageButton =
+  document.getElementById("messageButton");
+
+const cover =
+  document.getElementById("cover");
+
+const coverTitle =
+  document.getElementById("coverTitle");
+
+const coverSubtitle =
+  document.getElementById("coverSubtitle");
+
+const coverBadge =
+  document.getElementById("coverBadge");
+
+const avatarImage =
+  document.getElementById("avatarImage");
+
+const defaultAvatar =
+  document.getElementById("defaultAvatar");
+
+
+function escapeHTML(value) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    value ?? "";
+
+  return div.innerHTML;
+
+}
+
+
+function getProfileId() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return (
+    params.get("user_id") ||
+    params.get("id")
+  );
+
+}
+
+
+async function loadPublicProfile() {
+
+  const profileId =
+    getProfileId();
+
+
+  if (!profileId) {
+
+    loading.style.display =
+      "none";
+
+    notFound.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  const {
+    data: profile,
+    error
+  } =
+  await supabaseClient
+
+    .from("profiles")
+
+    .select(`
+      "user-id",
+      username,
+      bio,
+      country,
+      role,
+      badge,
+      premium,
+      avatar_url,
+      banner_url,
+      created_at
+    `)
+
+    .eq(
+      "user-id",
+      profileId
+    )
+
+    .maybeSingle();
+
+
+  if (error) {
+
+    console.error(
+      "Profile error:",
+      error
+    );
+
+    loading.style.display =
+      "none";
+
+    notFound.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  if (!profile) {
+
+    loading.style.display =
+      "none";
+
+    notFound.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  /* USERNAME */
+
+  const name =
+    profile.username ||
+    "TeenSpace Member";
+
+  username.textContent =
+    name;
+
+  handle.textContent =
+    "@" +
+    name
+      .toLowerCase()
+      .replace(
+        /[^a-z0-9_]/g,
+        ""
+      );
+
+
+  /* BIO */
+
+  bio.textContent =
+    profile.bio ||
+    "No bio yet.";
+
+
+  /* COUNTRY */
+
+  country.textContent =
+    profile.country
+      ? "🌍 " + profile.country
+      : "🌍 Country not provided";
+
+
+  /* JOIN DATE */
+
+  if (profile.created_at) {
+
+    joinDate.textContent =
+      "Member since " +
+      new Date(
+        profile.created_at
+      ).toLocaleDateString(
+        undefined,
+        {
+          year: "numeric",
+          month: "long"
+        }
+      );
+
+  }
+
+
+  /* BADGES */
+
+  badges.innerHTML =
+    "";
+
+  const role =
+    profile.role ||
+    "user";
+
+
+  if (role === "owner") {
+
+    badges.innerHTML += `
+      <span class="badge founder">
+        👑 ${escapeHTML(
+          profile.badge ||
+          "FOUNDER"
+        )}
+      </span>
+    `;
+
+  } else if (role === "staff") {
+
+    badges.innerHTML += `
+      <span class="badge staff">
+        🛡️ STAFF
+      </span>
+    `;
+
+  } else {
+
+    badges.innerHTML += `
+      <span class="badge member">
+        👤 MEMBER
+      </span>
+    `;
+
+  }
+
+
+  /*
+    Premium status is public-facing only.
+    Private premium controls are NOT displayed.
+  */
+
+  if (profile.premium === true) {
+
+    badges.innerHTML += `
+      <span class="badge premium">
+        💎 PREMIUM
+      </span>
+    `;
+
+    premiumNotice.style.display =
+      "block";
+
+  }
+
+
+  /*
+    Verified owner badge.
+    Only show for the owner role.
+  */
+
+  if (role === "owner") {
+
+    badges.innerHTML += `
+      <span class="badge verified">
+        ✅ VERIFIED OWNER
+      </span>
+    `;
+
+  }
+
+
+  /* COVER */
+
+  if (profile.banner_url) {
+
+    cover.style.backgroundImage =
+      `
+      linear-gradient(
+        rgba(35,20,70,.65),
+        rgba(35,20,70,.72)
+      ),
+      url("${profile.banner_url}")
+      `;
+
+  }
+
+
+  coverTitle.textContent =
+    "Welcome, " +
+    name;
+
+
+  coverSubtitle.textContent =
+    "Building TeenSpace for teens around the world 🌍";
+
+
+  if (role === "owner") {
+
+    coverBadge.textContent =
+      "👑 TeenSpace Founder";
+
+  } else if (role === "staff") {
+
+    coverBadge.textContent =
+      "🛡️ TeenSpace Staff";
+
+  } else {
+
+    coverBadge.textContent =
+      "🌍 TeenSpace Member";
+
+  }
+
+
+  /* AVATAR */
+
+  if (profile.avatar_url) {
+
+    avatarImage.src =
+      profile.avatar_url;
+
+    avatarImage.style.display =
+      "block";
+
+    defaultAvatar.style.display =
+      "none";
+
+  }
+
+
+  /*
+    PRIVATE MESSAGE BUTTON
+
+    The recipient ID is passed to
+    messages.html. No private
+    account information is exposed.
+  */
+
+  messageButton.href =
+    "messages.html?user_id=" +
+    encodeURIComponent(
+      profile["user-id"]
+    ) +
+    "&name=" +
+    encodeURIComponent(
+      name
+    );
+
+
+  loading.style.display =
+    "none";
+
+  profileCard.style.display =
+    "block";
+
+}
+
+
+loadPublicProfile();
+
+</script>
+
+</body>
+</html>
