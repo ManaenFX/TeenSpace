@@ -12,8 +12,8 @@
 
 body{
   margin:0;
-  background:#f5f6fb;
-  color:#202124;
+  background:#17151f;
+  color:#eee;
   height:100vh;
   overflow:hidden;
 }
@@ -26,8 +26,8 @@ body{
 /* SIDEBAR */
 .sidebar{
   width:270px;
-  background:#fff;
-  border-right:1px solid #e7e7ee;
+  background:#211f2b;
+  border-right:1px solid #302d3c;
   padding:22px 16px;
   display:flex;
   flex-direction:column;
@@ -36,13 +36,14 @@ body{
 .logo{
   font-size:25px;
   font-weight:800;
-  color:#6c5ce7;
+  color:#9b8cff;
   padding:8px 12px 25px;
 }
 
-.menu-title{
-  color:#999;
-  font-size:12px;
+.menu-title,
+.channel-title{
+  color:#777285;
+  font-size:11px;
   font-weight:bold;
   text-transform:uppercase;
   padding:0 12px 8px;
@@ -54,34 +55,28 @@ body{
   gap:12px;
   padding:12px;
   margin-bottom:4px;
-  border-radius:12px;
-  color:#555;
+  border-radius:10px;
+  color:#b9b5c5;
   text-decoration:none;
   font-weight:bold;
 }
 
 .nav a:hover,
 .nav a.active{
-  background:#eeeaff;
-  color:#624fe0;
+  background:#302b49;
+  color:#b39cff;
 }
 
 .channel-title{
   margin-top:25px;
-  padding:0 12px 10px;
-  color:#999;
-  font-size:12px;
-  font-weight:bold;
-  text-transform:uppercase;
 }
 
 .channel{
   padding:12px;
-  border-radius:12px;
-  color:#555;
+  border-radius:10px;
+  color:#b39cff;
+  background:#302b49;
   font-weight:bold;
-  background:#eeeaff;
-  color:#624fe0;
 }
 
 .sidebar-bottom{
@@ -90,14 +85,13 @@ body{
 
 .premium{
   display:block;
-  background:#fff8dc;
-  color:#947000;
+  background:#342e20;
+  color:#e8c75b;
   text-decoration:none;
   padding:13px;
-  border-radius:12px;
+  border-radius:10px;
   font-weight:bold;
   text-align:center;
-  margin-bottom:10px;
 }
 
 /* MAIN */
@@ -110,8 +104,8 @@ body{
 
 .topbar{
   height:75px;
-  background:#fff;
-  border-bottom:1px solid #e7e7ee;
+  background:#211f2b;
+  border-bottom:1px solid #302d3c;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -124,13 +118,13 @@ body{
 }
 
 .channel-description{
-  color:#999;
+  color:#817d8e;
   font-size:13px;
   margin-top:3px;
 }
 
 .online{
-  color:#159447;
+  color:#58c98a;
   font-size:13px;
   font-weight:bold;
 }
@@ -140,30 +134,38 @@ body{
   flex:1;
   overflow-y:auto;
   padding:25px;
+  background:#17151f;
 }
 
 .welcome{
-  background:#fff;
-  border-radius:18px;
+  background:#211f2b;
+  border:1px solid #302d3c;
+  border-radius:16px;
   padding:20px;
   margin-bottom:22px;
-  box-shadow:0 5px 18px rgba(0,0,0,.04);
 }
 
 .welcome h2{
   margin:0 0 7px;
-  color:#624fe0;
+  color:#a08dff;
 }
 
 .welcome p{
   margin:0;
-  color:#777;
+  color:#9994a6;
+  line-height:1.5;
 }
 
 .message{
   display:flex;
   gap:12px;
-  margin-bottom:20px;
+  margin-bottom:22px;
+  padding:8px;
+  border-radius:12px;
+}
+
+.message:hover{
+  background:#1e1c27;
 }
 
 .avatar{
@@ -171,7 +173,7 @@ body{
   height:43px;
   min-width:43px;
   border-radius:50%;
-  background:#eeeaff;
+  background:#302b49;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -191,7 +193,12 @@ body{
 
 .username{
   font-weight:800;
-  color:#5d49d5;
+  color:#a895ff;
+  cursor:pointer;
+}
+
+.username:hover{
+  text-decoration:underline;
 }
 
 .badge{
@@ -202,33 +209,34 @@ body{
 }
 
 .owner{
-  background:#fff0b3;
-  color:#946c00;
+  background:#4a3e20;
+  color:#e7c65c;
 }
 
 .staff{
-  background:#e1f0ff;
-  color:#1769aa;
+  background:#233b52;
+  color:#72b9ee;
 }
 
 .premium-badge{
-  background:#ffe0ef;
-  color:#b52270;
+  background:#4a2940;
+  color:#ed72b4;
 }
 
 .member{
-  background:#eeeaff;
-  color:#5d49d5;
+  background:#302b49;
+  color:#a895ff;
 }
 
 .message-time{
-  color:#aaa;
+  color:#666273;
   font-size:11px;
 }
 
 .message-text{
-  margin-top:5px;
-  line-height:1.5;
+  margin-top:6px;
+  color:#ddd9e5;
+  line-height:1.55;
   white-space:pre-wrap;
   word-break:break-word;
 }
@@ -236,26 +244,27 @@ body{
 .reactions{
   display:flex;
   gap:5px;
-  margin-top:7px;
+  margin-top:8px;
 }
 
 .react{
-  border:1px solid #ddd;
-  background:#fff;
+  border:1px solid #393545;
+  background:#24212e;
+  color:#ccc7d7;
   border-radius:999px;
-  padding:4px 8px;
+  padding:4px 9px;
   cursor:pointer;
-  font-size:13px;
 }
 
 .react:hover{
-  background:#eeeaff;
+  background:#302b49;
+  border-color:#504777;
 }
 
 /* COMPOSER */
 .composer{
-  background:#fff;
-  border-top:1px solid #e7e7ee;
+  background:#211f2b;
+  border-top:1px solid #302d3c;
   padding:14px 20px;
 }
 
@@ -266,17 +275,23 @@ body{
 }
 
 .tool{
-  border:none;
-  background:#f0eff8;
+  border:1px solid #393545;
+  background:#292633;
+  color:#c9c3d6;
   border-radius:9px;
   padding:7px 10px;
   cursor:pointer;
 }
 
+.tool:hover{
+  background:#302b49;
+  color:#b39cff;
+}
+
 .emoji-panel{
   display:none;
-  background:#f8f7fc;
-  border:1px solid #ddd;
+  background:#24212e;
+  border:1px solid #393545;
   padding:8px;
   border-radius:12px;
   margin-bottom:8px;
@@ -285,9 +300,15 @@ body{
 .emoji-panel button{
   border:none;
   background:none;
+  color:white;
   font-size:22px;
   cursor:pointer;
   padding:5px;
+}
+
+.emoji-panel button:hover{
+  background:#302b49;
+  border-radius:7px;
 }
 
 .input-row{
@@ -300,15 +321,21 @@ textarea{
   resize:none;
   min-height:48px;
   max-height:120px;
-  border:1px solid #ddd;
-  border-radius:14px;
+  border:1px solid #393545;
+  background:#181620;
+  color:#eee;
+  border-radius:13px;
   padding:13px;
   outline:none;
   font-size:15px;
 }
 
+textarea::placeholder{
+  color:#716c7c;
+}
+
 textarea:focus{
-  border-color:#6c5ce7;
+  border-color:#7662dc;
 }
 
 .send{
@@ -322,29 +349,25 @@ textarea:focus{
 }
 
 .send:hover{
-  background:#5747cf;
+  background:#7b6bed;
 }
 
 .status{
   text-align:center;
   padding:8px;
   font-size:13px;
-  color:#777;
+  color:#777285;
+  background:#211f2b;
 }
 
-.error{color:#d63050}
-.success{color:#159447}
-
-/* MOBILE */
-.mobile-menu{
-  display:none;
-}
+.error{color:#ff6b81}
+.success{color:#58c98a}
 
 @media(max-width:750px){
 
   .sidebar{
-    width:72px;
-    padding:15px 8px;
+    width:68px;
+    padding:15px 7px;
   }
 
   .logo{
@@ -352,7 +375,7 @@ textarea:focus{
     text-align:center;
   }
 
-  .logo:first-letter{
+  .logo::first-letter{
     font-size:25px;
   }
 
@@ -376,6 +399,10 @@ textarea:focus{
     padding:0 15px;
   }
 
+  .channel-description{
+    display:none;
+  }
+
   .chat{
     padding:15px;
   }
@@ -395,115 +422,129 @@ textarea:focus{
 
 <div class="app">
 
-  <aside class="sidebar">
+<aside class="sidebar">
 
-    <div class="logo">🌍 TeenSpace</div>
+  <div class="logo">🌍 TeenSpace</div>
 
-    <div class="menu-title">Navigation</div>
+  <div class="menu-title">Navigation</div>
 
-    <nav class="nav">
-      <a href="home.html">🏠 Home</a>
-      <a href="explore.html">🌍 Explore</a>
-      <a href="community.html" class="active">💬 Community</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="friends.html">👥 Friends</a>
-    </nav>
+  <nav class="nav">
+    <a href="home.html">🏠 Home</a>
+    <a href="explore.html">🌍 Explore</a>
+    <a href="community.html" class="active">💬 Community</a>
+    <a href="profile.html">👤 Profile</a>
+    <a href="friends.html">👥 Friends</a>
+  </nav>
 
-    <div class="channel-title">Community</div>
+  <div class="channel-title">Community</div>
 
-    <div class="channel">
-      💬 General Chat
+  <div class="channel">
+    💬 General Chat
+  </div>
+
+  <div class="sidebar-bottom">
+    <a href="premium.html" class="premium">
+      💎 Premium
+    </a>
+  </div>
+
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+
+  <div>
+    <div class="channel-name"># General Chat</div>
+    <div class="channel-description">
+      Talk, share ideas and meet the TeenSpace community.
     </div>
+  </div>
 
-    <div class="sidebar-bottom">
-      <a href="premium.html" class="premium">
-        💎 Premium
-      </a>
-    </div>
+  <div class="online">
+    🟢 Online
+  </div>
 
-  </aside>
+</header>
 
-  <main class="main">
+<section id="chat" class="chat">
 
-    <header class="topbar">
-      <div>
-        <div class="channel-name"># General Chat</div>
-        <div class="channel-description">
-          Talk, share ideas and meet the TeenSpace community.
-        </div>
-      </div>
+  <div class="welcome">
+    <h2>👋 Welcome to TeenSpace!</h2>
+    <p>
+      Talk with the community, share ideas and have fun 🌍💜
+    </p>
+  </div>
 
-      <div id="onlineCount" class="online">
-        🟢 Online
-      </div>
-    </header>
+  <div id="loading" class="status">
+    Loading community...
+  </div>
 
-    <section id="chat" class="chat">
+  <div id="messages"></div>
 
-      <div class="welcome">
-        <h2>👋 Welcome to TeenSpace!</h2>
-        <p>
-          This is the community chat. Be friendly,
-          respect other members and have fun 🌍💜
-        </p>
-      </div>
+</section>
 
-      <div id="loading" class="status">
-        Loading community...
-      </div>
+<div id="status" class="status"></div>
 
-      <div id="messages"></div>
+<section class="composer">
 
-    </section>
+  <div id="emojiPanel" class="emoji-panel">
+    <button>😀</button>
+    <button>😂</button>
+    <button>😍</button>
+    <button>🥰</button>
+    <button>😎</button>
+    <button>😭</button>
+    <button>😱</button>
+    <button>🤔</button>
+    <button>🙌</button>
+    <button>👏</button>
+    <button>❤️</button>
+    <button>💜</button>
+    <button>💙</button>
+    <button>🔥</button>
+    <button>⭐</button>
+    <button>🎉</button>
+    <button>🤣</button>
+    <button>😮</button>
+    <button>👍</button>
+    <button>👀</button>
+    <button>💯</button>
+    <button>😄</button>
+    <button>😢</button>
+    <button>😡</button>
+    <button>🤩</button>
+    <button>🥳</button>
+    <button>🙈</button>
+    <button>💀</button>
+    <button>✨</button>
+    <button>🌍</button>
+    <button>🚀</button>
+  </div>
 
-    <div id="status" class="status"></div>
+  <div class="tools">
+    <button id="emojiBtn" class="tool">
+      😀 Emoji
+    </button>
+  </div>
 
-    <section class="composer">
+  <div class="input-row">
 
-      <div id="emojiPanel" class="emoji-panel">
-        <button>😀</button>
-        <button>😂</button>
-        <button>😍</button>
-        <button>🥰</button>
-        <button>😎</button>
-        <button>😭</button>
-        <button>😱</button>
-        <button>🤔</button>
-        <button>🙌</button>
-        <button>👏</button>
-        <button>❤️</button>
-        <button>💜</button>
-        <button>🔥</button>
-        <button>⭐</button>
-        <button>🎉</button>
-        <button>🤣</button>
-        <button>😮</button>
-        <button>👍</button>
-        <button>👀</button>
-        <button>💯</button>
-      </div>
+    <textarea
+      id="messageInput"
+      maxlength="2000"
+      placeholder="Message #general..."
+    ></textarea>
 
-      <div class="tools">
-        <button id="emojiBtn" class="tool">😀</button>
-      </div>
+    <button id="sendBtn" class="send">
+      Send
+    </button>
 
-      <div class="input-row">
+  </div>
 
-        <textarea
-          id="messageInput"
-          maxlength="2000"
-          placeholder="Message #general..."
-        ></textarea>
+</section>
 
-        <button id="sendBtn" class="send">
-          Send
-        </button>
-
-      </div>
-
-    </section>
-
-  </main>
+</main>
 
 </div>
 
@@ -550,8 +591,6 @@ const emojiPanel =
 
 let currentUser = null;
 
-/* ESCAPE */
-
 function escapeHTML(value){
 
   const div =
@@ -562,8 +601,6 @@ function escapeHTML(value){
 
   return div.innerHTML;
 }
-
-/* USER */
 
 async function getUser(){
 
@@ -589,11 +626,13 @@ async function getUser(){
 
 emojiBtn.addEventListener(
   "click",
-  ()=>{
+  function(){
+
     emojiPanel.style.display =
       emojiPanel.style.display === "block"
       ? "none"
       : "block";
+
   }
 );
 
@@ -603,7 +642,7 @@ emojiPanel
 
   button.addEventListener(
     "click",
-    ()=>{
+    function(){
 
       const emoji =
         button.textContent;
@@ -624,93 +663,15 @@ emojiPanel
       input.selectionStart =
         input.selectionEnd =
         start + emoji.length;
+
     }
   );
 
 });
 
-/* LOAD */
+/* LOAD POSTS */
 
-async function loadMessages(){
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-    .from("messages")
-    .select(`
-      id,
-      sender_id,
-      content,
-      created_at
-    `)
-    .eq(
-      "receiver_id",
-      "00000000-0000-0000-0000-000000000000"
-    )
-    .order(
-      "created_at",
-      {
-        ascending:true
-      }
-    );
-
-  /*
-    If your existing messages table is
-    private-message-only, the query above
-    will simply show no community messages.
-
-    The page also tries the community_posts
-    table below.
-  */
-
-  if(error){
-
-    loadCommunityPosts();
-
-    return;
-  }
-
-  renderMessages(data || []);
-}
-
-/* COMMUNITY POSTS FALLBACK */
-
-async function loadCommunityPosts(){
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-    .from("community_posts")
-    .select("*")
-    .order(
-      "created_at",
-      {
-        ascending:true
-      }
-    );
-
-  if(error){
-
-    /*
-      Your existing community page uses
-      the "posts" table, so try that too.
-    */
-
-    loadPostsTable();
-
-    return;
-  }
-
-  renderCommunityData(data || []);
-}
-
-/* EXISTING POSTS TABLE */
-
-async function loadPostsTable(){
+async function loadPosts(){
 
   const {
     data:posts,
@@ -733,7 +694,7 @@ async function loadPostsTable(){
     console.error(error);
 
     loading.textContent =
-      "❌ Could not load the community.";
+      "❌ Could not load community.";
 
     loading.className =
       "status error";
@@ -741,10 +702,15 @@ async function loadPostsTable(){
     return;
   }
 
+  loading.remove();
+
   if(!posts || posts.length === 0){
 
-    loading.textContent =
-      "🌟 No community messages yet.";
+    messagesBox.innerHTML = `
+      <div class="status">
+        🌟 No messages yet. Start the conversation!
+      </div>
+    `;
 
     return;
   }
@@ -791,7 +757,7 @@ async function loadPostsTable(){
 
   });
 
-  loading.remove();
+  messagesBox.innerHTML = "";
 
   posts.forEach(post=>{
 
@@ -800,37 +766,22 @@ async function loadPostsTable(){
         post.user_id
       ) || {};
 
-    renderOne(
+    renderMessage(
       post,
       profile
     );
 
   });
-}
 
-/* GENERIC */
-
-function renderCommunityData(data){
-
-  loading.remove();
-
-  data.forEach(item=>{
-
-    renderOne(
-      item,
-      item.profile || {}
-    );
-
-  });
+  scrollBottom();
 }
 
 /* RENDER */
 
-function renderOne(item,profile){
+function renderMessage(post,profile){
 
   const username =
     profile.username ||
-    item.username ||
     "TeenSpace Member";
 
   const role =
@@ -839,11 +790,6 @@ function renderOne(item,profile){
 
   const premium =
     profile.premium === true;
-
-  const message =
-    item.content ||
-    item.message ||
-    "";
 
   const div =
     document.createElement("div");
@@ -877,12 +823,17 @@ function renderOne(item,profile){
   if(premium){
 
     badge +=
-      `<span class="badge premium-badge">💎 PREMIUM</span>`;
+      `<span class="badge premium-badge">
+        💎 PREMIUM
+      </span>`;
+
   }
 
   div.innerHTML = `
 
-    <div class="avatar">👤</div>
+    <div class="avatar">
+      👤
+    </div>
 
     <div class="message-body">
 
@@ -896,14 +847,14 @@ function renderOne(item,profile){
 
         <span class="message-time">
           ${new Date(
-            item.created_at
+            post.created_at
           ).toLocaleString()}
         </span>
 
       </div>
 
       <div class="message-text">
-        ${escapeHTML(message)}
+        ${escapeHTML(post.content)}
       </div>
 
       <div class="reactions">
@@ -912,6 +863,7 @@ function renderOne(item,profile){
         <button class="react">😂</button>
         <button class="react">🔥</button>
         <button class="react">👍</button>
+        <button class="react">💯</button>
 
       </div>
 
@@ -939,13 +891,10 @@ async function sendMessage(){
   await supabaseClient
     .from("posts")
     .insert({
-
       user_id:
         currentUser.id,
-
       content:
         content
-
     });
 
   if(error){
@@ -968,7 +917,7 @@ async function sendMessage(){
     status.className =
       "status success";
 
-    await refresh();
+    await loadPosts();
 
   }
 
@@ -976,8 +925,8 @@ async function sendMessage(){
     false;
 
   setTimeout(
-    ()=>{
-      status.textContent="";
+    function(){
+      status.textContent = "";
     },
     1500
   );
@@ -990,7 +939,7 @@ sendBtn.addEventListener(
 
 input.addEventListener(
   "keydown",
-  event=>{
+  function(event){
 
     if(
       event.key === "Enter" &&
@@ -1010,7 +959,7 @@ input.addEventListener(
 
 messagesBox.addEventListener(
   "click",
-  event=>{
+  function(event){
 
     if(
       event.target.classList.contains(
@@ -1019,35 +968,48 @@ messagesBox.addEventListener(
     ){
 
       event.target.style.background =
-        "#eeeaff";
+        "#302b49";
+
+      event.target.style.borderColor =
+        "#6558a0";
 
     }
 
   }
 );
 
-/* REFRESH */
-
-async function refresh(){
-
-  messagesBox.innerHTML = "";
-
-  const old =
-    document.getElementById(
-      "loading"
-    );
-
-  if(old) old.remove();
-
-  await loadPostsTable();
+function scrollBottom(){
 
   const chat =
-    document.getElementById(
-      "chat"
-    );
+    document.getElementById("chat");
 
   chat.scrollTop =
     chat.scrollHeight;
+}
+
+/* REALTIME */
+
+function subscribe(){
+
+  supabaseClient
+    .channel(
+      "teen-space-community-dark"
+    )
+    .on(
+      "postgres_changes",
+      {
+        event:"*",
+        schema:"public",
+        table:"posts"
+      },
+      function(){
+
+        loadPosts();
+
+      }
+    )
+    .subscribe();
+
 }
 
 /* START */
@@ -1059,24 +1021,9 @@ async function start(){
 
   if(!currentUser) return;
 
-  await refresh();
+  await loadPosts();
 
-  supabaseClient
-    .channel(
-      "teen-space-community"
-    )
-    .on(
-      "postgres_changes",
-      {
-        event:"*",
-        schema:"public",
-        table:"posts"
-      },
-      ()=>{
-        refresh();
-      }
-    )
-    .subscribe();
+  subscribe();
 
 }
 
