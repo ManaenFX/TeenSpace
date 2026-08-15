@@ -1,13 +1,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Community | TeenSpace 🌍</title>
+<title>TeenSpace — General Chat</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -18,78 +16,366 @@
   font-family:Arial,sans-serif;
 }
 
+:root{
+  --bg:#080d1c;
+  --sidebar:#0d1428;
+  --sidebar2:#111a31;
+  --panel:#0a1020;
+  --line:#1b2741;
+  --text:#f5f7ff;
+  --muted:#929bb5;
+  --purple:#7047e8;
+  --purple2:#5d35d4;
+  --blue:#36a4ff;
+  --green:#16d979;
+  --pink:#ff4fa3;
+  --gold:#ffc928;
+}
+
 body{
   margin:0;
-  background:#f4f7ff;
-  color:#222;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
 }
 
 /* =========================
-   HEADER
+   APP
 ========================= */
 
-header{
-  background:#6c5ce7;
-  color:white;
-  padding:15px 6%;
+.app{
+  height:100vh;
+  display:flex;
+}
+
+/* =========================
+   ICON BAR
+========================= */
+
+.icon-bar{
+  width:78px;
+  background:#080f20;
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:12px 0;
+  gap:10px;
+}
+
+.app-logo{
+  width:58px;
+  height:72px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  position:sticky;
-  top:0;
-  z-index:100;
-  box-shadow:0 3px 15px rgba(0,0,0,.12);
+  justify-content:center;
+  font-size:30px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:8px;
 }
 
-.logo{
-  font-size:26px;
-  font-weight:bold;
-}
-
-nav{
+.icon-btn{
+  width:52px;
+  height:52px;
+  border-radius:18px;
   display:flex;
-  flex-wrap:wrap;
-  gap:5px;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  color:#aab3cc;
+  cursor:pointer;
+  transition:.2s;
 }
 
-nav a{
+.icon-btn:hover{
+  background:#18223d;
   color:white;
-  text-decoration:none;
-  padding:8px 10px;
-  border-radius:9px;
-  font-weight:bold;
-  font-size:14px;
 }
 
-nav a:hover{
-  background:rgba(255,255,255,.15);
+.icon-btn.active{
+  background:linear-gradient(
+    135deg,
+    #7447ef,
+    #5731c8
+  );
+  color:white;
+  box-shadow:0 8px 25px rgba(112,71,232,.35);
 }
 
-.active{
-  background:rgba(255,255,255,.22);
-}
-
-.premium-nav{
-  background:#f5cf45;
-  color:#4c3a00 !important;
+.icon-spacer{
+  flex:1;
 }
 
 /* =========================
-   CHAT AREA
+   SIDEBAR
 ========================= */
 
-.chat-wrapper{
-  width:94%;
-  max-width:850px;
-  margin:25px auto;
+.sidebar{
+  width:302px;
+  background:linear-gradient(
+    180deg,
+    #10182e,
+    #0d1428
+  );
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  min-width:302px;
 }
 
-.chat-card{
-  background:white;
-  border-radius:22px;
+.sidebar-top{
+  padding:22px 16px 14px;
+  border-bottom:1px solid var(--line);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand-icon{
+  font-size:29px;
+}
+
+.brand-name{
+  font-size:24px;
+  font-weight:800;
+}
+
+.brand-sub{
+  color:#aab1c4;
+  font-size:13px;
+  margin-top:3px;
+}
+
+.search{
+  margin-top:20px;
+  background:#151e36;
+  border:1px solid #202d4a;
+  border-radius:12px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  padding:0 13px;
+  color:#909ab3;
+}
+
+.search input{
+  flex:1;
+  border:0;
+  outline:0;
+  background:none;
+  color:white;
+  font-size:14px;
+  padding-left:9px;
+}
+
+.search input::placeholder{
+  color:#8791aa;
+}
+
+/* =========================
+   NAV
+========================= */
+
+.navigation{
+  padding:15px 12px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:11px 14px;
+  border-radius:11px;
+  margin-bottom:4px;
+  color:#aeb6ca;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.nav-item:hover{
+  background:#151e35;
+  color:white;
+}
+
+.nav-item.active{
+  background:linear-gradient(
+    90deg,
+    #6336dc,
+    #7047e8
+  );
+  color:white;
+}
+
+.nav-icon{
+  width:22px;
+  text-align:center;
+  font-size:19px;
+}
+
+.count{
+  margin-left:auto;
+  background:#ff4666;
+  color:white;
+  min-width:23px;
+  height:23px;
+  padding:0 6px;
+  border-radius:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* =========================
+   DMS
+========================= */
+
+.dm-section{
+  flex:1;
+  min-height:0;
+  padding:0 12px;
   overflow:hidden;
-  box-shadow:0 8px 28px rgba(0,0,0,.08);
+}
+
+.dm-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#858faa;
+  font-size:12px;
+  font-weight:bold;
+  padding:10px 8px;
+}
+
+.dm-add{
+  font-size:20px;
+  color:#aab3c9;
+  cursor:pointer;
+}
+
+.dm-list{
+  overflow:auto;
+  height:calc(100% - 40px);
+}
+
+.dm{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.dm:hover{
+  background:#151e35;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:linear-gradient(
+    135deg,
+    #6844e9,
+    #21a6ff
+  );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+  border:2px solid #27365a;
+  position:relative;
+}
+
+.online{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#19db75;
+  border:2px solid #10182e;
+  position:absolute;
+  right:-1px;
+  bottom:0;
+}
+
+.dm-info{
+  min-width:0;
+}
+
+.dm-name{
+  font-size:14px;
+  font-weight:bold;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.dm-preview{
+  color:#8992aa;
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-top:3px;
+}
+
+/* =========================
+   ACCOUNT
+========================= */
+
+.account{
+  border-top:1px solid var(--line);
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.account-info{
+  flex:1;
+  min-width:0;
+}
+
+.account-name{
+  font-weight:bold;
+}
+
+.account-role{
+  color:#aab3c8;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.account-tools{
+  display:flex;
+  gap:8px;
+  color:#8993aa;
+  font-size:19px;
+}
+
+/* =========================
+   MAIN CHAT
+========================= */
+
+.chat{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(91,60,170,.09),
+      transparent 35%
+    ),
+    #090f1e;
 }
 
 /* =========================
@@ -97,584 +383,1187 @@ nav a:hover{
 ========================= */
 
 .chat-header{
-  padding:20px;
-  background:linear-gradient(135deg,#6c5ce7,#806df0);
-  color:white;
+  height:100px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  padding:0 28px;
+  gap:12px;
 }
 
-.chat-title{
-  font-size:25px;
+.channel-title{
+  flex:1;
+}
+
+.channel-name{
+  font-size:20px;
+  font-weight:800;
+}
+
+.channel-desc{
+  margin-top:6px;
+  color:#8e98b0;
+  font-size:13px;
+}
+
+.chat-actions{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  color:#aeb7ca;
+  font-size:22px;
+}
+
+.chat-action{
+  cursor:pointer;
+}
+
+.member-count{
+  font-size:14px;
   font-weight:bold;
 }
 
-.chat-subtitle{
-  margin-top:5px;
-  opacity:.85;
-  font-size:14px;
-}
-
 /* =========================
-   POSTS / MESSAGES
+   MESSAGES
 ========================= */
 
 .messages{
-  padding:18px;
-  min-height:500px;
-  max-height:650px;
+  flex:1;
   overflow-y:auto;
-  background:#faf9ff;
+  padding:15px 28px;
 }
 
-.status{
-  text-align:center;
-  padding:35px 15px;
-  color:#777;
-}
-
-.status.error{
-  color:#d63050;
-}
-
-.message{
+.message-row{
   display:flex;
-  gap:10px;
-  margin-bottom:18px;
+  gap:14px;
+  padding:18px 4px;
+  border-bottom:1px solid rgba(31,43,68,.65);
 }
 
-.avatar{
-  width:42px;
-  height:42px;
-  min-width:42px;
+.message-row:hover{
+  background:rgba(255,255,255,.015);
+}
+
+.message-avatar{
+  width:48px;
+  height:48px;
   border-radius:50%;
-  background:#eeeaff;
+  flex-shrink:0;
+  background:linear-gradient(
+    135deg,
+    #7447ed,
+    #238cff
+  );
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:21px;
+  font-size:22px;
+  border:2px solid #29385e;
+  position:relative;
 }
 
-.message-content{
-  max-width:calc(100% - 55px);
+.message-body{
+  flex:1;
+  min-width:0;
 }
 
-.user-line{
+.message-top{
   display:flex;
   align-items:center;
+  gap:8px;
   flex-wrap:wrap;
-  gap:7px;
-  cursor:pointer;
 }
 
 .username{
-  color:#5f4ce0;
-  font-weight:bold;
   font-size:16px;
+  font-weight:800;
 }
 
-.username:hover{
-  text-decoration:underline;
-}
+.username.blue{color:#22a3ff}
+.username.red{color:#ff5968}
+.username.purple{color:#a46cff}
+.username.cyan{color:#1ce3e1}
+.username.pink{color:#ff4fa3}
+.username.gold{color:#ffb92e}
 
 .badge{
-  font-size:10px;
-  font-weight:bold;
   padding:4px 8px;
-  border-radius:999px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:800;
 }
 
-.owner{
-  background:#fff0b3;
-  color:#946c00;
+.member-badge{
+  background:#174b79;
+  color:#67bfff;
 }
 
-.staff{
-  background:#e1f0ff;
-  color:#1769aa;
+.premium-badge{
+  background:#7c1b64;
+  color:#ff72c4;
 }
 
-.premium{
-  background:#ffe0ef;
-  color:#b52270;
+.founder-badge{
+  background:#4a4200;
+  color:#ffd52d;
 }
 
-.member{
-  background:#eeeaff;
-  color:#5f4ce0;
-}
-
-.message-bubble{
-  margin-top:5px;
-  background:white;
-  border:1px solid #eee;
-  border-radius:5px 17px 17px 17px;
-  padding:11px 14px;
-  line-height:1.5;
-  font-size:16px;
-  word-break:break-word;
-  white-space:pre-wrap;
-  box-shadow:0 2px 7px rgba(0,0,0,.03);
+.online-badge{
+  background:#073f2d;
+  color:#20df86;
 }
 
 .message-time{
-  color:#999;
-  font-size:11px;
-  margin-top:5px;
-}
-
-.message-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  margin-top:5px;
-}
-
-.message-action{
-  border:none;
-  background:transparent;
-  color:#777;
+  margin-left:auto;
+  color:#818ba1;
   font-size:12px;
-  cursor:pointer;
-  padding:3px 6px;
-  border-radius:7px;
 }
 
-.message-action:hover{
-  background:#eeeaff;
-  color:#5f4ce0;
+.message-text{
+  font-size:17px;
+  line-height:1.55;
+  margin-top:7px;
+  color:#f3f5fa;
+  word-break:break-word;
 }
 
-.delete-action:hover{
-  color:#d63050;
-}
-
-/* =========================
-   USER MENU
-========================= */
-
-.user-menu{
-  position:fixed;
-  display:none;
-  background:white;
+.message-bubble{
+  display:inline-block;
+  margin-top:7px;
+  padding:13px 17px;
   border-radius:14px;
-  padding:7px;
-  box-shadow:0 8px 30px rgba(0,0,0,.18);
-  z-index:500;
-  min-width:170px;
-  border:1px solid #eee;
+  background:linear-gradient(
+    135deg,
+    #5031a3,
+    #36216e
+  );
+  max-width:600px;
 }
 
-.user-menu button{
-  display:block;
-  width:100%;
-  border:none;
-  background:white;
-  padding:11px;
-  text-align:left;
+.reactions{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+
+.reaction{
+  border:1px solid #202e4b;
+  background:#0d1528;
+  color:#c3c9d8;
   border-radius:9px;
+  padding:6px 10px;
   cursor:pointer;
-  font-weight:bold;
-  color:#444;
+  font-size:13px;
 }
 
-.user-menu button:hover{
-  background:#eeeaff;
-  color:#5f4ce0;
+.reaction:hover{
+  background:#18233c;
 }
 
 /* =========================
-   EMOJI PANEL
+   TYPING
 ========================= */
 
-.emoji-panel{
-  display:none;
-  background:white;
-  border-top:1px solid #eee;
-  padding:12px;
+.typing{
+  min-height:40px;
+  padding:5px 30px;
+  color:#8993aa;
+  font-size:13px;
 }
 
-.emoji-tabs{
-  display:flex;
-  gap:5px;
-  overflow-x:auto;
-  margin-bottom:9px;
-}
-
-.emoji-tab{
-  border:none;
-  background:#f1efff;
-  border-radius:9px;
-  padding:7px 10px;
-  cursor:pointer;
-  font-size:16px;
-}
-
-.emoji-grid{
-  display:grid;
-  grid-template-columns:repeat(10,1fr);
-  gap:3px;
-  max-height:180px;
-  overflow-y:auto;
-}
-
-.emoji-grid button{
-  border:none;
-  background:transparent;
-  font-size:23px;
-  padding:5px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.emoji-grid button:hover{
-  background:#eeeaff;
+.typing-dots{
+  color:#8d5cf5;
+  letter-spacing:4px;
 }
 
 /* =========================
    COMPOSER
 ========================= */
 
+.composer-wrap{
+  padding:0 25px 16px;
+}
+
 .composer{
-  background:white;
-  border-top:1px solid #eee;
-  padding:12px;
-}
-
-.toolbar{
+  min-height:100px;
+  border:1px solid #273454;
+  border-radius:18px;
+  background:#10172b;
+  padding:13px 15px;
   display:flex;
-  gap:6px;
-  margin-bottom:8px;
+  flex-direction:column;
 }
 
-.tool{
-  border:none;
-  background:#eeeaff;
-  color:#5f4ce0;
-  padding:8px 11px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.tool:hover{
-  background:#ddd6ff;
-}
-
-.compose-row{
-  display:flex;
-  gap:8px;
-  align-items:flex-end;
-}
-
-textarea{
-  flex:1;
-  min-height:45px;
-  max-height:130px;
-  resize:none;
-  border:1px solid #ccc;
-  border-radius:15px;
-  padding:12px;
-  font-size:15px;
-  outline:none;
-}
-
-textarea:focus{
-  border-color:#6c5ce7;
-}
-
-.send-button{
-  border:none;
-  background:#6c5ce7;
-  color:white;
-  border-radius:13px;
-  padding:13px 18px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.send-button:hover{
-  background:#5747cf;
-}
-
-.send-button:disabled{
-  opacity:.6;
-}
-
-/* =========================
-   EDIT
-========================= */
-
-.edit-area{
-  margin-top:8px;
-}
-
-.edit-area textarea{
+.composer textarea{
   width:100%;
-  min-height:90px;
+  flex:1;
+  resize:none;
+  min-height:45px;
+  background:none;
+  border:0;
+  outline:0;
+  color:white;
+  font-size:16px;
 }
 
-.save-edit{
-  margin-top:6px;
-  border:none;
-  background:#6c5ce7;
-  color:white;
-  padding:9px 13px;
-  border-radius:9px;
-  font-weight:bold;
+.composer textarea::placeholder{
+  color:#818ba4;
+}
+
+.composer-bottom{
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+
+.compose-icon{
+  color:#aeb6ca;
+  font-size:20px;
   cursor:pointer;
+}
+
+.send-btn{
+  margin-left:auto;
+  width:45px;
+  height:45px;
+  border:0;
+  border-radius:50%;
+  background:linear-gradient(
+    135deg,
+    #7a45ef,
+    #6332d7
+  );
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 5px 18px rgba(105,57,220,.35);
+}
+
+.send-btn:hover{
+  transform:scale(1.05);
 }
 
 /* =========================
    FOOTER
 ========================= */
 
-footer{
-  background:#222;
-  color:#aaa;
-  text-align:center;
-  padding:22px;
-  margin-top:30px;
-  font-size:13px;
+.chat-footer{
+  height:54px;
+  border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  color:#9ca5bb;
+  font-size:14px;
+}
+
+.chat-footer span{
+  display:flex;
+  align-items:center;
+  gap:7px;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:700px){
+@media(max-width:850px){
 
-  header{
-    flex-direction:column;
+  .icon-bar{
+    width:60px;
   }
 
-  nav{
-    justify-content:center;
+  .icon-btn{
+    width:44px;
+    height:44px;
+    font-size:21px;
   }
 
-  .chat-wrapper{
-    width:100%;
-    margin:0;
+  .sidebar{
+    width:230px;
+    min-width:230px;
   }
 
-  .chat-card{
-    border-radius:0;
+  .brand-name{
+    font-size:20px;
+  }
+
+  .brand-sub{
+    display:none;
+  }
+
+  .chat-header{
+    padding:0 15px;
   }
 
   .messages{
-    min-height:calc(100vh - 260px);
-    max-height:none;
+    padding:10px 15px;
   }
 
-  .message-content{
-    max-width:calc(100% - 50px);
+  .composer-wrap{
+    padding:0 12px 10px;
   }
 
-  .emoji-grid{
-    grid-template-columns:repeat(8,1fr);
+  .chat-actions{
+    gap:10px;
   }
 
-  .compose-row{
-    align-items:stretch;
+}
+
+@media(max-width:650px){
+
+  .icon-bar{
+    display:none;
   }
 
-  .send-button{
-    padding:10px 14px;
+  .sidebar{
+    display:none;
+  }
+
+  .chat{
+    width:100%;
+  }
+
+  .chat-header{
+    height:75px;
+  }
+
+  .channel-name{
+    font-size:17px;
+  }
+
+  .channel-desc{
+    font-size:11px;
+  }
+
+  .member-count{
+    display:none;
+  }
+
+  .message-row{
+    gap:9px;
+    padding:14px 0;
+  }
+
+  .message-avatar{
+    width:39px;
+    height:39px;
+    font-size:18px;
+  }
+
+  .message-time{
+    display:none;
+  }
+
+  .message-text{
+    font-size:15px;
+  }
+
+  .chat-footer{
+    display:none;
   }
 
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<div class="app">
 
-<header>
+  <!-- ICON BAR -->
 
-  <div class="logo">
-    🌍 TeenSpace
-  </div>
+  <aside class="icon-bar">
 
-  <nav>
+    <div class="app-logo">
+      🌍
+    </div>
 
-    <a href="home.html">
-      🏠 Home
-    </a>
+    <div class="icon-btn active">💬</div>
+    <div class="icon-btn">🌎</div>
+    <div class="icon-btn">🎮</div>
+    <div class="icon-btn">⭐</div>
+    <div class="icon-btn">🎵</div>
 
-    <a href="explore.html">
-      🌍 Explore
-    </a>
+    <div class="icon-spacer"></div>
 
-    <a
-      href="community.html"
-      class="active"
+    <div class="icon-btn">＋</div>
+
+  </aside>
+
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="sidebar-top">
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          🌍
+        </div>
+
+        <div>
+          <div class="brand-name">
+            TeenSpace
+          </div>
+
+          <div class="brand-sub">
+            Made for teens, by teens
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="search">
+
+        🔎
+
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search or start a chat"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="navigation">
+
+      <div class="nav-item">
+        <span class="nav-icon">🏠</span>
+        Home
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">🔎</span>
+        Explore
+      </div>
+
+      <div class="nav-item active">
+        <span class="nav-icon">👥</span>
+        Community
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">✉️</span>
+        Messages
+        <span class="count">24</span>
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">👫</span>
+        Friends
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">🔔</span>
+        Notifications
+        <span class="count">8</span>
+      </div>
+
+    </div>
+
+
+    <div class="dm-section">
+
+      <div class="dm-title">
+
+        DIRECT MESSAGES
+
+        <span class="dm-add">＋</span>
+
+      </div>
+
+
+      <div class="dm-list">
+
+        <div class="dm">
+          <div class="avatar">
+            🧑
+            <span class="online"></span>
+          </div>
+          <div class="dm-info">
+            <div class="dm-name">woods</div>
+            <div class="dm-preview">Hi</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">
+            🕷️
+            <span class="online"></span>
+          </div>
+          <div class="dm-info">
+            <div class="dm-name">Arabian male</div>
+            <div class="dm-preview">Hi all</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">
+            🐺
+            <span class="online"></span>
+          </div>
+          <div class="dm-info">
+            <div class="dm-name">LadyAnya54</div>
+            <div class="dm-preview">Online</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">
+            👻
+            <span class="online"></span>
+          </div>
+          <div class="dm-info">
+            <div class="dm-name">Chaotic Dixie</div>
+            <div class="dm-preview">Yo</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">🦸</div>
+          <div class="dm-info">
+            <div class="dm-name">Gloomurai</div>
+            <div class="dm-preview">made grilled cheese auuuu</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">🦉</div>
+          <div class="dm-info">
+            <div class="dm-name">B4by D0l3y</div>
+            <div class="dm-preview">Vivacious and determined</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">👧</div>
+          <div class="dm-info">
+            <div class="dm-name">Cutie_Pie</div>
+            <div class="dm-preview">Typing...</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">🧸</div>
+          <div class="dm-info">
+            <div class="dm-name">Squibbles</div>
+            <div class="dm-preview">August 15th</div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">👩</div>
+          <div class="dm-info">
+            <div class="dm-name" style="color:#ffb51e">
+              Alexa
+            </div>
+            <div class="dm-preview">
+              Where's your mute button?
+            </div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">🐊</div>
+          <div class="dm-info">
+            <div class="dm-name" style="color:#168fff">
+              wallvdarling
+            </div>
+            <div class="dm-preview">
+              Solid state ice cream
+            </div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">✏️</div>
+          <div class="dm-info">
+            <div class="dm-name">
+              abcdeFox
+            </div>
+          </div>
+        </div>
+
+
+        <div class="dm">
+          <div class="avatar">🌌</div>
+          <div class="dm-info">
+            <div class="dm-name">
+              Arabian engineer
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="account">
+
+      <div class="avatar">
+        👤
+        <span class="online"></span>
+      </div>
+
+      <div class="account-info">
+
+        <div
+          class="account-name"
+          id="accountName"
+        >
+          Loading...
+        </div>
+
+        <div class="account-role">
+          Member 🌍
+        </div>
+
+      </div>
+
+      <div class="account-tools">
+        🎙️
+        🎧
+        ⚙️
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CHAT -->
+
+  <main class="chat">
+
+
+    <header class="chat-header">
+
+      <div class="channel-title">
+
+        <div class="channel-name">
+          # 💬 General Chat
+          <span style="color:#7f8ba5">⌄</span>
+        </div>
+
+        <div class="channel-desc">
+          · Global chat for everyone 🌍
+        </div>
+
+      </div>
+
+
+      <div class="chat-actions">
+
+        <span class="chat-action">
+          📌
+        </span>
+
+        <span class="chat-action">
+          👥
+        </span>
+
+        <span class="member-count">
+          128
+        </span>
+
+        <span class="chat-action">
+          🔎
+        </span>
+
+        <span class="chat-action">
+          ⋮
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <section
+      class="messages"
+      id="messages"
     >
-      💬 Community
-    </a>
 
-    <a href="profile.html">
-      👤 Profile
-    </a>
+      <div class="message-row">
 
-    <a href="customize.html">
-      ✨ Customize
-    </a>
+        <div class="message-avatar">
+          🧑
+          <span class="online"></span>
+        </div>
 
-    <a
-      href="premium.html"
-      class="premium-nav"
-    >
-      💎 Premium
-    </a>
+        <div class="message-body">
 
-  </nav>
+          <div class="message-top">
 
-</header>
+            <span class="username blue">
+              woods
+            </span>
+
+            <span class="badge member-badge">
+              MEMBER
+            </span>
+
+            <span class="message-time">
+              15/08 1:25
+            </span>
+
+          </div>
+
+          <div class="message-text">
+            Hi
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              👋 3
+            </button>
+
+            <button class="reaction">
+              ❤️ 2
+            </button>
+
+            <button class="reaction">
+              😂 1
+            </button>
+
+            <button class="reaction">
+              ☺️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
 
 
-<main class="chat-wrapper">
+      <div class="message-row">
 
-<div class="chat-card">
+        <div class="message-avatar">
+          🕷️
+          <span class="online"></span>
+        </div>
+
+        <div class="message-body">
+
+          <div class="message-top">
+
+            <span class="username red">
+              Arabian male
+            </span>
+
+            <span class="badge member-badge">
+              MEMBER
+            </span>
+
+            <span class="message-time">
+              15/08 1:30
+            </span>
+
+          </div>
+
+          <div class="message-text">
+            Hi all
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              ❤️ 4
+            </button>
+
+            <button class="reaction">
+              🔥 2
+            </button>
+
+            <button class="reaction">
+              ☺️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
 
 
-  <div class="chat-header">
+      <div class="message-row">
 
-    <div class="chat-title">
-      💬 TeenSpace Community
+        <div class="message-avatar">
+          🐺
+          <span class="online"></span>
+        </div>
+
+        <div class="message-body">
+
+          <div class="message-top">
+
+            <span class="username purple">
+              LadyAnya54
+            </span>
+
+            <span class="badge online-badge">
+              ONLINE
+            </span>
+
+            <span class="message-time">
+              15/08 1:33
+            </span>
+
+          </div>
+
+          <div class="message-text">
+            Hiii everyone 👋
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              🙌 2
+            </button>
+
+            <button class="reaction">
+              💜 2
+            </button>
+
+            <button class="reaction">
+              ☺️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="message-row">
+
+        <div class="message-avatar">
+          👻
+          <span class="online"></span>
+        </div>
+
+        <div class="message-body">
+
+          <div class="message-top">
+
+            <span class="username cyan">
+              Chaotic Dixie
+            </span>
+
+            <span style="font-size:18px">
+              💎
+            </span>
+
+            <span class="badge premium-badge">
+              PREMIUM
+            </span>
+
+            <span class="message-time">
+              15/08 1:34
+            </span>
+
+          </div>
+
+          <div class="message-text">
+            <span class="message-bubble">
+              Yo
+            </span>
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              😎 2
+            </button>
+
+            <button class="reaction">
+              🔥 1
+            </button>
+
+            <button class="reaction">
+              ☺️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="message-row">
+
+        <div class="message-avatar">
+          🦸
+        </div>
+
+        <div class="message-body">
+
+          <div class="message-top">
+
+            <span class="username blue">
+              Gloomurai
+            </span>
+
+            <span style="font-size:18px">
+              👑
+            </span>
+
+            <span class="badge founder-badge">
+              FOUNDER
+            </span>
+
+            <span class="message-time">
+              15/08 1:35
+            </span>
+
+          </div>
+
+          <div class="message-text">
+            made grilled cheese uauuu 🧀🔥
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              🧀 4
+            </button>
+
+            <button class="reaction">
+              🔥 3
+            </button>
+
+            <button class="reaction">
+              😂 1
+            </button>
+
+            <button class="reaction">
+              ☺️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="message-row">
+
+        <div class="message-avatar">
+          🌸
+          <span class="online"></span>
+        </div>
+
+        <div class="message-body">
+
+          <div class="message-top">
+
+            <span class="username pink">
+              toxicchurchyboi
+            </span>
+
+            <span class="badge premium-badge">
+              PREMIUM
+            </span>
+
+            <span class="message-time">
+              15/08 1:36
+            </span>
+
+          </div>
+
+          <div class="message-text">
+
+            <span class="message-bubble">
+              irl is gonna give me lash clusters tomorrow YAY 😭✨
+            </span>
+
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              😭 3
+            </button>
+
+            <button class="reaction">
+              ✨ 3
+            </button>
+
+            <button class="reaction">
+              💯 2
+            </button>
+
+            <button class="reaction">
+              ☺️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="message-row">
+
+        <div class="message-avatar">
+          🦸
+        </div>
+
+        <div class="message-body">
+
+          <div class="message-top">
+
+            <span class="username blue">
+              Gloomurai
+            </span>
+
+            <span style="font-size:18px">
+              👑
+            </span>
+
+            <span class="badge founder-badge">
+              FOUNDER
+            </span>
+
+            <span class="message-time">
+              15/08 1:38
+            </span>
+
+          </div>
+
+          <div class="message-text">
+            real 💯
+          </div>
+
+          <div class="reactions">
+
+            <button class="reaction">
+              💯 2
+            </button>
+
+            <button class="reaction">
+              🔥 1
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div class="typing">
+
+      <span class="typing-dots">
+        • • •
+      </span>
+
+      <strong>
+        Cutie_Pie
+      </strong>
+
+      is typing...
+
     </div>
 
-    <div class="chat-subtitle">
-      🌍 Share ideas and chat with the community
-    </div>
 
-  </div>
+    <div class="composer-wrap">
 
+      <div class="composer">
 
-  <!-- MESSAGES -->
+        <textarea
+          id="messageInput"
+          placeholder="Type a message..."
+        ></textarea>
 
-  <div
-    id="messages"
-    class="messages"
-  >
+        <div class="composer-bottom">
 
-    <div class="status">
-      Loading community...
-    </div>
+          <span class="compose-icon">
+            ＋
+          </span>
 
-  </div>
+          <span class="compose-icon">
+            🎁
+          </span>
 
+          <span class="compose-icon">
+            GIF
+          </span>
 
-  <!-- EMOJI PICKER -->
+          <span class="compose-icon">
+            😊
+          </span>
 
-  <div
-    id="emojiPanel"
-    class="emoji-panel"
-  >
+          <span class="compose-icon">
+            🎙️
+          </span>
 
-    <div class="emoji-tabs">
+          <button
+            id="sendButton"
+            class="send-btn"
+          >
+            ➤
+          </button>
 
-      <button class="emoji-tab" data-category="faces">
-        😀
-      </button>
+        </div>
 
-      <button class="emoji-tab" data-category="hands">
-        👍
-      </button>
-
-      <button class="emoji-tab" data-category="hearts">
-        ❤️
-      </button>
-
-      <button class="emoji-tab" data-category="animals">
-        🐶
-      </button>
-
-      <button class="emoji-tab" data-category="food">
-        🍕
-      </button>
-
-      <button class="emoji-tab" data-category="objects">
-        ⚽
-      </button>
-
-      <button class="emoji-tab" data-category="symbols">
-        ⭐
-      </button>
-
-    </div>
-
-    <div
-      id="emojiGrid"
-      class="emoji-grid"
-    ></div>
-
-  </div>
-
-
-  <!-- COMPOSER -->
-
-  <div class="composer">
-
-    <div class="toolbar">
-
-      <button
-        id="emojiButton"
-        class="tool"
-      >
-        😀 Emoji
-      </button>
+      </div>
 
     </div>
 
 
-    <div class="compose-row">
+    <footer class="chat-footer">
 
-      <textarea
-        id="messageInput"
-        maxlength="2000"
-        placeholder="Write something..."
-      ></textarea>
+      <span>
+        🔥 Streak: 12
+      </span>
 
-      <button
-        id="sendButton"
-        class="send-button"
-      >
-        ➤
-      </button>
+      <span>
+        🛡️ Stay safe
+      </span>
 
-    </div>
+      <span>
+        📜 Community Rules
+      </span>
 
-  </div>
+      <span>
+        ❔
+      </span>
 
+    </footer>
+
+
+  </main>
 
 </div>
-
-</main>
-
-
-<div
-  id="userMenu"
-  class="user-menu"
->
-
-  <button id="profileButton">
-    👤 View Profile
-  </button>
-
-  <button id="privateButton">
-    💬 Private Message
-  </button>
-
-</div>
-
-
-<footer>
-
-  TeenSpace 🌍 |
-  Made for teens, with safety in mind.
-
-</footer>
 
 
 <script>
@@ -703,227 +1592,10 @@ const supabaseClient =
 
 
 /* =========================
-   ELEMENTS
+   USER
 ========================= */
 
-const messages =
-  document.getElementById("messages");
-
-const messageInput =
-  document.getElementById("messageInput");
-
-const sendButton =
-  document.getElementById("sendButton");
-
-const emojiButton =
-  document.getElementById("emojiButton");
-
-const emojiPanel =
-  document.getElementById("emojiPanel");
-
-const emojiGrid =
-  document.getElementById("emojiGrid");
-
-const userMenu =
-  document.getElementById("userMenu");
-
-const profileButton =
-  document.getElementById("profileButton");
-
-const privateButton =
-  document.getElementById("privateButton");
-
-
-let currentUser = null;
-
-let selectedUser = null;
-
-
-/* =========================
-   EMOJIS
-========================= */
-
-const emojis = {
-
-  faces:[
-    "😀","😃","😄","😁","😆","😅","😂","🤣",
-    "😊","😇","🙂","🙃","😉","😌","😍","🥰",
-    "😘","😗","😙","😚","😋","😛","😝","😜",
-    "🤪","🤨","🧐","🤓","😎","🤩","🥳","😏",
-    "😒","😞","😔","😟","😕","🙁","☹️","😣",
-    "😖","😫","😩","🥺","😢","😭","😤","😠",
-    "😡","🤬","🤯","😳","🥵","🥶","😱","😨",
-    "😰","😥","😓","🤗","🤔","🫢","🤭","🤫",
-    "🤥","😶","😐","😑","😬","🙄","😯","😦",
-    "😧","😮","😲","🥱","😴","🤤","😪","😵",
-    "🤐","🥴","🤢","🤮","🤧","😷","🤒","🤕"
-  ],
-
-  hands:[
-    "👍","👎","👌","✌️","🤞","🤟","🤘","🤙",
-    "👈","👉","👆","👇","☝️","✋","🤚","🖐️",
-    "🖖","👋","🤏","💪","🙏","👏","🙌","👐",
-    "🤝","🤜","🤛","✊","👊","🤌","🫶","👀"
-  ],
-
-  hearts:[
-    "❤️","🧡","💛","💚","💙","💜","🖤","🤍",
-    "🤎","💗","💓","💞","💕","💖","💘","💝",
-    "💟","❣️","💔","❤️‍🔥","❤️‍🩹","💯","🔥","✨"
-  ],
-
-  animals:[
-    "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼",
-    "🐨","🐯","🦁","🐮","🐷","🐸","🐵","🙈",
-    "🙉","🙊","🐔","🐧","🐦","🐤","🦄","🐝",
-    "🦋","🐢","🐍","🦎","🐙","🐠","🐟","🐬",
-    "🦈","🐳","🐋","🐊","🐘","🦒","🦓","🦌"
-  ],
-
-  food:[
-    "🍎","🍏","🍊","🍋","🍌","🍉","🍇","🍓",
-    "🫐","🍒","🍑","🥭","🍍","🥥","🥝","🍅",
-    "🥑","🌽","🥕","🥔","🍔","🍟","🍕","🌭",
-    "🌮","🌯","🥪","🍿","🍩","🍪","🎂","🍰",
-    "🍫","🍭","🍬","🍨","🍦","🧁","☕","🧃"
-  ],
-
-  objects:[
-    "⚽","🏀","🏈","⚾","🎾","🏐","🏆","🎮",
-    "🎯","🎨","🎸","🎹","🎤","🎧","📱","💻",
-    "📚","📖","✏️","📝","💡","🔑","🎁","🎈",
-    "🚗","🚲","✈️","🚀","🏠","🌎","📷","💎"
-  ],
-
-  symbols:[
-    "⭐","🌟","✨","💫","🔥","💥","❄️","☀️",
-    "🌈","☁️","⚡","💯","❗","❓","‼️","⁉️",
-    "✅","❌","⭕","💜","🔴","🟠","🟡","🟢",
-    "🔵","🟣","⚫","⚪","🔔","🎉","🎊","💡"
-  ]
-
-};
-
-
-/* =========================
-   SHOW EMOJIS
-========================= */
-
-function showEmojiCategory(category){
-
-  emojiGrid.innerHTML = "";
-
-  emojis[category].forEach(emoji => {
-
-    const button =
-      document.createElement("button");
-
-    button.textContent = emoji;
-
-    button.type = "button";
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        insertEmoji(emoji);
-
-      }
-    );
-
-    emojiGrid.appendChild(button);
-
-  });
-
-}
-
-
-function insertEmoji(emoji){
-
-  const start =
-    messageInput.selectionStart;
-
-  const end =
-    messageInput.selectionEnd;
-
-  const text =
-    messageInput.value;
-
-  messageInput.value =
-    text.slice(0,start) +
-    emoji +
-    text.slice(end);
-
-  messageInput.focus();
-
-  const position =
-    start + emoji.length;
-
-  messageInput.selectionStart =
-    position;
-
-  messageInput.selectionEnd =
-    position;
-
-}
-
-
-document
-  .querySelectorAll(".emoji-tab")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        showEmojiCategory(
-          button.dataset.category
-        );
-
-      }
-    );
-
-  });
-
-
-emojiButton.addEventListener(
-  "click",
-  function(){
-
-    emojiPanel.style.display =
-      emojiPanel.style.display === "block"
-        ? "none"
-        : "block";
-
-  }
-);
-
-
-showEmojiCategory("faces");
-
-
-/* =========================
-   ESCAPE
-========================= */
-
-function escapeHTML(value){
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    value ?? "";
-
-  return div.innerHTML;
-
-}
-
-
-/* =========================
-   CURRENT USER
-========================= */
-
-async function getCurrentUser(){
+async function loadUser(){
 
   const {
     data:{
@@ -939,632 +1611,70 @@ async function getCurrentUser(){
     window.location.href =
       "index.html";
 
-    return null;
-
-  }
-
-  return user;
-
-}
-
-
-/* =========================
-   LOAD POSTS
-========================= */
-
-async function loadPosts(){
-
-  messages.innerHTML = `
-    <div class="status">
-      Loading community...
-    </div>
-  `;
-
-
-  const {
-    data:posts,
-    error
-  } =
-  await supabaseClient
-    .from("posts")
-    .select(
-      "id,user_id,content,created_at,edited"
-    )
-    .order(
-      "created_at",
-      {
-        ascending:true
-      }
-    );
-
-
-  if(error){
-
-    console.error(error);
-
-    messages.innerHTML = `
-      <div class="status error">
-        ❌ Could not load community.
-      </div>
-    `;
-
     return;
 
   }
-
-
-  if(!posts || posts.length === 0){
-
-    messages.innerHTML = `
-      <div class="status">
-        🌟 No messages yet.<br><br>
-        Be the first to say something!
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  const userIds =
-    [
-      ...new Set(
-        posts.map(
-          post => post.user_id
-        )
-      )
-    ];
-
-
-  let profiles = [];
-
-
-  if(userIds.length){
-
-    const {
-      data,
-      error:profileError
-    } =
-    await supabaseClient
-      .from("profiles")
-      .select(
-        'username,role,badge,premium,"user-id"'
-      )
-      .in(
-        "user-id",
-        userIds
-      );
-
-
-    if(!profileError){
-
-      profiles =
-        data || [];
-
-    }
-
-  }
-
-
-  const profileMap =
-    new Map();
-
-
-  profiles.forEach(profile => {
-
-    profileMap.set(
-      profile["user-id"],
-      profile
-    );
-
-  });
-
-
-  messages.innerHTML = "";
-
-
-  posts.forEach(post => {
-
-    renderPost(
-      post,
-      profileMap.get(post.user_id) || {}
-    );
-
-  });
-
-
-  messages.scrollTop =
-    messages.scrollHeight;
-
-}
-
-
-/* =========================
-   RENDER POST
-========================= */
-
-function renderPost(
-  post,
-  profile
-){
 
   const username =
-    profile.username ||
-    "TeenSpace User";
-
-  const role =
-    profile.role ||
-    "user";
-
-
-  const card =
-    document.createElement("div");
-
-  card.className =
-    "message";
-
-
-  let badgeHTML =
-    `<span class="badge member">👤 MEMBER</span>`;
-
-
-  if(role === "owner"){
-
-    badgeHTML =
-      `<span class="badge owner">
-        👑 ${escapeHTML(
-          profile.badge || "FOUNDER"
-        )}
-      </span>`;
-
-  }else if(role === "staff"){
-
-    badgeHTML =
-      `<span class="badge staff">
-        🛡️ STAFF
-      </span>`;
-
-  }
-
-
-  if(profile.premium === true){
-
-    badgeHTML +=
-      `<span class="badge premium">
-        💎 PREMIUM
-      </span>`;
-
-  }
-
-
-  const mine =
-    currentUser &&
-    currentUser.id === post.user_id;
-
-
-  card.innerHTML = `
-
-    <div class="avatar">
-      👤
-    </div>
-
-    <div class="message-content">
-
-      <div
-        class="user-line"
-        data-user-id="${escapeHTML(post.user_id)}"
-        data-username="${escapeHTML(username)}"
-      >
-
-        <span class="username">
-          ${escapeHTML(username)}
-        </span>
-
-        ${badgeHTML}
-
-      </div>
-
-
-      <div class="message-bubble">
-        ${escapeHTML(post.content)}
-      </div>
-
-
-      <div class="message-time">
-        ${new Date(
-          post.created_at
-        ).toLocaleString()}
-
-        ${
-          post.edited
-            ? " · edited"
-            : ""
-        }
-
-      </div>
-
-
-      <div class="message-actions">
-
-        <button
-          class="message-action quote-button"
-        >
-          💬 Reply
-        </button>
-
-        ${
-          mine
-            ? `
-              <button
-                class="message-action edit-button"
-              >
-                ✏️ Edit
-              </button>
-
-              <button
-                class="message-action delete-action delete-button"
-              >
-                🗑️ Delete
-              </button>
-            `
-            : ""
-        }
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  const userLine =
-    card.querySelector(".user-line");
-
-
-  userLine.addEventListener(
-    "click",
-    function(event){
-
-      event.stopPropagation();
-
-      selectedUser = {
-        id:
-          userLine.dataset.userId,
-
-        name:
-          userLine.dataset.username
-      };
-
-
-      const rect =
-        userLine.getBoundingClientRect();
-
-
-      userMenu.style.display =
-        "block";
-
-      userMenu.style.left =
-        Math.min(
-          rect.left,
-          window.innerWidth - 190
-        ) + "px";
-
-      userMenu.style.top =
-        (rect.bottom + 7) + "px";
-
-    }
-  );
-
-
-  const quoteButton =
-    card.querySelector(
-      ".quote-button"
-    );
-
-
-  quoteButton.addEventListener(
-    "click",
-    function(){
-
-      messageInput.value =
-        "@" +
-        username +
-        " ";
-
-      messageInput.focus();
-
-    }
-  );
-
-
-  const editButton =
-    card.querySelector(
-      ".edit-button"
-    );
-
-
-  if(editButton){
-
-    editButton.addEventListener(
-      "click",
-      function(){
-
-        openEdit(
-          card,
-          post
-        );
-
-      }
-    );
-
-  }
-
-
-  const deleteButton =
-    card.querySelector(
-      ".delete-button"
-    );
-
-
-  if(deleteButton){
-
-    deleteButton.addEventListener(
-      "click",
-      function(){
-
-        deletePost(
-          post.id
-        );
-
-      }
-    );
-
-  }
-
-
-  messages.appendChild(card);
+    user.user_metadata?.username ||
+    "TeenSpace Member";
+
+  document.getElementById(
+    "accountName"
+  ).textContent =
+    username;
 
 }
 
-
-/* =========================
-   USER MENU
-========================= */
-
-profileButton.addEventListener(
-  "click",
-  function(){
-
-    if(!selectedUser){
-      return;
-    }
-
-    window.location.href =
-      "profile.html?user_id=" +
-      encodeURIComponent(
-        selectedUser.id
-      );
-
-  }
-);
-
-
-privateButton.addEventListener(
-  "click",
-  function(){
-
-    if(!selectedUser){
-      return;
-    }
-
-    window.location.href =
-      "messages.html?user_id=" +
-      encodeURIComponent(
-        selectedUser.id
-      ) +
-      "&name=" +
-      encodeURIComponent(
-        selectedUser.name
-      );
-
-  }
-);
-
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    if(
-      !userMenu.contains(event.target) &&
-      !event.target.closest(".user-line")
-    ){
-
-      userMenu.style.display =
-        "none";
-
-    }
-
-  }
-);
+loadUser();
 
 
 /* =========================
-   EDIT
+   COMPOSER
 ========================= */
 
-function openEdit(
-  card,
-  post
-){
-
-  const bubble =
-    card.querySelector(
-      ".message-bubble"
-    );
-
-  const actions =
-    card.querySelector(
-      ".message-actions"
-    );
-
-
-  bubble.style.display =
-    "none";
-
-  actions.style.display =
-    "none";
-
-
-  const area =
-    document.createElement("div");
-
-  area.className =
-    "edit-area";
-
-
-  const textarea =
-    document.createElement("textarea");
-
-  textarea.value =
-    post.content;
-
-
-  const save =
-    document.createElement("button");
-
-  save.className =
-    "save-edit";
-
-  save.textContent =
-    "Save Changes";
-
-
-  save.addEventListener(
-    "click",
-    async function(){
-
-      const content =
-        textarea.value.trim();
-
-
-      if(!content){
-
-        return;
-
-      }
-
-
-      const {
-        error
-      } =
-      await supabaseClient
-        .from("posts")
-        .update({
-          content,
-          edited:true
-        })
-        .eq(
-          "id",
-          post.id
-        );
-
-
-      if(error){
-
-        alert(
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      loadPosts();
-
-    }
+const input =
+  document.getElementById(
+    "messageInput"
   );
 
+const sendButton =
+  document.getElementById(
+    "sendButton"
+  );
 
-  area.appendChild(textarea);
-
-  area.appendChild(save);
-
-  card
-    .querySelector(".message-content")
-    .appendChild(area);
-
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-async function deletePost(
-  postId
-){
-
-  if(
-    !confirm(
-      "Delete this message?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  const {
-    error
-  } =
-  await supabaseClient
-    .from("posts")
-    .delete()
-    .eq(
-      "id",
-      postId
-    );
-
-
-  if(error){
-
-    alert(
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  loadPosts();
-
-}
-
-
-/* =========================
-   SEND MESSAGE
-========================= */
 
 async function sendMessage(){
 
   const content =
-    messageInput.value.trim();
-
+    input.value.trim();
 
   if(!content){
+    return;
+  }
+
+
+  sendButton.disabled = true;
+
+
+  const {
+    data:{
+      user
+    }
+  } =
+  await supabaseClient
+    .auth
+    .getUser();
+
+
+  if(!user){
+
+    window.location.href =
+      "index.html";
 
     return;
 
   }
-
-
-  sendButton.disabled =
-    true;
 
 
   const {
@@ -1574,49 +1684,34 @@ async function sendMessage(){
     .from("posts")
     .insert({
 
-      user_id:
-        currentUser.id,
+      user_id:user.id,
 
-      content:
-        content
+      content:content,
+
+      edited:false
 
     });
 
 
+  sendButton.disabled = false;
+
+
   if(error){
 
-    console.error(error);
-
     alert(
+      "Could not send message: " +
       error.message
     );
-
-    sendButton.disabled =
-      false;
 
     return;
 
   }
 
 
-  messageInput.value =
-    "";
-
-  emojiPanel.style.display =
-    "none";
-
-  sendButton.disabled =
-    false;
-
-
-  await loadPosts();
+  input.value = "";
 
 }
 
-
-/* =========================
-   SEND BUTTON
-========================= */
 
 sendButton.addEventListener(
   "click",
@@ -1624,11 +1719,7 @@ sendButton.addEventListener(
 );
 
 
-/* =========================
-   ENTER
-========================= */
-
-messageInput.addEventListener(
+input.addEventListener(
   "keydown",
   function(event){
 
@@ -1648,62 +1739,75 @@ messageInput.addEventListener(
 
 
 /* =========================
-   REALTIME
+   REACTIONS
 ========================= */
 
-function subscribe(){
+document.addEventListener(
+  "click",
+  function(event){
 
-  supabaseClient
-    .channel(
-      "community-posts"
-    )
-    .on(
-      "postgres_changes",
-      {
-        event:"*",
-        schema:"public",
-        table:"posts"
-      },
-      function(){
+    if(
+      event.target.classList.contains(
+        "reaction"
+      )
+    ){
 
-        loadPosts();
+      const button =
+        event.target;
 
-      }
-    )
-    .subscribe();
+      button.style.background =
+        "#37267a";
 
-}
+      button.style.borderColor =
+        "#7047e8";
+
+    }
+
+  }
+);
 
 
 /* =========================
-   START
+   SEARCH
 ========================= */
 
-async function start(){
+document.getElementById(
+  "searchInput"
+).addEventListener(
+  "input",
+  function(){
 
-  currentUser =
-    await getCurrentUser();
+    const query =
+      this.value
+        .toLowerCase()
+        .trim();
 
+    document
+      .querySelectorAll(".dm")
+      .forEach(
+        function(item){
 
-  if(!currentUser){
+          const name =
+            item
+              .querySelector(
+                ".dm-name"
+              )
+              .textContent
+              .toLowerCase();
 
-    return;
+          item.style.display =
+            name.includes(query)
+              ? "flex"
+              : "none";
+
+        }
+      );
 
   }
-
-
-  await loadPosts();
-
-  subscribe();
-
-}
-
-
-start();
+);
 
 </script>
 
 </body>
-
 </html>
 
