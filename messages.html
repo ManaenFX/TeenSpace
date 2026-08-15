@@ -1,268 +1,386 @@
-```html id="g8r4m1"
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Messages | TeenSpace 💬</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-
-    body {
-      margin: 0;
-      background: linear-gradient(
-        135deg,
-        #f4f7ff,
-        #eee8ff
-      );
-      color: #222;
-    }
-
-
-    header {
-      background: #6c5ce7;
-      color: white;
-      padding: 18px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 16px;
-      font-weight: bold;
-    }
-
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-
-    .container {
-      width: 92%;
-      max-width: 800px;
-      margin: 35px auto;
-    }
-
-
-    .chat-card {
-      background: white;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 10px 35px rgba(0,0,0,.08);
-    }
-
-
-    .chat-header {
-      padding: 22px;
-      background:
-        linear-gradient(
-          135deg,
-          #6c5ce7,
-          #8e74ff
-        );
-      color: white;
-    }
-
-
-    .chat-name {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-
-    .chat-subtitle {
-      margin-top: 5px;
-      opacity: .9;
-    }
-
-
-    .messages {
-      height: 500px;
-      overflow-y: auto;
-      padding: 22px;
-      background: #faf9ff;
-    }
-
-
-    .empty {
-      text-align: center;
-      color: #888;
-      padding: 50px 20px;
-    }
-
-
-    .bubble-row {
-      display: flex;
-      margin-bottom: 14px;
-    }
-
-
-    .bubble-row.mine {
-      justify-content: flex-end;
-    }
-
-
-    .bubble {
-      max-width: 75%;
-      padding: 12px 15px;
-      border-radius: 18px;
-      background: #eeeaff;
-      color: #333;
-      line-height: 1.5;
-      word-break: break-word;
-      white-space: pre-wrap;
-    }
-
-
-    .mine .bubble {
-      background: #6c5ce7;
-      color: white;
-      border-bottom-right-radius: 5px;
-    }
-
-
-    .bubble-time {
-      font-size: 11px;
-      margin-top: 6px;
-      opacity: .7;
-    }
-
-
-    .composer {
-      padding: 18px;
-      display: flex;
-      gap: 10px;
-      background: white;
-      border-top: 1px solid #eee;
-    }
-
-
-    textarea {
-      flex: 1;
-      min-height: 55px;
-      max-height: 140px;
-      resize: vertical;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 14px;
-      font-size: 16px;
-      outline: none;
-    }
-
-
-    textarea:focus {
-      border-color: #6c5ce7;
-    }
-
-
-    .send {
-      width: 120px;
-      border: none;
-      border-radius: 14px;
-      background: #6c5ce7;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-
-    .send:hover {
-      background: #5849c4;
-    }
-
-
-    .send:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-
-    #status {
-      text-align: center;
-      padding: 12px;
-      min-height: 20px;
-    }
-
-
-    .error {
-      color: #d63050;
-    }
-
-
-    .success {
-      color: #159447;
-    }
-
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #6c5ce7;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-
-    @media (max-width: 700px) {
-
-      header {
-        flex-direction: column;
-        gap: 14px;
-      }
-
-
-      nav a {
-        margin: 4px 6px;
-        display: inline-block;
-      }
-
-
-      .messages {
-        height: 430px;
-      }
-
-
-      .composer {
-        flex-direction: column;
-      }
-
-
-      .send {
-        width: 100%;
-        padding: 15px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Messages | TeenSpace 💬</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  background:
+    linear-gradient(135deg,#f4f7ff,#eee8ff);
+  color:#222;
+}
+
+header{
+  background:#6c5ce7;
+  color:white;
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+}
+
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:9px;
+  font-weight:bold;
+}
+
+nav a:hover{
+  background:rgba(255,255,255,.15);
+}
+
+.container{
+  width:94%;
+  max-width:850px;
+  margin:30px auto;
+}
+
+.chat-card{
+  background:white;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.chat-header{
+  padding:22px;
+  background:
+    linear-gradient(135deg,#6c5ce7,#8e74ff);
+  color:white;
+}
+
+.chat-name{
+  font-size:25px;
+  font-weight:bold;
+}
+
+.chat-subtitle{
+  margin-top:6px;
+  opacity:.9;
+}
+
+.streak{
+  margin-top:10px;
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+  font-weight:bold;
+}
+
+.messages{
+  height:520px;
+  overflow-y:auto;
+  padding:22px;
+  background:#faf9ff;
+}
+
+.empty{
+  text-align:center;
+  color:#888;
+  padding:50px 20px;
+}
+
+.bubble-row{
+  display:flex;
+  margin-bottom:14px;
+}
+
+.bubble-row.mine{
+  justify-content:flex-end;
+}
+
+.bubble{
+  max-width:78%;
+  padding:12px 15px;
+  border-radius:18px;
+  background:#eeeaff;
+  color:#333;
+  line-height:1.5;
+  word-break:break-word;
+  white-space:pre-wrap;
+}
+
+.mine .bubble{
+  background:#6c5ce7;
+  color:white;
+  border-bottom-right-radius:5px;
+}
+
+.bubble-time{
+  font-size:11px;
+  margin-top:7px;
+  opacity:.7;
+}
+
+.media{
+  max-width:100%;
+  border-radius:14px;
+  margin-top:5px;
+}
+
+.audio{
+  width:100%;
+  margin-top:5px;
+}
+
+.poll{
+  background:white;
+  color:#222;
+  border-radius:15px;
+  padding:15px;
+  margin-top:5px;
+}
+
+.poll-question{
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.poll-option{
+  width:100%;
+  padding:10px;
+  margin-top:7px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:#f7f5ff;
+  cursor:pointer;
+  text-align:left;
+}
+
+.poll-option:hover{
+  background:#eeeaff;
+}
+
+.poll-result{
+  margin-top:6px;
+  font-size:12px;
+  color:#777;
+}
+
+.composer{
+  padding:15px;
+  background:white;
+  border-top:1px solid #eee;
+}
+
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:10px;
+}
+
+.tool-btn{
+  border:none;
+  background:#eeeaff;
+  color:#5f4ce0;
+  padding:9px 11px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.tool-btn:hover{
+  background:#ddd6ff;
+}
+
+.recording{
+  background:#ffe5ea;
+  color:#d63050;
+}
+
+textarea{
+  width:100%;
+  min-height:55px;
+  max-height:150px;
+  resize:vertical;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:14px;
+  font-size:16px;
+  outline:none;
+}
+
+textarea:focus{
+  border-color:#6c5ce7;
+}
+
+.send-row{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.send{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  background:#6c5ce7;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  padding:14px;
+}
+
+.send:hover{
+  background:#5849c4;
+}
+
+.send:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.emoji-panel{
+  display:none;
+  background:#faf9ff;
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.emoji-panel button{
+  border:none;
+  background:transparent;
+  font-size:25px;
+  padding:6px;
+  cursor:pointer;
+}
+
+.file-name{
+  margin-top:8px;
+  color:#666;
+  font-size:13px;
+}
+
+.poll-box{
+  display:none;
+  background:#faf9ff;
+  border:1px solid #ddd;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.poll-box input{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  margin-bottom:8px;
+  font-size:15px;
+}
+
+.poll-actions{
+  display:flex;
+  gap:8px;
+}
+
+.small-btn{
+  border:none;
+  border-radius:9px;
+  padding:9px 12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.add-option{
+  background:#eeeaff;
+  color:#5f4ce0;
+}
+
+.cancel{
+  background:#ffe5ea;
+  color:#d63050;
+}
+
+.status{
+  text-align:center;
+  padding:10px;
+  min-height:20px;
+}
+
+.error{
+  color:#d63050;
+}
+
+.success{
+  color:#159447;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  margin-top:20px;
+  color:#6c5ce7;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.hidden-input{
+  display:none;
+}
+
+@media(max-width:700px){
+
+  header{
+    flex-direction:column;
+  }
+
+  .messages{
+    height:430px;
+  }
+
+  .bubble{
+    max-width:88%;
+  }
+
+  .send-row{
+    flex-direction:column;
+  }
+
+  .send{
+    width:100%;
+  }
+
+}
+
+</style>
 
 </head>
 
@@ -276,73 +394,202 @@
     🌍 TeenSpace
   </div>
 
-
   <nav>
-
     <a href="home.html">Home</a>
-
     <a href="explore.html">Explore</a>
-
     <a href="community.html">Community</a>
-
     <a href="profile.html">Profile</a>
-
+    <a href="friends.html">Friends</a>
   </nav>
 
 </header>
 
 
-
 <main class="container">
 
-
-  <div class="chat-card">
-
-
-    <div class="chat-header">
-
-      <div
-        id="chatName"
-        class="chat-name"
-      >
-        Private Message
-      </div>
-
-      <div class="chat-subtitle">
-        🔒 Private conversation
-      </div>
-
-    </div>
+<div class="chat-card">
 
 
+  <div class="chat-header">
 
     <div
-      id="messages"
-      class="messages"
+      id="chatName"
+      class="chat-name"
+    >
+      Private Message
+    </div>
+
+    <div class="chat-subtitle">
+      🔒 Private conversation
+    </div>
+
+    <div
+      id="streak"
+      class="streak"
+    >
+      🔥 Streak: 0 days
+    </div>
+
+  </div>
+
+
+  <div
+    id="messages"
+    class="messages"
+  >
+
+    <div class="empty">
+      Loading messages...
+    </div>
+
+  </div>
+
+
+  <div id="status"></div>
+
+
+  <!-- EMOJI -->
+
+  <div
+    id="emojiPanel"
+    class="emoji-panel"
+  >
+
+    <button>😀</button>
+    <button>😂</button>
+    <button>😍</button>
+    <button>🥰</button>
+    <button>😎</button>
+    <button>😭</button>
+    <button>😡</button>
+    <button>😱</button>
+    <button>🤔</button>
+    <button>🙌</button>
+    <button>👏</button>
+    <button>❤️</button>
+    <button>💜</button>
+    <button>💙</button>
+    <button>🔥</button>
+    <button>⭐</button>
+    <button>🎉</button>
+    <button>😂</button>
+
+  </div>
+
+
+  <!-- POLL -->
+
+  <div
+    id="pollBox"
+    class="poll-box"
+  >
+
+    <input
+      id="pollQuestion"
+      maxlength="200"
+      placeholder="Ask your poll question..."
     >
 
-      <div class="empty">
-        Loading messages...
-      </div>
+    <div id="pollOptions">
+
+      <input
+        class="poll-input"
+        maxlength="100"
+        placeholder="Option 1"
+      >
+
+      <input
+        class="poll-input"
+        maxlength="100"
+        placeholder="Option 2"
+      >
+
+    </div>
+
+    <div class="poll-actions">
+
+      <button
+        id="addOption"
+        class="small-btn add-option"
+      >
+        + Add option
+      </button>
+
+      <button
+        id="cancelPoll"
+        class="small-btn cancel"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- FILE PREVIEW -->
+
+  <div
+    id="fileName"
+    class="file-name"
+  ></div>
+
+
+  <div class="composer">
+
+
+    <div class="toolbar">
+
+      <button
+        id="emojiButton"
+        class="tool-btn"
+      >
+        😀 Emoji
+      </button>
+
+
+      <button
+        id="mediaButton"
+        class="tool-btn"
+      >
+        📎 Media
+      </button>
+
+
+      <button
+        id="voiceButton"
+        class="tool-btn"
+      >
+        🎙️ Voice
+      </button>
+
+
+      <button
+        id="pollButton"
+        class="tool-btn"
+      >
+        📊 Poll
+      </button>
 
     </div>
 
 
+    <input
+      id="mediaInput"
+      class="hidden-input"
+      type="file"
+      accept="image/*,video/*,audio/*"
+    >
 
-    <div
-      id="status"
-    ></div>
+
+    <textarea
+      id="messageInput"
+      maxlength="2000"
+      placeholder="Write a private message..."
+    ></textarea>
 
 
-
-    <div class="composer">
-
-      <textarea
-        id="messageInput"
-        maxlength="2000"
-        placeholder="Write a private message..."
-      ></textarea>
-
+    <div class="send-row">
 
       <button
         id="sendButton"
@@ -356,18 +603,18 @@
 
   </div>
 
+</div>
 
 
-  <a
-    href="explore.html"
-    class="back"
-  >
-    ← Back to Explore
-  </a>
+<a
+  href="explore.html"
+  class="back"
+>
+  ← Back to Explore
+</a>
 
 
 </main>
-
 
 
 <script>
@@ -390,10 +637,10 @@ const supabaseClient =
     SUPABASE_URL,
     SUPABASE_KEY,
     {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
       }
     }
   );
@@ -406,21 +653,56 @@ const supabaseClient =
 const messagesBox =
   document.getElementById("messages");
 
-
 const messageInput =
   document.getElementById("messageInput");
-
 
 const sendButton =
   document.getElementById("sendButton");
 
-
 const status =
   document.getElementById("status");
 
-
 const chatName =
   document.getElementById("chatName");
+
+const streak =
+  document.getElementById("streak");
+
+const emojiButton =
+  document.getElementById("emojiButton");
+
+const emojiPanel =
+  document.getElementById("emojiPanel");
+
+const mediaButton =
+  document.getElementById("mediaButton");
+
+const mediaInput =
+  document.getElementById("mediaInput");
+
+const voiceButton =
+  document.getElementById("voiceButton");
+
+const pollButton =
+  document.getElementById("pollButton");
+
+const pollBox =
+  document.getElementById("pollBox");
+
+const pollQuestion =
+  document.getElementById("pollQuestion");
+
+const pollOptions =
+  document.getElementById("pollOptions");
+
+const addOption =
+  document.getElementById("addOption");
+
+const cancelPoll =
+  document.getElementById("cancelPoll");
+
+const fileName =
+  document.getElementById("fileName");
 
 
 let currentUser = null;
@@ -430,12 +712,20 @@ let receiverId = null;
 let receiverName =
   "TeenSpace User";
 
+let selectedFile = null;
+
+let mediaRecorder = null;
+
+let audioChunks = [];
+
+let recording = false;
+
 
 /* =========================================
    HELPERS
 ========================================= */
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
   const div =
     document.createElement("div");
@@ -448,11 +738,25 @@ function escapeHTML(value) {
 }
 
 
+function showStatus(
+  text,
+  type=""
+){
+
+  status.className =
+    type;
+
+  status.textContent =
+    text;
+
+}
+
+
 /* =========================================
-   GET RECIPIENT
+   GET RECEIVER
 ========================================= */
 
-function getReceiverFromURL() {
+function getReceiverFromURL(){
 
   const params =
     new URLSearchParams(
@@ -470,19 +774,20 @@ function getReceiverFromURL() {
 
 
   chatName.textContent =
-    "💬 " + receiverName;
+    "💬 " +
+    receiverName;
 
 }
 
 
 /* =========================================
-   CHECK LOGIN
+   LOGIN
 ========================================= */
 
-async function getCurrentUser() {
+async function getCurrentUser(){
 
   const {
-    data: {
+    data:{
       user
     },
     error
@@ -490,10 +795,7 @@ async function getCurrentUser() {
   await supabaseClient.auth.getUser();
 
 
-  if (
-    error ||
-    !user
-  ) {
+  if(error || !user){
 
     window.location.href =
       "login.html";
@@ -509,15 +811,463 @@ async function getCurrentUser() {
 
 
 /* =========================================
+   EMOJIS
+========================================= */
+
+emojiButton.addEventListener(
+  "click",
+  function(){
+
+    emojiPanel.style.display =
+      emojiPanel.style.display === "block"
+        ? "none"
+        : "block";
+
+  }
+);
+
+
+emojiPanel
+  .querySelectorAll("button")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        const emoji =
+          button.textContent;
+
+        const start =
+          messageInput.selectionStart;
+
+        const end =
+          messageInput.selectionEnd;
+
+        const text =
+          messageInput.value;
+
+        messageInput.value =
+          text.slice(0,start) +
+          emoji +
+          text.slice(end);
+
+        messageInput.focus();
+
+        messageInput.selectionStart =
+          start + emoji.length;
+
+        messageInput.selectionEnd =
+          start + emoji.length;
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   MEDIA
+========================================= */
+
+mediaButton.addEventListener(
+  "click",
+  function(){
+
+    mediaInput.click();
+
+  }
+);
+
+
+mediaInput.addEventListener(
+  "change",
+  function(){
+
+    selectedFile =
+      mediaInput.files[0] ||
+      null;
+
+
+    if(!selectedFile){
+
+      fileName.textContent =
+        "";
+
+      return;
+
+    }
+
+
+    const maxSize =
+      25 * 1024 * 1024;
+
+
+    if(selectedFile.size > maxSize){
+
+      showStatus(
+        "❌ File must be 25 MB or smaller.",
+        "error"
+      );
+
+      mediaInput.value =
+        "";
+
+      selectedFile =
+        null;
+
+      return;
+
+    }
+
+
+    fileName.textContent =
+      "📎 " +
+      selectedFile.name;
+
+  }
+);
+
+
+/* =========================================
+   POLL
+========================================= */
+
+pollButton.addEventListener(
+  "click",
+  function(){
+
+    pollBox.style.display =
+      pollBox.style.display === "block"
+        ? "none"
+        : "block";
+
+  }
+);
+
+
+cancelPoll.addEventListener(
+  "click",
+  function(){
+
+    pollBox.style.display =
+      "none";
+
+    pollQuestion.value =
+      "";
+
+    pollOptions.innerHTML = `
+      <input
+        class="poll-input"
+        maxlength="100"
+        placeholder="Option 1"
+      >
+
+      <input
+        class="poll-input"
+        maxlength="100"
+        placeholder="Option 2"
+      >
+    `;
+
+  }
+);
+
+
+addOption.addEventListener(
+  "click",
+  function(){
+
+    const count =
+      pollOptions.querySelectorAll(
+        ".poll-input"
+      ).length;
+
+
+    if(count >= 6){
+
+      showStatus(
+        "You can have up to 6 options.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const input =
+      document.createElement("input");
+
+    input.className =
+      "poll-input";
+
+    input.maxLength =
+      100;
+
+    input.placeholder =
+      "Option " +
+      (count + 1);
+
+
+    pollOptions.appendChild(
+      input
+    );
+
+  }
+);
+
+
+/* =========================================
+   VOICE RECORDING
+========================================= */
+
+voiceButton.addEventListener(
+  "click",
+  async function(){
+
+    if(recording){
+
+      stopRecording();
+
+      return;
+
+    }
+
+
+    if(
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ){
+
+      showStatus(
+        "❌ Voice recording is not supported by this browser.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+      const stream =
+        await navigator.mediaDevices
+          .getUserMedia({
+            audio:true
+          });
+
+
+      audioChunks = [];
+
+
+      mediaRecorder =
+        new MediaRecorder(stream);
+
+
+      mediaRecorder.ondataavailable =
+        function(event){
+
+          if(event.data.size > 0){
+
+            audioChunks.push(
+              event.data
+            );
+
+          }
+
+        };
+
+
+      mediaRecorder.onstop =
+        async function(){
+
+          stream
+            .getTracks()
+            .forEach(
+              track =>
+                track.stop()
+            );
+
+
+          const blob =
+            new Blob(
+              audioChunks,
+              {
+                type:
+                  mediaRecorder.mimeType ||
+                  "audio/webm"
+              }
+            );
+
+
+          const file =
+            new File(
+              [blob],
+              "voice-" +
+              Date.now() +
+              ".webm",
+              {
+                type:
+                  blob.type
+              }
+            );
+
+
+          selectedFile =
+            file;
+
+
+          fileName.textContent =
+            "🎙️ Voice recording ready";
+
+
+          showStatus(
+            "Voice recording ready. Press Send.",
+            "success"
+          );
+
+
+          recording =
+            false;
+
+          voiceButton.textContent =
+            "🎙️ Voice";
+
+          voiceButton.classList.remove(
+            "recording"
+          );
+
+        };
+
+
+      mediaRecorder.start();
+
+      recording =
+        true;
+
+      voiceButton.textContent =
+        "⏹️ Stop";
+
+      voiceButton.classList.add(
+        "recording"
+      );
+
+      showStatus(
+        "🎙️ Recording...",
+        "success"
+      );
+
+    }catch(error){
+
+      console.error(error);
+
+      showStatus(
+        "❌ Microphone permission was not granted.",
+        "error"
+      );
+
+    }
+
+  }
+);
+
+
+function stopRecording(){
+
+  if(
+    mediaRecorder &&
+    mediaRecorder.state !== "inactive"
+  ){
+
+    mediaRecorder.stop();
+
+  }
+
+}
+
+
+/* =========================================
+   UPLOAD MEDIA
+========================================= */
+
+async function uploadMedia(file){
+
+  const extension =
+    file.name.includes(".")
+      ? file.name
+          .split(".")
+          .pop()
+          .toLowerCase()
+      : "bin";
+
+
+  const path =
+    currentUser.id +
+    "/" +
+    crypto.randomUUID() +
+    "." +
+    extension;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .storage
+
+    .from("chat-media")
+
+    .upload(
+      path,
+      file,
+      {
+        contentType:
+          file.type,
+        upsert:false
+      }
+    );
+
+
+  if(error){
+
+    throw error;
+
+  }
+
+
+  const {
+    data:urlData
+  } =
+  supabaseClient
+
+    .storage
+
+    .from("chat-media")
+
+    .getPublicUrl(
+      data.path
+    );
+
+
+  return urlData.publicUrl;
+
+}
+
+
+/* =========================================
    LOAD MESSAGES
 ========================================= */
 
-async function loadMessages() {
+async function loadMessages(){
 
-  if (
+  if(
     !currentUser ||
     !receiverId
-  ) {
+  ){
 
     return;
 
@@ -532,15 +1282,18 @@ async function loadMessages() {
 
     .from("messages")
 
-    .select(
-      `
+    .select(`
       id,
       sender_id,
       receiver_id,
       content,
-      created_at
-      `
-    )
+      created_at,
+      message_type,
+      media_url,
+      media_name,
+      poll_question,
+      poll_options
+    `)
 
     .or(
       `and(sender_id.eq.${currentUser.id},receiver_id.eq.${receiverId}),and(sender_id.eq.${receiverId},receiver_id.eq.${currentUser.id})`
@@ -549,27 +1302,19 @@ async function loadMessages() {
     .order(
       "created_at",
       {
-        ascending: true
+        ascending:true
       }
     );
 
 
-  if (error) {
+  if(error){
 
-    console.error(
-      "Message load error:",
-      error
-    );
-
+    console.error(error);
 
     messagesBox.innerHTML = `
-
       <div class="empty">
-
         ❌ Could not load messages.
-
       </div>
-
     `;
 
     return;
@@ -577,19 +1322,15 @@ async function loadMessages() {
   }
 
 
-  if (
+  if(
     !data ||
     data.length === 0
-  ) {
+  ){
 
     messagesBox.innerHTML = `
-
       <div class="empty">
-
         👋 Start the conversation.
-
       </div>
-
     `;
 
     return;
@@ -601,66 +1342,10 @@ async function loadMessages() {
     "";
 
 
-  data.forEach(message => {
-
-    const mine =
-      message.sender_id ===
-      currentUser.id;
-
-
-    const row =
-      document.createElement("div");
-
-
-    row.className =
-      "bubble-row" +
-      (
-        mine
-          ? " mine"
-          : ""
-      );
-
-
-    const bubble =
-      document.createElement("div");
-
-
-    bubble.className =
-      "bubble";
-
-
-    bubble.innerHTML = `
-
-      <div>
-
-        ${escapeHTML(
-          message.content
-        )}
-
-      </div>
-
-
-      <div class="bubble-time">
-
-        ${new Date(
-          message.created_at
-        ).toLocaleString()}
-
-      </div>
-
-    `;
-
-
-    row.appendChild(
-      bubble
-    );
-
-
-    messagesBox.appendChild(
-      row
-    );
-
-  });
+  data.forEach(
+    message =>
+      renderMessage(message)
+  );
 
 
   messagesBox.scrollTop =
@@ -670,45 +1355,503 @@ async function loadMessages() {
 
 
 /* =========================================
-   SEND MESSAGE
+   RENDER MESSAGE
 ========================================= */
 
-async function sendMessage() {
+function renderMessage(message){
+
+  const mine =
+    message.sender_id ===
+    currentUser.id;
+
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+
+  row.className =
+    "bubble-row" +
+    (
+      mine
+        ? " mine"
+        : ""
+    );
+
+
+  const bubble =
+    document.createElement(
+      "div"
+    );
+
+
+  bubble.className =
+    "bubble";
+
+
+  let contentHTML =
+    "";
+
+
+  const type =
+    message.message_type ||
+    "text";
+
+
+  if(type === "image"){
+
+    contentHTML = `
+      <img
+        class="media"
+        src="${escapeHTML(message.media_url)}"
+        alt="Shared image"
+      >
+    `;
+
+  }else if(type === "video"){
+
+    contentHTML = `
+      <video
+        class="media"
+        src="${escapeHTML(message.media_url)}"
+        controls
+        playsinline
+      ></video>
+    `;
+
+  }else if(type === "audio"){
+
+    contentHTML = `
+      <audio
+        class="audio"
+        src="${escapeHTML(message.media_url)}"
+        controls
+      ></audio>
+    `;
+
+  }else if(type === "poll"){
+
+    contentHTML =
+      renderPoll(
+        message,
+        mine
+      );
+
+  }else{
+
+    contentHTML = `
+      <div>
+        ${escapeHTML(
+          message.content
+        )}
+      </div>
+    `;
+
+  }
+
+
+  bubble.innerHTML =
+    contentHTML +
+    `
+      <div class="bubble-time">
+        ${new Date(
+          message.created_at
+        ).toLocaleString()}
+      </div>
+    `;
+
+
+  row.appendChild(
+    bubble
+  );
+
+
+  messagesBox.appendChild(
+    row
+  );
+
+}
+
+
+/* =========================================
+   POLL DISPLAY
+========================================= */
+
+function renderPoll(
+  message,
+  mine
+){
+
+  let options =
+    message.poll_options;
+
+
+  if(
+    typeof options === "string"
+  ){
+
+    try{
+
+      options =
+        JSON.parse(options);
+
+    }catch{
+
+      options = [];
+
+    }
+
+  }
+
+
+  if(!Array.isArray(options)){
+
+    options = [];
+
+  }
+
+
+  let html = `
+    <div class="poll">
+
+      <div class="poll-question">
+        📊 ${escapeHTML(
+          message.poll_question ||
+          "Poll"
+        )}
+      </div>
+  `;
+
+
+  options.forEach(
+    (option,index) => {
+
+      const text =
+        typeof option === "string"
+          ? option
+          : option.text || "";
+
+
+      html += `
+        <button
+          class="poll-option"
+          data-message-id="${message.id}"
+          data-option="${index}"
+        >
+          ${escapeHTML(text)}
+        </button>
+      `;
+
+    }
+  );
+
+
+  html += `
+      <div class="poll-result">
+        Choose an option to vote.
+      </div>
+
+    </div>
+  `;
+
+
+  return html;
+
+}
+
+
+/* =========================================
+   POLL CLICK
+========================================= */
+
+messagesBox.addEventListener(
+  "click",
+  async function(event){
+
+    const button =
+      event.target.closest(
+        ".poll-option"
+      );
+
+
+    if(!button){
+
+      return;
+
+    }
+
+
+    const messageId =
+      button.dataset.messageId;
+
+
+    const optionIndex =
+      Number(
+        button.dataset.option
+      );
+
+
+    const {
+      error
+    } =
+    await supabaseClient
+
+      .from("poll_votes")
+
+      .upsert(
+        {
+          message_id:
+            messageId,
+
+          user_id:
+            currentUser.id,
+
+          option_index:
+            optionIndex
+        },
+        {
+          onConflict:
+            "message_id,user_id"
+        }
+      );
+
+
+    if(error){
+
+      console.error(error);
+
+      showStatus(
+        "❌ Could not save your vote.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    showStatus(
+      "✅ Vote saved!",
+      "success"
+    );
+
+  }
+);
+
+
+/* =========================================
+   SEND TEXT
+========================================= */
+
+async function sendTextMessage(){
 
   const content =
     messageInput.value.trim();
 
 
-  if (!content) {
+  if(!content){
 
     return;
 
   }
 
 
-  if (!receiverId) {
+  await insertMessage(
+    {
+      message_type:
+        "text",
 
-    status.className =
-      "error";
+      content:
+        content
+    }
+  );
 
-    status.textContent =
-      "No recipient selected.";
+}
+
+
+/* =========================================
+   SEND MEDIA
+========================================= */
+
+async function sendMediaMessage(){
+
+  if(!selectedFile){
 
     return;
 
   }
 
 
-  if (
+  showStatus(
+    "Uploading...",
+    "success"
+  );
+
+
+  const url =
+    await uploadMedia(
+      selectedFile
+    );
+
+
+  let type =
+    "audio";
+
+
+  if(
+    selectedFile.type.startsWith(
+      "image/"
+    )
+  ){
+
+    type =
+      "image";
+
+  }else if(
+    selectedFile.type.startsWith(
+      "video/"
+    )
+  ){
+
+    type =
+      "video";
+
+  }
+
+
+  await insertMessage(
+    {
+      message_type:
+        type,
+
+      content:
+        selectedFile.name,
+
+      media_url:
+        url,
+
+      media_name:
+        selectedFile.name
+    }
+  );
+
+
+  selectedFile =
+    null;
+
+  mediaInput.value =
+    "";
+
+  fileName.textContent =
+    "";
+
+}
+
+
+/* =========================================
+   SEND POLL
+========================================= */
+
+async function sendPoll(){
+
+  const question =
+    pollQuestion.value.trim();
+
+
+  const inputs =
+    [
+      ...pollOptions.querySelectorAll(
+        ".poll-input"
+      )
+    ];
+
+
+  const options =
+    inputs
+      .map(
+        input =>
+          input.value.trim()
+      )
+      .filter(
+        value =>
+          value.length > 0
+      );
+
+
+  if(!question){
+
+    showStatus(
+      "❌ Enter a poll question.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(options.length < 2){
+
+    showStatus(
+      "❌ Add at least 2 options.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  await insertMessage(
+    {
+      message_type:
+        "poll",
+
+      content:
+        question,
+
+      poll_question:
+        question,
+
+      poll_options:
+        options
+    }
+  );
+
+
+  cancelPoll.click();
+
+}
+
+
+/* =========================================
+   INSERT MESSAGE
+========================================= */
+
+async function insertMessage(payload){
+
+  if(!receiverId){
+
+    showStatus(
+      "❌ No recipient selected.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(
     receiverId ===
     currentUser.id
-  ) {
+  ){
 
-    status.className =
-      "error";
-
-    status.textContent =
-      "You cannot message yourself.";
+    showStatus(
+      "❌ You cannot message yourself.",
+      "error"
+    );
 
     return;
 
@@ -719,64 +1862,82 @@ async function sendMessage() {
     true;
 
 
-  sendButton.textContent =
-    "Sending...";
+  try{
 
-
-  status.textContent =
-    "";
-
-
-  const {
-    error
-  } =
-  await supabaseClient
-
-    .from("messages")
-
-    .insert({
-
-      sender_id:
-        currentUser.id,
-
-      receiver_id:
-        receiverId,
-
-      content:
-        content
-
-    });
-
-
-  if (error) {
-
-    console.error(
-      "Send message error:",
+    const {
       error
-    );
+    } =
+    await supabaseClient
+
+      .from("messages")
+
+      .insert({
+        sender_id:
+          currentUser.id,
+
+        receiver_id:
+          receiverId,
+
+        content:
+          payload.content ||
+          "",
+
+        message_type:
+          payload.message_type ||
+          "text",
+
+        media_url:
+          payload.media_url ||
+          null,
+
+        media_name:
+          payload.media_name ||
+          null,
+
+        poll_question:
+          payload.poll_question ||
+          null,
+
+        poll_options:
+          payload.poll_options ||
+          null
+
+      });
 
 
-    status.className =
-      "error";
+    if(error){
 
-    status.textContent =
-      "❌ " + error.message;
+      throw error;
 
-
-  } else {
-
-    status.className =
-      "success";
-
-    status.textContent =
-      "✅ Sent";
+    }
 
 
     messageInput.value =
       "";
 
+    showStatus(
+      "✅ Sent!",
+      "success"
+    );
+
 
     await loadMessages();
+
+    await updateStreak();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "❌ " +
+      (
+        error.message ||
+        "Could not send message."
+      ),
+      "error"
+    );
 
   }
 
@@ -785,16 +1946,9 @@ async function sendMessage() {
     false;
 
 
-  sendButton.textContent =
-    "Send 💬";
-
-
   setTimeout(
-    function() {
-
-      status.textContent = "";
-
-    },
+    () =>
+      showStatus(""),
     1800
   );
 
@@ -802,21 +1956,286 @@ async function sendMessage() {
 
 
 /* =========================================
-   SEND WITH ENTER
+   STREAK
+========================================= */
+
+async function updateStreak(){
+
+  const today =
+    new Date()
+      .toISOString()
+      .slice(0,10);
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .from("chat_streaks")
+
+    .select(
+      "id,user_a,user_b,streak_count,last_message_date"
+    )
+
+    .or(
+      `and(user_a.eq.${currentUser.id},user_b.eq.${receiverId}),and(user_a.eq.${receiverId},user_b.eq.${currentUser.id})`
+    )
+
+    .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Streak error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if(!data){
+
+    const {
+      error:insertError
+    } =
+    await supabaseClient
+
+      .from("chat_streaks")
+
+      .insert({
+        user_a:
+          currentUser.id,
+
+        user_b:
+          receiverId,
+
+        streak_count:
+          1,
+
+        last_message_date:
+          today
+      });
+
+
+    if(!insertError){
+
+      streak.textContent =
+        "🔥 Streak: 1 day";
+
+    }
+
+    return;
+
+  }
+
+
+  if(
+    data.last_message_date ===
+    today
+  ){
+
+    streak.textContent =
+      "🔥 Streak: " +
+      data.streak_count +
+      " days";
+
+    return;
+
+  }
+
+
+  const yesterday =
+    new Date();
+
+
+  yesterday.setDate(
+    yesterday.getDate() - 1
+  );
+
+
+  const yesterdayString =
+    yesterday
+      .toISOString()
+      .slice(0,10);
+
+
+  let newCount;
+
+
+  if(
+    data.last_message_date ===
+    yesterdayString
+  ){
+
+    newCount =
+      data.streak_count + 1;
+
+  }else{
+
+    newCount =
+      1;
+
+  }
+
+
+  const {
+    error:updateError
+  } =
+  await supabaseClient
+
+    .from("chat_streaks")
+
+    .update({
+
+      streak_count:
+        newCount,
+
+      last_message_date:
+        today
+
+    })
+
+    .eq(
+      "id",
+      data.id
+    );
+
+
+  if(!updateError){
+
+    streak.textContent =
+      "🔥 Streak: " +
+      newCount +
+      " days";
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD STREAK
+========================================= */
+
+async function loadStreak(){
+
+  if(
+    !currentUser ||
+    !receiverId
+  ){
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .from("chat_streaks")
+
+    .select(
+      "streak_count"
+    )
+
+    .or(
+      `and(user_a.eq.${currentUser.id},user_b.eq.${receiverId}),and(user_a.eq.${receiverId},user_b.eq.${currentUser.id})`
+    )
+
+    .maybeSingle();
+
+
+  if(
+    error ||
+    !data
+  ){
+
+    streak.textContent =
+      "🔥 Streak: 0 days";
+
+    return;
+
+  }
+
+
+  streak.textContent =
+    "🔥 Streak: " +
+    data.streak_count +
+    " days";
+
+}
+
+
+/* =========================================
+   SEND BUTTON
+========================================= */
+
+sendButton.addEventListener(
+  "click",
+  async function(){
+
+    if(pollBox.style.display === "block"){
+
+      await sendPoll();
+
+      return;
+
+    }
+
+
+    if(selectedFile){
+
+      try{
+
+        await sendMediaMessage();
+
+      }catch(error){
+
+        console.error(error);
+
+        showStatus(
+          "❌ " +
+          error.message,
+          "error"
+        );
+
+      }
+
+      return;
+
+    }
+
+
+    await sendTextMessage();
+
+  }
+);
+
+
+/* =========================================
+   ENTER TO SEND
 ========================================= */
 
 messageInput.addEventListener(
   "keydown",
-  function(event) {
+  function(event){
 
-    if (
+    if(
       event.key === "Enter" &&
       !event.shiftKey
-    ) {
+    ){
 
       event.preventDefault();
 
-      sendMessage();
+      sendTextMessage();
 
     }
 
@@ -824,17 +2243,65 @@ messageInput.addEventListener(
 );
 
 
-sendButton.addEventListener(
-  "click",
-  sendMessage
-);
+/* =========================================
+   REALTIME
+========================================= */
+
+function subscribeToMessages(){
+
+  supabaseClient
+
+    .channel(
+      "teen-space-messages"
+    )
+
+    .on(
+      "postgres_changes",
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"messages"
+      },
+      function(payload){
+
+        const message =
+          payload.new;
+
+
+        const belongsToChat =
+          (
+            message.sender_id ===
+              currentUser.id &&
+            message.receiver_id ===
+              receiverId
+          ) ||
+          (
+            message.sender_id ===
+              receiverId &&
+            message.receiver_id ===
+              currentUser.id
+          );
+
+
+        if(belongsToChat){
+
+          loadMessages();
+
+        }
+
+      }
+    )
+
+    .subscribe();
+
+}
 
 
 /* =========================================
    START
 ========================================= */
 
-async function start() {
+async function start(){
 
   getReceiverFromURL();
 
@@ -843,26 +2310,22 @@ async function start() {
     await getCurrentUser();
 
 
-  if (!currentUser) {
+  if(!currentUser){
+
     return;
+
   }
 
 
-  if (!receiverId) {
+  if(!receiverId){
 
     messagesBox.innerHTML = `
-
       <div class="empty">
-
         👤 No person selected.
-
         <br><br>
-
         Go to Explore and choose someone
         to message.
-
       </div>
-
     `;
 
     sendButton.disabled =
@@ -878,6 +2341,10 @@ async function start() {
 
   await loadMessages();
 
+  await loadStreak();
+
+  subscribeToMessages();
+
 }
 
 
@@ -885,7 +2352,7 @@ start();
 
 </script>
 
-
 </body>
+
 </html>
 ```
