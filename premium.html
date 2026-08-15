@@ -1,4 +1,4 @@
-```html id="n7y1k2"
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -156,6 +156,11 @@
       transform: translateY(-5px);
     }
 
+    .plan.selected {
+      border-color: #b78d00;
+      box-shadow: 0 12px 35px rgba(183,141,0,.18);
+    }
+
     .plan h2 {
       margin-top: 0;
       color: #5f4ce0;
@@ -202,6 +207,47 @@
 
     .trial-button {
       background: #b78d00;
+    }
+
+    .checkout-card {
+      display: none;
+      background: white;
+      border-radius: 22px;
+      padding: 24px;
+      margin-top: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.07);
+      border: 2px solid #6c5ce7;
+      text-align: center;
+    }
+
+    .checkout-card h2 {
+      color: #5f4ce0;
+      margin-top: 0;
+    }
+
+    .selected-plan {
+      font-size: 26px;
+      font-weight: bold;
+      margin: 12px 0;
+      color: #222;
+    }
+
+    .checkout-note {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .disabled-checkout {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 13px;
+      background: #999;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: not-allowed;
     }
 
     .note {
@@ -320,9 +366,7 @@
       FREE MEMBER
     </div>
 
-    <div
-      id="statusText"
-    >
+    <div id="statusText">
       You're currently using the free plan.
     </div>
 
@@ -337,7 +381,10 @@
   <section class="plans">
 
 
-    <article class="plan">
+    <article
+      id="freePlan"
+      class="plan"
+    >
 
       <h2>
         🌍 Free
@@ -370,7 +417,10 @@
     </article>
 
 
-    <article class="plan featured">
+    <article
+      id="trialPlan"
+      class="plan featured"
+    >
 
       <h2>
         ✨ 5-Day Trial
@@ -406,7 +456,10 @@
     </article>
 
 
-    <article class="plan">
+    <article
+      id="monthlyPlan"
+      class="plan"
+    >
 
       <h2>
         💎 Monthly
@@ -435,10 +488,10 @@
       </div>
 
       <button
+        id="monthlyButton"
         class="button"
-        disabled
       >
-        Coming Soon
+        Choose Monthly
       </button>
 
     </article>
@@ -448,6 +501,7 @@
 
 
   <section
+    id="yearlyPlan"
     class="plan"
     style="margin-top:20px;"
   >
@@ -479,10 +533,42 @@
     </div>
 
     <button
+      id="yearlyButton"
       class="button"
+    >
+      Choose Yearly
+    </button>
+
+  </section>
+
+
+  <section
+    id="checkoutCard"
+    class="checkout-card"
+  >
+
+    <h2>
+      💳 Selected Premium Plan
+    </h2>
+
+    <div
+      id="selectedPlan"
+      class="selected-plan"
+    >
+    </div>
+
+    <div
+      id="checkoutNote"
+      class="checkout-note"
+    >
+      Payment checkout is not connected yet.
+    </div>
+
+    <button
+      class="disabled-checkout"
       disabled
     >
-      Coming Soon
+      Payment Coming Soon
     </button>
 
   </section>
@@ -493,10 +579,9 @@
 
   <div class="note">
 
-    🛡️ Prices shown here are localized display prices.
-    Paid checkout is not connected yet, so these amounts
-    are placeholders until you choose your final pricing
-    and connect a payment provider.
+    🛡️ The 5-day trial can be used once per account.
+    Monthly and Yearly prices shown here are display prices
+    until a real payment provider is connected.
 
   </div>
 
@@ -556,6 +641,16 @@ const trialButton =
     "trialButton"
   );
 
+const monthlyButton =
+  document.getElementById(
+    "monthlyButton"
+  );
+
+const yearlyButton =
+  document.getElementById(
+    "yearlyButton"
+  );
+
 const monthlyPrice =
   document.getElementById(
     "monthlyPrice"
@@ -571,6 +666,36 @@ const currencyNote =
     "currencyNote"
   );
 
+const checkoutCard =
+  document.getElementById(
+    "checkoutCard"
+  );
+
+const selectedPlan =
+  document.getElementById(
+    "selectedPlan"
+  );
+
+const checkoutNote =
+  document.getElementById(
+    "checkoutNote"
+  );
+
+const monthlyPlan =
+  document.getElementById(
+    "monthlyPlan"
+  );
+
+const yearlyPlan =
+  document.getElementById(
+    "yearlyPlan"
+  );
+
+const trialPlan =
+  document.getElementById(
+    "trialPlan"
+  );
+
 const message =
   document.getElementById(
     "message"
@@ -582,62 +707,54 @@ let profile = null;
 
 
 /* =========================================
-   LOCAL PRICE SETTINGS
+   PRICES
 ========================================= */
 
 const pricing = {
 
   NGN: {
-    symbol: "₦",
     monthly: 1500,
     yearly: 12000,
     label: "Nigerian Naira"
   },
 
   USD: {
-    symbol: "$",
     monthly: 9.99,
     yearly: 79.99,
     label: "US Dollar"
   },
 
   GBP: {
-    symbol: "£",
     monthly: 7.99,
     yearly: 64.99,
     label: "British Pound"
   },
 
   EUR: {
-    symbol: "€",
     monthly: 8.99,
     yearly: 71.99,
     label: "Euro"
   },
 
   CAD: {
-    symbol: "CA$",
     monthly: 13.99,
     yearly: 109.99,
     label: "Canadian Dollar"
   },
 
   AUD: {
-    symbol: "A$",
     monthly: 15.99,
     yearly: 125.99,
     label: "Australian Dollar"
   },
 
   INR: {
-    symbol: "₹",
     monthly: 799,
     yearly: 6499,
     label: "Indian Rupee"
   },
 
   ZAR: {
-    symbol: "R",
     monthly: 179,
     yearly: 1499,
     label: "South African Rand"
@@ -648,38 +765,52 @@ const pricing = {
 
 const countryCurrency = {
 
-  "Nigeria": "NGN",
+  Nigeria: "NGN",
 
   "United States": "USD",
 
-  "Canada": "CAD",
+  Canada: "CAD",
 
   "United Kingdom": "GBP",
 
-  "France": "EUR",
-  "Germany": "EUR",
-  "Spain": "EUR",
-  "Italy": "EUR",
-  "Portugal": "EUR",
-  "Ireland": "EUR",
-  "Netherlands": "EUR",
-  "Belgium": "EUR",
-  "Austria": "EUR",
-  "Finland": "EUR",
-  "Greece": "EUR",
+  France: "EUR",
+  Germany: "EUR",
+  Spain: "EUR",
+  Italy: "EUR",
+  Portugal: "EUR",
+  Ireland: "EUR",
+  Netherlands: "EUR",
+  Belgium: "EUR",
+  Austria: "EUR",
+  Finland: "EUR",
+  Greece: "EUR",
 
-  "India": "INR",
+  India: "INR",
 
   "South Africa": "ZAR",
 
-  "Australia": "AUD"
+  Australia: "AUD"
 
 };
 
 
 /* =========================================
-   FORMAT PRICE
+   HELPERS
 ========================================= */
+
+function showMessage(
+  text,
+  type
+) {
+
+  message.className =
+    type || "";
+
+  message.textContent =
+    text;
+
+}
+
 
 function formatPrice(
   amount,
@@ -703,58 +834,36 @@ function formatPrice(
 }
 
 
-/* =========================================
-   DETECT CURRENCY
-========================================= */
-
-function getCurrencyFromBrowser() {
+function getBrowserCurrency() {
 
   const locale =
     navigator.language ||
     "en-US";
 
 
-  if (
-    locale.startsWith("en-NG")
-  ) {
+  if (locale.startsWith("en-NG")) {
     return "NGN";
   }
 
-  if (
-    locale.startsWith("en-GB")
-  ) {
+  if (locale.startsWith("en-GB")) {
     return "GBP";
   }
 
-  if (
-    locale.startsWith("en-CA")
-  ) {
+  if (locale.startsWith("en-CA")) {
     return "CAD";
   }
 
-  if (
-    locale.startsWith("en-AU")
-  ) {
+  if (locale.startsWith("en-AU")) {
     return "AUD";
   }
 
-  if (
-    locale.startsWith("en-US")
-  ) {
-    return "USD";
-  }
-
-  if (
-    locale.startsWith("hi-IN") ||
-    locale.startsWith("en-IN")
-  ) {
+  if (locale.startsWith("hi-IN") ||
+      locale.startsWith("en-IN")) {
     return "INR";
   }
 
-  if (
-    locale.startsWith("af-ZA") ||
-    locale.startsWith("en-ZA")
-  ) {
+  if (locale.startsWith("af-ZA") ||
+      locale.startsWith("en-ZA")) {
     return "ZAR";
   }
 
@@ -772,10 +881,6 @@ function getCurrencyFromBrowser() {
 
 }
 
-
-/* =========================================
-   APPLY PRICING
-========================================= */
 
 function applyPricing(
   currency
@@ -809,10 +914,6 @@ function applyPricing(
 
 }
 
-
-/* =========================================
-   STATUS
-========================================= */
 
 function getTrialEnd(
   start
@@ -860,6 +961,10 @@ function isTrialActive(
 }
 
 
+/* =========================================
+   STATUS
+========================================= */
+
 function updateStatus() {
 
   if (
@@ -883,6 +988,18 @@ function updateStatus() {
       true;
 
     trialButton.textContent =
+      "Already Premium ✓";
+
+    monthlyButton.disabled =
+      true;
+
+    yearlyButton.disabled =
+      true;
+
+    monthlyButton.textContent =
+      "Already Premium ✓";
+
+    yearlyButton.textContent =
       "Already Premium ✓";
 
     return;
@@ -921,6 +1038,7 @@ function updateStatus() {
           : "s"
       ) +
       " remaining";
+
 
     trialButton.disabled =
       true;
@@ -976,7 +1094,69 @@ function updateStatus() {
 
 
 /* =========================================
-   START TRIAL
+   CHOOSE PAID PLAN
+========================================= */
+
+function choosePlan(
+  planName,
+  price
+) {
+
+  monthlyPlan.classList.remove(
+    "selected"
+  );
+
+  yearlyPlan.classList.remove(
+    "selected"
+  );
+
+  checkoutCard.style.display =
+    "block";
+
+
+  if (
+    planName === "Monthly"
+  ) {
+
+    monthlyPlan.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  if (
+    planName === "Yearly"
+  ) {
+
+    yearlyPlan.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  selectedPlan.textContent =
+    planName +
+    " — " +
+    price;
+
+
+  checkoutNote.textContent =
+    "You've selected the " +
+    planName.toLowerCase() +
+    " Premium plan. Real payment checkout isn't connected yet.";
+
+  checkoutCard.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+
+}
+
+
+/* =========================================
+   TRIAL
 ========================================= */
 
 trialButton.addEventListener(
@@ -1137,21 +1317,63 @@ trialButton.addEventListener(
 
 
 /* =========================================
-   MESSAGE
+   PLAN BUTTONS
 ========================================= */
 
-function showMessage(
-  text,
-  type
-) {
+monthlyButton.addEventListener(
+  "click",
+  function() {
 
-  message.className =
-    type || "";
+    const currency =
+      countryCurrency[
+        profile?.country
+      ] ||
+      getBrowserCurrency();
 
-  message.textContent =
-    text;
 
-}
+    const data =
+      pricing[currency] ||
+      pricing.USD;
+
+
+    choosePlan(
+      "Monthly",
+      formatPrice(
+        data.monthly,
+        currency
+      )
+    );
+
+  }
+);
+
+
+yearlyButton.addEventListener(
+  "click",
+  function() {
+
+    const currency =
+      countryCurrency[
+        profile?.country
+      ] ||
+      getBrowserCurrency();
+
+
+    const data =
+      pricing[currency] ||
+      pricing.USD;
+
+
+    choosePlan(
+      "Yearly",
+      formatPrice(
+        data.yearly,
+        currency
+      )
+    );
+
+  }
+);
 
 
 /* =========================================
@@ -1224,16 +1446,11 @@ async function start() {
     data || {};
 
 
-  /*
-    Country from TeenSpace profile first.
-    Browser locale as fallback.
-  */
-
   const currency =
     countryCurrency[
       profile.country
     ] ||
-    getCurrencyFromBrowser();
+    getBrowserCurrency();
 
 
   applyPricing(
@@ -1251,6 +1468,5 @@ start();
 </script>
 
 </body>
-
 </html>
 ```
