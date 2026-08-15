@@ -4,466 +4,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TeenSpace — General Chat</title>
-
+<title>TeenSpace Community 💬</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
-
-:root{
-  --bg:#080d1c;
-  --sidebar:#0d1428;
-  --sidebar2:#111a31;
-  --panel:#0a1020;
-  --line:#1b2741;
-  --text:#f5f7ff;
-  --muted:#929bb5;
-  --purple:#7047e8;
-  --purple2:#5d35d4;
-  --blue:#36a4ff;
-  --green:#16d979;
-  --pink:#ff4fa3;
-  --gold:#ffc928;
-}
+*{box-sizing:border-box;font-family:Arial,sans-serif}
 
 body{
   margin:0;
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--text);
+  background:#f5f6fb;
+  color:#202124;
+  height:100vh;
   overflow:hidden;
 }
-
-/* =========================
-   APP
-========================= */
 
 .app{
   height:100vh;
   display:flex;
 }
 
-/* =========================
-   ICON BAR
-========================= */
-
-.icon-bar{
-  width:78px;
-  background:#080f20;
-  border-right:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:12px 0;
-  gap:10px;
-}
-
-.app-logo{
-  width:58px;
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  border-bottom:1px solid var(--line);
-  margin-bottom:8px;
-}
-
-.icon-btn{
-  width:52px;
-  height:52px;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:25px;
-  color:#aab3cc;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.icon-btn:hover{
-  background:#18223d;
-  color:white;
-}
-
-.icon-btn.active{
-  background:linear-gradient(
-    135deg,
-    #7447ef,
-    #5731c8
-  );
-  color:white;
-  box-shadow:0 8px 25px rgba(112,71,232,.35);
-}
-
-.icon-spacer{
-  flex:1;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
+/* SIDEBAR */
 .sidebar{
-  width:302px;
-  background:linear-gradient(
-    180deg,
-    #10182e,
-    #0d1428
-  );
-  border-right:1px solid var(--line);
+  width:270px;
+  background:#fff;
+  border-right:1px solid #e7e7ee;
+  padding:22px 16px;
   display:flex;
   flex-direction:column;
-  min-width:302px;
 }
 
-.sidebar-top{
-  padding:22px 16px 14px;
-  border-bottom:1px solid var(--line);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.brand-icon{
-  font-size:29px;
-}
-
-.brand-name{
-  font-size:24px;
+.logo{
+  font-size:25px;
   font-weight:800;
+  color:#6c5ce7;
+  padding:8px 12px 25px;
 }
 
-.brand-sub{
-  color:#aab1c4;
-  font-size:13px;
-  margin-top:3px;
-}
-
-.search{
-  margin-top:20px;
-  background:#151e36;
-  border:1px solid #202d4a;
-  border-radius:12px;
-  height:44px;
-  display:flex;
-  align-items:center;
-  padding:0 13px;
-  color:#909ab3;
-}
-
-.search input{
-  flex:1;
-  border:0;
-  outline:0;
-  background:none;
-  color:white;
-  font-size:14px;
-  padding-left:9px;
-}
-
-.search input::placeholder{
-  color:#8791aa;
-}
-
-/* =========================
-   NAV
-========================= */
-
-.navigation{
-  padding:15px 12px;
-}
-
-.nav-item{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:11px 14px;
-  border-radius:11px;
-  margin-bottom:4px;
-  color:#aeb6ca;
-  cursor:pointer;
-  font-size:16px;
-}
-
-.nav-item:hover{
-  background:#151e35;
-  color:white;
-}
-
-.nav-item.active{
-  background:linear-gradient(
-    90deg,
-    #6336dc,
-    #7047e8
-  );
-  color:white;
-}
-
-.nav-icon{
-  width:22px;
-  text-align:center;
-  font-size:19px;
-}
-
-.count{
-  margin-left:auto;
-  background:#ff4666;
-  color:white;
-  min-width:23px;
-  height:23px;
-  padding:0 6px;
-  border-radius:20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:11px;
-  font-weight:bold;
-}
-
-/* =========================
-   DMS
-========================= */
-
-.dm-section{
-  flex:1;
-  min-height:0;
-  padding:0 12px;
-  overflow:hidden;
-}
-
-.dm-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#858faa;
+.menu-title{
+  color:#999;
   font-size:12px;
   font-weight:bold;
-  padding:10px 8px;
+  text-transform:uppercase;
+  padding:0 12px 8px;
 }
 
-.dm-add{
-  font-size:20px;
-  color:#aab3c9;
-  cursor:pointer;
-}
-
-.dm-list{
-  overflow:auto;
-  height:calc(100% - 40px);
-}
-
-.dm{
+.nav a{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:8px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.dm:hover{
-  background:#151e35;
-}
-
-.avatar{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:linear-gradient(
-    135deg,
-    #6844e9,
-    #21a6ff
-  );
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  flex-shrink:0;
-  border:2px solid #27365a;
-  position:relative;
-}
-
-.online{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#19db75;
-  border:2px solid #10182e;
-  position:absolute;
-  right:-1px;
-  bottom:0;
-}
-
-.dm-info{
-  min-width:0;
-}
-
-.dm-name{
-  font-size:14px;
-  font-weight:bold;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.dm-preview{
-  color:#8992aa;
-  font-size:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  margin-top:3px;
-}
-
-/* =========================
-   ACCOUNT
-========================= */
-
-.account{
-  border-top:1px solid var(--line);
-  padding:12px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.account-info{
-  flex:1;
-  min-width:0;
-}
-
-.account-name{
-  font-weight:bold;
-}
-
-.account-role{
-  color:#aab3c8;
-  font-size:12px;
-  margin-top:3px;
-}
-
-.account-tools{
-  display:flex;
-  gap:8px;
-  color:#8993aa;
-  font-size:19px;
-}
-
-/* =========================
-   MAIN CHAT
-========================= */
-
-.chat{
-  flex:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  background:
-    radial-gradient(
-      circle at 80% 10%,
-      rgba(91,60,170,.09),
-      transparent 35%
-    ),
-    #090f1e;
-}
-
-/* =========================
-   CHAT HEADER
-========================= */
-
-.chat-header{
-  height:100px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  padding:0 28px;
   gap:12px;
+  padding:12px;
+  margin-bottom:4px;
+  border-radius:12px;
+  color:#555;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.nav a:hover,
+.nav a.active{
+  background:#eeeaff;
+  color:#624fe0;
 }
 
 .channel-title{
+  margin-top:25px;
+  padding:0 12px 10px;
+  color:#999;
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+.channel{
+  padding:12px;
+  border-radius:12px;
+  color:#555;
+  font-weight:bold;
+  background:#eeeaff;
+  color:#624fe0;
+}
+
+.sidebar-bottom{
+  margin-top:auto;
+}
+
+.premium{
+  display:block;
+  background:#fff8dc;
+  color:#947000;
+  text-decoration:none;
+  padding:13px;
+  border-radius:12px;
+  font-weight:bold;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+/* MAIN */
+.main{
   flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.topbar{
+  height:75px;
+  background:#fff;
+  border-bottom:1px solid #e7e7ee;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
 }
 
 .channel-name{
-  font-size:20px;
+  font-size:21px;
   font-weight:800;
 }
 
-.channel-desc{
-  margin-top:6px;
-  color:#8e98b0;
+.channel-description{
+  color:#999;
   font-size:13px;
+  margin-top:3px;
 }
 
-.chat-actions{
-  display:flex;
-  gap:18px;
-  align-items:center;
-  color:#aeb7ca;
-  font-size:22px;
-}
-
-.chat-action{
-  cursor:pointer;
-}
-
-.member-count{
-  font-size:14px;
+.online{
+  color:#159447;
+  font-size:13px;
   font-weight:bold;
 }
 
-/* =========================
-   MESSAGES
-========================= */
-
-.messages{
+/* CHAT */
+.chat{
   flex:1;
   overflow-y:auto;
-  padding:15px 28px;
+  padding:25px;
 }
 
-.message-row{
+.welcome{
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:22px;
+  box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.welcome h2{
+  margin:0 0 7px;
+  color:#624fe0;
+}
+
+.welcome p{
+  margin:0;
+  color:#777;
+}
+
+.message{
   display:flex;
-  gap:14px;
-  padding:18px 4px;
-  border-bottom:1px solid rgba(31,43,68,.65);
+  gap:12px;
+  margin-bottom:20px;
 }
 
-.message-row:hover{
-  background:rgba(255,255,255,.015);
-}
-
-.message-avatar{
-  width:48px;
-  height:48px;
+.avatar{
+  width:43px;
+  height:43px;
+  min-width:43px;
   border-radius:50%;
-  flex-shrink:0;
-  background:linear-gradient(
-    135deg,
-    #7447ed,
-    #238cff
-  );
+  background:#eeeaff;
   display:flex;
-  align-items:center;
   justify-content:center;
-  font-size:22px;
-  border:2px solid #29385e;
-  position:relative;
+  align-items:center;
+  font-size:20px;
 }
 
 .message-body{
-  flex:1;
   min-width:0;
 }
 
@@ -475,297 +190,204 @@ body{
 }
 
 .username{
-  font-size:16px;
   font-weight:800;
+  color:#5d49d5;
 }
-
-.username.blue{color:#22a3ff}
-.username.red{color:#ff5968}
-.username.purple{color:#a46cff}
-.username.cyan{color:#1ce3e1}
-.username.pink{color:#ff4fa3}
-.username.gold{color:#ffb92e}
 
 .badge{
-  padding:4px 8px;
-  border-radius:6px;
   font-size:10px;
-  font-weight:800;
+  font-weight:bold;
+  padding:4px 7px;
+  border-radius:999px;
 }
 
-.member-badge{
-  background:#174b79;
-  color:#67bfff;
+.owner{
+  background:#fff0b3;
+  color:#946c00;
+}
+
+.staff{
+  background:#e1f0ff;
+  color:#1769aa;
 }
 
 .premium-badge{
-  background:#7c1b64;
-  color:#ff72c4;
+  background:#ffe0ef;
+  color:#b52270;
 }
 
-.founder-badge{
-  background:#4a4200;
-  color:#ffd52d;
-}
-
-.online-badge{
-  background:#073f2d;
-  color:#20df86;
+.member{
+  background:#eeeaff;
+  color:#5d49d5;
 }
 
 .message-time{
-  margin-left:auto;
-  color:#818ba1;
-  font-size:12px;
+  color:#aaa;
+  font-size:11px;
 }
 
 .message-text{
-  font-size:17px;
-  line-height:1.55;
-  margin-top:7px;
-  color:#f3f5fa;
+  margin-top:5px;
+  line-height:1.5;
+  white-space:pre-wrap;
   word-break:break-word;
-}
-
-.message-bubble{
-  display:inline-block;
-  margin-top:7px;
-  padding:13px 17px;
-  border-radius:14px;
-  background:linear-gradient(
-    135deg,
-    #5031a3,
-    #36216e
-  );
-  max-width:600px;
 }
 
 .reactions{
   display:flex;
-  gap:7px;
-  margin-top:10px;
-  flex-wrap:wrap;
+  gap:5px;
+  margin-top:7px;
 }
 
-.reaction{
-  border:1px solid #202e4b;
-  background:#0d1528;
-  color:#c3c9d8;
-  border-radius:9px;
-  padding:6px 10px;
+.react{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:999px;
+  padding:4px 8px;
   cursor:pointer;
   font-size:13px;
 }
 
-.reaction:hover{
-  background:#18233c;
+.react:hover{
+  background:#eeeaff;
 }
 
-/* =========================
-   TYPING
-========================= */
-
-.typing{
-  min-height:40px;
-  padding:5px 30px;
-  color:#8993aa;
-  font-size:13px;
-}
-
-.typing-dots{
-  color:#8d5cf5;
-  letter-spacing:4px;
-}
-
-/* =========================
-   COMPOSER
-========================= */
-
-.composer-wrap{
-  padding:0 25px 16px;
-}
-
+/* COMPOSER */
 .composer{
-  min-height:100px;
-  border:1px solid #273454;
-  border-radius:18px;
-  background:#10172b;
-  padding:13px 15px;
-  display:flex;
-  flex-direction:column;
+  background:#fff;
+  border-top:1px solid #e7e7ee;
+  padding:14px 20px;
 }
 
-.composer textarea{
-  width:100%;
+.tools{
+  display:flex;
+  gap:6px;
+  margin-bottom:8px;
+}
+
+.tool{
+  border:none;
+  background:#f0eff8;
+  border-radius:9px;
+  padding:7px 10px;
+  cursor:pointer;
+}
+
+.emoji-panel{
+  display:none;
+  background:#f8f7fc;
+  border:1px solid #ddd;
+  padding:8px;
+  border-radius:12px;
+  margin-bottom:8px;
+}
+
+.emoji-panel button{
+  border:none;
+  background:none;
+  font-size:22px;
+  cursor:pointer;
+  padding:5px;
+}
+
+.input-row{
+  display:flex;
+  gap:10px;
+}
+
+textarea{
   flex:1;
   resize:none;
-  min-height:45px;
-  background:none;
-  border:0;
-  outline:0;
-  color:white;
-  font-size:16px;
+  min-height:48px;
+  max-height:120px;
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:13px;
+  outline:none;
+  font-size:15px;
 }
 
-.composer textarea::placeholder{
-  color:#818ba4;
+textarea:focus{
+  border-color:#6c5ce7;
 }
 
-.composer-bottom{
-  display:flex;
-  align-items:center;
-  gap:17px;
-}
-
-.compose-icon{
-  color:#aeb6ca;
-  font-size:20px;
+.send{
+  border:none;
+  background:#6c5ce7;
+  color:#fff;
+  border-radius:13px;
+  padding:0 22px;
+  font-weight:bold;
   cursor:pointer;
 }
 
-.send-btn{
-  margin-left:auto;
-  width:45px;
-  height:45px;
-  border:0;
-  border-radius:50%;
-  background:linear-gradient(
-    135deg,
-    #7a45ef,
-    #6332d7
-  );
-  color:white;
-  font-size:20px;
-  cursor:pointer;
-  box-shadow:0 5px 18px rgba(105,57,220,.35);
+.send:hover{
+  background:#5747cf;
 }
 
-.send-btn:hover{
-  transform:scale(1.05);
+.status{
+  text-align:center;
+  padding:8px;
+  font-size:13px;
+  color:#777;
 }
 
-/* =========================
-   FOOTER
-========================= */
+.error{color:#d63050}
+.success{color:#159447}
 
-.chat-footer{
-  height:54px;
-  border-top:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  color:#9ca5bb;
-  font-size:14px;
+/* MOBILE */
+.mobile-menu{
+  display:none;
 }
 
-.chat-footer span{
-  display:flex;
-  align-items:center;
-  gap:7px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:850px){
-
-  .icon-bar{
-    width:60px;
-  }
-
-  .icon-btn{
-    width:44px;
-    height:44px;
-    font-size:21px;
-  }
+@media(max-width:750px){
 
   .sidebar{
-    width:230px;
-    min-width:230px;
+    width:72px;
+    padding:15px 8px;
   }
 
-  .brand-name{
+  .logo{
+    font-size:0;
+    text-align:center;
+  }
+
+  .logo:first-letter{
+    font-size:25px;
+  }
+
+  .nav a{
+    justify-content:center;
+    font-size:0;
+  }
+
+  .nav a:first-letter{
     font-size:20px;
   }
 
-  .brand-sub{
+  .menu-title,
+  .channel-title,
+  .channel,
+  .premium{
     display:none;
   }
 
-  .chat-header{
+  .topbar{
     padding:0 15px;
   }
 
-  .messages{
-    padding:10px 15px;
-  }
-
-  .composer-wrap{
-    padding:0 12px 10px;
-  }
-
-  .chat-actions{
-    gap:10px;
-  }
-
-}
-
-@media(max-width:650px){
-
-  .icon-bar{
-    display:none;
-  }
-
-  .sidebar{
-    display:none;
-  }
-
   .chat{
-    width:100%;
+    padding:15px;
   }
 
-  .chat-header{
-    height:75px;
+  .composer{
+    padding:10px;
   }
 
-  .channel-name{
-    font-size:17px;
+  .send{
+    padding:0 15px;
   }
-
-  .channel-desc{
-    font-size:11px;
-  }
-
-  .member-count{
-    display:none;
-  }
-
-  .message-row{
-    gap:9px;
-    padding:14px 0;
-  }
-
-  .message-avatar{
-    width:39px;
-    height:39px;
-    font-size:18px;
-  }
-
-  .message-time{
-    display:none;
-  }
-
-  .message-text{
-    font-size:15px;
-  }
-
-  .chat-footer{
-    display:none;
-  }
-
 }
-
 </style>
 </head>
 
@@ -773,804 +395,119 @@ body{
 
 <div class="app">
 
-  <!-- ICON BAR -->
-
-  <aside class="icon-bar">
-
-    <div class="app-logo">
-      🌍
-    </div>
-
-    <div class="icon-btn active">💬</div>
-    <div class="icon-btn">🌎</div>
-    <div class="icon-btn">🎮</div>
-    <div class="icon-btn">⭐</div>
-    <div class="icon-btn">🎵</div>
-
-    <div class="icon-spacer"></div>
-
-    <div class="icon-btn">＋</div>
-
-  </aside>
-
-
-  <!-- SIDEBAR -->
-
   <aside class="sidebar">
 
-    <div class="sidebar-top">
+    <div class="logo">🌍 TeenSpace</div>
 
-      <div class="brand">
+    <div class="menu-title">Navigation</div>
 
-        <div class="brand-icon">
-          🌍
-        </div>
+    <nav class="nav">
+      <a href="home.html">🏠 Home</a>
+      <a href="explore.html">🌍 Explore</a>
+      <a href="community.html" class="active">💬 Community</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="friends.html">👥 Friends</a>
+    </nav>
 
-        <div>
-          <div class="brand-name">
-            TeenSpace
-          </div>
+    <div class="channel-title">Community</div>
 
-          <div class="brand-sub">
-            Made for teens, by teens
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="search">
-
-        🔎
-
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Search or start a chat"
-        >
-
-      </div>
-
+    <div class="channel">
+      💬 General Chat
     </div>
 
-
-    <div class="navigation">
-
-      <div class="nav-item">
-        <span class="nav-icon">🏠</span>
-        Home
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">🔎</span>
-        Explore
-      </div>
-
-      <div class="nav-item active">
-        <span class="nav-icon">👥</span>
-        Community
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">✉️</span>
-        Messages
-        <span class="count">24</span>
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">👫</span>
-        Friends
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">🔔</span>
-        Notifications
-        <span class="count">8</span>
-      </div>
-
-    </div>
-
-
-    <div class="dm-section">
-
-      <div class="dm-title">
-
-        DIRECT MESSAGES
-
-        <span class="dm-add">＋</span>
-
-      </div>
-
-
-      <div class="dm-list">
-
-        <div class="dm">
-          <div class="avatar">
-            🧑
-            <span class="online"></span>
-          </div>
-          <div class="dm-info">
-            <div class="dm-name">woods</div>
-            <div class="dm-preview">Hi</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">
-            🕷️
-            <span class="online"></span>
-          </div>
-          <div class="dm-info">
-            <div class="dm-name">Arabian male</div>
-            <div class="dm-preview">Hi all</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">
-            🐺
-            <span class="online"></span>
-          </div>
-          <div class="dm-info">
-            <div class="dm-name">LadyAnya54</div>
-            <div class="dm-preview">Online</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">
-            👻
-            <span class="online"></span>
-          </div>
-          <div class="dm-info">
-            <div class="dm-name">Chaotic Dixie</div>
-            <div class="dm-preview">Yo</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">🦸</div>
-          <div class="dm-info">
-            <div class="dm-name">Gloomurai</div>
-            <div class="dm-preview">made grilled cheese auuuu</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">🦉</div>
-          <div class="dm-info">
-            <div class="dm-name">B4by D0l3y</div>
-            <div class="dm-preview">Vivacious and determined</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">👧</div>
-          <div class="dm-info">
-            <div class="dm-name">Cutie_Pie</div>
-            <div class="dm-preview">Typing...</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">🧸</div>
-          <div class="dm-info">
-            <div class="dm-name">Squibbles</div>
-            <div class="dm-preview">August 15th</div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">👩</div>
-          <div class="dm-info">
-            <div class="dm-name" style="color:#ffb51e">
-              Alexa
-            </div>
-            <div class="dm-preview">
-              Where's your mute button?
-            </div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">🐊</div>
-          <div class="dm-info">
-            <div class="dm-name" style="color:#168fff">
-              wallvdarling
-            </div>
-            <div class="dm-preview">
-              Solid state ice cream
-            </div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">✏️</div>
-          <div class="dm-info">
-            <div class="dm-name">
-              abcdeFox
-            </div>
-          </div>
-        </div>
-
-
-        <div class="dm">
-          <div class="avatar">🌌</div>
-          <div class="dm-info">
-            <div class="dm-name">
-              Arabian engineer
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="account">
-
-      <div class="avatar">
-        👤
-        <span class="online"></span>
-      </div>
-
-      <div class="account-info">
-
-        <div
-          class="account-name"
-          id="accountName"
-        >
-          Loading...
-        </div>
-
-        <div class="account-role">
-          Member 🌍
-        </div>
-
-      </div>
-
-      <div class="account-tools">
-        🎙️
-        🎧
-        ⚙️
-      </div>
-
+    <div class="sidebar-bottom">
+      <a href="premium.html" class="premium">
+        💎 Premium
+      </a>
     </div>
 
   </aside>
 
+  <main class="main">
 
-  <!-- MAIN CHAT -->
-
-  <main class="chat">
-
-
-    <header class="chat-header">
-
-      <div class="channel-title">
-
-        <div class="channel-name">
-          # 💬 General Chat
-          <span style="color:#7f8ba5">⌄</span>
+    <header class="topbar">
+      <div>
+        <div class="channel-name"># General Chat</div>
+        <div class="channel-description">
+          Talk, share ideas and meet the TeenSpace community.
         </div>
-
-        <div class="channel-desc">
-          · Global chat for everyone 🌍
-        </div>
-
       </div>
 
-
-      <div class="chat-actions">
-
-        <span class="chat-action">
-          📌
-        </span>
-
-        <span class="chat-action">
-          👥
-        </span>
-
-        <span class="member-count">
-          128
-        </span>
-
-        <span class="chat-action">
-          🔎
-        </span>
-
-        <span class="chat-action">
-          ⋮
-        </span>
-
+      <div id="onlineCount" class="online">
+        🟢 Online
       </div>
-
     </header>
 
+    <section id="chat" class="chat">
 
-    <section
-      class="messages"
-      id="messages"
-    >
-
-      <div class="message-row">
-
-        <div class="message-avatar">
-          🧑
-          <span class="online"></span>
-        </div>
-
-        <div class="message-body">
-
-          <div class="message-top">
-
-            <span class="username blue">
-              woods
-            </span>
-
-            <span class="badge member-badge">
-              MEMBER
-            </span>
-
-            <span class="message-time">
-              15/08 1:25
-            </span>
-
-          </div>
-
-          <div class="message-text">
-            Hi
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              👋 3
-            </button>
-
-            <button class="reaction">
-              ❤️ 2
-            </button>
-
-            <button class="reaction">
-              😂 1
-            </button>
-
-            <button class="reaction">
-              ☺️
-            </button>
-
-          </div>
-
-        </div>
-
+      <div class="welcome">
+        <h2>👋 Welcome to TeenSpace!</h2>
+        <p>
+          This is the community chat. Be friendly,
+          respect other members and have fun 🌍💜
+        </p>
       </div>
 
-
-      <div class="message-row">
-
-        <div class="message-avatar">
-          🕷️
-          <span class="online"></span>
-        </div>
-
-        <div class="message-body">
-
-          <div class="message-top">
-
-            <span class="username red">
-              Arabian male
-            </span>
-
-            <span class="badge member-badge">
-              MEMBER
-            </span>
-
-            <span class="message-time">
-              15/08 1:30
-            </span>
-
-          </div>
-
-          <div class="message-text">
-            Hi all
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              ❤️ 4
-            </button>
-
-            <button class="reaction">
-              🔥 2
-            </button>
-
-            <button class="reaction">
-              ☺️
-            </button>
-
-          </div>
-
-        </div>
-
+      <div id="loading" class="status">
+        Loading community...
       </div>
 
+      <div id="messages"></div>
 
-      <div class="message-row">
+    </section>
 
-        <div class="message-avatar">
-          🐺
-          <span class="online"></span>
-        </div>
+    <div id="status" class="status"></div>
 
-        <div class="message-body">
+    <section class="composer">
 
-          <div class="message-top">
-
-            <span class="username purple">
-              LadyAnya54
-            </span>
-
-            <span class="badge online-badge">
-              ONLINE
-            </span>
-
-            <span class="message-time">
-              15/08 1:33
-            </span>
-
-          </div>
-
-          <div class="message-text">
-            Hiii everyone 👋
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              🙌 2
-            </button>
-
-            <button class="reaction">
-              💜 2
-            </button>
-
-            <button class="reaction">
-              ☺️
-            </button>
-
-          </div>
-
-        </div>
-
+      <div id="emojiPanel" class="emoji-panel">
+        <button>😀</button>
+        <button>😂</button>
+        <button>😍</button>
+        <button>🥰</button>
+        <button>😎</button>
+        <button>😭</button>
+        <button>😱</button>
+        <button>🤔</button>
+        <button>🙌</button>
+        <button>👏</button>
+        <button>❤️</button>
+        <button>💜</button>
+        <button>🔥</button>
+        <button>⭐</button>
+        <button>🎉</button>
+        <button>🤣</button>
+        <button>😮</button>
+        <button>👍</button>
+        <button>👀</button>
+        <button>💯</button>
       </div>
 
-
-      <div class="message-row">
-
-        <div class="message-avatar">
-          👻
-          <span class="online"></span>
-        </div>
-
-        <div class="message-body">
-
-          <div class="message-top">
-
-            <span class="username cyan">
-              Chaotic Dixie
-            </span>
-
-            <span style="font-size:18px">
-              💎
-            </span>
-
-            <span class="badge premium-badge">
-              PREMIUM
-            </span>
-
-            <span class="message-time">
-              15/08 1:34
-            </span>
-
-          </div>
-
-          <div class="message-text">
-            <span class="message-bubble">
-              Yo
-            </span>
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              😎 2
-            </button>
-
-            <button class="reaction">
-              🔥 1
-            </button>
-
-            <button class="reaction">
-              ☺️
-            </button>
-
-          </div>
-
-        </div>
-
+      <div class="tools">
+        <button id="emojiBtn" class="tool">😀</button>
       </div>
 
+      <div class="input-row">
 
-      <div class="message-row">
+        <textarea
+          id="messageInput"
+          maxlength="2000"
+          placeholder="Message #general..."
+        ></textarea>
 
-        <div class="message-avatar">
-          🦸
-        </div>
-
-        <div class="message-body">
-
-          <div class="message-top">
-
-            <span class="username blue">
-              Gloomurai
-            </span>
-
-            <span style="font-size:18px">
-              👑
-            </span>
-
-            <span class="badge founder-badge">
-              FOUNDER
-            </span>
-
-            <span class="message-time">
-              15/08 1:35
-            </span>
-
-          </div>
-
-          <div class="message-text">
-            made grilled cheese uauuu 🧀🔥
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              🧀 4
-            </button>
-
-            <button class="reaction">
-              🔥 3
-            </button>
-
-            <button class="reaction">
-              😂 1
-            </button>
-
-            <button class="reaction">
-              ☺️
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="message-row">
-
-        <div class="message-avatar">
-          🌸
-          <span class="online"></span>
-        </div>
-
-        <div class="message-body">
-
-          <div class="message-top">
-
-            <span class="username pink">
-              toxicchurchyboi
-            </span>
-
-            <span class="badge premium-badge">
-              PREMIUM
-            </span>
-
-            <span class="message-time">
-              15/08 1:36
-            </span>
-
-          </div>
-
-          <div class="message-text">
-
-            <span class="message-bubble">
-              irl is gonna give me lash clusters tomorrow YAY 😭✨
-            </span>
-
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              😭 3
-            </button>
-
-            <button class="reaction">
-              ✨ 3
-            </button>
-
-            <button class="reaction">
-              💯 2
-            </button>
-
-            <button class="reaction">
-              ☺️
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="message-row">
-
-        <div class="message-avatar">
-          🦸
-        </div>
-
-        <div class="message-body">
-
-          <div class="message-top">
-
-            <span class="username blue">
-              Gloomurai
-            </span>
-
-            <span style="font-size:18px">
-              👑
-            </span>
-
-            <span class="badge founder-badge">
-              FOUNDER
-            </span>
-
-            <span class="message-time">
-              15/08 1:38
-            </span>
-
-          </div>
-
-          <div class="message-text">
-            real 💯
-          </div>
-
-          <div class="reactions">
-
-            <button class="reaction">
-              💯 2
-            </button>
-
-            <button class="reaction">
-              🔥 1
-            </button>
-
-          </div>
-
-        </div>
+        <button id="sendBtn" class="send">
+          Send
+        </button>
 
       </div>
 
     </section>
 
-
-    <div class="typing">
-
-      <span class="typing-dots">
-        • • •
-      </span>
-
-      <strong>
-        Cutie_Pie
-      </strong>
-
-      is typing...
-
-    </div>
-
-
-    <div class="composer-wrap">
-
-      <div class="composer">
-
-        <textarea
-          id="messageInput"
-          placeholder="Type a message..."
-        ></textarea>
-
-        <div class="composer-bottom">
-
-          <span class="compose-icon">
-            ＋
-          </span>
-
-          <span class="compose-icon">
-            🎁
-          </span>
-
-          <span class="compose-icon">
-            GIF
-          </span>
-
-          <span class="compose-icon">
-            😊
-          </span>
-
-          <span class="compose-icon">
-            🎙️
-          </span>
-
-          <button
-            id="sendButton"
-            class="send-btn"
-          >
-            ➤
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <footer class="chat-footer">
-
-      <span>
-        🔥 Streak: 12
-      </span>
-
-      <span>
-        🛡️ Stay safe
-      </span>
-
-      <span>
-        📜 Community Rules
-      </span>
-
-      <span>
-        ❔
-      </span>
-
-    </footer>
-
-
   </main>
 
 </div>
 
-
 <script>
-
-/* =========================
-   SUPABASE
-========================= */
 
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
@@ -1590,92 +527,411 @@ const supabaseClient =
     }
   );
 
+const messagesBox =
+  document.getElementById("messages");
 
-/* =========================
-   USER
-========================= */
+const loading =
+  document.getElementById("loading");
 
-async function loadUser(){
+const input =
+  document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const status =
+  document.getElementById("status");
+
+const emojiBtn =
+  document.getElementById("emojiBtn");
+
+const emojiPanel =
+  document.getElementById("emojiPanel");
+
+let currentUser = null;
+
+/* ESCAPE */
+
+function escapeHTML(value){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    value || "";
+
+  return div.innerHTML;
+}
+
+/* USER */
+
+async function getUser(){
 
   const {
     data:{
       user
     }
   } =
-  await supabaseClient
-    .auth
-    .getUser();
+  await supabaseClient.auth.getUser();
 
   if(!user){
 
     window.location.href =
-      "index.html";
+      "login.html";
+
+    return null;
+  }
+
+  return user;
+}
+
+/* EMOJI */
+
+emojiBtn.addEventListener(
+  "click",
+  ()=>{
+    emojiPanel.style.display =
+      emojiPanel.style.display === "block"
+      ? "none"
+      : "block";
+  }
+);
+
+emojiPanel
+.querySelectorAll("button")
+.forEach(button=>{
+
+  button.addEventListener(
+    "click",
+    ()=>{
+
+      const emoji =
+        button.textContent;
+
+      const start =
+        input.selectionStart;
+
+      const end =
+        input.selectionEnd;
+
+      input.value =
+        input.value.slice(0,start) +
+        emoji +
+        input.value.slice(end);
+
+      input.focus();
+
+      input.selectionStart =
+        input.selectionEnd =
+        start + emoji.length;
+    }
+  );
+
+});
+
+/* LOAD */
+
+async function loadMessages(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("messages")
+    .select(`
+      id,
+      sender_id,
+      content,
+      created_at
+    `)
+    .eq(
+      "receiver_id",
+      "00000000-0000-0000-0000-000000000000"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
+  /*
+    If your existing messages table is
+    private-message-only, the query above
+    will simply show no community messages.
+
+    The page also tries the community_posts
+    table below.
+  */
+
+  if(error){
+
+    loadCommunityPosts();
 
     return;
+  }
+
+  renderMessages(data || []);
+}
+
+/* COMMUNITY POSTS FALLBACK */
+
+async function loadCommunityPosts(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("community_posts")
+    .select("*")
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
+  if(error){
+
+    /*
+      Your existing community page uses
+      the "posts" table, so try that too.
+    */
+
+    loadPostsTable();
+
+    return;
+  }
+
+  renderCommunityData(data || []);
+}
+
+/* EXISTING POSTS TABLE */
+
+async function loadPostsTable(){
+
+  const {
+    data:posts,
+    error
+  } =
+  await supabaseClient
+    .from("posts")
+    .select(
+      "id,user_id,content,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
+  if(error){
+
+    console.error(error);
+
+    loading.textContent =
+      "❌ Could not load the community.";
+
+    loading.className =
+      "status error";
+
+    return;
+  }
+
+  if(!posts || posts.length === 0){
+
+    loading.textContent =
+      "🌟 No community messages yet.";
+
+    return;
+  }
+
+  const ids =
+    [
+      ...new Set(
+        posts.map(
+          post=>post.user_id
+        )
+      )
+    ];
+
+  let profiles = [];
+
+  if(ids.length){
+
+    const {
+      data
+    } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        'username,role,badge,premium,"user-id"'
+      )
+      .in(
+        "user-id",
+        ids
+      );
+
+    profiles =
+      data || [];
+  }
+
+  const profileMap =
+    new Map();
+
+  profiles.forEach(profile=>{
+
+    profileMap.set(
+      profile["user-id"],
+      profile
+    );
+
+  });
+
+  loading.remove();
+
+  posts.forEach(post=>{
+
+    const profile =
+      profileMap.get(
+        post.user_id
+      ) || {};
+
+    renderOne(
+      post,
+      profile
+    );
+
+  });
+}
+
+/* GENERIC */
+
+function renderCommunityData(data){
+
+  loading.remove();
+
+  data.forEach(item=>{
+
+    renderOne(
+      item,
+      item.profile || {}
+    );
+
+  });
+}
+
+/* RENDER */
+
+function renderOne(item,profile){
+
+  const username =
+    profile.username ||
+    item.username ||
+    "TeenSpace Member";
+
+  const role =
+    profile.role ||
+    "user";
+
+  const premium =
+    profile.premium === true;
+
+  const message =
+    item.content ||
+    item.message ||
+    "";
+
+  const div =
+    document.createElement("div");
+
+  div.className =
+    "message";
+
+  let badge = "";
+
+  if(role === "owner"){
+
+    badge =
+      `<span class="badge owner">👑 ${
+        escapeHTML(
+          profile.badge || "FOUNDER"
+        )
+      }</span>`;
+
+  }else if(role === "staff"){
+
+    badge =
+      `<span class="badge staff">🛡️ STAFF</span>`;
+
+  }else{
+
+    badge =
+      `<span class="badge member">👤 MEMBER</span>`;
 
   }
 
-  const username =
-    user.user_metadata?.username ||
-    "TeenSpace Member";
+  if(premium){
 
-  document.getElementById(
-    "accountName"
-  ).textContent =
-    username;
+    badge +=
+      `<span class="badge premium-badge">💎 PREMIUM</span>`;
+  }
 
+  div.innerHTML = `
+
+    <div class="avatar">👤</div>
+
+    <div class="message-body">
+
+      <div class="message-top">
+
+        <span class="username">
+          ${escapeHTML(username)}
+        </span>
+
+        ${badge}
+
+        <span class="message-time">
+          ${new Date(
+            item.created_at
+          ).toLocaleString()}
+        </span>
+
+      </div>
+
+      <div class="message-text">
+        ${escapeHTML(message)}
+      </div>
+
+      <div class="reactions">
+
+        <button class="react">❤️</button>
+        <button class="react">😂</button>
+        <button class="react">🔥</button>
+        <button class="react">👍</button>
+
+      </div>
+
+    </div>
+  `;
+
+  messagesBox.appendChild(div);
 }
 
-loadUser();
-
-
-/* =========================
-   COMPOSER
-========================= */
-
-const input =
-  document.getElementById(
-    "messageInput"
-  );
-
-const sendButton =
-  document.getElementById(
-    "sendButton"
-  );
-
+/* SEND */
 
 async function sendMessage(){
 
   const content =
     input.value.trim();
 
-  if(!content){
-    return;
-  }
+  if(!content) return;
 
-
-  sendButton.disabled = true;
-
-
-  const {
-    data:{
-      user
-    }
-  } =
-  await supabaseClient
-    .auth
-    .getUser();
-
-
-  if(!user){
-
-    window.location.href =
-      "index.html";
-
-    return;
-
-  }
-
+  sendBtn.disabled =
+    true;
 
   const {
     error
@@ -1684,44 +940,57 @@ async function sendMessage(){
     .from("posts")
     .insert({
 
-      user_id:user.id,
+      user_id:
+        currentUser.id,
 
-      content:content,
-
-      edited:false
+      content:
+        content
 
     });
 
-
-  sendButton.disabled = false;
-
-
   if(error){
 
-    alert(
-      "Could not send message: " +
-      error.message
-    );
+    console.error(error);
 
-    return;
+    status.textContent =
+      "❌ " + error.message;
+
+    status.className =
+      "status error";
+
+  }else{
+
+    input.value = "";
+
+    status.textContent =
+      "✅ Message sent!";
+
+    status.className =
+      "status success";
+
+    await refresh();
 
   }
 
+  sendBtn.disabled =
+    false;
 
-  input.value = "";
-
+  setTimeout(
+    ()=>{
+      status.textContent="";
+    },
+    1500
+  );
 }
 
-
-sendButton.addEventListener(
+sendBtn.addEventListener(
   "click",
   sendMessage
 );
 
-
 input.addEventListener(
   "keydown",
-  function(event){
+  event=>{
 
     if(
       event.key === "Enter" &&
@@ -1737,74 +1006,81 @@ input.addEventListener(
   }
 );
 
+/* REACTIONS */
 
-/* =========================
-   REACTIONS
-========================= */
-
-document.addEventListener(
+messagesBox.addEventListener(
   "click",
-  function(event){
+  event=>{
 
     if(
       event.target.classList.contains(
-        "reaction"
+        "react"
       )
     ){
 
-      const button =
-        event.target;
-
-      button.style.background =
-        "#37267a";
-
-      button.style.borderColor =
-        "#7047e8";
+      event.target.style.background =
+        "#eeeaff";
 
     }
 
   }
 );
 
+/* REFRESH */
 
-/* =========================
-   SEARCH
-========================= */
+async function refresh(){
 
-document.getElementById(
-  "searchInput"
-).addEventListener(
-  "input",
-  function(){
+  messagesBox.innerHTML = "";
 
-    const query =
-      this.value
-        .toLowerCase()
-        .trim();
+  const old =
+    document.getElementById(
+      "loading"
+    );
 
-    document
-      .querySelectorAll(".dm")
-      .forEach(
-        function(item){
+  if(old) old.remove();
 
-          const name =
-            item
-              .querySelector(
-                ".dm-name"
-              )
-              .textContent
-              .toLowerCase();
+  await loadPostsTable();
 
-          item.style.display =
-            name.includes(query)
-              ? "flex"
-              : "none";
+  const chat =
+    document.getElementById(
+      "chat"
+    );
 
-        }
-      );
+  chat.scrollTop =
+    chat.scrollHeight;
+}
 
-  }
-);
+/* START */
+
+async function start(){
+
+  currentUser =
+    await getUser();
+
+  if(!currentUser) return;
+
+  await refresh();
+
+  supabaseClient
+    .channel(
+      "teen-space-community"
+    )
+    .on(
+      "postgres_changes",
+      {
+        event:"*",
+        schema:"public",
+        table:"posts"
+      },
+      ()=>{
+        refresh();
+      }
+    )
+    .subscribe();
+
+}
+
+start();
 
 </script>
 
