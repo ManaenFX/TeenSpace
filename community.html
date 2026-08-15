@@ -1,23 +1,17 @@
+# community.html
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>TeenSpace Community 🌍</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
   <style>
-
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -25,8 +19,7 @@
 
     body {
       margin: 0;
-      background:
-        linear-gradient(135deg, #f4f7ff, #eee8ff);
+      background: linear-gradient(135deg,#f4f7ff,#eee8ff);
       color: #222;
       min-height: 100vh;
     }
@@ -142,14 +135,12 @@
 
     .post-owner {
       border-left-color: #f1b500;
-      background:
-        linear-gradient(135deg, #fffdf4, #ffffff);
+      background: linear-gradient(135deg,#fffdf4,#ffffff);
     }
 
     .post-staff {
       border-left-color: #2787d8;
-      background:
-        linear-gradient(135deg, #f5fbff, #ffffff);
+      background: linear-gradient(135deg,#f5fbff,#ffffff);
     }
 
     .post-header {
@@ -235,10 +226,32 @@
       color: #5a49c7;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
     }
 
     .action-btn:hover {
       background: #ddd6ff;
+    }
+
+    .friend-btn {
+      background: #e4f8eb;
+      color: #168044;
+    }
+
+    .friend-btn:hover {
+      background: #d2f1dd;
+    }
+
+    .message-btn {
+      background: #e8e2ff;
+      color: #5f4ce0;
+    }
+
+    .pending-btn {
+      background: #fff3d6;
+      color: #9b6a00;
+      cursor: default;
     }
 
     .delete-btn {
@@ -283,8 +296,7 @@
       padding: 25px;
     }
 
-    @media (max-width: 700px) {
-
+    @media (max-width:700px) {
       header {
         flex-direction: column;
         gap: 14px;
@@ -309,16 +321,11 @@
       .post {
         padding: 20px;
       }
-
     }
-
   </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -326,49 +333,21 @@
     🌍 TeenSpace
   </div>
 
-
   <nav>
-
-    <a href="home.html">
-      Home
-    </a>
-
-    <a href="explore.html">
-      Explore
-    </a>
-
-    <a href="community.html">
-      Community
-    </a>
-
-    <a href="profile.html">
-      Profile
-    </a>
-
-    <a
-      href="customize.html"
-      class="customize-nav"
-    >
-      ✨ Customize
-    </a>
-
-    <a
-      href="premium.html"
-      class="premium-nav"
-    >
-      💎 Premium
-    </a>
-
+    <a href="home.html">Home</a>
+    <a href="explore.html">Explore</a>
+    <a href="community.html">Community</a>
+    <a href="profile.html">Profile</a>
+    <a href="friends.html">👥 Friends</a>
+    <a href="customize.html" class="customize-nav">✨ Customize</a>
+    <a href="premium.html" class="premium-nav">💎 Premium</a>
   </nav>
 
 </header>
 
-
 <section class="hero">
 
-  <h1>
-    💬 TeenSpace Community
-  </h1>
+  <h1>💬 TeenSpace Community</h1>
 
   <p>
     Share, connect and build the TeenSpace world 🌍
@@ -376,17 +355,13 @@
 
 </section>
 
-
 <main class="container">
 
-
-  <a
-    href="post.html"
-    class="create-post"
-  >
+  <a href="post.html" class="create-post">
     ✍️ Create a Post
   </a>
 
+  <div id="pageStatus"></div>
 
   <div id="posts">
 
@@ -396,20 +371,13 @@
 
   </div>
 
-
 </main>
 
-
 <footer>
-
-  © 2026 TeenSpace 🌍 |
-  Made for teens, with safety in mind.
-
+  © 2026 TeenSpace 🌍 | Made for teens, with safety in mind.
 </footer>
 
-
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -420,7 +388,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
-
 
 const supabaseClient =
   window.supabase.createClient(
@@ -435,11 +402,58 @@ const supabaseClient =
   );
 
 
+/* =========================================
+   ELEMENTS
+========================================= */
+
 const postsContainer =
   document.getElementById("posts");
 
+const pageStatus =
+  document.getElementById("pageStatus");
+
 
 let currentUser = null;
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHTML(value) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    value ?? "";
+
+  return div.innerHTML;
+}
+
+
+function formatTime(dateString) {
+
+  return new Date(
+    dateString
+  ).toLocaleString();
+
+}
+
+
+function showPageStatus(text) {
+
+  pageStatus.innerHTML = `
+    <div class="status">
+      ${escapeHTML(text)}
+    </div>
+  `;
+
+  setTimeout(() => {
+    pageStatus.innerHTML = "";
+  }, 2500);
+
+}
 
 
 /* =========================================
@@ -457,34 +471,367 @@ async function getCurrentUser() {
 
   currentUser =
     user || null;
+
 }
 
 
 /* =========================================
-   ESCAPE HTML
+   CHECK FRIEND STATUS
 ========================================= */
 
-function escapeHTML(value) {
+async function getFriendStatus(otherUserId) {
 
-  const div =
+  if (!currentUser || currentUser.id === otherUserId) {
+    return "self";
+  }
+
+
+  const {
+    data: friendships,
+    error: friendError
+  } =
+  await supabaseClient
+    .from("friends")
+    .select("id,user_id,friend_id")
+    .or(
+      `and(user_id.eq.${currentUser.id},friend_id.eq.${otherUserId}),and(user_id.eq.${otherUserId},friend_id.eq.${currentUser.id})`
+    );
+
+
+  if (!friendError && friendships && friendships.length > 0) {
+    return "friends";
+  }
+
+
+  const {
+    data: sentRequests,
+    error: sentError
+  } =
+  await supabaseClient
+    .from("friend_requests")
+    .select("id,status")
+    .eq("sender_id", currentUser.id)
+    .eq("receiver_id", otherUserId)
+    .eq("status", "pending")
+    .limit(1);
+
+
+  if (!sentError && sentRequests && sentRequests.length > 0) {
+    return "sent";
+  }
+
+
+  const {
+    data: receivedRequests,
+    error: receivedError
+  } =
+  await supabaseClient
+    .from("friend_requests")
+    .select("id,status")
+    .eq("sender_id", otherUserId)
+    .eq("receiver_id", currentUser.id)
+    .eq("status", "pending")
+    .limit(1);
+
+
+  if (
+    !receivedError &&
+    receivedRequests &&
+    receivedRequests.length > 0
+  ) {
+    return "received";
+  }
+
+
+  return "none";
+
+}
+
+
+/* =========================================
+   FRIEND REQUEST
+========================================= */
+
+async function sendFriendRequest(otherUserId, button) {
+
+  if (!currentUser) {
+
+    window.location.href =
+      "login.html";
+
+    return;
+
+  }
+
+
+  if (currentUser.id === otherUserId) {
+
+    return;
+
+  }
+
+
+  button.disabled = true;
+  button.textContent = "Sending...";
+
+
+  try {
+
+    const status =
+      await getFriendStatus(otherUserId);
+
+
+    if (status === "friends") {
+
+      button.textContent =
+        "👥 Friends";
+
+      button.className =
+        "action-btn pending-btn";
+
+      return;
+
+    }
+
+
+    if (status === "sent") {
+
+      button.textContent =
+        "⏳ Request Sent";
+
+      button.className =
+        "action-btn pending-btn";
+
+      return;
+
+    }
+
+
+    if (status === "received") {
+
+      button.textContent =
+        "📩 Check Requests";
+
+      button.className =
+        "action-btn pending-btn";
+
+      return;
+
+    }
+
+
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("friend_requests")
+      .insert({
+
+        sender_id:
+          currentUser.id,
+
+        receiver_id:
+          otherUserId,
+
+        status:
+          "pending"
+
+      });
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    button.textContent =
+      "⏳ Request Sent";
+
+    button.className =
+      "action-btn pending-btn";
+
+    showPageStatus(
+      "✅ Friend request sent!"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Friend request error:",
+      error
+    );
+
+    button.disabled = false;
+
+    button.textContent =
+      "➕ Add Friend";
+
+    showPageStatus(
+      "❌ " +
+      (
+        error.message ||
+        "Could not send friend request."
+      )
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   MAKE MEMBER ACTION BUTTONS
+========================================= */
+
+async function createMemberActions(
+  username,
+  userId
+) {
+
+  const actions =
     document.createElement("div");
 
-  div.textContent =
-    value ?? "";
-
-  return div.innerHTML;
-}
+  actions.className =
+    "actions";
 
 
-/* =========================================
-   TIME
-========================================= */
+  const quoteButton =
+    document.createElement("button");
 
-function formatTime(dateString) {
+  quoteButton.className =
+    "action-btn quote-button";
 
-  return new Date(
-    dateString
-  ).toLocaleString();
+  quoteButton.textContent =
+    "💬 Quote";
+
+
+  quoteButton.addEventListener(
+    "click",
+    function() {
+
+      const quoteText =
+        "> " +
+        username +
+        ": " +
+        (
+          window.currentPostContent ||
+          ""
+        );
+
+
+      window.location.href =
+        "post.html?quote=" +
+        encodeURIComponent(
+          quoteText
+        );
+
+    }
+  );
+
+
+  actions.appendChild(
+    quoteButton
+  );
+
+
+  if (
+    currentUser &&
+    currentUser.id !== userId
+  ) {
+
+    const messageLink =
+      document.createElement("a");
+
+    messageLink.className =
+      "action-btn message-btn";
+
+    messageLink.textContent =
+      "💬 Message";
+
+    messageLink.href =
+      "messages.html?user_id=" +
+      encodeURIComponent(userId) +
+      "&name=" +
+      encodeURIComponent(username);
+
+    actions.appendChild(
+      messageLink
+    );
+
+
+    const friendButton =
+      document.createElement("button");
+
+    friendButton.className =
+      "action-btn friend-btn";
+
+    friendButton.textContent =
+      "➕ Add Friend";
+
+
+    const friendStatus =
+      await getFriendStatus(userId);
+
+
+    if (friendStatus === "friends") {
+
+      friendButton.textContent =
+        "👥 Friends";
+
+      friendButton.className =
+        "action-btn pending-btn";
+
+      friendButton.disabled =
+        true;
+
+    } else if (friendStatus === "sent") {
+
+      friendButton.textContent =
+        "⏳ Request Sent";
+
+      friendButton.className =
+        "action-btn pending-btn";
+
+      friendButton.disabled =
+        true;
+
+    } else if (friendStatus === "received") {
+
+      friendButton.textContent =
+        "📩 Check Requests";
+
+      friendButton.className =
+        "action-btn pending-btn";
+
+      friendButton.disabled =
+        true;
+
+    } else {
+
+      friendButton.addEventListener(
+        "click",
+        function() {
+
+          sendFriendRequest(
+            userId,
+            friendButton
+          );
+
+        }
+      );
+
+    }
+
+
+    actions.appendChild(
+      friendButton
+    );
+
+  }
+
+
+  return actions;
 
 }
 
@@ -507,13 +854,10 @@ async function loadPosts() {
     error: postsError
   } =
   await supabaseClient
-
     .from("posts")
-
     .select(
-      "id, user_id, content, created_at, edited"
+      "id,user_id,content,created_at,edited"
     )
-
     .order(
       "created_at",
       {
@@ -537,6 +881,7 @@ async function loadPosts() {
     `;
 
     return;
+
   }
 
 
@@ -553,6 +898,7 @@ async function loadPosts() {
     `;
 
     return;
+
   }
 
 
@@ -576,13 +922,10 @@ async function loadPosts() {
       error: profileError
     } =
     await supabaseClient
-
       .from("profiles")
-
       .select(
-        'username, role, badge, premium, "user-id"'
+        'username,role,badge,premium,"user-id"'
       )
-
       .in(
         "user-id",
         userIds
@@ -610,20 +953,24 @@ async function loadPosts() {
     new Map();
 
 
-  profiles.forEach(profile => {
+  profiles.forEach(
+    profile => {
 
-    profileMap.set(
-      profile["user-id"],
-      profile
-    );
+      profileMap.set(
+        profile["user-id"],
+        profile
+      );
 
-  });
+    }
+  );
 
 
   postsContainer.innerHTML = "";
 
 
-  posts.forEach(post => {
+  for (
+    const post of posts
+  ) {
 
     const profile =
       profileMap.get(
@@ -646,18 +993,26 @@ async function loadPosts() {
 
 
     const card =
-      document.createElement("article");
+      document.createElement(
+        "article"
+      );
 
 
-    card.className = "post";
+    card.className =
+      "post";
 
 
     if (role === "owner") {
-      card.classList.add("post-owner");
+      card.classList.add(
+        "post-owner"
+      );
     }
 
+
     if (role === "staff") {
-      card.classList.add("post-staff");
+      card.classList.add(
+        "post-staff"
+      );
     }
 
 
@@ -669,7 +1024,8 @@ async function loadPosts() {
       badgeHTML += `
         <span class="badge owner-badge">
           👑 ${escapeHTML(
-            profile.badge || "FOUNDER"
+            profile.badge ||
+            "FOUNDER"
           )}
         </span>
       `;
@@ -730,7 +1086,9 @@ async function loadPosts() {
 
       <div class="time">
 
-        ${formatTime(post.created_at)}
+        ${formatTime(
+          post.created_at
+        )}
 
         ${
           post.edited
@@ -740,49 +1098,21 @@ async function loadPosts() {
 
       </div>
 
-
-      <div class="actions">
-
-        <button
-          class="action-btn quote-button"
-        >
-          💬 Quote
-        </button>
-
-
-        ${
-          currentUser &&
-          currentUser.id === post.user_id
-          ?
-
-          `
-          <button
-            class="action-btn edit-button"
-          >
-            ✏️ Edit
-          </button>
-
-          <button
-            class="action-btn delete-btn delete-button"
-          >
-            🗑️ Delete
-          </button>
-          `
-
-          :
-
-          ""
-        }
-
-      </div>
-
     `;
 
 
+    /*
+      Store this post's content for Quote.
+    */
+
     const quoteButton =
-      card.querySelector(
-        ".quote-button"
-      );
+      document.createElement("button");
+
+    quoteButton.className =
+      "action-btn quote-button";
+
+    quoteButton.textContent =
+      "💬 Quote";
 
 
     quoteButton.addEventListener(
@@ -806,13 +1136,156 @@ async function loadPosts() {
     );
 
 
-    const editButton =
-      card.querySelector(
-        ".edit-button"
+    const actions =
+      document.createElement("div");
+
+    actions.className =
+      "actions";
+
+
+    actions.appendChild(
+      quoteButton
+    );
+
+
+    /*
+      Add Message + Friend buttons
+      for other members.
+    */
+
+    if (
+      currentUser &&
+      currentUser.id !== post.user_id
+    ) {
+
+      const messageLink =
+        document.createElement("a");
+
+      messageLink.className =
+        "action-btn message-btn";
+
+      messageLink.textContent =
+        "💬 Message";
+
+      messageLink.href =
+        "messages.html?user_id=" +
+        encodeURIComponent(
+          post.user_id
+        ) +
+        "&name=" +
+        encodeURIComponent(
+          username
+        );
+
+
+      actions.appendChild(
+        messageLink
       );
 
 
-    if (editButton) {
+      const friendButton =
+        document.createElement("button");
+
+      friendButton.className =
+        "action-btn friend-btn";
+
+      friendButton.textContent =
+        "➕ Add Friend";
+
+
+      const friendStatus =
+        await getFriendStatus(
+          post.user_id
+        );
+
+
+      if (
+        friendStatus ===
+        "friends"
+      ) {
+
+        friendButton.textContent =
+          "👥 Friends";
+
+        friendButton.className =
+          "action-btn pending-btn";
+
+        friendButton.disabled =
+          true;
+
+      } else if (
+        friendStatus ===
+        "sent"
+      ) {
+
+        friendButton.textContent =
+          "⏳ Request Sent";
+
+        friendButton.className =
+          "action-btn pending-btn";
+
+        friendButton.disabled =
+          true;
+
+      } else if (
+        friendStatus ===
+        "received"
+      ) {
+
+        friendButton.textContent =
+          "📩 Check Requests";
+
+        friendButton.className =
+          "action-btn pending-btn";
+
+        friendButton.disabled =
+          true;
+
+      } else {
+
+        friendButton.addEventListener(
+          "click",
+          function() {
+
+            sendFriendRequest(
+              post.user_id,
+              friendButton
+            );
+
+          }
+        );
+
+      }
+
+
+      actions.appendChild(
+        friendButton
+      );
+
+    }
+
+
+    /*
+      Edit/Delete only your own posts.
+    */
+
+    if (
+      currentUser &&
+      currentUser.id ===
+      post.user_id
+    ) {
+
+      const editButton =
+        document.createElement(
+          "button"
+        );
+
+      editButton.className =
+        "action-btn";
+
+      editButton.textContent =
+        "✏️ Edit";
+
 
       editButton.addEventListener(
         "click",
@@ -826,16 +1299,23 @@ async function loadPosts() {
         }
       );
 
-    }
 
-
-    const deleteButton =
-      card.querySelector(
-        ".delete-button"
+      actions.appendChild(
+        editButton
       );
 
 
-    if (deleteButton) {
+      const deleteButton =
+        document.createElement(
+          "button"
+        );
+
+      deleteButton.className =
+        "action-btn delete-btn";
+
+      deleteButton.textContent =
+        "🗑️ Delete";
+
 
       deleteButton.addEventListener(
         "click",
@@ -848,14 +1328,24 @@ async function loadPosts() {
         }
       );
 
+
+      actions.appendChild(
+        deleteButton
+      );
+
     }
+
+
+    card.appendChild(
+      actions
+    );
 
 
     postsContainer.appendChild(
       card
     );
 
-  });
+  }
 
 }
 
@@ -892,7 +1382,6 @@ function openEdit(
       "div"
     );
 
-
   editArea.className =
     "edit-area";
 
@@ -902,7 +1391,6 @@ function openEdit(
       "textarea"
     );
 
-
   textarea.value =
     post.content;
 
@@ -911,7 +1399,6 @@ function openEdit(
     document.createElement(
       "button"
     );
-
 
   saveButton.className =
     "save-edit";
@@ -943,9 +1430,7 @@ function openEdit(
         error
       } =
       await supabaseClient
-
         .from("posts")
-
         .update({
 
           content:
@@ -955,7 +1440,6 @@ function openEdit(
             true
 
         })
-
         .eq(
           "id",
           post.id
@@ -964,7 +1448,9 @@ function openEdit(
 
       if (error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
 
         alert(
           error.message
@@ -1019,11 +1505,8 @@ async function deletePost(
     error
   } =
   await supabaseClient
-
     .from("posts")
-
     .delete()
-
     .eq(
       "id",
       postId
@@ -1032,7 +1515,9 @@ async function deletePost(
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message
@@ -1062,7 +1547,6 @@ async function start() {
 
 
 start();
-
 
 </script>
 
