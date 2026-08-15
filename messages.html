@@ -1,3 +1,5 @@
+# messages.html
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -6,10 +8,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Messages | TeenSpace 💬</title>
 
@@ -24,8 +23,7 @@
 
 body{
   margin:0;
-  background:
-    linear-gradient(135deg,#f4f7ff,#eee8ff);
+  background:linear-gradient(135deg,#f4f7ff,#eee8ff);
   color:#222;
 }
 
@@ -77,8 +75,7 @@ nav a:hover{
 
 .chat-header{
   padding:22px;
-  background:
-    linear-gradient(135deg,#6c5ce7,#8e74ff);
+  background:linear-gradient(135deg,#6c5ce7,#8e74ff);
   color:white;
 }
 
@@ -395,11 +392,13 @@ textarea:focus{
   </div>
 
   <nav>
+
     <a href="home.html">Home</a>
     <a href="explore.html">Explore</a>
     <a href="community.html">Community</a>
     <a href="profile.html">Profile</a>
     <a href="friends.html">Friends</a>
+
   </nav>
 
 </header>
@@ -472,7 +471,6 @@ textarea:focus{
     <button>🔥</button>
     <button>⭐</button>
     <button>🎉</button>
-    <button>😂</button>
 
   </div>
 
@@ -527,8 +525,6 @@ textarea:focus{
   </div>
 
 
-  <!-- FILE PREVIEW -->
-
   <div
     id="fileName"
     class="file-name"
@@ -536,7 +532,6 @@ textarea:focus{
 
 
   <div class="composer">
-
 
     <div class="toolbar">
 
@@ -547,7 +542,6 @@ textarea:focus{
         😀 Emoji
       </button>
 
-
       <button
         id="mediaButton"
         class="tool-btn"
@@ -555,14 +549,12 @@ textarea:focus{
         📎 Media
       </button>
 
-
       <button
         id="voiceButton"
         class="tool-btn"
       >
         🎙️ Voice
       </button>
-
 
       <button
         id="pollButton"
@@ -600,8 +592,8 @@ textarea:focus{
 
     </div>
 
-
   </div>
+
 
 </div>
 
@@ -626,7 +618,6 @@ textarea:focus{
 
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
-
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
@@ -753,7 +744,7 @@ function showStatus(
 
 
 /* =========================================
-   GET RECEIVER
+   RECEIVER
 ========================================= */
 
 function getReceiverFromURL(){
@@ -763,15 +754,12 @@ function getReceiverFromURL(){
       window.location.search
     );
 
-
   receiverId =
     params.get("user_id");
-
 
   receiverName =
     params.get("name") ||
     "TeenSpace User";
-
 
   chatName.textContent =
     "💬 " +
@@ -794,7 +782,6 @@ async function getCurrentUser(){
   } =
   await supabaseClient.auth.getUser();
 
-
   if(error || !user){
 
     window.location.href =
@@ -803,7 +790,6 @@ async function getCurrentUser(){
     return null;
 
   }
-
 
   return user;
 
@@ -867,7 +853,7 @@ emojiPanel
 
 
 /* =========================================
-   MEDIA
+   MEDIA SELECT
 ========================================= */
 
 mediaButton.addEventListener(
@@ -885,9 +871,10 @@ mediaInput.addEventListener(
   function(){
 
     selectedFile =
-      mediaInput.files[0] ||
-      null;
-
+      mediaInput.files &&
+      mediaInput.files.length > 0
+        ? mediaInput.files[0]
+        : null;
 
     if(!selectedFile){
 
@@ -898,10 +885,8 @@ mediaInput.addEventListener(
 
     }
 
-
     const maxSize =
       25 * 1024 * 1024;
-
 
     if(selectedFile.size > maxSize){
 
@@ -920,10 +905,9 @@ mediaInput.addEventListener(
 
     }
 
-
     fileName.textContent =
       "📎 " +
-      selectedFile.name;
+      (selectedFile.name || "Selected file");
 
   }
 );
@@ -957,6 +941,7 @@ cancelPoll.addEventListener(
       "";
 
     pollOptions.innerHTML = `
+
       <input
         class="poll-input"
         maxlength="100"
@@ -968,6 +953,7 @@ cancelPoll.addEventListener(
         maxlength="100"
         placeholder="Option 2"
       >
+
     `;
 
   }
@@ -983,7 +969,6 @@ addOption.addEventListener(
         ".poll-input"
       ).length;
 
-
     if(count >= 6){
 
       showStatus(
@@ -994,7 +979,6 @@ addOption.addEventListener(
       return;
 
     }
-
 
     const input =
       document.createElement("input");
@@ -1008,7 +992,6 @@ addOption.addEventListener(
     input.placeholder =
       "Option " +
       (count + 1);
-
 
     pollOptions.appendChild(
       input
@@ -1034,7 +1017,6 @@ voiceButton.addEventListener(
 
     }
 
-
     if(
       !navigator.mediaDevices ||
       !navigator.mediaDevices.getUserMedia
@@ -1049,7 +1031,6 @@ voiceButton.addEventListener(
 
     }
 
-
     try{
 
       const stream =
@@ -1058,13 +1039,30 @@ voiceButton.addEventListener(
             audio:true
           });
 
-
       audioChunks = [];
 
+      let mimeType =
+        "audio/webm";
+
+      if(
+        MediaRecorder.isTypeSupported &&
+        MediaRecorder.isTypeSupported(
+          "audio/webm"
+        )
+      ){
+
+        mimeType =
+          "audio/webm";
+
+      }
 
       mediaRecorder =
-        new MediaRecorder(stream);
-
+        new MediaRecorder(
+          stream,
+          {
+            mimeType
+          }
+        );
 
       mediaRecorder.ondataavailable =
         function(event){
@@ -1081,7 +1079,7 @@ voiceButton.addEventListener(
 
 
       mediaRecorder.onstop =
-        async function(){
+        function(){
 
           stream
             .getTracks()
@@ -1089,7 +1087,6 @@ voiceButton.addEventListener(
               track =>
                 track.stop()
             );
-
 
           const blob =
             new Blob(
@@ -1100,7 +1097,6 @@ voiceButton.addEventListener(
                   "audio/webm"
               }
             );
-
 
           const file =
             new File(
@@ -1114,20 +1110,16 @@ voiceButton.addEventListener(
               }
             );
 
-
           selectedFile =
             file;
 
-
           fileName.textContent =
             "🎙️ Voice recording ready";
-
 
           showStatus(
             "Voice recording ready. Press Send.",
             "success"
           );
-
 
           recording =
             false;
@@ -1189,14 +1181,38 @@ function stopRecording(){
 
 
 /* =========================================
-   UPLOAD MEDIA
+   FIXED MEDIA UPLOAD
 ========================================= */
 
 async function uploadMedia(file){
 
+  if(!file){
+
+    throw new Error(
+      "No media file was selected."
+    );
+
+  }
+
+  if(!currentUser){
+
+    throw new Error(
+      "You are not logged in."
+    );
+
+  }
+
+
+  const fileName =
+    String(
+      file.name ||
+      "upload"
+    );
+
+
   const extension =
-    file.name.includes(".")
-      ? file.name
+    fileName.includes(".")
+      ? fileName
           .split(".")
           .pop()
           .toLowerCase()
@@ -1216,17 +1232,16 @@ async function uploadMedia(file){
     error
   } =
   await supabaseClient
-
     .storage
-
     .from("chat-media")
-
     .upload(
       path,
       file,
       {
         contentType:
-          file.type,
+          file.type ||
+          "application/octet-stream",
+
         upsert:false
       }
     );
@@ -1239,18 +1254,36 @@ async function uploadMedia(file){
   }
 
 
+  if(!data || !data.path){
+
+    throw new Error(
+      "Upload completed but no file path was returned."
+    );
+
+  }
+
+
   const {
     data:urlData
   } =
   supabaseClient
-
     .storage
-
     .from("chat-media")
-
     .getPublicUrl(
       data.path
     );
+
+
+  if(
+    !urlData ||
+    !urlData.publicUrl
+  ){
+
+    throw new Error(
+      "Could not create media URL."
+    );
+
+  }
 
 
   return urlData.publicUrl;
@@ -1279,9 +1312,7 @@ async function loadMessages(){
     error
   } =
   await supabaseClient
-
     .from("messages")
-
     .select(`
       id,
       sender_id,
@@ -1294,11 +1325,9 @@ async function loadMessages(){
       poll_question,
       poll_options
     `)
-
     .or(
       `and(sender_id.eq.${currentUser.id},receiver_id.eq.${receiverId}),and(sender_id.eq.${receiverId},receiver_id.eq.${currentUser.id})`
     )
-
     .order(
       "created_at",
       {
@@ -1312,9 +1341,11 @@ async function loadMessages(){
     console.error(error);
 
     messagesBox.innerHTML = `
+
       <div class="empty">
         ❌ Could not load messages.
       </div>
+
     `;
 
     return;
@@ -1328,9 +1359,11 @@ async function loadMessages(){
   ){
 
     messagesBox.innerHTML = `
+
       <div class="empty">
         👋 Start the conversation.
       </div>
+
     `;
 
     return;
@@ -1370,7 +1403,6 @@ function renderMessage(message){
       "div"
     );
 
-
   row.className =
     "bubble-row" +
     (
@@ -1385,13 +1417,8 @@ function renderMessage(message){
       "div"
     );
 
-
   bubble.className =
     "bubble";
-
-
-  let contentHTML =
-    "";
 
 
   const type =
@@ -1399,53 +1426,64 @@ function renderMessage(message){
     "text";
 
 
+  let contentHTML =
+    "";
+
+
   if(type === "image"){
 
     contentHTML = `
+
       <img
         class="media"
         src="${escapeHTML(message.media_url)}"
         alt="Shared image"
       >
+
     `;
 
   }else if(type === "video"){
 
     contentHTML = `
+
       <video
         class="media"
         src="${escapeHTML(message.media_url)}"
         controls
         playsinline
       ></video>
+
     `;
 
   }else if(type === "audio"){
 
     contentHTML = `
+
       <audio
         class="audio"
         src="${escapeHTML(message.media_url)}"
         controls
       ></audio>
+
     `;
 
   }else if(type === "poll"){
 
     contentHTML =
       renderPoll(
-        message,
-        mine
+        message
       );
 
   }else{
 
     contentHTML = `
+
       <div>
         ${escapeHTML(
           message.content
         )}
       </div>
+
     `;
 
   }
@@ -1454,18 +1492,19 @@ function renderMessage(message){
   bubble.innerHTML =
     contentHTML +
     `
+
       <div class="bubble-time">
         ${new Date(
           message.created_at
         ).toLocaleString()}
       </div>
+
     `;
 
 
   row.appendChild(
     bubble
   );
-
 
   messagesBox.appendChild(
     row
@@ -1478,10 +1517,7 @@ function renderMessage(message){
    POLL DISPLAY
 ========================================= */
 
-function renderPoll(
-  message,
-  mine
-){
+function renderPoll(message){
 
   let options =
     message.poll_options;
@@ -1498,7 +1534,8 @@ function renderPoll(
 
     }catch{
 
-      options = [];
+      options =
+        [];
 
     }
 
@@ -1507,12 +1544,14 @@ function renderPoll(
 
   if(!Array.isArray(options)){
 
-    options = [];
+    options =
+      [];
 
   }
 
 
   let html = `
+
     <div class="poll">
 
       <div class="poll-question">
@@ -1521,6 +1560,7 @@ function renderPoll(
           "Poll"
         )}
       </div>
+
   `;
 
 
@@ -1534,13 +1574,15 @@ function renderPoll(
 
 
       html += `
+
         <button
           class="poll-option"
-          data-message-id="${message.id}"
+          data-message-id="${escapeHTML(message.id)}"
           data-option="${index}"
         >
           ${escapeHTML(text)}
         </button>
+
       `;
 
     }
@@ -1548,11 +1590,13 @@ function renderPoll(
 
 
   html += `
+
       <div class="poll-result">
         Choose an option to vote.
       </div>
 
     </div>
+
   `;
 
 
@@ -1562,7 +1606,7 @@ function renderPoll(
 
 
 /* =========================================
-   POLL CLICK
+   POLL VOTING
 ========================================= */
 
 messagesBox.addEventListener(
@@ -1582,9 +1626,15 @@ messagesBox.addEventListener(
     }
 
 
+    if(!currentUser){
+
+      return;
+
+    }
+
+
     const messageId =
       button.dataset.messageId;
-
 
     const optionIndex =
       Number(
@@ -1596,9 +1646,7 @@ messagesBox.addEventListener(
       error
     } =
     await supabaseClient
-
       .from("poll_votes")
-
       .upsert(
         {
           message_id:
@@ -1657,15 +1705,15 @@ async function sendTextMessage(){
   }
 
 
-  await insertMessage(
-    {
-      message_type:
-        "text",
+  await insertMessage({
 
-      content:
-        content
-    }
-  );
+    message_type:
+      "text",
+
+    content:
+      content
+
+  });
 
 }
 
@@ -1678,6 +1726,11 @@ async function sendMediaMessage(){
 
   if(!selectedFile){
 
+    showStatus(
+      "❌ Please select a file first.",
+      "error"
+    );
+
     return;
 
   }
@@ -1689,9 +1742,13 @@ async function sendMediaMessage(){
   );
 
 
+  const file =
+    selectedFile;
+
+
   const url =
     await uploadMedia(
-      selectedFile
+      file
     );
 
 
@@ -1700,7 +1757,8 @@ async function sendMediaMessage(){
 
 
   if(
-    selectedFile.type.startsWith(
+    file.type &&
+    file.type.startsWith(
       "image/"
     )
   ){
@@ -1709,7 +1767,8 @@ async function sendMediaMessage(){
       "image";
 
   }else if(
-    selectedFile.type.startsWith(
+    file.type &&
+    file.type.startsWith(
       "video/"
     )
   ){
@@ -1720,21 +1779,23 @@ async function sendMediaMessage(){
   }
 
 
-  await insertMessage(
-    {
-      message_type:
-        type,
+  await insertMessage({
 
-      content:
-        selectedFile.name,
+    message_type:
+      type,
 
-      media_url:
-        url,
+    content:
+      file.name ||
+      "Shared media",
 
-      media_name:
-        selectedFile.name
-    }
-  );
+    media_url:
+      url,
+
+    media_name:
+      file.name ||
+      "Shared media"
+
+  });
 
 
   selectedFile =
@@ -1803,21 +1864,21 @@ async function sendPoll(){
   }
 
 
-  await insertMessage(
-    {
-      message_type:
-        "poll",
+  await insertMessage({
 
-      content:
-        question,
+    message_type:
+      "poll",
 
-      poll_question:
-        question,
+    content:
+      question,
 
-      poll_options:
-        options
-    }
-  );
+    poll_question:
+      question,
+
+    poll_options:
+      options
+
+  });
 
 
   cancelPoll.click();
@@ -1830,6 +1891,18 @@ async function sendPoll(){
 ========================================= */
 
 async function insertMessage(payload){
+
+  if(!currentUser){
+
+    showStatus(
+      "❌ You are not logged in.",
+      "error"
+    );
+
+    return;
+
+  }
+
 
   if(!receiverId){
 
@@ -1868,10 +1941,9 @@ async function insertMessage(payload){
       error
     } =
     await supabaseClient
-
       .from("messages")
-
       .insert({
+
         sender_id:
           currentUser.id,
 
@@ -1914,6 +1986,7 @@ async function insertMessage(payload){
 
     messageInput.value =
       "";
+
 
     showStatus(
       "✅ Sent!",
@@ -1961,6 +2034,16 @@ async function insertMessage(payload){
 
 async function updateStreak(){
 
+  if(
+    !currentUser ||
+    !receiverId
+  ){
+
+    return;
+
+  }
+
+
   const today =
     new Date()
       .toISOString()
@@ -1972,17 +2055,13 @@ async function updateStreak(){
     error
   } =
   await supabaseClient
-
     .from("chat_streaks")
-
     .select(
       "id,user_a,user_b,streak_count,last_message_date"
     )
-
     .or(
       `and(user_a.eq.${currentUser.id},user_b.eq.${receiverId}),and(user_a.eq.${receiverId},user_b.eq.${currentUser.id})`
     )
-
     .maybeSingle();
 
 
@@ -2004,10 +2083,9 @@ async function updateStreak(){
       error:insertError
     } =
     await supabaseClient
-
       .from("chat_streaks")
-
       .insert({
+
         user_a:
           currentUser.id,
 
@@ -2019,6 +2097,7 @@ async function updateStreak(){
 
         last_message_date:
           today
+
       });
 
 
@@ -2087,9 +2166,7 @@ async function updateStreak(){
     error:updateError
   } =
   await supabaseClient
-
     .from("chat_streaks")
-
     .update({
 
       streak_count:
@@ -2099,7 +2176,6 @@ async function updateStreak(){
         today
 
     })
-
     .eq(
       "id",
       data.id
@@ -2139,17 +2215,13 @@ async function loadStreak(){
     error
   } =
   await supabaseClient
-
     .from("chat_streaks")
-
     .select(
       "streak_count"
     )
-
     .or(
       `and(user_a.eq.${currentUser.id},user_b.eq.${receiverId}),and(user_a.eq.${receiverId},user_b.eq.${currentUser.id})`
     )
-
     .maybeSingle();
 
 
@@ -2182,7 +2254,10 @@ sendButton.addEventListener(
   "click",
   async function(){
 
-    if(pollBox.style.display === "block"){
+    if(
+      pollBox.style.display ===
+      "block"
+    ){
 
       await sendPoll();
 
@@ -2203,7 +2278,10 @@ sendButton.addEventListener(
 
         showStatus(
           "❌ " +
-          error.message,
+          (
+            error.message ||
+            "Could not send media."
+          ),
           "error"
         );
 
@@ -2250,11 +2328,12 @@ messageInput.addEventListener(
 function subscribeToMessages(){
 
   supabaseClient
-
     .channel(
-      "teen-space-messages"
+      "teen-space-messages-" +
+      currentUser.id +
+      "-" +
+      receiverId
     )
-
     .on(
       "postgres_changes",
       {
@@ -2291,7 +2370,6 @@ function subscribeToMessages(){
 
       }
     )
-
     .subscribe();
 
 }
@@ -2320,13 +2398,20 @@ async function start(){
   if(!receiverId){
 
     messagesBox.innerHTML = `
+
       <div class="empty">
+
         👤 No person selected.
+
         <br><br>
+
         Go to Explore and choose someone
         to message.
+
       </div>
+
     `;
+
 
     sendButton.disabled =
       true;
