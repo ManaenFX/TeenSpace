@@ -1,4 +1,4 @@
-```html
+```html id="n7y1k2"
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,6 +87,13 @@
       color: #666;
       font-size: 18px;
       line-height: 1.5;
+    }
+
+    .currency-note {
+      text-align: center;
+      color: #777;
+      margin-top: 10px;
+      font-size: 14px;
     }
 
     .status-card {
@@ -294,6 +301,13 @@
       Unlock more ways to personalize your TeenSpace profile.
     </p>
 
+    <div
+      id="currencyNote"
+      class="currency-note"
+    >
+      Loading local pricing...
+    </div>
+
   </section>
 
 
@@ -330,7 +344,7 @@
       </h2>
 
       <div class="price">
-        ₦0
+        Free
       </div>
 
       <div class="period">
@@ -363,7 +377,7 @@
       </h2>
 
       <div class="price">
-        ₦0
+        Free
       </div>
 
       <div class="period">
@@ -398,8 +412,11 @@
         💎 Monthly
       </h2>
 
-      <div class="price">
-        ₦1,500
+      <div
+        id="monthlyPrice"
+        class="price"
+      >
+        Loading...
       </div>
 
       <div class="period">
@@ -419,7 +436,7 @@
 
       <button
         class="button"
-        id="monthlyButton"
+        disabled
       >
         Coming Soon
       </button>
@@ -439,8 +456,11 @@
       👑 Yearly
     </h2>
 
-    <div class="price">
-      ₦12,000
+    <div
+      id="yearlyPrice"
+      class="price"
+    >
+      Loading...
     </div>
 
     <div class="period">
@@ -460,7 +480,7 @@
 
     <button
       class="button"
-      id="yearlyButton"
+      disabled
     >
       Coming Soon
     </button>
@@ -473,10 +493,10 @@
 
   <div class="note">
 
-    🛡️ The 5-day trial can be used once per account.
-    Paid subscriptions are not connected yet. The prices
-    shown here are placeholders until you connect a real
-    payment provider and decide your final pricing.
+    🛡️ Prices shown here are localized display prices.
+    Paid checkout is not connected yet, so these amounts
+    are placeholders until you choose your final pricing
+    and connect a payment provider.
 
   </div>
 
@@ -494,8 +514,10 @@
 
 <script>
 
+
 const SUPABASE_URL =
   "https://gcigveojqwwovitlwtxl.supabase.co";
+
 
 const SUPABASE_KEY =
   "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
@@ -515,37 +537,286 @@ const supabaseClient =
 
 
 const statusBadge =
-  document.getElementById("statusBadge");
+  document.getElementById(
+    "statusBadge"
+  );
 
 const statusText =
-  document.getElementById("statusText");
+  document.getElementById(
+    "statusText"
+  );
 
 const daysElement =
-  document.getElementById("days");
+  document.getElementById(
+    "days"
+  );
 
 const trialButton =
-  document.getElementById("trialButton");
+  document.getElementById(
+    "trialButton"
+  );
+
+const monthlyPrice =
+  document.getElementById(
+    "monthlyPrice"
+  );
+
+const yearlyPrice =
+  document.getElementById(
+    "yearlyPrice"
+  );
+
+const currencyNote =
+  document.getElementById(
+    "currencyNote"
+  );
 
 const message =
-  document.getElementById("message");
+  document.getElementById(
+    "message"
+  );
 
 
 let currentUser = null;
 let profile = null;
 
 
-function showMessage(text, type) {
+/* =========================================
+   LOCAL PRICE SETTINGS
+========================================= */
 
-  message.className =
-    type || "";
+const pricing = {
 
-  message.textContent =
-    text;
+  NGN: {
+    symbol: "₦",
+    monthly: 1500,
+    yearly: 12000,
+    label: "Nigerian Naira"
+  },
+
+  USD: {
+    symbol: "$",
+    monthly: 9.99,
+    yearly: 79.99,
+    label: "US Dollar"
+  },
+
+  GBP: {
+    symbol: "£",
+    monthly: 7.99,
+    yearly: 64.99,
+    label: "British Pound"
+  },
+
+  EUR: {
+    symbol: "€",
+    monthly: 8.99,
+    yearly: 71.99,
+    label: "Euro"
+  },
+
+  CAD: {
+    symbol: "CA$",
+    monthly: 13.99,
+    yearly: 109.99,
+    label: "Canadian Dollar"
+  },
+
+  AUD: {
+    symbol: "A$",
+    monthly: 15.99,
+    yearly: 125.99,
+    label: "Australian Dollar"
+  },
+
+  INR: {
+    symbol: "₹",
+    monthly: 799,
+    yearly: 6499,
+    label: "Indian Rupee"
+  },
+
+  ZAR: {
+    symbol: "R",
+    monthly: 179,
+    yearly: 1499,
+    label: "South African Rand"
+  }
+
+};
+
+
+const countryCurrency = {
+
+  "Nigeria": "NGN",
+
+  "United States": "USD",
+
+  "Canada": "CAD",
+
+  "United Kingdom": "GBP",
+
+  "France": "EUR",
+  "Germany": "EUR",
+  "Spain": "EUR",
+  "Italy": "EUR",
+  "Portugal": "EUR",
+  "Ireland": "EUR",
+  "Netherlands": "EUR",
+  "Belgium": "EUR",
+  "Austria": "EUR",
+  "Finland": "EUR",
+  "Greece": "EUR",
+
+  "India": "INR",
+
+  "South Africa": "ZAR",
+
+  "Australia": "AUD"
+
+};
+
+
+/* =========================================
+   FORMAT PRICE
+========================================= */
+
+function formatPrice(
+  amount,
+  currency
+) {
+
+  return new Intl.NumberFormat(
+    undefined,
+    {
+      style: "currency",
+      currency: currency,
+      maximumFractionDigits:
+        currency === "NGN" ||
+        currency === "INR" ||
+        currency === "ZAR"
+          ? 0
+          : 2
+    }
+  ).format(amount);
 
 }
 
 
-function getTrialEnd(start) {
+/* =========================================
+   DETECT CURRENCY
+========================================= */
+
+function getCurrencyFromBrowser() {
+
+  const locale =
+    navigator.language ||
+    "en-US";
+
+
+  if (
+    locale.startsWith("en-NG")
+  ) {
+    return "NGN";
+  }
+
+  if (
+    locale.startsWith("en-GB")
+  ) {
+    return "GBP";
+  }
+
+  if (
+    locale.startsWith("en-CA")
+  ) {
+    return "CAD";
+  }
+
+  if (
+    locale.startsWith("en-AU")
+  ) {
+    return "AUD";
+  }
+
+  if (
+    locale.startsWith("en-US")
+  ) {
+    return "USD";
+  }
+
+  if (
+    locale.startsWith("hi-IN") ||
+    locale.startsWith("en-IN")
+  ) {
+    return "INR";
+  }
+
+  if (
+    locale.startsWith("af-ZA") ||
+    locale.startsWith("en-ZA")
+  ) {
+    return "ZAR";
+  }
+
+  if (
+    locale.startsWith("fr-") ||
+    locale.startsWith("de-") ||
+    locale.startsWith("es-") ||
+    locale.startsWith("it-") ||
+    locale.startsWith("pt-")
+  ) {
+    return "EUR";
+  }
+
+  return "USD";
+
+}
+
+
+/* =========================================
+   APPLY PRICING
+========================================= */
+
+function applyPricing(
+  currency
+) {
+
+  const data =
+    pricing[currency] ||
+    pricing.USD;
+
+
+  monthlyPrice.textContent =
+    formatPrice(
+      data.monthly,
+      currency
+    );
+
+
+  yearlyPrice.textContent =
+    formatPrice(
+      data.yearly,
+      currency
+    );
+
+
+  currencyNote.textContent =
+    "Prices shown in " +
+    data.label +
+    " (" +
+    currency +
+    ").";
+
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function getTrialEnd(
+  start
+) {
 
   return new Date(
     new Date(start).getTime() +
@@ -555,11 +826,14 @@ function getTrialEnd(start) {
 }
 
 
-function getDaysLeft(start) {
+function getDaysLeft(
+  start
+) {
 
   const difference =
     getTrialEnd(start) -
     new Date();
+
 
   return Math.max(
     0,
@@ -572,7 +846,9 @@ function getDaysLeft(start) {
 }
 
 
-function isTrialActive(start) {
+function isTrialActive(
+  start
+) {
 
   if (!start) {
     return false;
@@ -587,7 +863,8 @@ function isTrialActive(start) {
 function updateStatus() {
 
   if (
-    profile?.premium_status === "premium"
+    profile?.premium_status ===
+    "premium"
   ) {
 
     statusBadge.className =
@@ -624,6 +901,7 @@ function updateStatus() {
       getDaysLeft(
         profile.trial_started_at
       );
+
 
     statusBadge.className =
       "status-badge trial";
@@ -697,6 +975,10 @@ function updateStatus() {
 }
 
 
+/* =========================================
+   START TRIAL
+========================================= */
+
 trialButton.addEventListener(
   "click",
   async function() {
@@ -709,10 +991,6 @@ trialButton.addEventListener(
 
 
     try {
-
-      const now =
-        new Date().toISOString();
-
 
       const {
         data,
@@ -752,6 +1030,7 @@ trialButton.addEventListener(
         updateStatus();
 
         return;
+
       }
 
 
@@ -772,7 +1051,12 @@ trialButton.addEventListener(
         );
 
         return;
+
       }
+
+
+      const now =
+        new Date().toISOString();
 
 
       const {
@@ -829,6 +1113,7 @@ trialButton.addEventListener(
 
       console.error(error);
 
+
       showMessage(
         "❌ " +
         (
@@ -850,6 +1135,28 @@ trialButton.addEventListener(
   }
 );
 
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+  text,
+  type
+) {
+
+  message.className =
+    type || "";
+
+  message.textContent =
+    text;
+
+}
+
+
+/* =========================================
+   START
+========================================= */
 
 async function start() {
 
@@ -890,7 +1197,7 @@ async function start() {
     .from("profiles")
 
     .select(
-      "trial_started_at,premium_status,premium"
+      "country,trial_started_at,premium_status,premium"
     )
 
     .eq(
@@ -916,6 +1223,24 @@ async function start() {
   profile =
     data || {};
 
+
+  /*
+    Country from TeenSpace profile first.
+    Browser locale as fallback.
+  */
+
+  const currency =
+    countryCurrency[
+      profile.country
+    ] ||
+    getCurrencyFromBrowser();
+
+
+  applyPricing(
+    currency
+  );
+
+
   updateStatus();
 
 }
@@ -926,5 +1251,6 @@ start();
 </script>
 
 </body>
+
 </html>
 ```
