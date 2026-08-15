@@ -2,24 +2,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>TeenSpace Community 💬</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
+
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --accent:#6c5ce7;
+  --page-bg:#f4f7ff;
+  --chat-bg:#faf9ff;
+  --card:#ffffff;
+  --bubble:#eeeaff;
+  --text:#222;
+  --font:Arial,sans-serif;
+}
 
 body{
   margin:0;
   min-height:100vh;
-  background:var(--page-bg,#f4f7ff);
-  color:var(--text,#222);
+  background:var(--page-bg);
+  color:var(--text);
+  font-family:var(--font);
   transition:.25s;
 }
 
 header{
-  background:var(--accent,#6c5ce7);
+  background:var(--accent);
   color:white;
   padding:15px 6%;
   display:flex;
@@ -28,9 +46,17 @@ header{
   gap:15px;
 }
 
-.logo{font-size:25px;font-weight:bold}
+.logo{
+  font-size:25px;
+  font-weight:bold;
+  white-space:nowrap;
+}
 
-nav{display:flex;flex-wrap:wrap;gap:6px}
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
 
 nav a{
   color:white;
@@ -40,7 +66,9 @@ nav a{
   font-weight:bold;
 }
 
-nav a:hover{background:rgba(255,255,255,.15)}
+nav a:hover{
+  background:rgba(255,255,255,.15);
+}
 
 .container{
   width:94%;
@@ -49,8 +77,8 @@ nav a:hover{background:rgba(255,255,255,.15)}
 }
 
 .chat{
-  background:var(--card,#fff);
-  border-radius:20px;
+  background:var(--card);
+  border-radius:22px;
   overflow:hidden;
   box-shadow:0 8px 28px rgba(0,0,0,.10);
 }
@@ -67,15 +95,26 @@ nav a:hover{background:rgba(255,255,255,.15)}
 
 .chat-subtitle{
   color:#888;
-  margin-top:4px;
+  margin-top:5px;
   font-size:14px;
+}
+
+.premium-label{
+  display:inline-block;
+  margin-top:9px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#fff0b8;
+  color:#916d00;
+  font-size:11px;
+  font-weight:bold;
 }
 
 .messages{
   height:550px;
   overflow-y:auto;
   padding:20px;
-  background:var(--chat-bg,#faf9ff);
+  background:var(--chat-bg);
 }
 
 .status{
@@ -87,7 +126,7 @@ nav a:hover{background:rgba(255,255,255,.15)}
 .message-row{
   display:flex;
   gap:9px;
-  margin-bottom:16px;
+  margin-bottom:17px;
   align-items:flex-end;
 }
 
@@ -96,46 +135,48 @@ nav a:hover{background:rgba(255,255,255,.15)}
 }
 
 .avatar-wrap{
-  width:38px;
-  height:38px;
+  width:40px;
+  height:40px;
   flex-shrink:0;
 }
 
 .avatar{
-  width:38px;
-  height:38px;
+  width:40px;
+  height:40px;
   border-radius:50%;
   object-fit:cover;
-  background:#e9e5ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
+  background:#eeeaff;
+  display:block;
+  cursor:pointer;
 }
 
 .message-content{
-  max-width:min(75%,620px);
+  max-width:min(76%,620px);
 }
 
 .username{
   font-size:13px;
-  color:var(--accent,#6c5ce7);
+  color:var(--accent);
   font-weight:bold;
   margin:0 0 4px 5px;
   cursor:pointer;
 }
 
+.username:hover{
+  text-decoration:underline;
+}
+
 .bubble{
-  background:var(--bubble,#eeeaff);
+  background:var(--bubble);
   padding:11px 14px;
   border-radius:17px;
-  line-height:1.45;
+  line-height:1.5;
   word-break:break-word;
   white-space:pre-wrap;
 }
 
 .mine .bubble{
-  background:var(--accent,#6c5ce7);
+  background:var(--accent);
   color:white;
   border-bottom-right-radius:5px;
 }
@@ -148,71 +189,100 @@ nav a:hover{background:rgba(255,255,255,.15)}
 
 .media{
   max-width:100%;
-  max-height:320px;
+  max-height:330px;
   border-radius:12px;
   display:block;
 }
 
 .audio{
-  width:280px;
+  width:290px;
   max-width:100%;
 }
 
 .composer{
   padding:13px;
   border-top:1px solid rgba(128,128,128,.2);
-  background:var(--card,#fff);
+  background:var(--card);
 }
 
 .toolbar{
   display:flex;
-  gap:6px;
   flex-wrap:wrap;
+  gap:7px;
   margin-bottom:8px;
 }
 
 .tool{
   border:0;
-  background:var(--bubble,#eeeaff);
-  color:var(--accent,#6c5ce7);
-  border-radius:9px;
-  padding:8px 10px;
+  background:var(--bubble);
+  color:var(--accent);
+  border-radius:10px;
+  padding:9px 11px;
   cursor:pointer;
   font-weight:bold;
 }
 
+.tool:hover{
+  filter:brightness(.96);
+}
+
+.tool.premium-tool{
+  position:relative;
+}
+
+.tool.premium-tool::after{
+  content:"💎";
+  font-size:11px;
+  margin-left:4px;
+}
+
+.recording{
+  background:#ff5275!important;
+  color:white!important;
+}
+
 textarea{
   width:100%;
-  min-height:52px;
-  max-height:140px;
+  min-height:55px;
+  max-height:150px;
   resize:vertical;
   border:1px solid #ccc;
-  border-radius:13px;
-  padding:12px;
+  border-radius:14px;
+  padding:13px;
+  font-family:var(--font);
   font-size:16px;
-  background:var(--card,#fff);
-  color:var(--text,#222);
+  background:var(--card);
+  color:var(--text);
   outline:none;
+}
+
+textarea:focus{
+  border-color:var(--accent);
 }
 
 .send{
   width:100%;
   margin-top:8px;
   border:0;
-  border-radius:12px;
-  padding:12px;
-  background:var(--accent,#6c5ce7);
+  border-radius:13px;
+  padding:13px;
+  background:var(--accent);
   color:white;
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
 }
 
+.send:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 .emoji-panel{
   display:none;
-  padding:8px;
-  background:var(--chat-bg,#faf9ff);
-  border-radius:12px;
+  padding:9px;
+  background:var(--chat-bg);
+  border-radius:13px;
   margin-bottom:8px;
 }
 
@@ -224,31 +294,59 @@ textarea{
   cursor:pointer;
 }
 
-.recording{
-  background:#ff5275!important;
-  color:white!important;
-}
-
 .file-name{
   color:#888;
   font-size:12px;
   margin-top:6px;
 }
 
-.hidden{display:none}
+.hidden{
+  display:none;
+}
+
+.premium-notice{
+  display:none;
+  margin-bottom:9px;
+  padding:11px 13px;
+  border-radius:12px;
+  background:#fff6d6;
+  color:#765b00;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.premium-notice a{
+  color:#765b00;
+  text-decoration:underline;
+}
 
 @media(max-width:600px){
-  .messages{height:500px}
-  .message-content{max-width:82%}
-  header{flex-direction:column}
+
+  header{
+    flex-direction:column;
+  }
+
+  .messages{
+    height:500px;
+  }
+
+  .message-content{
+    max-width:83%;
+  }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <div class="logo">🌍 TeenSpace</div>
+
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
 
   <nav>
     <a href="home.html">Home</a>
@@ -257,42 +355,138 @@ textarea{
     <a href="profile.html">Profile</a>
     <a href="premium.html">💎 Premium</a>
   </nav>
+
 </header>
+
 
 <main class="container">
 
 <div class="chat">
 
   <div class="chat-top">
-    <div class="chat-title">💬 TeenSpace Community</div>
-    <div class="chat-subtitle">Talk, share and connect with the community 🌍</div>
+
+    <div class="chat-title">
+      💬 TeenSpace Community
+    </div>
+
+    <div class="chat-subtitle">
+      Talk, share and connect with the community 🌍
+    </div>
+
+    <div
+      id="premiumLabel"
+      class="premium-label"
+      style="display:none"
+    >
+      💎 PREMIUM FEATURES ACTIVE
+    </div>
+
   </div>
 
-  <div id="messages" class="messages">
-    <div class="status">Loading chat...</div>
+
+  <div
+    id="messages"
+    class="messages"
+  >
+
+    <div class="status">
+      Loading community...
+    </div>
+
   </div>
+
 
   <div class="composer">
 
-    <div id="emojiPanel" class="emoji-panel">
-      <button>😀</button><button>😂</button><button>🤣</button>
-      <button>😍</button><button>🥰</button><button>😘</button>
-      <button>😎</button><button>😭</button><button>😂</button>
-      <button>😡</button><button>😱</button><button>🤔</button>
-      <button>🙄</button><button>😴</button><button>🤗</button>
-      <button>🥳</button><button>😇</button><button>🤩</button>
-      <button>❤️</button><button>🧡</button><button>💛</button>
-      <button>💚</button><button>💙</button><button>💜</button>
-      <button>🖤</button><button>🤍</button><button>🔥</button>
-      <button>⭐</button><button>✨</button><button>🎉</button>
-      <button>👏</button><button>🙌</button><button>💯</button>
+    <div
+      id="premiumNotice"
+      class="premium-notice"
+    >
+      💎 This feature is for Premium members.
+      <a href="premium.html">Upgrade to Premium</a>
     </div>
 
-    <div class="toolbar">
-      <button id="emojiBtn" class="tool">😀 Emoji</button>
-      <button id="mediaBtn" class="tool">📎 Media</button>
-      <button id="voiceBtn" class="tool">🎙️ Voice</button>
+
+    <!-- EMOJIS -->
+
+    <div
+      id="emojiPanel"
+      class="emoji-panel"
+    >
+
+      <button>😀</button>
+      <button>😂</button>
+      <button>🤣</button>
+      <button>😍</button>
+      <button>🥰</button>
+      <button>😘</button>
+      <button>😎</button>
+      <button>😭</button>
+      <button>😡</button>
+      <button>😱</button>
+      <button>🤔</button>
+      <button>🙄</button>
+      <button>😴</button>
+      <button>🤗</button>
+      <button>🥳</button>
+      <button>😇</button>
+      <button>🤩</button>
+      <button>❤️</button>
+      <button>🧡</button>
+      <button>💛</button>
+      <button>💚</button>
+      <button>💙</button>
+      <button>💜</button>
+      <button>🖤</button>
+      <button>🤍</button>
+      <button>🔥</button>
+      <button>⭐</button>
+      <button>✨</button>
+      <button>🎉</button>
+      <button>👏</button>
+      <button>🙌</button>
+      <button>💯</button>
+      <button>👍</button>
+      <button>👎</button>
+      <button>😂</button>
+      <button>💀</button>
+      <button>👀</button>
+      <button>🙏</button>
+      <button>💖</button>
+      <button>💫</button>
+      <button>🌍</button>
+      <button>🚀</button>
+
     </div>
+
+
+    <div class="toolbar">
+
+      <button
+        id="emojiBtn"
+        class="tool"
+      >
+        😀 Emoji
+      </button>
+
+
+      <button
+        id="mediaBtn"
+        class="tool premium-tool"
+      >
+        📎 Media
+      </button>
+
+
+      <button
+        id="voiceBtn"
+        class="tool premium-tool"
+      >
+        🎙️ Voice
+      </button>
+
+    </div>
+
 
     <input
       id="mediaInput"
@@ -301,7 +495,12 @@ textarea{
       accept="image/*,video/*"
     >
 
-    <div id="fileName" class="file-name"></div>
+
+    <div
+      id="fileName"
+      class="file-name"
+    ></div>
+
 
     <textarea
       id="messageInput"
@@ -309,7 +508,11 @@ textarea{
       placeholder="Write a message..."
     ></textarea>
 
-    <button id="sendBtn" class="send">
+
+    <button
+      id="sendBtn"
+      class="send"
+    >
       Send 💬
     </button>
 
@@ -319,609 +522,1357 @@ textarea{
 
 </main>
 
+
 <script>
-const SUPABASE_URL="https://gcigveojqwwovitlwtxl.supabase.co";
-const SUPABASE_KEY="sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
-const supabaseClient=window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+  "https://gcigveojqwwovitlwtxl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
     }
+  );
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const messagesBox =
+  document.getElementById("messages");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const emojiBtn =
+  document.getElementById("emojiBtn");
+
+const emojiPanel =
+  document.getElementById("emojiPanel");
+
+const mediaBtn =
+  document.getElementById("mediaBtn");
+
+const voiceBtn =
+  document.getElementById("voiceBtn");
+
+const mediaInput =
+  document.getElementById("mediaInput");
+
+const fileName =
+  document.getElementById("fileName");
+
+const premiumNotice =
+  document.getElementById("premiumNotice");
+
+const premiumLabel =
+  document.getElementById("premiumLabel");
+
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let isPremium = false;
+
+let selectedFile = null;
+
+let recorder = null;
+
+let audioChunks = [];
+
+
+/* =========================================
+   THEME + PREMIUM PROFILE
+========================================= */
+
+async function loadCurrentUser(){
+
+  const {
+    data:{
+      user
+    },
+    error
+  } =
+  await supabaseClient
+    .auth
+    .getUser();
+
+
+  if(error || !user){
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
   }
-);
-
-const messagesBox=document.getElementById("messages");
-const messageInput=document.getElementById("messageInput");
-const sendBtn=document.getElementById("sendBtn");
-const emojiBtn=document.getElementById("emojiBtn");
-const emojiPanel=document.getElementById("emojiPanel");
-const mediaBtn=document.getElementById("mediaBtn");
-const mediaInput=document.getElementById("mediaInput");
-const fileName=document.getElementById("fileName");
-const voiceBtn=document.getElementById("voiceBtn");
-
-let currentUser=null;
-let selectedFile=null;
-let recorder=null;
-let chunks=[];
 
 
-/* ================================
-   THEME
-================================ */
+  currentUser =
+    user;
+
+
+  /*
+    IMPORTANT:
+    Premium is controlled by the
+    profiles.premium column.
+  */
+
+  const {
+    data:profile,
+    error:profileError
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq(
+      "user-id",
+      currentUser.id
+    )
+    .maybeSingle();
+
+
+  if(profileError){
+
+    console.error(
+      "Profile error:",
+      profileError
+    );
+
+  }
+
+
+  currentProfile =
+    profile || {};
+
+
+  isPremium =
+    currentProfile.premium === true;
+
+
+  applyTheme(
+    currentProfile
+  );
+
+
+  if(isPremium){
+
+    premiumLabel.style.display =
+      "inline-block";
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================
+   PREMIUM THEME
+========================================= */
 
 function applyTheme(profile){
 
-  const root=document.documentElement;
+  const root =
+    document.documentElement;
 
-  if(!profile) return;
-
-  const accent=profile.accent_color || "#6c5ce7";
-
-  root.style.setProperty("--accent",accent);
 
   /*
-    These fields are optional.
-    If your customization page already stores
-    these values, the chat will use them.
+    Accent colour
+  */
+
+  if(profile.accent_color){
+
+    root.style.setProperty(
+      "--accent",
+      profile.accent_color
+    );
+
+  }
+
+
+  /*
+    Background colours
   */
 
   if(profile.background_color){
+
     root.style.setProperty(
       "--page-bg",
       profile.background_color
     );
+
   }
 
+
   if(profile.chat_background){
+
     root.style.setProperty(
       "--chat-bg",
       profile.chat_background
     );
+
   }
 
+
   if(profile.card_color){
+
     root.style.setProperty(
       "--card",
       profile.card_color
     );
+
   }
 
-  if(profile.text_color){
-    root.style.setProperty(
-      "--text",
-      profile.text_color
-    );
-  }
 
   if(profile.bubble_color){
+
     root.style.setProperty(
       "--bubble",
       profile.bubble_color
     );
-  }
-}
 
-
-/* ================================
-   CURRENT USER + OWN PROFILE
-================================ */
-
-async function loadCurrentUser(){
-
-  const {data,error}=await supabaseClient.auth.getUser();
-
-  if(error || !data.user){
-    window.location.href="login.html";
-    return false;
   }
 
-  currentUser=data.user;
+
+  if(profile.text_color){
+
+    root.style.setProperty(
+      "--text",
+      profile.text_color
+    );
+
+  }
+
 
   /*
-    Load the logged-in user's profile.
-    We use avatar_url if available.
+    PREMIUM FONT
   */
 
-  const {data:profile}=await supabaseClient
-    .from("profiles")
-    .select("*")
-    .eq("user-id",currentUser.id)
-    .maybeSingle();
+  if(
+    isPremium &&
+    profile.font_family
+  ){
 
-  if(profile){
-    applyTheme(profile);
+    root.style.setProperty(
+      "--font",
+      profile.font_family
+    );
+
+  }else{
+
+    root.style.setProperty(
+      "--font",
+      "Arial,sans-serif"
+    );
+
   }
 
-  return true;
 }
 
 
-/* ================================
-   ESCAPE
-================================ */
+/* =========================================
+   PREMIUM CHECK
+========================================= */
+
+function requirePremium(){
+
+  if(isPremium){
+
+    premiumNotice.style.display =
+      "none";
+
+    return true;
+
+  }
+
+
+  premiumNotice.style.display =
+    "block";
+
+
+  setTimeout(
+    ()=>{
+      premiumNotice.style.display =
+        "none";
+    },
+    4500
+  );
+
+
+  return false;
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
 
 function escapeHTML(value){
 
-  const div=document.createElement("div");
+  const div =
+    document.createElement("div");
 
-  div.textContent=value || "";
+  div.textContent =
+    value || "";
 
   return div.innerHTML;
+
 }
 
 
-/* ================================
-   GET PROFILE MAP
-================================ */
+/* =========================================
+   PROFILE MAP
+========================================= */
 
 async function getProfiles(userIds){
 
-  if(!userIds.length) return new Map();
+  if(!userIds.length){
 
-  const {data,error}=await supabaseClient
-    .from("profiles")
-    .select(
-      'username, avatar_url, "user-id", accent_color, background_color, chat_background, card_color, text_color, bubble_color'
-    )
-    .in("user-id",userIds);
-
-  if(error){
-    console.error("Profile loading error:",error);
     return new Map();
+
   }
 
-  const map=new Map();
 
-  (data || []).forEach(profile=>{
-    map.set(profile["user-id"],profile);
-  });
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select(
+      'username, avatar_url, "user-id", premium'
+    )
+    .in(
+      "user-id",
+      userIds
+    );
+
+
+  if(error){
+
+    console.error(
+      "Profile loading error:",
+      error
+    );
+
+    return new Map();
+
+  }
+
+
+  const map =
+    new Map();
+
+
+  (data || []).forEach(
+    profile=>{
+
+      map.set(
+        profile["user-id"],
+        profile
+      );
+
+    }
+  );
+
 
   return map;
+
 }
 
 
-/* ================================
-   LOAD MESSAGES
-================================ */
+/* =========================================
+   LOAD COMMUNITY MESSAGES
+========================================= */
 
 async function loadMessages(){
 
-  const {data,error}=await supabaseClient
+  /*
+    Your earlier database uses sender_id,
+    so this version uses sender_id directly.
+  */
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
     .from("messages")
     .select(
-      "id,user_id,content,created_at,message_type,media_url,media_name"
+      "id,sender_id,content,created_at,message_type,media_url,media_name"
     )
-    .order("created_at",{ascending:true});
+    .is(
+      "receiver_id",
+      null
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
 
   if(error){
 
-    /*
-      Some existing databases may use sender_id
-      instead of user_id.
-    */
-
-    const fallback=await supabaseClient
-      .from("messages")
-      .select(
-        "id,sender_id,content,created_at,message_type,media_url,media_name"
-      )
-      .order("created_at",{ascending:true});
-
-    if(fallback.error){
-      messagesBox.innerHTML=
-        '<div class="status">❌ Could not load community chat.</div>';
-      console.error(error);
-      return;
-    }
-
-    renderMessages(
-      fallback.data.map(m=>({
-        ...m,
-        user_id:m.sender_id
-      }))
+    console.error(
+      "Messages error:",
+      error
     );
 
+
+    messagesBox.innerHTML = `
+
+      <div class="status">
+        ❌ Could not load community chat.
+        <br><br>
+        ${escapeHTML(error.message)}
+      </div>
+
+    `;
+
     return;
+
   }
 
-  renderMessages(data || []);
+
+  renderMessages(
+    data || []
+  );
+
 }
 
 
-/* ================================
-   RENDER
-================================ */
+/* =========================================
+   RENDER MESSAGES
+========================================= */
 
 async function renderMessages(data){
 
   if(!data.length){
-    messagesBox.innerHTML=
-      '<div class="status">👋 No messages yet. Start the conversation!</div>';
+
+    messagesBox.innerHTML = `
+
+      <div class="status">
+        👋 No messages yet.
+        <br><br>
+        Start the conversation!
+      </div>
+
+    `;
+
     return;
+
   }
 
-  const ids=[
-    ...new Set(
-      data.map(m=>m.user_id).filter(Boolean)
-    )
-  ];
 
-  const profiles=await getProfiles(ids);
+  const ids =
+    [
+      ...new Set(
+        data
+          .map(
+            message =>
+              message.sender_id
+          )
+          .filter(Boolean)
+      )
+    ];
 
-  messagesBox.innerHTML="";
 
-  data.forEach(message=>{
+  const profiles =
+    await getProfiles(ids);
 
-    const profile=
-      profiles.get(message.user_id) || {};
 
-    const mine=
-      message.user_id===currentUser.id;
+  messagesBox.innerHTML =
+    "";
 
-    const row=document.createElement("div");
 
-    row.className=
-      "message-row"+(mine?" mine":"");
+  data.forEach(
+    message=>{
 
-    /*
-      REAL PROFILE PICTURE
-    */
+      const profile =
+        profiles.get(
+          message.sender_id
+        ) || {};
 
-    const avatarWrap=document.createElement("div");
-    avatarWrap.className="avatar-wrap";
 
-    const avatar=document.createElement("img");
+      const mine =
+        message.sender_id ===
+        currentUser.id;
 
-    avatar.className="avatar";
 
-    avatar.alt="Profile picture";
+      const row =
+        document.createElement(
+          "div"
+        );
 
-    avatar.src=
-      profile.avatar_url ||
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23eeeaff'/%3E%3Ctext x='40' y='51' text-anchor='middle' font-size='34'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E";
 
-    avatar.onerror=function(){
-      this.onerror=null;
-      this.src=
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23eeeaff'/%3E%3Ctext x='40' y='51' text-anchor='middle' font-size='34'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E";
-    };
+      row.className =
+        "message-row" +
+        (
+          mine
+            ? " mine"
+            : ""
+        );
 
-    avatarWrap.appendChild(avatar);
 
-    const content=document.createElement("div");
-    content.className="message-content";
+      /* PROFILE IMAGE */
 
-    const username=document.createElement("div");
-    username.className="username";
+      const avatarWrap =
+        document.createElement(
+          "div"
+        );
 
-    username.textContent=
-      profile.username ||
-      "TeenSpace Member";
 
-    /*
-      Tap username/profile picture:
-      public profile
-    */
+      avatarWrap.className =
+        "avatar-wrap";
 
-    username.onclick=()=>{
-      window.location.href=
-        "profile.html?user_id="+
-        encodeURIComponent(message.user_id);
-    };
 
-    avatar.onclick=()=>{
-      window.location.href=
-        "profile.html?user_id="+
-        encodeURIComponent(message.user_id);
-    };
+      const avatar =
+        document.createElement(
+          "img"
+        );
 
-    avatar.style.cursor="pointer";
 
-    content.appendChild(username);
+      avatar.className =
+        "avatar";
 
-    const bubble=document.createElement("div");
-    bubble.className="bubble";
 
-    const type=message.message_type || "text";
+      avatar.alt =
+        "Profile picture";
 
-    if(type==="image"){
 
-      bubble.innerHTML=
-        `<img class="media" src="${escapeHTML(message.media_url)}" alt="Shared image">`;
+      avatar.src =
+        profile.avatar_url ||
+        createFallbackAvatar();
 
-    }else if(type==="video"){
 
-      bubble.innerHTML=
-        `<video class="media" src="${escapeHTML(message.media_url)}" controls playsinline></video>`;
+      avatar.onerror =
+        function(){
 
-    }else if(type==="audio"){
+          this.onerror =
+            null;
 
-      bubble.innerHTML=
-        `<audio class="audio" src="${escapeHTML(message.media_url)}" controls></audio>`;
+          this.src =
+            createFallbackAvatar();
 
-    }else{
+        };
 
-      bubble.textContent=
-        message.content || "";
+
+      avatar.onclick =
+        function(){
+
+          openProfile(
+            message.sender_id
+          );
+
+        };
+
+
+      avatarWrap.appendChild(
+        avatar
+      );
+
+
+      /* MESSAGE CONTENT */
+
+      const content =
+        document.createElement(
+          "div"
+        );
+
+
+      content.className =
+        "message-content";
+
+
+      const username =
+        document.createElement(
+          "div"
+        );
+
+
+      username.className =
+        "username";
+
+
+      username.textContent =
+        profile.username ||
+        "TeenSpace Member";
+
+
+      username.onclick =
+        function(){
+
+          openProfile(
+            message.sender_id
+          );
+
+        };
+
+
+      content.appendChild(
+        username
+      );
+
+
+      const bubble =
+        document.createElement(
+          "div"
+        );
+
+
+      bubble.className =
+        "bubble";
+
+
+      const type =
+        message.message_type ||
+        "text";
+
+
+      if(type === "image"){
+
+        bubble.innerHTML = `
+
+          <img
+            class="media"
+            src="${escapeHTML(
+              message.media_url
+            )}"
+            alt="Shared image"
+          >
+
+        `;
+
+      }
+
+      else if(type === "video"){
+
+        bubble.innerHTML = `
+
+          <video
+            class="media"
+            src="${escapeHTML(
+              message.media_url
+            )}"
+            controls
+            playsinline
+          ></video>
+
+        `;
+
+      }
+
+      else if(type === "audio"){
+
+        bubble.innerHTML = `
+
+          <audio
+            class="audio"
+            src="${escapeHTML(
+              message.media_url
+            )}"
+            controls
+          ></audio>
+
+        `;
+
+      }
+
+      else{
+
+        bubble.textContent =
+          message.content || "";
+
+      }
+
+
+      content.appendChild(
+        bubble
+      );
+
+
+      const time =
+        document.createElement(
+          "div"
+        );
+
+
+      time.className =
+        "message-time";
+
+
+      time.textContent =
+        new Date(
+          message.created_at
+        ).toLocaleString();
+
+
+      content.appendChild(
+        time
+      );
+
+
+      row.appendChild(
+        avatarWrap
+      );
+
+
+      row.appendChild(
+        content
+      );
+
+
+      messagesBox.appendChild(
+        row
+      );
 
     }
+  );
 
-    content.appendChild(bubble);
 
-    const time=document.createElement("div");
-    time.className="message-time";
-
-    time.textContent=
-      new Date(message.created_at).toLocaleString();
-
-    content.appendChild(time);
-
-    row.appendChild(avatarWrap);
-    row.appendChild(content);
-
-    messagesBox.appendChild(row);
-
-  });
-
-  messagesBox.scrollTop=
+  messagesBox.scrollTop =
     messagesBox.scrollHeight;
+
 }
 
 
-/* ================================
+/* =========================================
+   FALLBACK AVATAR
+========================================= */
+
+function createFallbackAvatar(){
+
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23eeeaff'/%3E%3Ctext x='40' y='52' text-anchor='middle' font-size='34'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E";
+
+}
+
+
+/* =========================================
+   PUBLIC PROFILE
+========================================= */
+
+function openProfile(userId){
+
+  window.location.href =
+    "profile.html?user_id=" +
+    encodeURIComponent(userId);
+
+}
+
+
+/* =========================================
    EMOJIS
-================================ */
+========================================= */
 
-emojiBtn.onclick=()=>{
-  emojiPanel.style.display=
-    emojiPanel.style.display==="block"
-      ?"none"
-      :"block";
-};
+emojiBtn.onclick =
+  function(){
 
-emojiPanel.querySelectorAll("button").forEach(button=>{
+    emojiPanel.style.display =
+      emojiPanel.style.display ===
+        "block"
+        ? "none"
+        : "block";
 
-  button.onclick=()=>{
-
-    const start=messageInput.selectionStart;
-    const end=messageInput.selectionEnd;
-
-    messageInput.value=
-      messageInput.value.slice(0,start)+
-      button.textContent+
-      messageInput.value.slice(end);
-
-    messageInput.focus();
-
-    const pos=
-      start+button.textContent.length;
-
-    messageInput.selectionStart=pos;
-    messageInput.selectionEnd=pos;
   };
-});
 
 
-/* ================================
-   MEDIA
-================================ */
+emojiPanel
+  .querySelectorAll("button")
+  .forEach(
+    button=>{
 
-mediaBtn.onclick=()=>{
-  mediaInput.click();
-};
+      button.onclick =
+        function(){
 
-mediaInput.onchange=()=>{
+          const start =
+            messageInput.selectionStart;
 
-  selectedFile=
-    mediaInput.files &&
-    mediaInput.files[0]
-      ?mediaInput.files[0]
-      :null;
+          const end =
+            messageInput.selectionEnd;
 
-  fileName.textContent=
-    selectedFile
-      ?"📎 "+selectedFile.name
-      :"";
-};
+          const text =
+            messageInput.value;
 
 
-/* ================================
-   VOICE
-================================ */
+          messageInput.value =
+            text.slice(0,start) +
+            button.textContent +
+            text.slice(end);
 
-voiceBtn.onclick=async()=>{
 
-  if(recorder && recorder.state==="recording"){
+          messageInput.focus();
 
-    recorder.stop();
-    voiceBtn.textContent="🎙️ Voice";
-    voiceBtn.classList.remove("recording");
-    return;
-  }
 
-  try{
+          const position =
+            start +
+            button.textContent.length;
 
-    const stream=
-      await navigator.mediaDevices.getUserMedia({
-        audio:true
-      });
 
-    chunks=[];
+          messageInput.selectionStart =
+            position;
 
-    recorder=new MediaRecorder(stream);
+          messageInput.selectionEnd =
+            position;
 
-    recorder.ondataavailable=e=>{
-      if(e.data.size) chunks.push(e.data);
-    };
+        };
 
-    recorder.onstop=()=>{
+    }
+  );
 
-      stream.getTracks().forEach(t=>t.stop());
 
-      const blob=new Blob(chunks,{
-        type:recorder.mimeType || "audio/webm"
-      });
+/* =========================================
+   MEDIA — PREMIUM ONLY
+========================================= */
 
-      selectedFile=new File(
-        [blob],
-        "voice-"+Date.now()+".webm",
-        {type:blob.type}
+mediaBtn.onclick =
+  function(){
+
+    if(!requirePremium()){
+
+      return;
+
+    }
+
+
+    mediaInput.click();
+
+  };
+
+
+mediaInput.onchange =
+  function(){
+
+    if(!isPremium){
+
+      mediaInput.value =
+        "";
+
+      selectedFile =
+        null;
+
+      return;
+
+    }
+
+
+    selectedFile =
+      mediaInput.files &&
+      mediaInput.files[0]
+        ? mediaInput.files[0]
+        : null;
+
+
+    if(!selectedFile){
+
+      fileName.textContent =
+        "";
+
+      return;
+
+    }
+
+
+    const maxSize =
+      25 * 1024 * 1024;
+
+
+    if(selectedFile.size > maxSize){
+
+      alert(
+        "Media must be 25 MB or smaller."
       );
 
-      fileName.textContent="🎙️ Voice recording ready";
 
-      voiceBtn.textContent="🎙️ Voice";
-      voiceBtn.classList.remove("recording");
-    };
+      mediaInput.value =
+        "";
 
-    recorder.start();
+      selectedFile =
+        null;
 
-    voiceBtn.textContent="⏹️ Stop";
-    voiceBtn.classList.add("recording");
+      return;
 
-  }catch(error){
-
-    alert("Microphone permission is needed for voice messages.");
-
-  }
-};
+    }
 
 
-/* ================================
+    fileName.textContent =
+      "📎 " +
+      selectedFile.name;
+
+  };
+
+
+/* =========================================
+   VOICE — PREMIUM ONLY
+========================================= */
+
+voiceBtn.onclick =
+  async function(){
+
+    if(!requirePremium()){
+
+      return;
+
+    }
+
+
+    if(
+      recorder &&
+      recorder.state ===
+      "recording"
+    ){
+
+      recorder.stop();
+
+      voiceBtn.textContent =
+        "🎙️ Voice";
+
+      voiceBtn.classList.remove(
+        "recording"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ){
+
+      alert(
+        "Voice recording is not supported by this browser."
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+      const stream =
+        await navigator.mediaDevices
+          .getUserMedia({
+            audio:true
+          });
+
+
+      audioChunks =
+        [];
+
+
+      let mimeType =
+        "audio/webm";
+
+
+      if(
+        MediaRecorder.isTypeSupported &&
+        MediaRecorder.isTypeSupported(
+          "audio/webm"
+        )
+      ){
+
+        mimeType =
+          "audio/webm";
+
+      }
+
+
+      recorder =
+        new MediaRecorder(
+          stream,
+          {
+            mimeType
+          }
+        );
+
+
+      recorder.ondataavailable =
+        function(event){
+
+          if(event.data.size > 0){
+
+            audioChunks.push(
+              event.data
+            );
+
+          }
+
+        };
+
+
+      recorder.onstop =
+        function(){
+
+          stream
+            .getTracks()
+            .forEach(
+              track =>
+                track.stop()
+            );
+
+
+          const blob =
+            new Blob(
+              audioChunks,
+              {
+                type:
+                  recorder.mimeType ||
+                  "audio/webm"
+              }
+            );
+
+
+          selectedFile =
+            new File(
+              [blob],
+              "voice-" +
+              Date.now() +
+              ".webm",
+              {
+                type:
+                  blob.type
+              }
+            );
+
+
+          fileName.textContent =
+            "🎙️ Voice recording ready";
+
+        };
+
+
+      recorder.start();
+
+
+      voiceBtn.textContent =
+        "⏹️ Stop";
+
+      voiceBtn.classList.add(
+        "recording"
+      );
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+      alert(
+        "Microphone permission was not granted."
+      );
+
+    }
+
+  };
+
+
+/* =========================================
    UPLOAD
-================================ */
+========================================= */
 
 async function uploadFile(file){
 
-  const extension=
-    file.name.includes(".")
-      ?file.name.split(".").pop()
-      :"bin";
+  if(!isPremium){
 
-  const path=
-    currentUser.id+
-    "/community-"+crypto.randomUUID()+
-    "."+
+    throw new Error(
+      "Premium is required for media sharing."
+    );
+
+  }
+
+
+  const extension =
+    file.name.includes(".")
+      ? file.name
+          .split(".")
+          .pop()
+          .toLowerCase()
+      : "bin";
+
+
+  const path =
+    currentUser.id +
+    "/community-" +
+    crypto.randomUUID() +
+    "." +
     extension;
 
-  const {data,error}=
-    await supabaseClient
-      .storage
-      .from("chat-media")
-      .upload(
-        path,
-        file,
-        {
-          contentType:file.type || "application/octet-stream",
-          upsert:false
-        }
-      );
 
-  if(error) throw error;
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .storage
+    .from("chat-media")
+    .upload(
+      path,
+      file,
+      {
+        contentType:
+          file.type ||
+          "application/octet-stream",
 
-  const {data:urlData}=
-    supabaseClient
-      .storage
-      .from("chat-media")
-      .getPublicUrl(data.path);
+        upsert:false
+      }
+    );
+
+
+  if(error){
+
+    throw error;
+
+  }
+
+
+  const {
+    data:urlData
+  } =
+  supabaseClient
+    .storage
+    .from("chat-media")
+    .getPublicUrl(
+      data.path
+    );
+
 
   return urlData.publicUrl;
+
 }
 
 
-/* ================================
-   SEND
-================================ */
+/* =========================================
+   SEND MESSAGE
+========================================= */
 
-sendBtn.onclick=async()=>{
+sendBtn.onclick =
+  async function(){
 
-  if(!currentUser) return;
+    if(!currentUser){
 
-  sendBtn.disabled=true;
-
-  try{
-
-    let payload={
-      user_id:currentUser.id,
-      content:messageInput.value.trim(),
-      message_type:"text"
-    };
-
-    if(selectedFile){
-
-      const url=
-        await uploadFile(selectedFile);
-
-      let type="audio";
-
-      if(selectedFile.type.startsWith("image/")){
-        type="image";
-      }else if(selectedFile.type.startsWith("video/")){
-        type="video";
-      }
-
-      payload={
-        ...payload,
-        message_type:type,
-        media_url:url,
-        media_name:selectedFile.name
-      };
+      return;
 
     }
 
-    if(!payload.content && !selectedFile) return;
 
-    const {error}=await supabaseClient
-      .from("messages")
-      .insert(payload);
+    const text =
+      messageInput.value.trim();
 
-    if(error) throw error;
 
-    messageInput.value="";
-    selectedFile=null;
-    mediaInput.value="";
-    fileName.textContent="";
+    if(
+      !text &&
+      !selectedFile
+    ){
 
-    await loadMessages();
+      return;
 
-  }catch(error){
+    }
 
-    console.error(error);
-    alert(error.message || "Could not send message.");
 
-  }finally{
+    sendBtn.disabled =
+      true;
 
-    sendBtn.disabled=false;
+
+    try{
+
+      let payload = {
+
+        sender_id:
+          currentUser.id,
+
+        receiver_id:
+          null,
+
+        content:
+          text,
+
+        message_type:
+          "text",
+
+        media_url:
+          null,
+
+        media_name:
+          null
+
+      };
+
+
+      if(selectedFile){
+
+        if(!isPremium){
+
+          throw new Error(
+            "Premium is required for media sharing."
+          );
+
+        }
+
+
+        const url =
+          await uploadFile(
+            selectedFile
+          );
+
+
+        let type =
+          "audio";
+
+
+        if(
+          selectedFile.type &&
+          selectedFile.type.startsWith(
+            "image/"
+          )
+        ){
+
+          type =
+            "image";
+
+        }
+
+        else if(
+          selectedFile.type &&
+          selectedFile.type.startsWith(
+            "video/"
+          )
+        ){
+
+          type =
+            "video";
+
+        }
+
+
+        payload.message_type =
+          type;
+
+
+        payload.media_url =
+          url;
+
+
+        payload.media_name =
+          selectedFile.name;
+
+      }
+
+
+      const {
+        error
+      } =
+      await supabaseClient
+        .from("messages")
+        .insert(
+          payload
+        );
+
+
+      if(error){
+
+        throw error;
+
+      }
+
+
+      messageInput.value =
+        "";
+
+      selectedFile =
+        null;
+
+      mediaInput.value =
+        "";
+
+      fileName.textContent =
+        "";
+
+
+      await loadMessages();
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+      alert(
+        error.message ||
+        "Could not send message."
+      );
+
+    }
+
+    finally{
+
+      sendBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =========================================
+   ENTER TO SEND
+========================================= */
+
+messageInput.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
+
+      event.preventDefault();
+
+      sendBtn.click();
+
+    }
 
   }
-};
+);
 
 
-messageInput.addEventListener("keydown",e=>{
-
-  if(e.key==="Enter" && !e.shiftKey){
-
-    e.preventDefault();
-    sendBtn.click();
-
-  }
-
-});
-
-
-/* ================================
+/* =========================================
    REALTIME
-================================ */
+========================================= */
 
 function subscribe(){
 
   supabaseClient
-    .channel("teen-space-community-chat")
+    .channel(
+      "teen-space-community-chat"
+    )
     .on(
       "postgres_changes",
       {
@@ -929,24 +1880,33 @@ function subscribe(){
         schema:"public",
         table:"messages"
       },
-      ()=>{
+      function(){
+
         loadMessages();
+
       }
     )
     .subscribe();
+
 }
 
 
-/* ================================
+/* =========================================
    START
-================================ */
+========================================= */
 
 async function start(){
 
-  const ok=
+  const ok =
     await loadCurrentUser();
 
-  if(!ok) return;
+
+  if(!ok){
+
+    return;
+
+  }
+
 
   await loadMessages();
 
@@ -954,7 +1914,9 @@ async function start(){
 
 }
 
+
 start();
+
 </script>
 
 </body>
