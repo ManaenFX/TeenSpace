@@ -1,140 +1,229 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>TeenSpace Community 💬</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- PREMIUM FONTS -->
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Rubik:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
->
-
 <style>
-
 *{
   box-sizing:border-box;
 }
 
 :root{
   --accent:#6c5ce7;
-  --page-bg:#f4f7ff;
-  --chat-bg:#faf9ff;
-  --card:#ffffff;
+  --page:#f1f3f8;
+  --chat:#ffffff;
   --bubble:#eeeaff;
-  --text:#222;
+  --text:#202124;
+  --muted:#777;
+  --border:#e4e4e8;
+  --header:#ffffff;
+  --input:#f5f5f8;
+  --danger:#ff4d6d;
   --font:Arial,sans-serif;
+}
+
+*{
+  scrollbar-width:thin;
+}
+
+body.dark{
+  --page:#101116;
+  --chat:#17181f;
+  --bubble:#252631;
+  --text:#f4f4f7;
+  --muted:#9b9ca8;
+  --border:#292a34;
+  --header:#17181f;
+  --input:#22232d;
 }
 
 body{
   margin:0;
   min-height:100vh;
-  background:var(--page-bg);
+  background:var(--page);
   color:var(--text);
   font-family:var(--font);
   transition:.25s;
 }
 
+/* HEADER */
+
 header{
-  background:var(--accent);
-  color:white;
-  padding:15px 6%;
+  height:64px;
+  background:var(--header);
+  border-bottom:1px solid var(--border);
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:15px;
+  justify-content:space-between;
+  padding:0 25px;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
 .logo{
-  font-size:25px;
-  font-weight:bold;
-  white-space:nowrap;
+  color:var(--accent);
+  font-size:23px;
+  font-weight:800;
 }
 
 nav{
   display:flex;
-  flex-wrap:wrap;
-  gap:6px;
+  align-items:center;
+  gap:5px;
 }
 
-nav a{
-  color:white;
+nav a,
+.theme-btn{
+  border:0;
+  background:transparent;
+  color:var(--text);
   text-decoration:none;
-  padding:8px 10px;
-  border-radius:9px;
-  font-weight:bold;
+  padding:9px 11px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
 }
 
-nav a:hover{
-  background:rgba(255,255,255,.15);
+nav a:hover,
+.theme-btn:hover{
+  background:var(--bubble);
 }
 
-.container{
-  width:94%;
-  max-width:900px;
-  margin:25px auto 50px;
+.premium-nav{
+  color:#b88600!important;
 }
+
+/* PAGE */
+
+.page{
+  width:100%;
+  max-width:1250px;
+  margin:auto;
+  padding:22px;
+}
+
+/* CHAT */
 
 .chat{
-  background:var(--card);
-  border-radius:22px;
+  height:calc(100vh - 108px);
+  min-height:600px;
+  display:flex;
+  background:var(--chat);
+  border:1px solid var(--border);
+  border-radius:20px;
   overflow:hidden;
-  box-shadow:0 8px 28px rgba(0,0,0,.10);
+  box-shadow:0 12px 35px rgba(0,0,0,.10);
 }
 
-.chat-top{
-  padding:18px 20px;
-  border-bottom:1px solid rgba(128,128,128,.2);
+/* LEFT PANEL */
+
+.chat-sidebar{
+  width:255px;
+  border-right:1px solid var(--border);
+  background:var(--header);
+  display:flex;
+  flex-direction:column;
 }
 
-.chat-title{
-  font-size:22px;
-  font-weight:bold;
+.sidebar-title{
+  padding:22px;
+  font-size:21px;
+  font-weight:800;
 }
 
-.chat-subtitle{
-  color:#888;
-  margin-top:5px;
-  font-size:14px;
+.online-box{
+  margin:0 15px 15px;
+  padding:13px;
+  border-radius:13px;
+  background:var(--bubble);
+}
+
+.online-dot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#25c46b;
+  margin-right:6px;
+}
+
+.room{
+  margin:4px 12px;
+  padding:13px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.room.active{
+  background:var(--accent);
+  color:white;
+}
+
+/* MAIN CHAT */
+
+.chat-main{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-header{
+  min-height:72px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;
+}
+
+.room-name{
+  font-size:20px;
+  font-weight:800;
+}
+
+.room-description{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:3px;
 }
 
 .premium-label{
-  display:inline-block;
-  margin-top:9px;
-  padding:5px 9px;
-  border-radius:999px;
-  background:#fff0b8;
+  background:#fff0b5;
   color:#916d00;
+  padding:7px 10px;
+  border-radius:999px;
   font-size:11px;
-  font-weight:bold;
+  font-weight:800;
 }
 
+/* MESSAGES */
+
 .messages{
-  height:550px;
+  flex:1;
   overflow-y:auto;
-  padding:20px;
-  background:var(--chat-bg);
+  padding:22px;
+  background:var(--page);
 }
 
 .status{
   text-align:center;
-  color:#888;
-  padding:30px;
+  color:var(--muted);
+  padding:40px;
 }
 
 .message-row{
   display:flex;
-  gap:9px;
-  margin-bottom:17px;
+  gap:10px;
+  margin-bottom:18px;
   align-items:flex-end;
 }
 
@@ -142,37 +231,26 @@ nav a:hover{
   justify-content:flex-end;
 }
 
-.avatar-wrap{
-  width:44px;
-  height:44px;
-  flex-shrink:0;
-}
-
 .avatar{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   object-fit:cover;
-  object-position:center;
-  background:#eeeaff;
-  display:block;
+  background:var(--bubble);
   cursor:pointer;
-  border:2px solid rgba(108,92,231,.15);
-}
-
-.avatar:hover{
-  transform:scale(1.05);
+  border:2px solid var(--chat);
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
 }
 
 .message-content{
-  max-width:min(76%,620px);
+  max-width:min(72%,650px);
 }
 
 .username{
-  font-size:13px;
   color:var(--accent);
-  font-weight:bold;
-  margin:0 0 4px 5px;
+  font-size:13px;
+  font-weight:800;
+  margin:0 0 5px 6px;
   cursor:pointer;
 }
 
@@ -181,12 +259,14 @@ nav a:hover{
 }
 
 .bubble{
+  position:relative;
   background:var(--bubble);
+  color:var(--text);
   padding:11px 14px;
   border-radius:17px;
   line-height:1.5;
-  word-break:break-word;
   white-space:pre-wrap;
+  word-break:break-word;
 }
 
 .mine .bubble{
@@ -196,33 +276,89 @@ nav a:hover{
 }
 
 .message-time{
+  color:var(--muted);
   font-size:10px;
-  opacity:.55;
-  margin:5px 5px 0;
+  margin:5px 6px;
 }
 
+.edited{
+  font-style:italic;
+}
+
+/* REACTIONS */
+
+.reactions{
+  display:flex;
+  gap:5px;
+  margin-top:5px;
+  flex-wrap:wrap;
+}
+
+.reaction{
+  border:1px solid var(--border);
+  background:var(--chat);
+  border-radius:999px;
+  padding:4px 8px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.reaction:hover{
+  transform:scale(1.05);
+}
+
+/* MESSAGE ACTIONS */
+
+.message-actions{
+  display:none;
+  gap:5px;
+  margin-top:5px;
+}
+
+.message-row:hover .message-actions{
+  display:flex;
+}
+
+.small-btn{
+  border:0;
+  background:var(--chat);
+  color:var(--muted);
+  border-radius:8px;
+  padding:5px 8px;
+  cursor:pointer;
+  font-size:11px;
+}
+
+.small-btn:hover{
+  background:var(--bubble);
+}
+
+/* MEDIA */
+
 .media{
-  max-width:100%;
-  max-height:330px;
-  border-radius:12px;
   display:block;
+  max-width:100%;
+  max-height:350px;
+  border-radius:13px;
 }
 
 .audio{
-  width:290px;
   max-width:100%;
+  width:290px;
 }
 
+/* COMPOSER */
+
 .composer{
-  padding:13px;
-  border-top:1px solid rgba(128,128,128,.2);
-  background:var(--card);
+  background:var(--header);
+  border-top:1px solid var(--border);
+  padding:12px;
 }
 
 .toolbar{
   display:flex;
-  flex-wrap:wrap;
   gap:7px;
+  flex-wrap:wrap;
   margin-bottom:8px;
 }
 
@@ -231,42 +367,27 @@ nav a:hover{
   background:var(--bubble);
   color:var(--accent);
   border-radius:10px;
-  padding:9px 11px;
+  padding:8px 11px;
   cursor:pointer;
-  font-weight:bold;
+  font-weight:700;
 }
 
 .tool:hover{
-  filter:brightness(.96);
-}
-
-.tool.premium-tool{
-  position:relative;
-}
-
-.tool.premium-tool::after{
-  content:"💎";
-  font-size:11px;
-  margin-left:4px;
-}
-
-.recording{
-  background:#ff5275!important;
-  color:white!important;
+  filter:brightness(.95);
 }
 
 textarea{
   width:100%;
-  min-height:55px;
+  min-height:52px;
   max-height:150px;
   resize:vertical;
-  border:1px solid #ccc;
+  border:1px solid var(--border);
+  background:var(--input);
+  color:var(--text);
   border-radius:14px;
   padding:13px;
   font-family:var(--font);
   font-size:16px;
-  background:var(--card);
-  color:var(--text);
   outline:none;
 }
 
@@ -274,30 +395,38 @@ textarea:focus{
   border-color:var(--accent);
 }
 
-.send{
-  width:100%;
+.send-row{
+  display:flex;
+  gap:8px;
   margin-top:8px;
+}
+
+.send{
+  flex:1;
   border:0;
-  border-radius:13px;
-  padding:13px;
+  border-radius:12px;
   background:var(--accent);
   color:white;
+  padding:12px;
   font-size:16px;
-  font-weight:bold;
+  font-weight:800;
   cursor:pointer;
 }
 
 .send:disabled{
-  opacity:.6;
-  cursor:not-allowed;
+  opacity:.5;
 }
+
+/* EMOJIS */
 
 .emoji-panel{
   display:none;
-  padding:9px;
-  background:var(--chat-bg);
-  border-radius:13px;
+  padding:10px;
   margin-bottom:8px;
+  border-radius:13px;
+  background:var(--bubble);
+  max-height:145px;
+  overflow-y:auto;
 }
 
 .emoji-panel button{
@@ -308,50 +437,102 @@ textarea:focus{
   cursor:pointer;
 }
 
-.file-name{
-  color:#888;
-  font-size:12px;
-  margin-top:6px;
-}
-
-.hidden{
-  display:none;
-}
+/* PREMIUM NOTICE */
 
 .premium-notice{
   display:none;
-  margin-bottom:9px;
-  padding:11px 13px;
-  border-radius:12px;
-  background:#fff6d6;
-  color:#765b00;
+  background:#fff4c7;
+  color:#745800;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:8px;
   font-size:13px;
-  font-weight:bold;
+  font-weight:700;
 }
 
 .premium-notice a{
-  color:#765b00;
-  text-decoration:underline;
+  color:#745800;
 }
 
-@media(max-width:600px){
+/* EDIT */
 
-  header{
-    flex-direction:column;
+.edit-box{
+  margin-top:8px;
+}
+
+.edit-box textarea{
+  min-height:90px;
+}
+
+.edit-save{
+  margin-top:6px;
+  border:0;
+  padding:8px 12px;
+  border-radius:9px;
+  background:var(--accent);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .page{
+    padding:0;
   }
 
-  .messages{
-    height:500px;
+  .chat{
+    height:calc(100vh - 64px);
+    min-height:0;
+    border-radius:0;
+    border:0;
+  }
+
+  .chat-sidebar{
+    display:none;
+  }
+
+  header{
+    padding:0 12px;
+  }
+
+  nav a{
+    display:none;
+  }
+
+  nav a[href="profile.html"],
+  nav a[href="premium.html"]{
+    display:block;
   }
 
   .message-content{
-    max-width:83%;
+    max-width:82%;
+  }
+
+  .messages{
+    padding:15px 11px;
   }
 
 }
 
-</style>
+@media(max-width:450px){
 
+  .logo{
+    font-size:19px;
+  }
+
+  .chat-header{
+    padding:10px 13px;
+  }
+
+  .chat-description{
+    display:none;
+  }
+
+}
+</style>
 </head>
 
 <body>
@@ -367,245 +548,314 @@ textarea:focus{
     <a href="explore.html">Explore</a>
     <a href="community.html">Community</a>
     <a href="profile.html">Profile</a>
-    <a href="premium.html">💎 Premium</a>
+    <a href="premium.html" class="premium-nav">💎 Premium</a>
+
+    <button id="themeBtn" class="theme-btn">
+      🌙
+    </button>
   </nav>
 
 </header>
 
-<main class="container">
+<div class="page">
 
 <div class="chat">
 
-  <div class="chat-top">
+  <aside class="chat-sidebar">
 
-    <div class="chat-title">
-      💬 TeenSpace Community
+    <div class="sidebar-title">
+      💬 Chats
     </div>
 
-    <div class="chat-subtitle">
-      Talk, share and connect with the community 🌍
+    <div class="online-box">
+      <span class="online-dot"></span>
+      Community chat
     </div>
 
-    <div
-      id="premiumLabel"
-      class="premium-label"
-      style="display:none"
-    >
-      💎 PREMIUM FEATURES ACTIVE
+    <div class="room active">
+      🌍 Global TeenSpace
     </div>
 
-  </div>
-
-  <div
-    id="messages"
-    class="messages"
-  >
-
-    <div class="status">
-      Loading community...
+    <div class="room">
+      🎮 Gaming
     </div>
 
-  </div>
-
-  <div class="composer">
-
-    <div
-      id="premiumNotice"
-      class="premium-notice"
-    >
-      💎 This feature is for Premium members.
-      <a href="premium.html">Upgrade to Premium</a>
+    <div class="room">
+      🎨 Creative
     </div>
 
-    <!-- EMOJIS -->
-
-    <div
-      id="emojiPanel"
-      class="emoji-panel"
-    >
-
-      <button>😀</button>
-      <button>😂</button>
-      <button>🤣</button>
-      <button>😍</button>
-      <button>🥰</button>
-      <button>😘</button>
-      <button>😎</button>
-      <button>😭</button>
-      <button>😡</button>
-      <button>😱</button>
-      <button>🤔</button>
-      <button>🙄</button>
-      <button>😴</button>
-      <button>🤗</button>
-      <button>🥳</button>
-      <button>😇</button>
-      <button>🤩</button>
-      <button>❤️</button>
-      <button>🧡</button>
-      <button>💛</button>
-      <button>💚</button>
-      <button>💙</button>
-      <button>💜</button>
-      <button>🖤</button>
-      <button>🤍</button>
-      <button>🔥</button>
-      <button>⭐</button>
-      <button>✨</button>
-      <button>🎉</button>
-      <button>👏</button>
-      <button>🙌</button>
-      <button>💯</button>
-      <button>👍</button>
-      <button>👎</button>
-      <button>💀</button>
-      <button>👀</button>
-      <button>🙏</button>
-      <button>💖</button>
-      <button>💫</button>
-      <button>🌍</button>
-      <button>🚀</button>
-
+    <div class="room">
+      📚 School
     </div>
 
-    <div class="toolbar">
+  </aside>
 
-      <button
-        id="emojiBtn"
-        class="tool"
+
+  <section class="chat-main">
+
+    <div class="chat-header">
+
+      <div>
+        <div class="room-name">
+          🌍 Global TeenSpace
+        </div>
+
+        <div class="room-description">
+          Talk, share and meet the community
+        </div>
+      </div>
+
+      <div
+        id="premiumLabel"
+        class="premium-label"
+        style="display:none"
       >
-        😀 Emoji
-      </button>
-
-      <button
-        id="mediaBtn"
-        class="tool premium-tool"
-      >
-        📎 Media
-      </button>
-
-      <button
-        id="voiceBtn"
-        class="tool premium-tool"
-      >
-        🎙️ Voice
-      </button>
+        💎 PREMIUM
+      </div>
 
     </div>
 
-    <input
-      id="mediaInput"
-      class="hidden"
-      type="file"
-      accept="image/*,video/*"
-    >
 
-    <div
-      id="fileName"
-      class="file-name"
-    ></div>
+    <div id="messages" class="messages">
 
-    <textarea
-      id="messageInput"
-      maxlength="2000"
-      placeholder="Write a message..."
-    ></textarea>
+      <div class="status">
+        Loading community...
+      </div>
 
-    <button
-      id="sendBtn"
-      class="send"
-    >
-      Send 💬
-    </button>
+    </div>
 
-  </div>
+
+    <div class="composer">
+
+      <div
+        id="premiumNotice"
+        class="premium-notice"
+      >
+        💎 This feature is for Premium members.
+        <a href="premium.html">Upgrade to Premium</a>
+      </div>
+
+
+      <div id="emojiPanel" class="emoji-panel">
+
+        😀 😂 🤣 😍 🥰 😎 😭 😡 😱 🤔 🙄 😴
+        🤗 🥳 😇 🤩 ❤️ 🧡 💛 💚 💙 💜 🖤 🤍
+        🔥 ⭐ ✨ 🎉 👏 🙌 💯 👍 👎 💀 👀 🙏
+        💖 💫 🌍 🚀 🎮 🎨 📚 🏆 🥹 😭 🤣
+
+      </div>
+
+
+      <div class="toolbar">
+
+        <button id="emojiBtn" class="tool">
+          😀
+        </button>
+
+        <button id="mediaBtn" class="tool">
+          📎 Media 💎
+        </button>
+
+        <button id="voiceBtn" class="tool">
+          🎙️ Voice 💎
+        </button>
+
+      </div>
+
+
+      <input
+        id="mediaInput"
+        type="file"
+        hidden
+        accept="image/*,video/*"
+      >
+
+
+      <div id="fileName"></div>
+
+
+      <textarea
+        id="messageInput"
+        maxlength="2000"
+        placeholder="Message TeenSpace..."
+      ></textarea>
+
+
+      <div class="send-row">
+
+        <button id="sendBtn" class="send">
+          Send 💬
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
 
-</main>
+</div>
+
 
 <script>
 
-/* =========================================
+/* ===============================
    SUPABASE
-========================================= */
+================================ */
 
 const SUPABASE_URL =
-  "https://gcigveojqwwovitlwtxl.supabase.co";
+"https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth:{
-        persistSession:true,
-        autoRefreshToken:true,
-        detectSessionInUrl:true
-      }
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
     }
-  );
+  }
+);
 
 
-/* =========================================
+/* ===============================
    ELEMENTS
-========================================= */
+================================ */
 
 const messagesBox =
-  document.getElementById("messages");
+document.getElementById("messages");
 
-const messageInput =
-  document.getElementById("messageInput");
+const input =
+document.getElementById("messageInput");
 
 const sendBtn =
-  document.getElementById("sendBtn");
+document.getElementById("sendBtn");
 
 const emojiBtn =
-  document.getElementById("emojiBtn");
+document.getElementById("emojiBtn");
 
 const emojiPanel =
-  document.getElementById("emojiPanel");
+document.getElementById("emojiPanel");
 
 const mediaBtn =
-  document.getElementById("mediaBtn");
+document.getElementById("mediaBtn");
 
 const voiceBtn =
-  document.getElementById("voiceBtn");
+document.getElementById("voiceBtn");
 
 const mediaInput =
-  document.getElementById("mediaInput");
-
-const fileName =
-  document.getElementById("fileName");
+document.getElementById("mediaInput");
 
 const premiumNotice =
-  document.getElementById("premiumNotice");
+document.getElementById("premiumNotice");
 
 const premiumLabel =
-  document.getElementById("premiumLabel");
+document.getElementById("premiumLabel");
+
+const fileName =
+document.getElementById("fileName");
+
+const themeBtn =
+document.getElementById("themeBtn");
 
 
-let currentUser = null;
-let currentProfile = null;
-let isPremium = false;
-let selectedFile = null;
-let recorder = null;
-let audioChunks = [];
+let currentUser=null;
+let currentProfile={};
+let isPremium=false;
+let selectedFile=null;
+let recorder=null;
+let audioChunks=[];
 
 
-/* =========================================
-   LOAD CURRENT USER
-========================================= */
+/* ===============================
+   THEME
+================================ */
 
-async function loadCurrentUser(){
+const savedTheme =
+localStorage.getItem("teenspace-theme");
+
+if(savedTheme==="dark"){
+  document.body.classList.add("dark");
+}
+
+function updateThemeButton(){
+
+  themeBtn.textContent =
+    document.body.classList.contains("dark")
+      ? "☀️"
+      : "🌙";
+
+}
+
+updateThemeButton();
+
+themeBtn.onclick=function(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "teenspace-theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+  updateThemeButton();
+
+};
+
+
+/* ===============================
+   PREMIUM FONT
+================================ */
+
+const allowedFonts={
+  Arial:"Arial,sans-serif",
+  Poppins:"Poppins,sans-serif",
+  Inter:"Inter,sans-serif",
+  Nunito:"Nunito,sans-serif",
+  Comic:"Comic Sans MS,cursive",
+  Georgia:"Georgia,serif"
+};
+
+function applyFont(font){
+
+  if(!isPremium){
+    document.documentElement
+      .style.setProperty(
+        "--font",
+        "Arial,sans-serif"
+      );
+    return;
+  }
+
+  const selected =
+    allowedFonts[font] ||
+    allowedFonts.Poppins;
+
+  document.documentElement
+    .style.setProperty(
+      "--font",
+      selected
+    );
+
+}
+
+
+/* ===============================
+   USER
+================================ */
+
+async function loadUser(){
 
   const {
-    data:{
-      user
-    },
+    data:{user},
     error
   } =
   await supabaseClient
@@ -614,261 +864,69 @@ async function loadCurrentUser(){
 
   if(error || !user){
 
-    window.location.href =
-      "login.html";
-
+    location.href="login.html";
     return false;
 
   }
 
-  currentUser =
-    user;
+  currentUser=user;
 
 
   const {
-    data:profile,
-    error:profileError
+    data:profile
   } =
   await supabaseClient
     .from("profiles")
     .select("*")
-    .eq(
-      "user-id",
-      currentUser.id
-    )
+    .eq("user-id",user.id)
     .maybeSingle();
 
 
-  if(profileError){
-
-    console.error(
-      "Profile error:",
-      profileError
-    );
-
-  }
-
-
-  currentProfile =
-    profile || {};
-
+  currentProfile=profile || {};
 
   isPremium =
-    currentProfile.premium === true;
-
-
-  applyTheme(
-    currentProfile
-  );
+    currentProfile.premium===true;
 
 
   if(isPremium){
 
-    premiumLabel.style.display =
+    premiumLabel.style.display=
       "inline-block";
 
-  }
+    applyFont(
+      currentProfile.font_family
+    );
 
+  }else{
+
+    applyFont("Arial");
+
+  }
 
   return true;
 
 }
 
 
-/* =========================================
-   PREMIUM FONT + THEME
-========================================= */
+/* ===============================
+   AVATAR
+================================ */
 
-function applyTheme(profile){
+function fallbackAvatar(){
 
-  const root =
-    document.documentElement;
-
-
-  if(profile.accent_color){
-
-    root.style.setProperty(
-      "--accent",
-      profile.accent_color
-    );
-
-  }
-
-
-  if(profile.background_color){
-
-    root.style.setProperty(
-      "--page-bg",
-      profile.background_color
-    );
-
-  }
-
-
-  if(profile.chat_background){
-
-    root.style.setProperty(
-      "--chat-bg",
-      profile.chat_background
-    );
-
-  }
-
-
-  if(profile.card_color){
-
-    root.style.setProperty(
-      "--card",
-      profile.card_color
-    );
-
-  }
-
-
-  if(profile.bubble_color){
-
-    root.style.setProperty(
-      "--bubble",
-      profile.bubble_color
-    );
-
-  }
-
-
-  if(profile.text_color){
-
-    root.style.setProperty(
-      "--text",
-      profile.text_color
-    );
-
-  }
-
-
-  /*
-    PREMIUM FONTS
-
-    The names here must match
-    the fonts loaded in <head>.
-  */
-
-  const fontMap = {
-
-    "Inter":
-      "'Inter', sans-serif",
-
-    "Nunito":
-      "'Nunito', sans-serif",
-
-    "Orbitron":
-      "'Orbitron', sans-serif",
-
-    "Pacifico":
-      "'Pacifico', cursive",
-
-    "Poppins":
-      "'Poppins', sans-serif",
-
-    "Quicksand":
-      "'Quicksand', sans-serif",
-
-    "Roboto":
-      "'Roboto', sans-serif",
-
-    "Rubik":
-      "'Rubik', sans-serif"
-
-  };
-
-
-  if(
-    isPremium &&
-    profile.font_family
-  ){
-
-    root.style.setProperty(
-      "--font",
-      fontMap[
-        profile.font_family
-      ] ||
-      profile.font_family
-    );
-
-  }else{
-
-    root.style.setProperty(
-      "--font",
-      "Arial, sans-serif"
-    );
-
-  }
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236c5ce7'/%3E%3Ctext x='50' y='65' text-anchor='middle' font-size='45'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E";
 
 }
 
 
-/* =========================================
-   PREMIUM CHECK
-========================================= */
+/* ===============================
+   PROFILES
+================================ */
 
-function requirePremium(){
+async function getProfiles(ids){
 
-  if(isPremium){
-
-    premiumNotice.style.display =
-      "none";
-
-    return true;
-
-  }
-
-
-  premiumNotice.style.display =
-    "block";
-
-
-  setTimeout(
-    ()=>{
-      premiumNotice.style.display =
-        "none";
-    },
-    4500
-  );
-
-
-  return false;
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHTML(value){
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    value || "";
-
-  return div.innerHTML;
-
-}
-
-
-/* =========================================
-   PROFILE MAP
-========================================= */
-
-async function getProfiles(userIds){
-
-  if(!userIds.length){
-
+  if(!ids.length)
     return new Map();
-
-  }
-
 
   const {
     data,
@@ -877,98 +935,36 @@ async function getProfiles(userIds){
   await supabaseClient
     .from("profiles")
     .select(
-      'username, avatar_url, "user-id", premium, font_family'
+      'username,avatar_url,"user-id",premium'
     )
-    .in(
-      "user-id",
-      userIds
-    );
-
+    .in("user-id",ids);
 
   if(error){
 
-    console.error(
-      "Profile loading error:",
-      error
-    );
-
+    console.error(error);
     return new Map();
 
   }
 
+  const map=new Map();
 
-  const map =
-    new Map();
+  (data||[]).forEach(profile=>{
 
+    map.set(
+      profile["user-id"],
+      profile
+    );
 
-  (data || []).forEach(
-    profile=>{
-
-      /*
-        PROFILE IMAGE FIX
-
-        Supports:
-        1. Full https URL
-        2. Supabase Storage path
-        3. data:image URL
-      */
-
-      let avatarUrl =
-        profile.avatar_url || "";
-
-
-      if(
-        avatarUrl &&
-        !avatarUrl.startsWith(
-          "http://"
-        ) &&
-        !avatarUrl.startsWith(
-          "https://"
-        ) &&
-        !avatarUrl.startsWith(
-          "data:"
-        )
-      ){
-
-        const {
-          data:urlData
-        } =
-        supabaseClient
-          .storage
-          .from("avatars")
-          .getPublicUrl(
-            avatarUrl
-          );
-
-
-        avatarUrl =
-          urlData?.publicUrl ||
-          "";
-
-      }
-
-
-      profile.avatar_url =
-        avatarUrl;
-
-
-      map.set(
-        profile["user-id"],
-        profile
-      );
-
-    }
-  );
-
+  });
 
   return map;
 
 }
 
 
-/* =========================================
-   LOAD COMMUNITY MESSAGES
-========================================= */
+/* ===============================
+   LOAD MESSAGES
+================================ */
 
 async function loadMessages(){
 
@@ -979,763 +975,701 @@ async function loadMessages(){
   await supabaseClient
     .from("messages")
     .select(
-      "id,sender_id,content,created_at,message_type,media_url,media_name"
+      "id,sender_id,receiver_id,content,created_at,message_type,media_url,media_name,edited"
     )
-    .is(
-      "receiver_id",
-      null
-    )
+    .is("receiver_id",null)
     .order(
       "created_at",
-      {
-        ascending:true
-      }
+      {ascending:true}
     );
 
 
   if(error){
 
-    console.error(
-      "Messages error:",
-      error
-    );
-
-
-    messagesBox.innerHTML = `
-
-      <div class="status">
-        ❌ Could not load community chat.
-        <br><br>
-        ${escapeHTML(error.message)}
-      </div>
-
-    `;
+    messagesBox.innerHTML=
+      `<div class="status">
+        ❌ ${escapeHTML(error.message)}
+      </div>`;
 
     return;
 
   }
 
-
-  renderMessages(
-    data || []
-  );
+  renderMessages(data||[]);
 
 }
 
 
-/* =========================================
-   RENDER MESSAGES
-========================================= */
+/* ===============================
+   ESCAPE
+================================ */
+
+function escapeHTML(value){
+
+  const div=
+    document.createElement("div");
+
+  div.textContent=value||"";
+
+  return div.innerHTML;
+
+}
+
+
+/* ===============================
+   RENDER
+================================ */
 
 async function renderMessages(data){
 
   if(!data.length){
 
-    messagesBox.innerHTML = `
-
-      <div class="status">
-        👋 No messages yet.
-        <br><br>
+    messagesBox.innerHTML=
+      `<div class="status">
+        👋 No messages yet.<br>
         Start the conversation!
-      </div>
-
-    `;
+      </div>`;
 
     return;
 
   }
 
 
-  const ids =
-    [
-      ...new Set(
-        data
-          .map(
-            message =>
-              message.sender_id
-          )
-          .filter(Boolean)
-      )
-    ];
+  const ids=[
+    ...new Set(
+      data
+        .map(x=>x.sender_id)
+        .filter(Boolean)
+    )
+  ];
 
 
-  const profiles =
+  const profiles=
     await getProfiles(ids);
 
 
-  messagesBox.innerHTML =
-    "";
+  messagesBox.innerHTML="";
 
 
-  data.forEach(
-    message=>{
+  data.forEach(message=>{
 
-      const profile =
-        profiles.get(
-          message.sender_id
-        ) || {};
-
-
-      const mine =
-        message.sender_id ===
-        currentUser.id;
+    const profile=
+      profiles.get(
+        message.sender_id
+      )||{};
 
 
-      const row =
-        document.createElement(
-          "div"
-        );
+    const mine=
+      message.sender_id===
+      currentUser.id;
 
 
-      row.className =
-        "message-row" +
-        (
-          mine
-            ? " mine"
-            : ""
-        );
+    const row=
+      document.createElement("div");
+
+    row.className=
+      "message-row"+
+      (mine?" mine":"");
 
 
-      /* =================================
-         PROFILE IMAGE
-      ================================= */
+    const avatar=
+      document.createElement("img");
 
-      const avatarWrap =
-        document.createElement(
-          "div"
-        );
+    avatar.className="avatar";
 
+    avatar.src=
+      profile.avatar_url ||
+      fallbackAvatar();
 
-      avatarWrap.className =
-        "avatar-wrap";
+    avatar.onerror=function(){
 
+      this.onerror=null;
+      this.src=fallbackAvatar();
 
-      const avatar =
-        document.createElement(
-          "img"
-        );
+    };
 
+    avatar.onclick=function(){
 
-      avatar.className =
-        "avatar";
-
-
-      avatar.alt =
-        profile.username
-          ? profile.username +
-            " profile picture"
-          : "Profile picture";
-
-
-      /*
-        Use actual profile picture.
-        If missing/broken, use fallback.
-      */
-
-      avatar.src =
-        profile.avatar_url ||
-        createFallbackAvatar();
-
-
-      avatar.onerror =
-        function(){
-
-          this.onerror =
-            null;
-
-          this.src =
-            createFallbackAvatar();
-
-        };
-
-
-      avatar.onclick =
-        function(){
-
-          openProfile(
-            message.sender_id
-          );
-
-        };
-
-
-      avatarWrap.appendChild(
-        avatar
+      openProfile(
+        message.sender_id
       );
 
-
-      /* =================================
-         MESSAGE CONTENT
-      ================================= */
-
-      const content =
-        document.createElement(
-          "div"
-        );
+    };
 
 
-      content.className =
-        "message-content";
+    const content=
+      document.createElement("div");
+
+    content.className=
+      "message-content";
 
 
-      const username =
-        document.createElement(
-          "div"
-        );
+    const username=
+      document.createElement("div");
 
+    username.className="username";
 
-      username.className =
-        "username";
+    username.textContent=
+      profile.username ||
+      "TeenSpace Member";
 
+    username.onclick=function(){
 
-      username.textContent =
-        profile.username ||
-        "TeenSpace Member";
-
-
-      username.onclick =
-        function(){
-
-          openProfile(
-            message.sender_id
-          );
-
-        };
-
-
-      content.appendChild(
-        username
+      openProfile(
+        message.sender_id
       );
 
-
-      const bubble =
-        document.createElement(
-          "div"
-        );
+    };
 
 
-      bubble.className =
-        "bubble";
+    const bubble=
+      document.createElement("div");
+
+    bubble.className="bubble";
 
 
-      const type =
-        message.message_type ||
-        "text";
+    const type=
+      message.message_type ||
+      "text";
 
 
-      if(type === "image"){
+    if(type==="image"){
 
-        const image =
-          document.createElement(
-            "img"
-          );
+      const img=
+        document.createElement("img");
 
-        image.className =
-          "media";
+      img.className="media";
+      img.src=message.media_url;
+      img.alt="Shared image";
 
-        image.src =
-          message.media_url;
-
-        image.alt =
-          "Shared image";
-
-        image.loading =
-          "lazy";
-
-        bubble.appendChild(
-          image
-        );
-
-      }
-
-      else if(type === "video"){
-
-        const video =
-          document.createElement(
-            "video"
-          );
-
-        video.className =
-          "media";
-
-        video.src =
-          message.media_url;
-
-        video.controls =
-          true;
-
-        video.playsInline =
-          true;
-
-        bubble.appendChild(
-          video
-        );
-
-      }
-
-      else if(type === "audio"){
-
-        const audio =
-          document.createElement(
-            "audio"
-          );
-
-        audio.className =
-          "audio";
-
-        audio.src =
-          message.media_url;
-
-        audio.controls =
-          true;
-
-        bubble.appendChild(
-          audio
-        );
-
-      }
-
-      else{
-
-        bubble.textContent =
-          message.content || "";
-
-      }
-
-
-      content.appendChild(
-        bubble
-      );
-
-
-      const time =
-        document.createElement(
-          "div"
-        );
-
-
-      time.className =
-        "message-time";
-
-
-      time.textContent =
-        new Date(
-          message.created_at
-        ).toLocaleString();
-
-
-      content.appendChild(
-        time
-      );
-
-
-      /*
-        OTHER USERS:
-        avatar on left
-
-        CURRENT USER:
-        bubble on right
-      */
-
-      if(mine){
-
-        row.appendChild(
-          content
-        );
-
-        row.appendChild(
-          avatarWrap
-        );
-
-      }else{
-
-        row.appendChild(
-          avatarWrap
-        );
-
-        row.appendChild(
-          content
-        );
-
-      }
-
-
-      messagesBox.appendChild(
-        row
-      );
+      bubble.appendChild(img);
 
     }
-  );
+
+    else if(type==="video"){
+
+      const video=
+        document.createElement("video");
+
+      video.className="media";
+      video.src=message.media_url;
+      video.controls=true;
+      video.playsInline=true;
+
+      bubble.appendChild(video);
+
+    }
+
+    else if(type==="audio"){
+
+      const audio=
+        document.createElement("audio");
+
+      audio.className="audio";
+      audio.src=message.media_url;
+      audio.controls=true;
+
+      bubble.appendChild(audio);
+
+    }
+
+    else{
+
+      bubble.textContent=
+        message.content||"";
+
+    }
 
 
-  messagesBox.scrollTop =
+    const time=
+      document.createElement("div");
+
+    time.className="message-time";
+
+    time.textContent=
+      new Date(
+        message.created_at
+      ).toLocaleTimeString(
+        [],
+        {
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
+
+    if(message.edited){
+
+      const edited=
+        document.createElement("span");
+
+      edited.className="edited";
+
+      edited.textContent=
+        " · edited";
+
+      time.appendChild(edited);
+
+    }
+
+
+    const reactions=
+      document.createElement("div");
+
+    reactions.className="reactions";
+
+    ["❤️","😂","🔥","👍"].forEach(emoji=>{
+
+      const button=
+        document.createElement("button");
+
+      button.className="reaction";
+      button.textContent=emoji;
+
+      button.onclick=function(){
+
+        alert(
+          "Reaction system ready for the reactions table."
+        );
+
+      };
+
+      reactions.appendChild(button);
+
+    });
+
+
+    const actions=
+      document.createElement("div");
+
+    actions.className=
+      "message-actions";
+
+
+    if(mine){
+
+      const edit=
+        document.createElement("button");
+
+      edit.className="small-btn";
+      edit.textContent="✏️ Edit";
+
+      edit.onclick=function(){
+
+        editMessage(
+          message,
+          content,
+          bubble
+        );
+
+      };
+
+
+      const del=
+        document.createElement("button");
+
+      del.className="small-btn";
+      del.textContent="🗑️ Delete";
+
+      del.onclick=function(){
+
+        deleteMessage(
+          message.id
+        );
+
+      };
+
+
+      actions.appendChild(edit);
+      actions.appendChild(del);
+
+    }
+
+
+    content.appendChild(username);
+    content.appendChild(bubble);
+    content.appendChild(reactions);
+    content.appendChild(time);
+    content.appendChild(actions);
+
+
+    if(mine){
+
+      row.appendChild(content);
+      row.appendChild(avatar);
+
+    }else{
+
+      row.appendChild(avatar);
+      row.appendChild(content);
+
+    }
+
+
+    messagesBox.appendChild(row);
+
+  });
+
+
+  messagesBox.scrollTop=
     messagesBox.scrollHeight;
 
 }
 
 
-/* =========================================
-   FALLBACK AVATAR
-========================================= */
+/* ===============================
+   PROFILE
+================================ */
 
-function createFallbackAvatar(){
+function openProfile(id){
 
-  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23eeeaff'/%3E%3Ctext x='40' y='52' text-anchor='middle' font-size='34'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E";
-
-}
-
-
-/* =========================================
-   PUBLIC PROFILE
-========================================= */
-
-function openProfile(userId){
-
-  window.location.href =
-    "profile.html?user_id=" +
-    encodeURIComponent(
-      userId
-    );
+  location.href=
+    "profile.html?user_id="+
+    encodeURIComponent(id);
 
 }
 
 
-/* =========================================
-   EMOJIS
-========================================= */
+/* ===============================
+   EDIT
+================================ */
 
-emojiBtn.onclick =
-  function(){
+function editMessage(
+  message,
+  content,
+  bubble
+){
 
-    emojiPanel.style.display =
-      emojiPanel.style.display ===
-        "block"
-        ? "none"
-        : "block";
+  const old=
+    message.content||"";
+
+  const box=
+    document.createElement("div");
+
+  box.className="edit-box";
+
+
+  const textarea=
+    document.createElement("textarea");
+
+  textarea.value=old;
+
+
+  const save=
+    document.createElement("button");
+
+  save.className="edit-save";
+  save.textContent="Save";
+
+
+  save.onclick=async function(){
+
+    const value=
+      textarea.value.trim();
+
+    if(!value)
+      return;
+
+
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("messages")
+      .update({
+        content:value,
+        edited:true
+      })
+      .eq("id",message.id)
+      .eq("sender_id",currentUser.id);
+
+
+    if(error){
+
+      alert(error.message);
+      return;
+
+    }
+
+    loadMessages();
 
   };
 
 
-emojiPanel
-  .querySelectorAll("button")
-  .forEach(
-    button=>{
+  box.appendChild(textarea);
+  box.appendChild(save);
 
-      button.onclick =
-        function(){
+  content.appendChild(box);
 
-          const start =
-            messageInput.selectionStart;
-
-          const end =
-            messageInput.selectionEnd;
-
-          const text =
-            messageInput.value;
+}
 
 
-          messageInput.value =
-            text.slice(0,start) +
-            button.textContent +
-            text.slice(end);
+/* ===============================
+   DELETE
+================================ */
+
+async function deleteMessage(id){
+
+  if(!confirm("Delete this message?"))
+    return;
 
 
-          messageInput.focus();
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("messages")
+    .delete()
+    .eq("id",id)
+    .eq("sender_id",currentUser.id);
 
 
-          const position =
-            start +
-            button.textContent.length;
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  loadMessages();
+
+}
 
 
-          messageInput.selectionStart =
-            position;
+/* ===============================
+   EMOJIS
+================================ */
 
-          messageInput.selectionEnd =
-            position;
+emojiBtn.onclick=function(){
 
-        };
+  emojiPanel.style.display=
+    emojiPanel.style.display==="block"
+      ? "none"
+      : "block";
 
-    }
+};
+
+
+const emojiList=[
+"😀","😂","🤣","😍","🥰","😘","😎","😭",
+"😡","😱","🤔","🙄","😴","🤗","🥳","😇",
+"🤩","❤️","🧡","💛","💚","💙","💜","🖤",
+"🤍","🔥","⭐","✨","🎉","👏","🙌","💯",
+"👍","👎","💀","👀","🙏","💖","💫","🌍",
+"🚀","🎮","🎨","📚","🏆","🥹","😅","😏"
+];
+
+
+emojiPanel.innerHTML="";
+
+emojiList.forEach(emoji=>{
+
+  const button=
+    document.createElement("button");
+
+  button.textContent=emoji;
+
+  button.onclick=function(){
+
+    const start=input.selectionStart;
+    const end=input.selectionEnd;
+
+    input.value=
+      input.value.slice(0,start)+
+      emoji+
+      input.value.slice(end);
+
+    input.focus();
+
+  };
+
+  emojiPanel.appendChild(button);
+
+});
+
+
+/* ===============================
+   PREMIUM
+================================ */
+
+function requirePremium(){
+
+  if(isPremium){
+
+    premiumNotice.style.display="none";
+    return true;
+
+  }
+
+  premiumNotice.style.display="block";
+
+  setTimeout(
+    ()=>premiumNotice.style.display="none",
+    4500
   );
 
+  return false;
 
-/* =========================================
-   MEDIA — PREMIUM ONLY
-========================================= */
-
-mediaBtn.onclick =
-  function(){
-
-    if(!requirePremium()){
-
-      return;
-
-    }
-
-    mediaInput.click();
-
-  };
+}
 
 
-mediaInput.onchange =
-  function(){
+/* ===============================
+   MEDIA
+================================ */
 
-    if(!isPremium){
+mediaBtn.onclick=function(){
 
-      mediaInput.value =
-        "";
+  if(!requirePremium())
+    return;
 
-      selectedFile =
-        null;
+  mediaInput.click();
 
-      return;
-
-    }
+};
 
 
-    selectedFile =
-      mediaInput.files &&
-      mediaInput.files[0]
-        ? mediaInput.files[0]
-        : null;
+mediaInput.onchange=function(){
 
+  selectedFile=
+    mediaInput.files?.[0]||
+    null;
 
-    if(!selectedFile){
+  if(selectedFile){
 
-      fileName.textContent =
-        "";
-
-      return;
-
-    }
-
-
-    const maxSize =
-      25 * 1024 * 1024;
-
-
-    if(selectedFile.size > maxSize){
+    if(selectedFile.size>
+      25*1024*1024){
 
       alert(
-        "Media must be 25 MB or smaller."
+        "Maximum media size is 25 MB."
       );
 
-
-      mediaInput.value =
-        "";
-
-      selectedFile =
-        null;
-
+      mediaInput.value="";
+      selectedFile=null;
       return;
 
     }
 
-
-    fileName.textContent =
-      "📎 " +
+    fileName.textContent=
+      "📎 "+
       selectedFile.name;
 
-  };
+  }
+
+};
 
 
-/* =========================================
-   VOICE — PREMIUM ONLY
-========================================= */
+/* ===============================
+   VOICE
+================================ */
 
-voiceBtn.onclick =
-  async function(){
+voiceBtn.onclick=async function(){
 
-    if(!requirePremium()){
-
-      return;
-
-    }
+  if(!requirePremium())
+    return;
 
 
-    if(
-      recorder &&
-      recorder.state ===
-      "recording"
-    ){
+  if(
+    recorder &&
+    recorder.state==="recording"
+  ){
 
-      recorder.stop();
+    recorder.stop();
 
-      voiceBtn.textContent =
-        "🎙️ Voice";
+    voiceBtn.textContent=
+      "🎙️ Voice 💎";
 
-      voiceBtn.classList.remove(
-        "recording"
-      );
-
-      return;
-
-    }
-
-
-    if(
-      !navigator.mediaDevices ||
-      !navigator.mediaDevices.getUserMedia
-    ){
-
-      alert(
-        "Voice recording is not supported by this browser."
-      );
-
-      return;
-
-    }
-
-
-    try{
-
-      const stream =
-        await navigator.mediaDevices
-          .getUserMedia({
-            audio:true
-          });
-
-
-      audioChunks =
-        [];
-
-
-      let mimeType =
-        "audio/webm";
-
-
-      if(
-        MediaRecorder.isTypeSupported &&
-        MediaRecorder.isTypeSupported(
-          "audio/webm"
-        )
-      ){
-
-        mimeType =
-          "audio/webm";
-
-      }
-
-
-      recorder =
-        new MediaRecorder(
-          stream,
-          {
-            mimeType
-          }
-        );
-
-
-      recorder.ondataavailable =
-        function(event){
-
-          if(event.data.size > 0){
-
-            audioChunks.push(
-              event.data
-            );
-
-          }
-
-        };
-
-
-      recorder.onstop =
-        function(){
-
-          stream
-            .getTracks()
-            .forEach(
-              track =>
-                track.stop()
-            );
-
-
-          const blob =
-            new Blob(
-              audioChunks,
-              {
-                type:
-                  recorder.mimeType ||
-                  "audio/webm"
-              }
-            );
-
-
-          selectedFile =
-            new File(
-              [blob],
-              "voice-" +
-              Date.now() +
-              ".webm",
-              {
-                type:
-                  blob.type
-              }
-            );
-
-
-          fileName.textContent =
-            "🎙️ Voice recording ready";
-
-        };
-
-
-      recorder.start();
-
-
-      voiceBtn.textContent =
-        "⏹️ Stop";
-
-      voiceBtn.classList.add(
-        "recording"
-      );
-
-    }
-
-    catch(error){
-
-      console.error(error);
-
-      alert(
-        "Microphone permission was not granted."
-      );
-
-    }
-
-  };
-
-
-/* =========================================
-   UPLOAD
-========================================= */
-
-async function uploadFile(file){
-
-  if(!isPremium){
-
-    throw new Error(
-      "Premium is required for media sharing."
-    );
+    return;
 
   }
 
 
-  const extension =
+  try{
+
+    const stream=
+      await navigator.mediaDevices
+        .getUserMedia({
+          audio:true
+        });
+
+
+    audioChunks=[];
+
+
+    recorder=
+      new MediaRecorder(stream);
+
+
+    recorder.ondataavailable=
+      event=>{
+
+        if(event.data.size)
+          audioChunks.push(event.data);
+
+      };
+
+
+    recorder.onstop=()=>{
+
+      stream
+        .getTracks()
+        .forEach(track=>track.stop());
+
+
+      const blob=
+        new Blob(
+          audioChunks,
+          {type:"audio/webm"}
+        );
+
+
+      selectedFile=
+        new File(
+          [blob],
+          "voice-"+Date.now()+".webm",
+          {type:"audio/webm"}
+        );
+
+
+      fileName.textContent=
+        "🎙️ Voice recording ready";
+
+    };
+
+
+    recorder.start();
+
+    voiceBtn.textContent=
+      "⏹️ Stop recording";
+
+  }
+
+  catch(error){
+
+    alert(
+      "Microphone permission was not granted."
+    );
+
+  }
+
+};
+
+
+/* ===============================
+   UPLOAD
+================================ */
+
+async function uploadFile(file){
+
+  const extension=
     file.name.includes(".")
-      ? file.name
-          .split(".")
-          .pop()
-          .toLowerCase()
+      ? file.name.split(".").pop()
       : "bin";
 
 
-  const path =
-    currentUser.id +
-    "/community-" +
-    crypto.randomUUID() +
-    "." +
+  const path=
+    currentUser.id+
+    "/"+
+    crypto.randomUUID()+
+    "."+
     extension;
 
 
@@ -1751,19 +1685,14 @@ async function uploadFile(file){
       file,
       {
         contentType:
-          file.type ||
-          "application/octet-stream",
-
-        upsert:false
+          file.type||
+          "application/octet-stream"
       }
     );
 
 
-  if(error){
-
+  if(error)
     throw error;
-
-  }
 
 
   const {
@@ -1782,193 +1711,125 @@ async function uploadFile(file){
 }
 
 
-/* =========================================
-   SEND MESSAGE
-========================================= */
+/* ===============================
+   SEND
+================================ */
 
-sendBtn.onclick =
-  async function(){
+sendBtn.onclick=async function(){
 
-    if(!currentUser){
-
-      return;
-
-    }
+  const text=
+    input.value.trim();
 
 
-    const text =
-      messageInput.value.trim();
+  if(!text && !selectedFile)
+    return;
 
 
-    if(
-      !text &&
-      !selectedFile
-    ){
-
-      return;
-
-    }
+  sendBtn.disabled=true;
 
 
-    sendBtn.disabled =
-      true;
+  try{
+
+    let payload={
+      sender_id:currentUser.id,
+      receiver_id:null,
+      content:text,
+      message_type:"text",
+      media_url:null,
+      media_name:null
+    };
 
 
-    try{
+    if(selectedFile){
 
-      let payload = {
-
-        sender_id:
-          currentUser.id,
-
-        receiver_id:
-          null,
-
-        content:
-          text,
-
-        message_type:
-          "text",
-
-        media_url:
-          null,
-
-        media_name:
-          null
-
-      };
-
-
-      if(selectedFile){
-
-        if(!isPremium){
-
-          throw new Error(
-            "Premium is required for media sharing."
-          );
-
-        }
-
-
-        const url =
-          await uploadFile(
-            selectedFile
-          );
-
-
-        let type =
-          "audio";
-
-
-        if(
-          selectedFile.type &&
-          selectedFile.type.startsWith(
-            "image/"
-          )
-        ){
-
-          type =
-            "image";
-
-        }
-
-        else if(
-          selectedFile.type &&
-          selectedFile.type.startsWith(
-            "video/"
-          )
-        ){
-
-          type =
-            "video";
-
-        }
-
-
-        payload.message_type =
-          type;
-
-
-        payload.media_url =
-          url;
-
-
-        payload.media_name =
-          selectedFile.name;
-
-      }
-
-
-      const {
-        error
-      } =
-      await supabaseClient
-        .from("messages")
-        .insert(
-          payload
+      if(!isPremium)
+        throw new Error(
+          "Premium is required for media."
         );
 
 
-      if(error){
-
-        throw error;
-
-      }
-
-
-      messageInput.value =
-        "";
-
-      selectedFile =
-        null;
-
-      mediaInput.value =
-        "";
-
-      fileName.textContent =
-        "";
+      const url=
+        await uploadFile(
+          selectedFile
+        );
 
 
-      await loadMessages();
+      payload.media_url=url;
+      payload.media_name=
+        selectedFile.name;
 
-    }
 
-    catch(error){
+      if(
+        selectedFile.type
+          ?.startsWith("image/")
+      )
+        payload.message_type="image";
 
-      console.error(error);
+      else if(
+        selectedFile.type
+          ?.startsWith("video/")
+      )
+        payload.message_type="video";
 
-      alert(
-        error.message ||
-        "Could not send message."
-      );
+      else
+        payload.message_type="audio";
 
     }
 
-    finally{
 
-      sendBtn.disabled =
-        false;
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("messages")
+      .insert(payload);
 
-    }
 
-  };
+    if(error)
+      throw error;
 
 
-/* =========================================
-   ENTER TO SEND
-========================================= */
+    input.value="";
+    selectedFile=null;
+    mediaInput.value="";
+    fileName.textContent="";
 
-messageInput.addEventListener(
+    loadMessages();
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message||
+      "Could not send message."
+    );
+
+  }
+
+  finally{
+
+    sendBtn.disabled=false;
+
+  }
+
+};
+
+
+/* ===============================
+   ENTER SEND
+================================ */
+
+input.addEventListener(
   "keydown",
-  function(event){
+  event=>{
 
     if(
-      event.key === "Enter" &&
+      event.key==="Enter" &&
       !event.shiftKey
     ){
 
       event.preventDefault();
-
       sendBtn.click();
 
     }
@@ -1977,61 +1838,42 @@ messageInput.addEventListener(
 );
 
 
-/* =========================================
+/* ===============================
    REALTIME
-========================================= */
+================================ */
 
-function subscribe(){
-
-  supabaseClient
-    .channel(
-      "teen-space-community-chat"
-    )
-    .on(
-      "postgres_changes",
-      {
-        event:"INSERT",
-        schema:"public",
-        table:"messages"
-      },
-      function(){
-
-        loadMessages();
-
-      }
-    )
-    .subscribe();
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-async function start(){
-
-  const ok =
-    await loadCurrentUser();
-
-
-  if(!ok){
-
-    return;
-
+supabaseClient
+.channel("teen-space-live-chat")
+.on(
+  "postgres_changes",
+  {
+    event:"*",
+    schema:"public",
+    table:"messages"
+  },
+  ()=>{
+    loadMessages();
   }
+)
+.subscribe();
 
 
-  await loadMessages();
+/* ===============================
+   START
+================================ */
 
-  subscribe();
+(async function(){
 
-}
+  const ok=
+    await loadUser();
 
+  if(ok)
+    await loadMessages();
 
-start();
+})();
 
 </script>
 
 </body>
 </html>
+```
