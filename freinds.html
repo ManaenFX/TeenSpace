@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Friends | TeenSpace 🌍</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#f4f7ff;
+  color:#222;
+}
+
+header{
+  background:#6c5ce7;
+  color:white;
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  padding:9px 11px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+nav a:hover{
+  background:rgba(255,255,255,.14);
+}
+
+.page{
+  width:92%;
+  max-width:900px;
+  margin:40px auto 60px;
+}
+
+h1{
+  text-align:center;
+  color:#6c5ce7;
+  font-size:40px;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#666;
+  margin-bottom:30px;
+}
+
+.card{
+  background:white;
+  border-radius:22px;
+  padding:24px;
+  margin-bottom:22px;
+  box-shadow:0 9px 28px rgba(0,0,0,.07);
+}
+
+.section-title{
+  color:#5f4ce0;
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
+
+.item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px 0;
+  border-bottom:1px solid #eee;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.avatar{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#eeeaff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  flex-shrink:0;
+}
+
+.username{
+  font-size:18px;
+  font-weight:bold;
+  color:#5f4ce0;
+  word-break:break-word;
+}
+
+.country{
+  color:#777;
+  font-size:13px;
+  margin-top:3px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+button,
+.message-link{
+  border:none;
+  border-radius:10px;
+  padding:10px 13px;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.accept{
+  background:#dff7e8;
+  color:#168044;
+}
+
+.decline{
+  background:#ffe5ea;
+  color:#d63050;
+}
+
+.remove{
+  background:#eeeaff;
+  color:#5f4ce0;
+}
+
+.message{
+  background:#6c5ce7;
+  color:white;
+}
+
+.status{
+  text-align:center;
+  color:#777;
+  padding:20px 5px;
+}
+
+.error{
+  color:#d63050;
+}
+
+.empty{
+  background:#fafaff;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+  color:#777;
+}
+
+footer{
+  background:#222;
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+
+@media(max-width:700px){
+
+  header{
+    flex-direction:column;
+  }
+
+  h1{
+    font-size:34px;
+  }
+
+  .item{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .actions{
+    width:100%;
+  }
+
+  button,
+  .message-link{
+    flex:1;
+    text-align:center;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+🌍 TeenSpace
+</div>
+
+<nav>
+
+<a href="home.html">
+Home
+</a>
+
+<a href="explore.html">
+Explore
+</a>
+
+<a href="community.html">
+Community
+</a>
+
+<a href="profile.html">
+Profile
+</a>
+
+<a href="customize.html">
+✨ Customize
+</a>
+
+<a href="premium.html">
+💎 Premium
+</a>
+
+</nav>
+
+</header>
+
+
+<main class="page">
+
+<h1>
+👥 My Friends
+</h1>
+
+<p class="subtitle">
+Manage your TeenSpace friendships.
+</p>
+
+
+<div class="card">
+
+<div class="section-title">
+👥 Friends
+</div>
+
+<div id="friendsList">
+<div class="status">
+Loading friends...
+</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+📩 Friend Requests
+</div>
+
+<div id="requestsList">
+<div class="status">
+Loading requests...
+</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+📤 Sent Requests
+</div>
+
+<div id="sentList">
+<div class="status">
+Loading requests...
+</div>
+</div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 TeenSpace 🌍 |
+Made for teens, with safety in mind.
+
+</footer>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://gcigveojqwwovitlwtxl.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true
+    }
+  }
+);
+
+
+const friendsList =
+document.getElementById(
+  "friendsList"
+);
+
+const requestsList =
+document.getElementById(
+  "requestsList"
+);
+
+const sentList =
+document.getElementById(
+  "sentList"
+);
+
+
+let currentUser = null;
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHTML(value){
+
+  const div =
+  document.createElement("div");
+
+  div.textContent =
+  value ?? "";
+
+  return div.innerHTML;
+
+}
+
+
+function avatarFor(profile){
+
+  if(profile?.role === "owner"){
+    return "👑";
+  }
+
+  if(profile?.role === "staff"){
+    return "🛡️";
+  }
+
+  return "👤";
+
+}
+
+
+/* =========================================
+   CURRENT USER
+========================================= */
+
+async function loadCurrentUser(){
+
+  const {
+    data:{
+      user
+    },
+    error
+  } =
+  await supabaseClient.auth.getUser();
+
+
+  if(
+    error ||
+    !user
+  ){
+
+    window.location.href =
+    "login.html";
+
+    return null;
+
+  }
+
+
+  currentUser =
+  user;
+
+  return user;
+
+}
+
+
+/* =========================================
+   PROFILE MAP
+========================================= */
+
+async function getProfiles(ids){
+
+  if(!ids.length){
+    return new Map();
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+  .from("profiles")
+
+  .select(
+    'username,country,role,badge,premium,"user-id"'
+  )
+
+  .in(
+    "user-id",
+    ids
+  );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  const map =
+  new Map();
+
+
+  (data || []).forEach(
+    profile => {
+
+      map.set(
+        profile["user-id"],
+        profile
+      );
+
+    }
+  );
+
+
+  return map;
+
+}
+
+
+/* =========================================
+   FRIENDS
+========================================= */
+
+async function loadFriends(){
+
+  friendsList.innerHTML = `
+    <div class="status">
+      Loading friends...
+    </div>
+  `;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+  .from("friends")
+
+  .select(
+    "id,user_id,friend_id,created_at"
+  )
+
+  .or(
+    "user_id.eq." +
+    currentUser.id +
+    ",friend_id.eq." +
+    currentUser.id
+  )
+
+
+  if(error){
+    throw error;
+  }
+
+
+  if(
+    !data ||
+    data.length === 0
+  ){
+
+    friendsList.innerHTML = `
+      <div class="empty">
+        👥 You don't have any friends yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const ids =
+  data.map(
+    friendship =>
+      friendship.user_id === currentUser.id
+        ? friendship.friend_id
+        : friendship.user_id
+  );
+
+
+  const profileMap =
+  await getProfiles(ids);
+
+
+  friendsList.innerHTML =
+  "";
+
+
+  data.forEach(
+    friendship => {
+
+      const friendId =
+      friendship.user_id === currentUser.id
+        ? friendship.friend_id
+        : friendship.user_id;
+
+
+      const profile =
+      profileMap.get(
+        friendId
+      ) || {};
+
+
+      const row =
+      document.createElement("div");
+
+
+      row.className =
+      "item";
+
+
+      row.innerHTML = `
+
+        <div class="user">
+
+          <div class="avatar">
+            ${avatarFor(profile)}
+          </div>
+
+          <div>
+
+            <div class="username">
+              ${escapeHTML(
+                profile.username ||
+                "TeenSpace Member"
+              )}
+            </div>
+
+            <div class="country">
+              🌍 ${escapeHTML(
+                profile.country ||
+                "Unknown"
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <a
+            class="message-link message"
+            href="messages.html?user_id=${
+              encodeURIComponent(friendId)
+            }&name=${
+              encodeURIComponent(
+                profile.username ||
+                "TeenSpace Member"
+              )
+            }"
+          >
+            💬 Message
+          </a>
+
+
+          <button
+            class="remove"
+            data-id="${friendship.id}"
+          >
+            Remove
+          </button>
+
+        </div>
+
+      `;
+
+
+      row
+      .querySelector(".remove")
+      .addEventListener(
+        "click",
+        () =>
+          removeFriend(
+            friendship.id
+          )
+      );
+
+
+      friendsList.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   INCOMING REQUESTS
+========================================= */
+
+async function loadRequests(){
+
+  requestsList.innerHTML = `
+    <div class="status">
+      Loading requests...
+    </div>
+  `;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+  .from("friend_requests")
+
+  .select(
+    "id,sender_id,created_at"
+  )
+
+  .eq(
+    "receiver_id",
+    currentUser.id
+  )
+
+  .eq(
+    "status",
+    "pending"
+  )
+
+
+  if(error){
+    throw error;
+  }
+
+
+  if(
+    !data ||
+    data.length === 0
+  ){
+
+    requestsList.innerHTML = `
+      <div class="empty">
+        📭 No new friend requests.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const ids =
+  data.map(
+    request =>
+      request.sender_id
+  );
+
+
+  const profileMap =
+  await getProfiles(ids);
+
+
+  requestsList.innerHTML =
+  "";
+
+
+  data.forEach(
+    request => {
+
+      const profile =
+      profileMap.get(
+        request.sender_id
+      ) || {};
+
+
+      const row =
+      document.createElement("div");
+
+
+      row.className =
+      "item";
+
+
+      row.innerHTML = `
+
+        <div class="user">
+
+          <div class="avatar">
+            ${avatarFor(profile)}
+          </div>
+
+          <div>
+
+            <div class="username">
+              ${escapeHTML(
+                profile.username ||
+                "TeenSpace Member"
+              )}
+            </div>
+
+            <div class="country">
+              🌍 ${escapeHTML(
+                profile.country ||
+                "Unknown"
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="accept"
+            data-id="${request.id}"
+          >
+            ✅ Accept
+          </button>
+
+          <button
+            class="decline"
+            data-id="${request.id}"
+          >
+            ❌ Decline
+          </button>
+
+        </div>
+
+      `;
+
+
+      row
+      .querySelector(".accept")
+      .addEventListener(
+        "click",
+        () =>
+          acceptRequest(
+            request
+          )
+      );
+
+
+      row
+      .querySelector(".decline")
+      .addEventListener(
+        "click",
+        () =>
+          declineRequest(
+            request.id
+          )
+      );
+
+
+      requestsList.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   SENT REQUESTS
+========================================= */
+
+async function loadSentRequests(){
+
+  sentList.innerHTML = `
+    <div class="status">
+      Loading requests...
+    </div>
+  `;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+  .from("friend_requests")
+
+  .select(
+    "id,receiver_id,created_at"
+  )
+
+  .eq(
+    "sender_id",
+    currentUser.id
+  )
+
+  .eq(
+    "status",
+    "pending"
+  )
+
+
+  if(error){
+    throw error;
+  }
+
+
+  if(
+    !data ||
+    data.length === 0
+  ){
+
+    sentList.innerHTML = `
+      <div class="empty">
+        📤 No pending sent requests.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const ids =
+  data.map(
+    request =>
+      request.receiver_id
+  );
+
+
+  const profileMap =
+  await getProfiles(ids);
+
+
+  sentList.innerHTML =
+  "";
+
+
+  data.forEach(
+    request => {
+
+      const profile =
+      profileMap.get(
+        request.receiver_id
+      ) || {};
+
+
+      const row =
+      document.createElement("div");
+
+
+      row.className =
+      "item";
+
+
+      row.innerHTML = `
+
+        <div class="user">
+
+          <div class="avatar">
+            ${avatarFor(profile)}
+          </div>
+
+          <div>
+
+            <div class="username">
+              ${escapeHTML(
+                profile.username ||
+                "TeenSpace Member"
+              )}
+            </div>
+
+            <div class="country">
+              🌍 ${escapeHTML(
+                profile.country ||
+                "Unknown"
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="decline cancel-request"
+          >
+            Cancel
+          </button>
+
+        </div>
+
+      `;
+
+
+      row
+      .querySelector(".cancel-request")
+      .addEventListener(
+        "click",
+        () =>
+          cancelRequest(
+            request.id
+          )
+      );
+
+
+      sentList.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   ACCEPT REQUEST
+========================================= */
+
+async function acceptRequest(
+  request
+){
+
+  try{
+
+    const {
+      error:updateError
+    } =
+    await supabaseClient
+
+    .from("friend_requests")
+
+    .update({
+      status:"accepted"
+    })
+
+    .eq(
+      "id",
+      request.id
+    )
+
+    .eq(
+      "receiver_id",
+      currentUser.id
+    );
+
+
+    if(updateError){
+      throw updateError;
+    }
+
+
+    /*
+      Create both friendship directions
+      so either user can query normally.
+    */
+
+    const {
+      error:friendError
+    } =
+    await supabaseClient
+
+    .from("friends")
+
+    .insert([
+
+      {
+        user_id:
+          currentUser.id,
+
+        friend_id:
+          request.sender_id
+      },
+
+      {
+        user_id:
+          request.sender_id,
+
+        friend_id:
+          currentUser.id
+      }
+
+    ]);
+
+
+    if(friendError){
+      throw friendError;
+    }
+
+
+    await refreshAll();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Could not accept request."
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   DECLINE
+========================================= */
+
+async function declineRequest(
+  requestId
+){
+
+  const {
+    error
+  } =
+  await supabaseClient
+
+  .from("friend_requests")
+
+  .update({
+    status:"declined"
+  })
+
+  .eq(
+    "id",
+    requestId
+  )
+
+  .eq(
+    "receiver_id",
+    currentUser.id
+  );
+
+
+  if(error){
+
+    alert(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  await loadRequests();
+
+}
+
+
+/* =========================================
+   CANCEL
+========================================= */
+
+async function cancelRequest(
+  requestId
+){
+
+  const {
+    error
+  } =
+  await supabaseClient
+
+  .from("friend_requests")
+
+  .delete()
+
+  .eq(
+    "id",
+    requestId
+  )
+
+  .eq(
+    "sender_id",
+    currentUser.id
+  );
+
+
+  if(error){
+
+    alert(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  await loadSentRequests();
+
+}
+
+
+/* =========================================
+   REMOVE FRIEND
+========================================= */
+
+async function removeFriend(
+  friendshipId
+){
+
+  const confirmed =
+  confirm(
+    "Remove this friend?"
+  );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  const {
+    data:friendship,
+    error:fetchError
+  } =
+  await supabaseClient
+
+  .from("friends")
+
+  .select(
+    "user_id,friend_id"
+  )
+
+  .eq(
+    "id",
+    friendshipId
+  )
+
+  .maybeSingle();
+
+
+  if(fetchError){
+    alert(fetchError.message);
+    return;
+  }
+
+
+  if(!friendship){
+    return;
+  }
+
+
+  const userA =
+    friendship.user_id;
+
+  const userB =
+    friendship.friend_id;
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+
+  .from("friends")
+
+  .delete()
+
+  .or(
+    "and(user_id.eq." +
+    userA +
+    ",friend_id.eq." +
+    userB +
+    "),and(user_id.eq." +
+    userB +
+    ",friend_id.eq." +
+    userA +
+    ")"
+  );
+
+
+  if(error){
+
+    alert(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  await loadFriends();
+
+}
+
+
+/* =========================================
+   REFRESH
+========================================= */
+
+async function refreshAll(){
+
+  await Promise.all([
+
+    loadFriends(),
+    loadRequests(),
+    loadSentRequests()
+
+  ]);
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+async function start(){
+
+  const user =
+  await loadCurrentUser();
+
+
+  if(!user){
+    return;
+  }
+
+
+  try{
+
+    await refreshAll();
+
+  }catch(error){
+
+    console.error(error);
+
+    friendsList.innerHTML = `
+      <div class="status error">
+        ❌ Could not load friends.
+      </div>
+    `;
+
+    requestsList.innerHTML = "";
+    sentList.i
+}
+
+
+start(
+
