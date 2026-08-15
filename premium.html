@@ -68,7 +68,7 @@
 
     .page {
       width: 92%;
-      max-width: 900px;
+      max-width: 950px;
       margin: 45px auto 60px;
     }
 
@@ -95,7 +95,7 @@
       padding: 22px;
       box-shadow: 0 10px 30px rgba(0,0,0,.07);
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     .status-badge {
@@ -131,20 +131,22 @@
     .plans {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 20px;
     }
 
     .plan {
       background: white;
       border-radius: 24px;
-      padding: 24px;
+      padding: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,.07);
       border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
     }
 
     .plan.featured {
       border-color: #6c5ce7;
-      transform: translateY(-4px);
+      transform: translateY(-5px);
     }
 
     .plan h2 {
@@ -153,15 +155,21 @@
     }
 
     .price {
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 800;
-      margin: 10px 0;
+      margin: 10px 0 3px;
+    }
+
+    .period {
+      color: #888;
+      margin-bottom: 15px;
     }
 
     .features {
-      margin: 18px 0;
-      line-height: 1.8;
+      margin: 10px 0 22px;
+      line-height: 1.9;
       color: #444;
+      flex: 1;
     }
 
     .button {
@@ -185,14 +193,18 @@
       cursor: not-allowed;
     }
 
+    .trial-button {
+      background: #b78d00;
+    }
+
     .note {
-      margin-top: 18px;
+      margin-top: 22px;
       background: #faf9ff;
       border: 1px solid #e6e2f7;
-      padding: 15px;
+      padding: 16px;
       border-radius: 14px;
       color: #666;
-      line-height: 1.5;
+      line-height: 1.6;
       font-size: 14px;
     }
 
@@ -239,6 +251,7 @@
     }
 
   </style>
+
 </head>
 
 
@@ -254,9 +267,13 @@
   <nav>
 
     <a href="home.html">Home</a>
+
     <a href="community.html">Community</a>
+
     <a href="explore.html">Explore</a>
+
     <a href="profile.html">Profile</a>
+
     <a href="customize.html">✨ Customize</a>
 
   </nav>
@@ -266,6 +283,7 @@
 
 <main class="page">
 
+
   <section class="hero">
 
     <h1>
@@ -273,7 +291,7 @@
     </h1>
 
     <p>
-      Unlock more ways to customize your TeenSpace profile.
+      Unlock more ways to personalize your TeenSpace profile.
     </p>
 
   </section>
@@ -290,7 +308,6 @@
 
     <div
       id="statusText"
-      class="muted"
     >
       You're currently using the free plan.
     </div>
@@ -313,7 +330,11 @@
       </h2>
 
       <div class="price">
-        Free
+        ₦0
+      </div>
+
+      <div class="period">
+        Forever
       </div>
 
       <div class="features">
@@ -342,7 +363,11 @@
       </h2>
 
       <div class="price">
-        Free
+        ₦0
+      </div>
+
+      <div class="period">
+        One-time trial
       </div>
 
       <div class="features">
@@ -359,7 +384,7 @@
 
       <button
         id="trialButton"
-        class="button"
+        class="button trial-button"
       >
         Start 5-Day Trial 🚀
       </button>
@@ -370,25 +395,31 @@
     <article class="plan">
 
       <h2>
-        💎 Premium
+        💎 Monthly
       </h2>
 
       <div class="price">
-        Coming Soon
+        ₦1,500
+      </div>
+
+      <div class="period">
+        Per month
       </div>
 
       <div class="features">
 
-        ✅ Keep Premium features<br>
-        ✅ Advanced customization<br>
-        ✅ More themes<br>
-        ✅ More profile options
+        ✅ All Premium features<br>
+        ✅ Custom themes<br>
+        ✅ Custom fonts<br>
+        ✅ Profile music<br>
+        ✅ Live wallpaper<br>
+        ✅ Premium badge
 
       </div>
 
       <button
         class="button"
-        disabled
+        id="monthlyButton"
       >
         Coming Soon
       </button>
@@ -399,13 +430,53 @@
   </section>
 
 
+  <section
+    class="plan"
+    style="margin-top:20px;"
+  >
+
+    <h2>
+      👑 Yearly
+    </h2>
+
+    <div class="price">
+      ₦12,000
+    </div>
+
+    <div class="period">
+      Per year
+    </div>
+
+    <div class="features">
+
+      ✅ Everything in Monthly<br>
+      ✅ Better value than monthly<br>
+      ✅ All Premium customization<br>
+      ✅ Premium badge<br>
+      ✅ Profile music<br>
+      ✅ Live wallpaper
+
+    </div>
+
+    <button
+      class="button"
+      id="yearlyButton"
+    >
+      Coming Soon
+    </button>
+
+  </section>
+
+
   <div id="message"></div>
 
 
   <div class="note">
 
-    🛡️ The 5-day trial is available once per account.
-    Paid Premium is not connected yet.
+    🛡️ The 5-day trial can be used once per account.
+    Paid subscriptions are not connected yet. The prices
+    shown here are placeholders until you connect a real
+    payment provider and decide your final pricing.
 
   </div>
 
@@ -463,17 +534,21 @@ let currentUser = null;
 let profile = null;
 
 
-/* =========================================
-   TRIAL HELPERS
-========================================= */
+function showMessage(text, type) {
+
+  message.className =
+    type || "";
+
+  message.textContent =
+    text;
+
+}
+
 
 function getTrialEnd(start) {
 
-  const startDate =
-    new Date(start);
-
   return new Date(
-    startDate.getTime() +
+    new Date(start).getTime() +
     5 * 24 * 60 * 60 * 1000
   );
 
@@ -482,14 +557,9 @@ function getTrialEnd(start) {
 
 function getDaysLeft(start) {
 
-  const end =
-    getTrialEnd(start);
-
-  const now =
-    new Date();
-
   const difference =
-    end - now;
+    getTrialEnd(start) -
+    new Date();
 
   return Math.max(
     0,
@@ -514,24 +584,11 @@ function isTrialActive(start) {
 }
 
 
-/* =========================================
-   STATUS
-========================================= */
-
 function updateStatus() {
 
-  const permanentPremium =
-    profile?.premium_status === "premium";
-
-
-  const activeTrial =
-    profile?.premium_status === "trial" &&
-    isTrialActive(
-      profile?.trial_started_at
-    );
-
-
-  if (permanentPremium) {
+  if (
+    profile?.premium_status === "premium"
+  ) {
 
     statusBadge.className =
       "status-badge premium";
@@ -552,16 +609,21 @@ function updateStatus() {
       "Already Premium ✓";
 
     return;
+
   }
 
 
-  if (activeTrial) {
+  if (
+    profile?.premium_status === "trial" &&
+    isTrialActive(
+      profile.trial_started_at
+    )
+  ) {
 
     const daysLeft =
       getDaysLeft(
         profile.trial_started_at
       );
-
 
     statusBadge.className =
       "status-badge trial";
@@ -589,6 +651,7 @@ function updateStatus() {
       "Trial Active ✓";
 
     return;
+
   }
 
 
@@ -615,6 +678,7 @@ function updateStatus() {
       "Trial Finished";
 
     return;
+
   }
 
 
@@ -632,10 +696,6 @@ function updateStatus() {
 
 }
 
-
-/* =========================================
-   START TRIAL
-========================================= */
 
 trialButton.addEventListener(
   "click",
@@ -680,14 +740,14 @@ trialButton.addEventListener(
 
 
       if (
-        data?.premium_status === "premium"
+        data?.premium_status ===
+        "premium"
       ) {
 
-        profile =
-          {
-            ...profile,
-            ...data
-          };
+        profile = {
+          ...profile,
+          ...data
+        };
 
         updateStatus();
 
@@ -699,11 +759,10 @@ trialButton.addEventListener(
         data?.trial_started_at
       ) {
 
-        profile =
-          {
-            ...profile,
-            ...data
-          };
+        profile = {
+          ...profile,
+          ...data
+        };
 
         updateStatus();
 
@@ -768,11 +827,7 @@ trialButton.addEventListener(
 
     } catch (error) {
 
-      console.error(
-        "Trial error:",
-        error
-      );
-
+      console.error(error);
 
       showMessage(
         "❌ " +
@@ -796,28 +851,6 @@ trialButton.addEventListener(
 );
 
 
-/* =========================================
-   MESSAGE
-========================================= */
-
-function showMessage(
-  text,
-  type
-) {
-
-  message.className =
-    type || "";
-
-  message.textContent =
-    text;
-
-}
-
-
-/* =========================================
-   LOAD
-========================================= */
-
 async function start() {
 
   const {
@@ -840,6 +873,7 @@ async function start() {
       "login.html";
 
     return;
+
   }
 
 
@@ -875,12 +909,12 @@ async function start() {
     );
 
     return;
+
   }
 
 
   profile =
     data || {};
-
 
   updateStatus();
 
