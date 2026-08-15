@@ -1,450 +1,547 @@
-# TeenSpace Community — Working Profile Menu
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TeenSpace Community 🌍</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8">
 
-<style>
-*{
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-body{
-  margin:0;
-  background:linear-gradient(135deg,#f4f7ff,#eee8ff);
-  color:#222;
-  min-height:100vh;
-}
+  <title>TeenSpace Community 🌍</title>
 
-header{
-  background:#6c5ce7;
-  color:white;
-  padding:18px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-.logo{
-  font-size:28px;
-  font-weight:bold;
-}
+  <style>
 
-nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-nav a{
-  color:white;
-  text-decoration:none;
-  padding:9px 11px;
-  border-radius:10px;
-  font-weight:bold;
-}
+    body {
+      margin: 0;
+      background:
+        linear-gradient(135deg, #f4f7ff, #eee8ff);
+      color: #222;
+      min-height: 100vh;
+    }
 
-nav a:hover{
-  background:rgba(255,255,255,.15);
-}
+    header {
+      background: #6c5ce7;
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
 
-.hero{
-  background:white;
-  text-align:center;
-  padding:45px 20px 35px;
-}
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
 
-.hero h1{
-  margin:0;
-  color:#6c5ce7;
-  font-size:42px;
-}
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-.hero p{
-  color:#666;
-  font-size:18px;
-}
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 9px 11px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
 
-.container{
-  width:92%;
-  max-width:820px;
-  margin:35px auto 60px;
-}
+    nav a:hover {
+      background: rgba(255,255,255,.14);
+    }
 
-.create-post{
-  display:block;
-  text-align:center;
-  background:#6c5ce7;
-  color:white;
-  text-decoration:none;
-  padding:18px;
-  border-radius:16px;
-  font-size:21px;
-  font-weight:bold;
-  margin-bottom:28px;
-}
+    .customize-nav {
+      background: rgba(255,255,255,.20);
+      border: 1px solid rgba(255,255,255,.35);
+    }
 
-.status{
-  background:white;
-  border-radius:20px;
-  padding:30px;
-  text-align:center;
-  color:#666;
-}
+    .premium-nav {
+      background: rgba(255,220,100,.20);
+      border: 1px solid rgba(255,240,160,.45);
+    }
 
-.status.error{
-  color:#d63050;
-}
+    .hero {
+      background: white;
+      text-align: center;
+      padding: 45px 20px 35px;
+    }
 
-.post{
-  position:relative;
-  background:white;
-  border-radius:22px;
-  padding:24px;
-  margin-bottom:20px;
-  box-shadow:0 9px 26px rgba(0,0,0,.07);
-  border-left:6px solid #6c5ce7;
-}
+    .hero h1 {
+      margin: 0;
+      color: #6c5ce7;
+      font-size: 42px;
+    }
 
-.post-owner{
-  border-left-color:#f1b500;
-  background:linear-gradient(135deg,#fffdf4,#fff);
-}
+    .hero p {
+      color: #666;
+      font-size: 18px;
+      margin-top: 12px;
+    }
 
-.post-staff{
-  border-left-color:#2787d8;
-}
+    .container {
+      width: 92%;
+      max-width: 820px;
+      margin: 35px auto 60px;
+    }
 
-.post-header{
-  display:flex;
-  align-items:flex-start;
-}
+    .create-post {
+      display: block;
+      text-align: center;
+      background: #6c5ce7;
+      color: white;
+      text-decoration: none;
+      padding: 18px;
+      border-radius: 16px;
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 22px rgba(108,92,231,.20);
+    }
 
-.username-button{
-  border:none;
-  background:none;
-  padding:0;
-  color:#5f4ce0;
-  font-size:21px;
-  font-weight:bold;
-  cursor:pointer;
-  text-align:left;
-}
+    .create-post:hover {
+      background: #5747cf;
+    }
 
-.username-button:hover{
-  text-decoration:underline;
-}
+    .status {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
 
-.badge-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:8px;
-}
+    .status.error {
+      color: #d63050;
+    }
 
-.badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-}
+    .post {
+      position: relative;
+      background: white;
+      border-radius: 22px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 9px 26px rgba(0,0,0,.07);
+      border-left: 6px solid #6c5ce7;
+    }
 
-.owner-badge{
-  background:#fff0b3;
-  color:#946c00;
-}
+    .post-owner {
+      border-left-color: #f1b500;
+      background:
+        linear-gradient(135deg, #fffdf4, #ffffff);
+    }
 
-.staff-badge{
-  background:#e1f0ff;
-  color:#1769aa;
-}
+    .post-staff {
+      border-left-color: #2787d8;
+      background:
+        linear-gradient(135deg, #f5fbff, #ffffff);
+    }
 
-.premium-badge{
-  background:#ffe0ef;
-  color:#b52270;
-}
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
 
-.member-badge{
-  background:#eeeaff;
-  color:#5f4ce0;
-}
+    /* USERNAME */
 
-.message{
-  margin-top:18px;
-  font-size:18px;
-  line-height:1.65;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
+    .username {
+      display: inline-flex;
+      align-items: center;
+      color: #5f4ce0;
+      font-size: 21px;
+      font-weight: bold;
+      word-break: break-word;
+      cursor: pointer;
+      padding: 5px 8px;
+      border-radius: 10px;
+      transition: background .15s;
+    }
 
-.time{
-  margin-top:14px;
-  color:#999;
-  font-size:13px;
-}
+    .username:hover,
+    .username:active {
+      background: #eeeaff;
+    }
 
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:18px;
-}
+    .username-arrow {
+      font-size: 13px;
+      margin-left: 6px;
+      opacity: .65;
+    }
 
-.action-btn{
-  border:none;
-  border-radius:10px;
-  padding:9px 13px;
-  background:#eeeaff;
-  color:#5a49c7;
-  font-weight:bold;
-  cursor:pointer;
-}
+    /* USER MENU */
 
-.delete-btn{
-  background:#ffe5ea;
-  color:#d63050;
-}
+    .user-menu {
+      display: none;
+      position: absolute;
+      top: 62px;
+      left: 24px;
+      z-index: 50;
+      width: 210px;
+      background: white;
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow:
+        0 12px 35px rgba(0,0,0,.18);
+      border: 1px solid #eee;
+    }
 
-.edit-area{
-  margin-top:15px;
-}
+    .user-menu.show {
+      display: block;
+    }
 
-.edit-area textarea{
-  width:100%;
-  min-height:120px;
-  padding:14px;
-  border:1px solid #ccc;
-  border-radius:14px;
-  font-size:17px;
-}
+    .menu-title {
+      padding: 9px 11px 7px;
+      font-size: 12px;
+      color: #888;
+      font-weight: bold;
+    }
 
-.save-edit{
-  margin-top:8px;
-  border:none;
-  border-radius:10px;
-  padding:10px 15px;
-  background:#6c5ce7;
-  color:white;
-  font-weight:bold;
-}
+    .menu-link {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: white;
+      color: #333;
+      text-decoration: none;
+      text-align: left;
+      border-radius: 11px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-/* =========================================
-   FLOATING USER MENU
-========================================= */
+    .menu-link:hover {
+      background: #f2efff;
+    }
 
-#userMenu{
-  position:fixed;
-  z-index:99999;
-  width:230px;
-  background:white;
-  border-radius:16px;
-  padding:10px;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
-  border:1px solid #ddd;
-  display:none;
-}
+    .private-link {
+      color: #5f4ce0;
+    }
 
-#userMenu.show{
-  display:block;
-}
+    .profile-link {
+      color: #333;
+    }
 
-.user-menu-name{
-  font-weight:bold;
-  color:#5f4ce0;
-  padding:10px;
-  border-bottom:1px solid #eee;
-  margin-bottom:6px;
-}
+    .menu-disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
 
-#userMenu a{
-  display:block;
-  padding:13px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-  color:#444;
-}
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px;
+    }
 
-#userMenu a:hover{
-  background:#eeeaff;
-  color:#5f4ce0;
-}
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: bold;
+    }
 
-#userMenu .pm-link:hover{
-  background:#ffeaf4;
-  color:#b52270;
-}
+    .owner-badge {
+      background: #fff0b3;
+      color: #946c00;
+    }
 
-footer{
-  background:#222;
-  color:white;
-  text-align:center;
-  padding:25px;
-}
+    .staff-badge {
+      background: #e1f0ff;
+      color: #1769aa;
+    }
 
-@media(max-width:700px){
+    .premium-badge {
+      background: #ffe0ef;
+      color: #b52270;
+    }
 
-  header{
-    flex-direction:column;
-  }
+    .member-badge {
+      background: #eeeaff;
+      color: #5f4ce0;
+    }
 
-  .hero h1{
-    font-size:34px;
-  }
+    .message {
+      margin-top: 18px;
+      font-size: 18px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
 
-  .post{
-    padding:20px;
-  }
+    .time {
+      margin-top: 14px;
+      color: #999;
+      font-size: 13px;
+    }
 
-  #userMenu{
-    width:210px;
-  }
-}
-</style>
+    .edited {
+      font-style: italic;
+      margin-left: 6px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .action-btn {
+      border: none;
+      border-radius: 10px;
+      padding: 9px 13px;
+      background: #eeeaff;
+      color: #5a49c7;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      background: #ddd6ff;
+    }
+
+    .delete-btn {
+      background: #ffe5ea;
+      color: #d63050;
+    }
+
+    .delete-btn:hover {
+      background: #ffd5dd;
+    }
+
+    .edit-area {
+      margin-top: 15px;
+    }
+
+    .edit-area textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 14px;
+      font-size: 17px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .save-edit {
+      margin-top: 8px;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 15px;
+      background: #6c5ce7;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    @media (max-width: 700px) {
+
+      header {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      nav a {
+        margin: 3px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .post {
+        padding: 20px;
+      }
+
+      .user-menu {
+        left: 20px;
+        top: 58px;
+        width: 220px;
+      }
+
+    }
+
+  </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-<div class="logo">
-🌍 TeenSpace
-</div>
+  <div class="logo">
+    🌍 TeenSpace
+  </div>
 
-<nav>
-<a href="home.html">Home</a>
-<a href="explore.html">Explore</a>
-<a href="community.html">Community</a>
-<a href="profile.html">Profile</a>
-<a href="friends.html">Friends</a>
-<a href="customize.html">✨ Customize</a>
-<a href="premium.html">💎 Premium</a>
-</nav>
+
+  <nav>
+
+    <a href="home.html">
+      Home
+    </a>
+
+    <a href="explore.html">
+      Explore
+    </a>
+
+    <a href="community.html">
+      Community
+    </a>
+
+    <a href="profile.html">
+      Profile
+    </a>
+
+    <a
+      href="customize.html"
+      class="customize-nav"
+    >
+      ✨ Customize
+    </a>
+
+    <a
+      href="premium.html"
+      class="premium-nav"
+    >
+      💎 Premium
+    </a>
+
+  </nav>
 
 </header>
 
+
 <section class="hero">
 
-<h1>💬 TeenSpace Community</h1>
+  <h1>
+    💬 TeenSpace Community
+  </h1>
 
-<p>
-Share, connect and build the TeenSpace world 🌍
-</p>
+  <p>
+    Share, connect and build the TeenSpace world 🌍
+  </p>
 
 </section>
 
+
 <main class="container">
 
-<a href="post.html" class="create-post">
-✍️ Create a Post
-</a>
 
-<div id="posts">
+  <a
+    href="post.html"
+    class="create-post"
+  >
+    ✍️ Create a Post
+  </a>
 
-<div class="status">
-Loading posts...
-</div>
 
-</div>
+  <div id="posts">
+
+    <div class="status">
+      Loading posts...
+    </div>
+
+  </div>
+
 
 </main>
 
+
 <footer>
-© 2026 TeenSpace 🌍 | Made for teens, with safety in mind.
+
+  © 2026 TeenSpace 🌍 |
+  Made for teens, with safety in mind.
+
 </footer>
-
-
-<!-- GLOBAL USER MENU -->
-
-<div id="userMenu">
-
-<div
-id="userMenuName"
-class="user-menu-name"
->
-👤 User
-</div>
-
-<a
-id="viewProfileLink"
-href="#"
->
-👤 View Profile
-</a>
-
-<a
-id="privateMessageLink"
-class="pm-link"
-href="#"
->
-💬 Private Message
-</a>
-
-</div>
 
 
 <script>
 
+
+/* =========================================
+   SUPABASE
+========================================= */
+
 const SUPABASE_URL =
-"https://gcigveojqwwovitlwtxl.supabase.co";
+  "https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
 
 const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY,
-{
-auth:{
-persistSession:true,
-autoRefreshToken:true
-}
-}
-);
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true
+      }
+    }
+  );
+
 
 const postsContainer =
-document.getElementById("posts");
+  document.getElementById("posts");
 
-const userMenu =
-document.getElementById("userMenu");
-
-const userMenuName =
-document.getElementById("userMenuName");
-
-const viewProfileLink =
-document.getElementById("viewProfileLink");
-
-const privateMessageLink =
-document.getElementById("privateMessageLink");
 
 let currentUser = null;
 
 
 /* =========================================
-   GET USER
+   CURRENT USER
 ========================================= */
 
-async function getCurrentUser(){
+async function getCurrentUser() {
 
-const {
-data:{
-user
-}
-} =
-await supabaseClient.auth.getUser();
+  const {
+    data: {
+      user
+    }
+  } =
+  await supabaseClient.auth.getUser();
 
-currentUser =
-user || null;
+  currentUser =
+    user || null;
 
 }
 
@@ -453,15 +550,45 @@ user || null;
    ESCAPE HTML
 ========================================= */
 
-function escapeHTML(value){
+function escapeHTML(value) {
 
-const div =
-document.createElement("div");
+  const div =
+    document.createElement("div");
 
-div.textContent =
-value ?? "";
+  div.textContent =
+    value ?? "";
 
-return div.innerHTML;
+  return div.innerHTML;
+
+}
+
+
+/* =========================================
+   TIME
+========================================= */
+
+function formatTime(dateString) {
+
+  return new Date(
+    dateString
+  ).toLocaleString();
+
+}
+
+
+/* =========================================
+   CLOSE ALL USER MENUS
+========================================= */
+
+function closeAllMenus() {
+
+  document
+    .querySelectorAll(".user-menu.show")
+    .forEach(menu => {
+
+      menu.classList.remove("show");
+
+    });
 
 }
 
@@ -470,622 +597,749 @@ return div.innerHTML;
    USER MENU
 ========================================= */
 
-function openUserMenu(
-button,
-userId,
-username
-){
+document.addEventListener(
+  "click",
+  function(event) {
 
-userMenuName.textContent =
-"👤 " + username;
-
-viewProfileLink.href =
-"profile.html?user_id=" +
-encodeURIComponent(userId);
-
-privateMessageLink.href =
-"messages.html?user_id=" +
-encodeURIComponent(userId) +
-"&name=" +
-encodeURIComponent(username);
+    const usernameButton =
+      event.target.closest(
+        ".username"
+      );
 
 
-/* Put menu beside the username */
+    if (usernameButton) {
 
-const rect =
-button.getBoundingClientRect();
+      event.stopPropagation();
 
-let left =
-rect.left;
+      const post =
+        usernameButton.closest(
+          ".post"
+        );
 
-let top =
-rect.bottom + 8;
+      const menu =
+        post.querySelector(
+          ".user-menu"
+        );
 
 
-/* Keep menu inside screen */
+      document
+        .querySelectorAll(
+          ".user-menu.show"
+        )
+        .forEach(otherMenu => {
 
-if(
-left + 230 >
-window.innerWidth - 10
-){
+          if (otherMenu !== menu) {
 
-left =
-window.innerWidth - 240;
+            otherMenu.classList.remove(
+              "show"
+            );
 
-}
+          }
 
-if(
-top + 150 >
-window.innerHeight
-){
+        });
 
-top =
-rect.top - 160;
 
-}
+      menu.classList.toggle(
+        "show"
+      );
 
-userMenu.style.left =
-Math.max(10,left) + "px";
+      return;
 
-userMenu.style.top =
-Math.max(10,top) + "px";
+    }
 
-userMenu.classList.add(
-"show"
+
+    if (
+      !event.target.closest(
+        ".user-menu"
+      )
+    ) {
+
+      closeAllMenus();
+
+    }
+
+  }
 );
-
-}
-
-
-function closeUserMenu(){
-
-userMenu.classList.remove(
-"show"
-);
-
-}
 
 
 /* =========================================
    LOAD POSTS
 ========================================= */
 
-async function loadPosts(){
+async function loadPosts() {
 
-postsContainer.innerHTML = `
-<div class="status">
-Loading posts...
-</div>
-`;
+  postsContainer.innerHTML = `
+    <div class="status">
+      Loading posts...
+    </div>
+  `;
 
 
-const {
-data:posts,
-error:postsError
-} =
-await supabaseClient
+  const {
+    data: posts,
+    error: postsError
+  } =
+  await supabaseClient
 
-.from("posts")
+    .from("posts")
 
-.select(
-"id,user_id,content,created_at,edited"
-)
+    .select(
+      "id, user_id, content, created_at, edited"
+    )
 
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+    .order(
+      "created_at",
+      {
+        ascending: false
+      }
+    );
 
 
-if(postsError){
+  if (postsError) {
 
-postsContainer.innerHTML = `
-<div class="status error">
-❌ Could not load posts.<br><br>
-${escapeHTML(postsError.message)}
-</div>
-`;
+    console.error(
+      "Posts error:",
+      postsError
+    );
 
-return;
+    postsContainer.innerHTML = `
+      <div class="status error">
+        ❌ Could not load posts.<br><br>
+        ${escapeHTML(postsError.message)}
+      </div>
+    `;
 
-}
+    return;
+  }
 
 
-if(
-!posts ||
-posts.length === 0
-){
+  if (
+    !posts ||
+    posts.length === 0
+  ) {
 
-postsContainer.innerHTML = `
-<div class="status">
-🌟 No posts yet.<br><br>
-Be the first person to post!
-</div>
-`;
+    postsContainer.innerHTML = `
+      <div class="status">
+        🌟 No posts yet.<br><br>
+        Be the first person to post!
+      </div>
+    `;
 
-return;
+    return;
+  }
 
-}
 
+  const userIds =
+    [
+      ...new Set(
+        posts.map(
+          post => post.user_id
+        )
+      )
+    ];
 
-const userIds =
-[
-...new Set(
-posts.map(
-post => post.user_id
-)
-)
-];
 
+  let profiles = [];
 
-const {
-data:profiles,
-error:profileError
-} =
-await supabaseClient
 
-.from("profiles")
+  if (userIds.length > 0) {
 
-.select(
-'username,role,badge,premium,"user-id"'
-)
+    const {
+      data,
+      error: profileError
+    } =
+    await supabaseClient
 
-.in(
-"user-id",
-userIds
-);
+      .from("profiles")
 
+      .select(
+        'username, role, badge, premium, country, bio, "user-id"'
+      )
 
-if(profileError){
+      .in(
+        "user-id",
+        userIds
+      );
 
-console.error(
-profileError
-);
 
-}
+    if (profileError) {
 
+      console.error(
+        "Profiles error:",
+        profileError
+      );
 
-const profileMap =
-new Map();
+    } else {
 
+      profiles =
+        data || [];
 
-(profiles || []).forEach(
-profile => {
+    }
 
-profileMap.set(
-profile["user-id"],
-profile
-);
+  }
 
-});
 
+  const profileMap =
+    new Map();
 
-postsContainer.innerHTML =
-"";
 
+  profiles.forEach(profile => {
 
-posts.forEach(post => {
+    profileMap.set(
+      profile["user-id"],
+      profile
+    );
 
-const profile =
-profileMap.get(
-post.user_id
-) || {};
+  });
 
 
-const username =
-profile.username ||
-"TeenSpace User";
+  postsContainer.innerHTML = "";
 
 
-const role =
-profile.role ||
-"user";
+  posts.forEach(post => {
 
+    const profile =
+      profileMap.get(
+        post.user_id
+      ) || {};
 
-const isPremium =
-profile.premium === true;
 
+    const username =
+      profile.username ||
+      "TeenSpace User";
 
-const card =
-document.createElement(
-"article"
-);
 
-card.className =
-"post";
+    const role =
+      profile.role ||
+      "user";
 
 
-if(role === "owner"){
+    const isPremium =
+      profile.premium === true;
 
-card.classList.add(
-"post-owner"
-);
 
-}
+    const country =
+      profile.country ||
+      "Country not set";
 
-if(role === "staff"){
 
-card.classList.add(
-"post-staff"
-);
+    const bio =
+      profile.bio ||
+      "No bio yet.";
 
-}
 
+    const userId =
+      profile["user-id"] ||
+      post.user_id;
 
-/* BADGES */
 
-let badgeHTML =
-"";
+    const card =
+      document.createElement(
+        "article"
+      );
 
 
-if(role === "owner"){
+    card.className =
+      "post";
 
-badgeHTML += `
-<span class="badge owner-badge">
-👑 ${escapeHTML(
-profile.badge || "FOUNDER"
-)}
-</span>
-`;
 
-}else if(role === "staff"){
+    if (role === "owner") {
 
-badgeHTML += `
-<span class="badge staff-badge">
-🛡️ STAFF
-</span>
-`;
+      card.classList.add(
+        "post-owner"
+      );
 
-}else{
+    }
 
-badgeHTML += `
-<span class="badge member-badge">
-👤 MEMBER
-</span>
-`;
 
-}
+    if (role === "staff") {
 
+      card.classList.add(
+        "post-staff"
+      );
 
-if(isPremium){
+    }
 
-badgeHTML += `
-<span class="badge premium-badge">
-💎 PREMIUM
-</span>
-`;
 
-}
+    let badgeHTML = "";
 
 
-/* POST */
+    if (role === "owner") {
 
-card.innerHTML = `
+      badgeHTML += `
+        <span class="badge owner-badge">
+          👑 ${escapeHTML(
+            profile.badge || "FOUNDER"
+          )}
+        </span>
+      `;
 
-<div class="post-header">
+    } else if (role === "staff") {
 
-<div>
+      badgeHTML += `
+        <span class="badge staff-badge">
+          🛡️ STAFF
+        </span>
+      `;
 
-<button
-class="username-button"
-type="button"
->
-👤 ${escapeHTML(username)}
-</button>
+    } else {
 
-<div class="badge-row">
-${badgeHTML}
-</div>
+      badgeHTML += `
+        <span class="badge member-badge">
+          👤 MEMBER
+        </span>
+      `;
 
-</div>
+    }
 
-</div>
 
-<div class="message">
-${escapeHTML(post.content)}
-</div>
+    if (isPremium) {
 
-<div class="time">
-${new Date(post.created_at).toLocaleString()}
-${post.edited ? " (edited)" : ""}
-</div>
+      badgeHTML += `
+        <span class="badge premium-badge">
+          💎 PREMIUM
+        </span>
+      `;
 
-<div class="actions">
+    }
 
-<button
-class="action-btn quote-button"
->
-💬 Quote
-</button>
 
-${
-currentUser &&
-currentUser.id === post.user_id
-?
-`
-<button
-class="action-btn edit-button"
->
-✏️ Edit
-</button>
+    const privateURL =
+      "messages.html?user_id=" +
+      encodeURIComponent(
+        userId
+      ) +
+      "&name=" +
+      encodeURIComponent(
+        username
+      );
 
-<button
-class="action-btn delete-btn delete-button"
->
-🗑️ Delete
-</button>
-`
-:
-""
-}
 
-</div>
+    const profileURL =
+      "profile.html?user_id=" +
+      encodeURIComponent(
+        userId
+      ) +
+      "&username=" +
+      encodeURIComponent(
+        username
+      );
 
-`;
 
+    card.innerHTML = `
 
-/* =========================================
-   USERNAME CLICK
-========================================= */
+      <div class="post-header">
 
-const usernameButton =
-card.querySelector(
-".username-button"
-);
+        <div>
 
-usernameButton.addEventListener(
-"click",
-function(event){
+          <div
+            class="username"
+            role="button"
+            tabindex="0"
+            title="Open user menu"
+          >
 
-event.stopPropagation();
+            👤 ${escapeHTML(username)}
 
-openUserMenu(
-usernameButton,
-post.user_id,
-username
-);
+            <span class="username-arrow">
+              ▼
+            </span>
 
-});
+          </div>
 
 
-/* =========================================
-   QUOTE
-========================================= */
+          <div class="badge-row">
+            ${badgeHTML}
+          </div>
 
-card
-.querySelector(".quote-button")
-.addEventListener(
-"click",
-function(){
+        </div>
 
-const quoteText =
-"> " +
-username +
-": " +
-post.content;
+      </div>
 
-window.location.href =
-"post.html?quote=" +
-encodeURIComponent(
-quoteText
-);
 
-});
+      <!-- USER MENU -->
 
+      <div class="user-menu">
 
-/* =========================================
-   EDIT
-========================================= */
+        <div class="menu-title">
+          ${escapeHTML(username)}
+        </div>
 
-const editButton =
-card.querySelector(
-".edit-button"
-);
 
-if(editButton){
+        <a
+          class="menu-link profile-link"
+          href="${profileURL}"
+        >
+          👤 View Profile
+        </a>
 
-editButton.addEventListener(
-"click",
-function(){
 
-openEdit(
-card,
-post
-);
+        ${
+          userId
+            ?
 
-});
+          `
+            <a
+              class="menu-link private-link"
+              href="${privateURL}"
+            >
+              💬 Private
+            </a>
+          `
 
-}
+            :
 
+          `
+            <div
+              class="menu-link menu-disabled"
+            >
+              💬 Private unavailable
+            </div>
+          `
+        }
 
-/* =========================================
-   DELETE
-========================================= */
+      </div>
 
-const deleteButton =
-card.querySelector(
-".delete-button"
-);
 
-if(deleteButton){
+      <div class="message">
+        ${escapeHTML(post.content)}
+      </div>
 
-deleteButton.addEventListener(
-"click",
-function(){
 
-deletePost(
-post.id
-);
+      <div class="time">
 
-});
+        ${formatTime(post.created_at)}
 
-}
+        ${
+          post.edited
+            ? '<span class="edited">(edited)</span>'
+            : ''
+        }
 
+      </div>
 
-postsContainer.appendChild(
-card
-);
 
-});
+      <div class="actions">
 
-}
+        <button
+          class="action-btn quote-button"
+        >
+          💬 Quote
+        </button>
 
 
-/* =========================================
-   CLOSE MENU
-========================================= */
+        ${
+          currentUser &&
+          currentUser.id === post.user_id
+          ?
 
-document.addEventListener(
-"click",
-function(event){
+          `
+          <button
+            class="action-btn edit-button"
+          >
+            ✏️ Edit
+          </button>
 
-if(
-!userMenu.contains(event.target)
-){
+          <button
+            class="action-btn delete-btn delete-button"
+          >
+            🗑️ Delete
+          </button>
+          `
 
-closeUserMenu();
+          :
 
-}
+          ""
+        }
 
-});
+      </div>
 
+    `;
 
-/* =========================================
-   EDIT
-========================================= */
 
-function openEdit(card,post){
+    /* =====================================
+       QUOTE
+    ===================================== */
 
-const message =
-card.querySelector(".message");
+    const quoteButton =
+      card.querySelector(
+        ".quote-button"
+      );
 
-const actions =
-card.querySelector(".actions");
 
-message.style.display =
-"none";
+    quoteButton.addEventListener(
+      "click",
+      function() {
 
-actions.style.display =
-"none";
+        const quoteText =
+          "> " +
+          username +
+          ": " +
+          post.content;
 
-const editArea =
-document.createElement("div");
 
-editArea.className =
-"edit-area";
+        window.location.href =
+          "post.html?quote=" +
+          encodeURIComponent(
+            quoteText
+          );
 
-const textarea =
-document.createElement("textarea");
+      }
+    );
 
-textarea.value =
-post.content;
 
-const saveButton =
-document.createElement("button");
+    /* =====================================
+       EDIT
+    ===================================== */
 
-saveButton.className =
-"save-edit";
+    const editButton =
+      card.querySelector(
+        ".edit-button"
+      );
 
-saveButton.textContent =
-"Save Changes";
 
-saveButton.onclick =
-async function(){
+    if (editButton) {
 
-const newContent =
-textarea.value.trim();
+      editButton.addEventListener(
+        "click",
+        function() {
 
-if(!newContent){
+          openEdit(
+            card,
+            post
+          );
 
-alert("Post cannot be empty.");
+        }
+      );
 
-return;
+    }
 
-}
 
-const {
-error
-} =
-await supabaseClient
+    /* =====================================
+       DELETE
+    ===================================== */
 
-.from("posts")
+    const deleteButton =
+      card.querySelector(
+        ".delete-button"
+      );
 
-.update({
-content:newContent,
-edited:true
-})
 
-.eq(
-"id",
-post.id
-);
+    if (deleteButton) {
 
-if(error){
+      deleteButton.addEventListener(
+        "click",
+        function() {
 
-alert(error.message);
+          deletePost(
+            post.id
+          );
 
-return;
+        }
+      );
 
-}
+    }
 
-loadPosts();
 
-};
+    postsContainer.appendChild(
+      card
+    );
 
-editArea.appendChild(
-textarea
-);
-
-editArea.appendChild(
-saveButton
-);
-
-card.appendChild(
-editArea
-);
+  });
 
 }
 
 
 /* =========================================
-   DELETE
+   EDIT POST
 ========================================= */
 
-async function deletePost(postId){
+function openEdit(
+  card,
+  post
+) {
 
-if(
-!confirm("Delete this post?")
-){
+  const message =
+    card.querySelector(
+      ".message"
+    );
 
-return;
+
+  const actions =
+    card.querySelector(
+      ".actions"
+    );
+
+
+  message.style.display =
+    "none";
+
+  actions.style.display =
+    "none";
+
+
+  const editArea =
+    document.createElement(
+      "div"
+    );
+
+
+  editArea.className =
+    "edit-area";
+
+
+  const textarea =
+    document.createElement(
+      "textarea"
+    );
+
+
+  textarea.value =
+    post.content;
+
+
+  const saveButton =
+    document.createElement(
+      "button"
+    );
+
+
+  saveButton.className =
+    "save-edit";
+
+
+  saveButton.textContent =
+    "Save Changes";
+
+
+  saveButton.addEventListener(
+    "click",
+    async function() {
+
+      const newContent =
+        textarea.value.trim();
+
+
+      if (!newContent) {
+
+        alert(
+          "Post cannot be empty."
+        );
+
+        return;
+
+      }
+
+
+      const {
+        error
+      } =
+      await supabaseClient
+
+        .from("posts")
+
+        .update({
+
+          content:
+            newContent,
+
+          edited:
+            true
+
+        })
+
+        .eq(
+          "id",
+          post.id
+        );
+
+
+      if (error) {
+
+        console.error(error);
+
+        alert(
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      loadPosts();
+
+    }
+  );
+
+
+  editArea.appendChild(
+    textarea
+  );
+
+
+  editArea.appendChild(
+    saveButton
+  );
+
+
+  card.appendChild(
+    editArea
+  );
 
 }
 
-const {
-error
-} =
-await supabaseClient
 
-.from("posts")
+/* =========================================
+   DELETE POST
+========================================= */
 
-.delete()
+async function deletePost(
+  postId
+) {
 
-.eq(
-"id",
-postId
-);
+  const confirmed =
+    confirm(
+      "Delete this post?"
+    );
 
-if(error){
 
-alert(error.message);
+  if (!confirmed) {
 
-return;
+    return;
 
-}
+  }
 
-loadPosts();
+
+  const {
+    error
+  } =
+  await supabaseClient
+
+    .from("posts")
+
+    .delete()
+
+    .eq(
+      "id",
+      postId
+    );
+
+
+  if (error) {
+
+    console.error(error);
+
+    alert(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  loadPosts();
 
 }
 
@@ -1094,18 +1348,21 @@ loadPosts();
    START
 ========================================= */
 
-async function start(){
+async function start() {
 
-await getCurrentUser();
+  await getCurrentUser();
 
-await loadPosts();
+  await loadPosts();
 
 }
 
+
 start();
+
 
 </script>
 
 </body>
+
 </html>
 ```
