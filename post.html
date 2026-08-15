@@ -11,7 +11,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>Create Post | TeenSpace 🌍</title>
+<title>Profile | TeenSpace 🌍</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -24,6 +24,7 @@
 
 body{
   margin:0;
+  min-height:100vh;
   background:
     linear-gradient(135deg,#f4f7ff,#eee8ff);
   color:#222;
@@ -36,6 +37,7 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:20px;
 }
 
 .logo{
@@ -43,227 +45,74 @@ header{
   font-weight:bold;
 }
 
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
 nav a{
   color:white;
   text-decoration:none;
-  margin-left:16px;
+  padding:9px 11px;
+  border-radius:10px;
   font-weight:bold;
 }
 
-.page{
+nav a:hover{
+  background:rgba(255,255,255,.15);
+}
+
+.container{
   width:92%;
-  max-width:850px;
+  max-width:800px;
   margin:35px auto 60px;
 }
 
-h1{
-  text-align:center;
-  color:#6c5ce7;
-  font-size:38px;
+.profile-card{
+  background:white;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 12px 35px rgba(0,0,0,.08);
+}
+
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:20px;
   margin-bottom:25px;
 }
 
-
-/* COMPOSER */
-
-.composer{
-  background:white;
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 9px 28px rgba(0,0,0,.08);
-}
-
-textarea{
-  width:100%;
-  min-height:150px;
-  padding:17px;
-  border:1px solid #ccc;
-  border-radius:16px;
-  resize:vertical;
-  font-size:18px;
-  outline:none;
-  line-height:1.6;
-}
-
-textarea:focus{
-  border-color:#6c5ce7;
-}
-
-
-/* QUOTE */
-
-.quote-box{
-  display:none;
-  margin-bottom:14px;
-  padding:13px;
-  background:#f2efff;
-  border-left:5px solid #6c5ce7;
-  border-radius:10px;
-  color:#555;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-
-.quote-title{
-  color:#6c5ce7;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:5px;
-}
-
-
-/* TOOLBAR */
-
-.toolbar{
+.avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:#eee8ff;
   display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:13px;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  flex-shrink:0;
 }
 
-.tool{
-  border:none;
-  padding:10px 13px;
-  border-radius:11px;
-  background:#eeeaff;
+.username{
+  font-size:30px;
+  font-weight:bold;
   color:#5f4ce0;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.tool:hover{
-  background:#ddd6ff;
-}
-
-.recording{
-  background:#ffe3e8;
-  color:#d63050;
-}
-
-
-/* EMOJI */
-
-.emoji-panel{
-  display:none;
-  margin-top:12px;
-  padding:12px;
-  background:#faf9ff;
-  border:1px solid #e7e2fb;
-  border-radius:14px;
-  line-height:2.2;
-}
-
-.emoji{
-  border:none;
-  background:transparent;
-  font-size:24px;
-  cursor:pointer;
-  padding:4px;
-}
-
-
-/* ATTACHMENT */
-
-.preview{
-  display:none;
-  margin-top:14px;
-  padding:14px;
-  background:#faf9ff;
-  border-radius:14px;
-}
-
-.preview img,
-.preview video{
-  width:100%;
-  max-height:350px;
-  object-fit:contain;
-  border-radius:12px;
-  background:#111;
-}
-
-.voice-preview{
-  width:100%;
-}
-
-
-/* PUBLISH */
-
-.publish{
-  width:100%;
-  margin-top:14px;
-  padding:17px;
-  border:none;
-  border-radius:14px;
-  background:#6c5ce7;
-  color:white;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.publish:hover{
-  background:#5747cf;
-}
-
-.publish:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-
-/* STATUS */
-
-#status{
-  min-height:25px;
-  text-align:center;
-  margin-top:14px;
-  line-height:1.5;
-}
-
-.success{
-  color:#159447;
-}
-
-.error{
-  color:#d63050;
-}
-
-
-/* LIVE FEED */
-
-.feed-title{
-  margin:40px 0 18px;
-  color:#5f4ce0;
-  font-size:27px;
-  font-weight:bold;
-}
-
-.post{
-  background:white;
-  padding:22px;
-  border-radius:20px;
-  margin-bottom:18px;
-  box-shadow:0 8px 24px rgba(0,0,0,.07);
-  border-left:5px solid #6c5ce7;
-}
-
-.post-user{
-  color:#5f4ce0;
-  font-weight:bold;
-  font-size:19px;
+  word-break:break-word;
 }
 
 .badges{
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
-  margin-top:7px;
+  gap:8px;
+  margin-top:10px;
 }
 
 .badge{
-  padding:5px 9px;
+  padding:7px 12px;
   border-radius:999px;
-  font-size:11px;
+  font-size:12px;
   font-weight:bold;
 }
 
@@ -287,72 +136,219 @@ textarea:focus{
   color:#5f4ce0;
 }
 
-.post-content{
-  margin-top:15px;
+.info{
+  margin-top:20px;
+}
+
+.info-box{
+  background:#faf9ff;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+.info-label{
+  color:#777;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.info-value{
+  font-size:17px;
+  line-height:1.5;
+  word-break:break-word;
+}
+
+.bio-box{
+  margin-top:18px;
+  background:#f8f6ff;
+  border-radius:18px;
+  padding:20px;
+}
+
+.bio-title{
   font-size:18px;
-  line-height:1.6;
+  font-weight:bold;
+  color:#5f4ce0;
+  margin-bottom:10px;
+}
+
+.bio{
+  line-height:1.65;
   white-space:pre-wrap;
   word-break:break-word;
 }
 
-.post-media{
-  margin-top:14px;
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:25px;
 }
 
-.post-media img,
-.post-media video{
-  width:100%;
-  max-height:380px;
-  object-fit:contain;
+.action-btn{
+  flex:1;
+  min-width:180px;
+  border:none;
   border-radius:14px;
-  background:#111;
-}
-
-.post-media audio{
-  width:100%;
-}
-
-.post-time{
-  margin-top:12px;
-  color:#999;
-  font-size:13px;
-}
-
-.empty{
-  background:white;
-  padding:30px;
-  border-radius:18px;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
   text-align:center;
-  color:#777;
+  text-decoration:none;
 }
 
-
-/* FOOTER */
-
-footer{
-  background:#222;
+.private-btn{
+  background:#6c5ce7;
   color:white;
-  text-align:center;
-  padding:25px;
 }
 
+.private-btn:hover{
+  background:#5747cf;
+}
 
-/* MOBILE */
+.edit-btn{
+  background:#eeeaff;
+  color:#5f4ce0;
+}
+
+.edit-btn:hover{
+  background:#ddd6ff;
+}
+
+.back-btn{
+  display:block;
+  margin-top:20px;
+  text-align:center;
+  color:#6c5ce7;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.status{
+  text-align:center;
+  padding:40px 20px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.error{
+  color:#d63050;
+}
+
+.success{
+  color:#159447;
+}
+
+.edit-panel{
+  display:none;
+  margin-top:25px;
+  padding:22px;
+  background:#faf9ff;
+  border:1px solid #ddd;
+  border-radius:18px;
+}
+
+.edit-panel.show{
+  display:block;
+}
+
+.edit-panel h2{
+  margin-top:0;
+  color:#5f4ce0;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:15px 0 7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:12px;
+  font-size:16px;
+  outline:none;
+  background:white;
+}
+
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#6c5ce7;
+}
+
+.edit-actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.save-btn,
+.cancel-btn{
+  flex:1;
+  border:none;
+  padding:13px;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.save-btn{
+  background:#6c5ce7;
+  color:white;
+}
+
+.cancel-btn{
+  background:#ffe5ea;
+  color:#d63050;
+}
+
+.loading{
+  color:#6c5ce7;
+}
 
 @media(max-width:700px){
 
   header{
     flex-direction:column;
-    gap:14px;
   }
 
-  nav a{
-    margin:4px 6px;
-    display:inline-block;
+  .profile-card{
+    padding:22px;
   }
 
-  .page{
-    width:94%;
+  .profile-top{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .username{
+    font-size:26px;
+  }
+
+  .badges{
+    justify-content:center;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .action-btn{
+    width:100%;
   }
 
 }
@@ -373,178 +369,248 @@ footer{
 
   <nav>
 
-    <a href="home.html">Home</a>
+    <a href="home.html">
+      Home
+    </a>
 
-    <a href="explore.html">Explore</a>
+    <a href="explore.html">
+      Explore
+    </a>
 
-    <a href="community.html">Community</a>
+    <a href="community.html">
+      Community
+    </a>
 
-    <a href="profile.html">Profile</a>
+    <a href="profile.html">
+      Profile
+    </a>
+
+    <a href="friends.html">
+      Friends
+    </a>
+
+    <a href="premium.html">
+      💎 Premium
+    </a>
 
   </nav>
 
 </header>
 
 
-<main class="page">
+<main class="container">
 
-  <h1>
-    ✍️ Create a Post
-  </h1>
-
-
-  <section class="composer">
-
-
-    <!-- QUOTE -->
-
-    <div
-      id="quoteBox"
-      class="quote-box"
-    >
-
-      <div class="quote-title">
-        💬 Replying to
-      </div>
-
-      <div id="quotePreview"></div>
-
-    </div>
-
-
-    <!-- TEXT -->
-
-    <textarea
-      id="content"
-      maxlength="2000"
-      placeholder="What's happening in TeenSpace? 🌍"
-    ></textarea>
-
-
-    <!-- TOOLBAR -->
-
-    <div class="toolbar">
-
-
-      <button
-        type="button"
-        class="tool"
-        id="emojiButton"
-      >
-        😊 Emoji
-      </button>
-
-
-      <button
-        type="button"
-        class="tool"
-        id="voiceButton"
-      >
-        🎤 Voice
-      </button>
-
-
-      <button
-        type="button"
-        class="tool"
-        id="mediaButton"
-      >
-        📷 Media
-      </button>
-
-
-      <input
-        type="file"
-        id="mediaInput"
-        accept="image/*,video/*"
-        hidden
-      >
-
-    </div>
-
-
-    <!-- EMOJIS -->
-
-    <div
-      id="emojiPanel"
-      class="emoji-panel"
-    >
-
-      <button class="emoji">😀</button>
-      <button class="emoji">😂</button>
-      <button class="emoji">😍</button>
-      <button class="emoji">😎</button>
-      <button class="emoji">🥳</button>
-      <button class="emoji">😭</button>
-      <button class="emoji">😅</button>
-      <button class="emoji">🔥</button>
-      <button class="emoji">❤️</button>
-      <button class="emoji">💜</button>
-      <button class="emoji">💙</button>
-      <button class="emoji">💚</button>
-      <button class="emoji">✨</button>
-      <button class="emoji">🌍</button>
-      <button class="emoji">🚀</button>
-      <button class="emoji">🎮</button>
-      <button class="emoji">🎨</button>
-      <button class="emoji">📚</button>
-      <button class="emoji">🙌</button>
-      <button class="emoji">👍</button>
-
-    </div>
-
-
-    <!-- PREVIEW -->
-
-    <div
-      id="preview"
-      class="preview"
-    ></div>
-
-
-    <!-- PUBLISH -->
-
-    <button
-      id="publishButton"
-      class="publish"
-    >
-      Publish Post 🚀
-    </button>
-
-
-    <div id="status"></div>
-
-  </section>
-
-
-  <!-- LIVE FEED -->
-
-  <div class="feed-title">
-    💬 Community
+  <div id="status" class="status loading">
+    Loading profile...
   </div>
 
 
-  <section id="feed">
+  <div
+    id="profileCard"
+    class="profile-card"
+    style="display:none;"
+  >
 
-    <div class="empty">
-      Loading community...
+    <div class="profile-top">
+
+      <div
+        id="avatar"
+        class="avatar"
+      >
+        👤
+      </div>
+
+
+      <div>
+
+        <div
+          id="username"
+          class="username"
+        >
+          TeenSpace User
+        </div>
+
+
+        <div
+          id="badges"
+          class="badges"
+        ></div>
+
+      </div>
+
     </div>
 
-  </section>
 
+    <div class="info">
+
+      <div class="info-box">
+
+        <div class="info-label">
+          🌍 COUNTRY
+        </div>
+
+        <div
+          id="country"
+          class="info-value"
+        >
+          Not set
+        </div>
+
+      </div>
+
+
+      <div class="bio-box">
+
+        <div class="bio-title">
+          📝 About Me
+        </div>
+
+        <div
+          id="bio"
+          class="bio"
+        >
+          No bio yet.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="actions"
+      class="actions"
+    ></div>
+
+
+    <div
+      id="editPanel"
+      class="edit-panel"
+    >
+
+      <h2>
+        ✏️ Edit Profile
+      </h2>
+
+
+      <label for="editUsername">
+        Username
+      </label>
+
+      <input
+        id="editUsername"
+        maxlength="30"
+        placeholder="Your username"
+      >
+
+
+      <label for="editCountry">
+        Country
+      </label>
+
+      <select id="editCountry">
+
+        <option value="">
+          🌍 Select country
+        </option>
+
+        <option>Nigeria</option>
+        <option>Ghana</option>
+        <option>South Africa</option>
+        <option>Kenya</option>
+        <option>Uganda</option>
+        <option>Tanzania</option>
+        <option>Rwanda</option>
+        <option>Egypt</option>
+        <option>Morocco</option>
+        <option>Algeria</option>
+        <option>Cameroon</option>
+        <option>Senegal</option>
+        <option>Zimbabwe</option>
+        <option>Zambia</option>
+
+        <option>United Kingdom</option>
+        <option>France</option>
+        <option>Germany</option>
+        <option>Italy</option>
+        <option>Spain</option>
+        <option>Portugal</option>
+        <option>Netherlands</option>
+        <option>Belgium</option>
+        <option>Switzerland</option>
+        <option>Sweden</option>
+        <option>Norway</option>
+        <option>Denmark</option>
+        <option>Finland</option>
+        <option>Ireland</option>
+        <option>Poland</option>
+        <option>Austria</option>
+        <option>Greece</option>
+        <option>Romania</option>
+
+        <option>United States</option>
+        <option>Canada</option>
+        <option>Mexico</option>
+        <option>Brazil</option>
+        <option>Argentina</option>
+
+        <option>India</option>
+        <option>China</option>
+        <option>Japan</option>
+        <option>South Korea</option>
+        <option>Australia</option>
+        <option>New Zealand</option>
+
+      </select>
+
+
+      <label for="editBio">
+        Bio
+      </label>
+
+      <textarea
+        id="editBio"
+        maxlength="500"
+        placeholder="Tell the TeenSpace community about yourself..."
+      ></textarea>
+
+
+      <div class="edit-actions">
+
+        <button
+          id="saveProfile"
+          class="save-btn"
+        >
+          💾 Save Changes
+        </button>
+
+        <button
+          id="cancelEdit"
+          class="cancel-btn"
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <a
+    href="community.html"
+    class="back-btn"
+  >
+    ← Back to Community
+  </a>
 
 </main>
 
 
-<footer>
-
-  © 2026 TeenSpace 🌍 |
-  Made for teens, with safety in mind.
-
-</footer>
-
-
 <script>
+
 
 /* =========================================
    SUPABASE
@@ -564,7 +630,8 @@ const supabaseClient =
     {
       auth:{
         persistSession:true,
-        autoRefreshToken:true
+        autoRefreshToken:true,
+        detectSessionInUrl:true
       }
     }
   );
@@ -574,51 +641,54 @@ const supabaseClient =
    ELEMENTS
 ========================================= */
 
-const content =
-  document.getElementById("content");
-
-const publishButton =
-  document.getElementById("publishButton");
-
-const status =
+const statusBox =
   document.getElementById("status");
 
-const feed =
-  document.getElementById("feed");
+const profileCard =
+  document.getElementById("profileCard");
 
-const emojiButton =
-  document.getElementById("emojiButton");
+const avatar =
+  document.getElementById("avatar");
 
-const emojiPanel =
-  document.getElementById("emojiPanel");
+const username =
+  document.getElementById("username");
 
-const mediaButton =
-  document.getElementById("mediaButton");
+const badges =
+  document.getElementById("badges");
 
-const mediaInput =
-  document.getElementById("mediaInput");
+const country =
+  document.getElementById("country");
 
-const preview =
-  document.getElementById("preview");
+const bio =
+  document.getElementById("bio");
 
-const voiceButton =
-  document.getElementById("voiceButton");
+const actions =
+  document.getElementById("actions");
 
-const quoteBox =
-  document.getElementById("quoteBox");
+const editPanel =
+  document.getElementById("editPanel");
 
-const quotePreview =
-  document.getElementById("quotePreview");
+const editUsername =
+  document.getElementById("editUsername");
+
+const editCountry =
+  document.getElementById("editCountry");
+
+const editBio =
+  document.getElementById("editBio");
+
+const saveProfile =
+  document.getElementById("saveProfile");
+
+const cancelEdit =
+  document.getElementById("cancelEdit");
 
 
 let currentUser = null;
-let selectedMedia = null;
-let mediaType = null;
-let mediaPath = null;
-let voiceBlob = null;
-let mediaRecorder = null;
-let audioChunks = [];
-let recording = false;
+
+let viewedUserId = null;
+
+let viewedProfile = null;
 
 
 /* =========================================
@@ -638,486 +708,49 @@ function escapeHTML(value){
 }
 
 
-function showStatus(
-  text,
-  type
-){
+function showError(text){
 
-  status.className =
-    type || "";
+  statusBox.className =
+    "status error";
 
-  status.textContent =
+  statusBox.textContent =
     text;
 
 }
 
 
 /* =========================================
-   EMOJI PANEL
+   GET CURRENT USER
 ========================================= */
 
-emojiButton.addEventListener(
-  "click",
-  function(){
-
-    emojiPanel.style.display =
-      emojiPanel.style.display === "block"
-        ? "none"
-        : "block";
-
-  }
-);
-
-
-document.querySelectorAll(
-  ".emoji"
-).forEach(
-  button => {
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        const emoji =
-          button.textContent;
-
-        const start =
-          content.selectionStart;
-
-        const end =
-          content.selectionEnd;
-
-        const value =
-          content.value;
-
-        content.value =
-          value.slice(0,start) +
-          emoji +
-          value.slice(end);
-
-        content.focus();
-
-        content.selectionStart =
-          start + emoji.length;
-
-        content.selectionEnd =
-          start + emoji.length;
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================
-   MEDIA PICKER
-========================================= */
-
-mediaButton.addEventListener(
-  "click",
-  function(){
-
-    mediaInput.click();
-
-  }
-);
-
-
-mediaInput.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      mediaInput.files[0];
-
-    if(!file){
-      return;
-    }
-
-
-    /*
-      Basic client-side limits.
-      Keep uploads manageable.
-    */
-
-    const maxSize =
-      25 * 1024 * 1024;
-
-
-    if(file.size > maxSize){
-
-      showStatus(
-        "❌ Media must be 25MB or smaller.",
-        "error"
-      );
-
-      mediaInput.value =
-        "";
-
-      return;
-
-    }
-
-
-    selectedMedia =
-      file;
-
-
-    mediaType =
-      file.type.startsWith("video/")
-        ? "video"
-        : "image";
-
-
-    preview.style.display =
-      "block";
-
-
-    const objectURL =
-      URL.createObjectURL(file);
-
-
-    if(mediaType === "image"){
-
-      preview.innerHTML = `
-        <img
-          src="${objectURL}"
-          alt="Selected media"
-        >
-      `;
-
-    }else{
-
-      preview.innerHTML = `
-        <video
-          src="${objectURL}"
-          controls
-        ></video>
-      `;
-
-    }
-
-  }
-);
-
-
-/* =========================================
-   VOICE RECORDING
-========================================= */
-
-voiceButton.addEventListener(
-  "click",
-  async function(){
-
-    if(recording){
-
-      stopRecording();
-
-      return;
-
-    }
-
-
-    if(
-      !navigator.mediaDevices ||
-      !navigator.mediaDevices.getUserMedia
-    ){
-
-      showStatus(
-        "❌ Voice recording isn't supported in this browser.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    try{
-
-      const stream =
-        await navigator.mediaDevices.getUserMedia({
-          audio:true
-        });
-
-
-      audioChunks = [];
-
-
-      mediaRecorder =
-        new MediaRecorder(stream);
-
-
-      mediaRecorder.ondataavailable =
-        function(event){
-
-          if(event.data.size > 0){
-
-            audioChunks.push(
-              event.data
-            );
-
-          }
-
-        };
-
-
-      mediaRecorder.onstop =
-        function(){
-
-          const blob =
-            new Blob(
-              audioChunks,
-              {
-                type:
-                  mediaRecorder.mimeType ||
-                  "audio/webm"
-              }
-            );
-
-
-          voiceBlob =
-            blob;
-
-
-          selectedMedia =
-            null;
-
-          mediaType =
-            null;
-
-
-          preview.style.display =
-            "block";
-
-
-          const url =
-            URL.createObjectURL(blob);
-
-
-          preview.innerHTML = `
-
-            <audio
-              class="voice-preview"
-              src="${url}"
-              controls
-            ></audio>
-
-          `;
-
-
-          stream
-            .getTracks()
-            .forEach(
-              track =>
-                track.stop()
-            );
-
-        };
-
-
-      mediaRecorder.start();
-
-      recording =
-        true;
-
-
-      voiceButton.classList.add(
-        "recording"
-      );
-
-      voiceButton.textContent =
-        "⏹️ Stop Recording";
-
-
-    }catch(error){
-
-      console.error(error);
-
-      showStatus(
-        "❌ Microphone permission was not available.",
-        "error"
-      );
-
-    }
-
-  }
-);
-
-
-function stopRecording(){
-
-  if(
-    mediaRecorder &&
-    recording
-  ){
-
-    mediaRecorder.stop();
-
-    recording =
-      false;
-
-
-    voiceButton.classList.remove(
-      "recording"
-    );
-
-    voiceButton.textContent =
-      "🎤 Voice";
-
-  }
-
-}
-
-
-/* =========================================
-   STORAGE UPLOAD
-========================================= */
-
-async function uploadFile(
-  file,
-  folder
-){
-
-  const extension =
-    file.name.includes(".")
-      ? file.name
-          .split(".")
-          .pop()
-          .toLowerCase()
-      : "bin";
-
-
-  const path =
-    currentUser.id +
-    "/" +
-    folder +
-    "/" +
-    crypto.randomUUID() +
-    "." +
-    extension;
-
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-
-    .storage
-
-    .from("community-media")
-
-    .upload(
-      path,
-      file,
-      {
-        contentType:
-          file.type,
-        upsert:false
-      }
-    );
-
-
-  if(error){
-
-    throw error;
-
-  }
-
-
-  return data.path;
-
-}
-
-
-/* =========================================
-   SIGNED URL
-========================================= */
-
-async function getSignedUrl(
-  path
-){
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
-
-    .storage
-
-    .from("community-media")
-
-    .createSignedUrl(
-      path,
-      3600
-    );
-
-
-  if(error){
-
-    console.error(
-      "Signed URL error:",
-      error
-    );
-
-    return null;
-
-  }
-
-
-  return data.signedUrl;
-
-}
-
-
-/* =========================================
-   LOAD CURRENT USER
-========================================= */
-
-async function loadUser(){
+async function getCurrentUser(){
 
   const {
     data:{
-      session
+      user
     },
     error
   } =
-  await supabaseClient
-    .auth
-    .getSession();
+  await supabaseClient.auth.getUser();
 
 
-  if(
-    error ||
-    !session ||
-    !session.user
-  ){
+  if(error){
 
-    window.location.href =
-      "login.html";
-
-    return null;
+    console.error(error);
 
   }
 
 
-  currentUser =
-    session.user;
-
-
-  return currentUser;
+  return user || null;
 
 }
 
 
 /* =========================================
-   QUOTE
+   GET PROFILE ID FROM URL
 ========================================= */
 
-function loadQuote(){
+function getProfileIdFromURL(){
 
   const params =
     new URLSearchParams(
@@ -1125,53 +758,419 @@ function loadQuote(){
     );
 
 
-  const quote =
-    params.get("quote");
-
-
-  if(!quote){
-    return;
-  }
-
-
-  quoteBox.style.display =
-    "block";
-
-
-  quotePreview.textContent =
-    quote;
-
-
-  content.value =
-    quote + "\n\n";
-
-
-  content.focus();
+  return (
+    params.get("user_id") ||
+    null
+  );
 
 }
 
 
 /* =========================================
-   PUBLISH
+   LOAD PROFILE
 ========================================= */
 
-publishButton.addEventListener(
+async function loadProfile(){
+
+  currentUser =
+    await getCurrentUser();
+
+
+  const urlUserId =
+    getProfileIdFromURL();
+
+
+  if(urlUserId){
+
+    viewedUserId =
+      urlUserId;
+
+  }else if(currentUser){
+
+    viewedUserId =
+      currentUser.id;
+
+  }else{
+
+    window.location.href =
+      "login.html";
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+
+    .from("profiles")
+
+    .select(
+      'username, country, bio, role, badge, premium, "user-id", created_at'
+    )
+
+    .eq(
+      "user-id",
+      viewedUserId
+    )
+
+    .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Profile error:",
+      error
+    );
+
+    showError(
+      "❌ Could not load this profile."
+    );
+
+    return;
+
+  }
+
+
+  if(!data){
+
+    showError(
+      "❌ This profile could not be found."
+    );
+
+    return;
+
+  }
+
+
+  viewedProfile =
+    data;
+
+
+  displayProfile();
+
+}
+
+
+/* =========================================
+   DISPLAY PROFILE
+========================================= */
+
+function displayProfile(){
+
+  const profile =
+    viewedProfile;
+
+
+  const name =
+    profile.username ||
+    "TeenSpace User";
+
+
+  const profileCountry =
+    profile.country ||
+    "Country not set";
+
+
+  const profileBio =
+    profile.bio ||
+    "No bio yet.";
+
+
+  const role =
+    profile.role ||
+    "user";
+
+
+  const isPremium =
+    profile.premium === true;
+
+
+  username.textContent =
+    name;
+
+
+  country.textContent =
+    "🌍 " +
+    profileCountry;
+
+
+  bio.textContent =
+    profileBio;
+
+
+  const firstLetter =
+    name
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+
+  avatar.textContent =
+    firstLetter ||
+    "👤";
+
+
+  /* =====================================
+     BADGES
+  ===================================== */
+
+  badges.innerHTML =
+    "";
+
+
+  if(role === "owner"){
+
+    const badge =
+      document.createElement(
+        "span"
+      );
+
+    badge.className =
+      "badge owner";
+
+    badge.textContent =
+      "👑 " +
+      (
+        profile.badge ||
+        "FOUNDER"
+      );
+
+    badges.appendChild(
+      badge
+    );
+
+  }else if(role === "staff"){
+
+    const badge =
+      document.createElement(
+        "span"
+      );
+
+    badge.className =
+      "badge staff";
+
+    badge.textContent =
+      "🛡️ STAFF";
+
+    badges.appendChild(
+      badge
+    );
+
+  }else{
+
+    const badge =
+      document.createElement(
+        "span"
+      );
+
+    badge.className =
+      "badge member";
+
+    badge.textContent =
+      "👤 MEMBER";
+
+    badges.appendChild(
+      badge
+    );
+
+  }
+
+
+  if(isPremium){
+
+    const premiumBadge =
+      document.createElement(
+        "span"
+      );
+
+    premiumBadge.className =
+      "badge premium";
+
+    premiumBadge.textContent =
+      "💎 PREMIUM";
+
+    badges.appendChild(
+      premiumBadge
+    );
+
+  }
+
+
+  /* =====================================
+     ACTIONS
+  ===================================== */
+
+  actions.innerHTML =
+    "";
+
+
+  const isOwnProfile =
+    currentUser &&
+    currentUser.id ===
+      viewedUserId;
+
+
+  if(isOwnProfile){
+
+    const editButton =
+      document.createElement(
+        "button"
+      );
+
+    editButton.className =
+      "action-btn edit-btn";
+
+    editButton.textContent =
+      "✏️ Edit Profile";
+
+
+    editButton.addEventListener(
+      "click",
+      function(){
+
+        openEditPanel();
+
+      }
+    );
+
+
+    actions.appendChild(
+      editButton
+    );
+
+
+  }else{
+
+    const privateButton =
+      document.createElement(
+        "a"
+      );
+
+
+    privateButton.className =
+      "action-btn private-btn";
+
+
+    privateButton.href =
+      "messages.html?user_id=" +
+      encodeURIComponent(
+        viewedUserId
+      ) +
+      "&name=" +
+      encodeURIComponent(
+        name
+      );
+
+
+    privateButton.textContent =
+      "💬 Private Message";
+
+
+    actions.appendChild(
+      privateButton
+    );
+
+  }
+
+
+  statusBox.style.display =
+    "none";
+
+  profileCard.style.display =
+    "block";
+
+
+  document.title =
+    name +
+    " | TeenSpace 🌍";
+
+}
+
+
+/* =========================================
+   EDIT PANEL
+========================================= */
+
+function openEditPanel(){
+
+  editUsername.value =
+    viewedProfile.username ||
+    "";
+
+  editCountry.value =
+    viewedProfile.country ||
+    "";
+
+  editBio.value =
+    viewedProfile.bio ||
+    "";
+
+
+  editPanel.classList.add(
+    "show"
+  );
+
+
+  editPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+cancelEdit.addEventListener(
+  "click",
+  function(){
+
+    editPanel.classList.remove(
+      "show"
+    );
+
+  }
+);
+
+
+/* =========================================
+   SAVE PROFILE
+========================================= */
+
+saveProfile.addEventListener(
   "click",
   async function(){
 
-    const text =
-      content.value.trim();
-
-
     if(
-      !text &&
-      !selectedMedia &&
-      !voiceBlob
+      !currentUser ||
+      currentUser.id !==
+        viewedUserId
     ){
 
-      showStatus(
-        "Write something or add media first.",
-        "error"
+      return;
+
+    }
+
+
+    const newUsername =
+      editUsername.value.trim();
+
+
+    const newCountry =
+      editCountry.value;
+
+
+    const newBio =
+      editBio.value.trim();
+
+
+    if(!newUsername){
+
+      alert(
+        "Please enter a username."
       );
 
       return;
@@ -1179,536 +1178,143 @@ publishButton.addEventListener(
     }
 
 
-    publishButton.disabled =
-      true;
+    if(newUsername.length < 2){
 
-    publishButton.textContent =
-      "Publishing...";
-
-
-    try{
-
-      if(!currentUser){
-
-        await loadUser();
-
-      }
-
-
-      let uploadedMediaPath =
-        null;
-
-      let uploadedVoicePath =
-        null;
-
-
-      /* MEDIA */
-
-      if(selectedMedia){
-
-        uploadedMediaPath =
-          await uploadFile(
-            selectedMedia,
-            "media"
-          );
-
-      }
-
-
-      /* VOICE */
-
-      if(voiceBlob){
-
-        uploadedVoicePath =
-          await uploadFile(
-            voiceBlob,
-            "voice"
-          );
-
-      }
-
-
-      /* POST */
-
-      const {
-        error
-      } =
-      await supabaseClient
-
-        .from("posts")
-
-        .insert({
-
-          user_id:
-            currentUser.id,
-
-          content:
-            text,
-
-          media_url:
-            uploadedMediaPath,
-
-          voice_url:
-            uploadedVoicePath
-
-        });
-
-
-      if(error){
-
-        throw error;
-
-      }
-
-
-      showStatus(
-        "✅ Published!",
-        "success"
+      alert(
+        "Username must be at least 2 characters."
       );
 
-
-      content.value =
-        "";
-
-      selectedMedia =
-        null;
-
-      voiceBlob =
-        null;
-
-      mediaInput.value =
-        "";
-
-      preview.innerHTML =
-        "";
-
-      preview.style.display =
-        "none";
-
-
-      quoteBox.style.display =
-        "none";
-
-
-      await loadFeed();
-
-
-    }catch(error){
-
-      console.error(
-        "Publish error:",
-        error
-      );
-
-
-      showStatus(
-        "❌ " +
-        error.message,
-        "error"
-      );
-
+      return;
 
     }
 
 
-    publishButton.disabled =
-      false;
+    saveProfile.disabled =
+      true;
 
-    publishButton.textContent =
-      "Publish Post 🚀";
+    saveProfile.textContent =
+      "Saving...";
 
-  }
-);
-
-
-/* =========================================
-   LOAD FEED
-========================================= */
-
-async function loadFeed(){
-
-  const {
-    data:posts,
-    error
-  } =
-  await supabaseClient
-
-    .from("posts")
-
-    .select(
-      "id, user_id, content, created_at, edited, media_url, voice_url"
-    )
-
-    .order(
-      "created_at",
-      {
-        ascending:false
-      }
-    );
-
-
-  if(error){
-
-    console.error(error);
-
-    feed.innerHTML = `
-
-      <div class="empty">
-
-        ❌ Could not load posts.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  if(
-    !posts ||
-    posts.length === 0
-  ){
-
-    feed.innerHTML = `
-
-      <div class="empty">
-
-        🌟 No posts yet.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  /* PROFILE IDS */
-
-  const ids =
-    [
-      ...new Set(
-        posts.map(
-          post =>
-            post.user_id
-        )
-      )
-    ];
-
-
-  let profiles = [];
-
-
-  if(ids.length){
 
     const {
-      data
+      error
     } =
     await supabaseClient
 
       .from("profiles")
 
-      .select(
-        'username, role, badge, premium, "user-id"'
-      )
+      .update({
 
-      .in(
+        username:
+          newUsername,
+
+        country:
+          newCountry,
+
+        bio:
+          newBio
+
+      })
+
+      .eq(
         "user-id",
-        ids
+        currentUser.id
       );
 
 
-    profiles =
-      data || [];
+    if(error){
 
-  }
+      console.error(error);
 
-
-  const profileMap =
-    new Map();
-
-
-  profiles.forEach(profile => {
-
-    profileMap.set(
-      profile["user-id"],
-      profile
-    );
-
-  });
-
-
-  feed.innerHTML =
-    "";
-
-
-  for(
-    const post of posts
-  ){
-
-    const profile =
-      profileMap.get(
-        post.user_id
-      ) || {};
-
-
-    const username =
-      profile.username ||
-      "TeenSpace User";
-
-
-    let badges =
-      "";
-
-
-    if(
-      profile.role === "owner"
-    ){
-
-      badges += `
-
-        <span class="badge owner">
-          👑 ${escapeHTML(
-            profile.badge ||
-            "FOUNDER"
-          )}
-        </span>
-
-      `;
-
-    }else if(
-      profile.role === "staff"
-    ){
-
-      badges += `
-
-        <span class="badge staff">
-          🛡️ STAFF
-        </span>
-
-      `;
-
-    }else{
-
-      badges += `
-
-        <span class="badge member">
-          👤 MEMBER
-        </span>
-
-      `;
-
-    }
-
-
-    if(
-      profile.premium === true
-    ){
-
-      badges += `
-
-        <span class="badge premium">
-          💎 PREMIUM
-        </span>
-
-      `;
-
-    }
-
-
-    let mediaHTML =
-      "";
-
-
-    if(
-      post.media_url
-    ){
-
-      const url =
-        await getSignedUrl(
-          post.media_url
-        );
-
-
-      if(url){
-
-        if(
-          /\.(mp4|webm|mov|m4v)$/i
-            .test(post.media_url)
-        ){
-
-          mediaHTML = `
-
-            <div class="post-media">
-
-              <video
-                src="${url}"
-                controls
-                preload="metadata"
-              ></video>
-
-            </div>
-
-          `;
-
-        }else{
-
-          mediaHTML = `
-
-            <div class="post-media">
-
-              <img
-                src="${url}"
-                alt="Community media"
-              >
-
-            </div>
-
-          `;
-
-        }
-
-      }
-
-    }
-
-
-    if(
-      post.voice_url
-    ){
-
-      const url =
-        await getSignedUrl(
-          post.voice_url
-        );
-
-
-      if(url){
-
-        mediaHTML += `
-
-          <div class="post-media">
-
-            <audio
-              src="${url}"
-              controls
-            ></audio>
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-
-    const card =
-      document.createElement(
-        "article"
+      alert(
+        "Could not save profile: " +
+        error.message
       );
 
+      saveProfile.disabled =
+        false;
 
-    card.className =
-      "post";
+      saveProfile.textContent =
+        "💾 Save Changes";
 
+      return;
 
-    card.innerHTML = `
-
-      <div class="post-user">
-
-        👤 ${escapeHTML(username)}
-
-        <div class="badges">
-
-          ${badges}
-
-        </div>
-
-      </div>
+    }
 
 
-      ${
-        post.content
-          ? `
-            <div class="post-content">
-              ${escapeHTML(
-                post.content
-              )}
-            </div>
-          `
-          : ""
-      }
+    viewedProfile.username =
+      newUsername;
+
+    viewedProfile.country =
+      newCountry;
+
+    viewedProfile.bio =
+      newBio;
 
 
-      ${mediaHTML}
+    displayProfile();
 
 
-      <div class="post-time">
-
-        ${new Date(
-          post.created_at
-        ).toLocaleString()}
-
-        ${
-          post.edited
-            ? " · edited"
-            : ""
-        }
-
-      </div>
-
-    `;
-
-
-    feed.appendChild(
-      card
+    editPanel.classList.add(
+      "show"
     );
 
-  }
 
-}
+    showTemporarySuccess();
+
+    saveProfile.disabled =
+      false;
+
+    saveProfile.textContent =
+      "💾 Save Changes";
+
+  }
+);
 
 
 /* =========================================
-   AUTO REFRESH
+   SUCCESS MESSAGE
 ========================================= */
 
-setInterval(
-  loadFeed,
-  10000
-);
+function showTemporarySuccess(){
+
+  const notice =
+    document.createElement(
+      "div"
+    );
+
+  notice.className =
+    "status success";
+
+  notice.textContent =
+    "✅ Profile updated!";
+
+
+  profileCard.parentNode.insertBefore(
+    notice,
+    profileCard
+  );
+
+
+  setTimeout(
+    function(){
+
+      notice.remove();
+
+    },
+    2500
+  );
+
+}
 
 
 /* =========================================
    START
 ========================================= */
 
-async function start(){
-
-  const user =
-    await loadUser();
-
-
-  if(!user){
-    return;
-  }
-
-
-  loadQuote();
-
-  await loadFeed();
-
-}
-
-
-start();
+loadProfile();
 
 </script>
-
 
 </body>
 
