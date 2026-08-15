@@ -1,21 +1,16 @@
-# TeenSpace Community — Clickable Profiles & Private Messages
+# TeenSpace Community — Working Profile Menu
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>TeenSpace Community 🌍</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
   box-sizing:border-box;
   font-family:Arial,sans-serif;
@@ -41,12 +36,10 @@ header{
 .logo{
   font-size:28px;
   font-weight:bold;
-  white-space:nowrap;
 }
 
 nav{
   display:flex;
-  align-items:center;
   flex-wrap:wrap;
   gap:8px;
 }
@@ -60,17 +53,7 @@ nav a{
 }
 
 nav a:hover{
-  background:rgba(255,255,255,.14);
-}
-
-.customize-nav{
-  background:rgba(255,255,255,.20);
-  border:1px solid rgba(255,255,255,.35);
-}
-
-.premium-nav{
-  background:rgba(255,220,100,.20);
-  border:1px solid rgba(255,240,160,.45);
+  background:rgba(255,255,255,.15);
 }
 
 .hero{
@@ -88,7 +71,6 @@ nav a:hover{
 .hero p{
   color:#666;
   font-size:18px;
-  margin-top:12px;
 }
 
 .container{
@@ -108,11 +90,6 @@ nav a:hover{
   font-size:21px;
   font-weight:bold;
   margin-bottom:28px;
-  box-shadow:0 8px 22px rgba(108,92,231,.20);
-}
-
-.create-post:hover{
-  background:#5747cf;
 }
 
 .status{
@@ -121,7 +98,6 @@ nav a:hover{
   padding:30px;
   text-align:center;
   color:#666;
-  box-shadow:0 8px 24px rgba(0,0,0,.06);
 }
 
 .status.error{
@@ -140,90 +116,31 @@ nav a:hover{
 
 .post-owner{
   border-left-color:#f1b500;
-  background:linear-gradient(135deg,#fffdf4,#ffffff);
+  background:linear-gradient(135deg,#fffdf4,#fff);
 }
 
 .post-staff{
   border-left-color:#2787d8;
-  background:linear-gradient(135deg,#f5fbff,#ffffff);
 }
 
 .post-header{
   display:flex;
-  justify-content:space-between;
   align-items:flex-start;
-  gap:15px;
 }
-
-.username{
-  color:#5f4ce0;
-  font-size:21px;
-  font-weight:bold;
-  word-break:break-word;
-}
-
-/* CLICKABLE USERNAME */
 
 .username-button{
   border:none;
-  background:transparent;
+  background:none;
+  padding:0;
   color:#5f4ce0;
   font-size:21px;
   font-weight:bold;
-  padding:0;
   cursor:pointer;
   text-align:left;
 }
 
 .username-button:hover{
   text-decoration:underline;
-}
-
-/* PROFILE MENU */
-
-.profile-menu{
-  position:absolute;
-  top:70px;
-  left:24px;
-  z-index:50;
-  width:220px;
-  background:white;
-  border-radius:16px;
-  padding:10px;
-  box-shadow:0 12px 35px rgba(0,0,0,.18);
-  border:1px solid #eee;
-  display:none;
-}
-
-.profile-menu.show{
-  display:block;
-}
-
-.profile-menu-title{
-  padding:8px 10px;
-  font-size:13px;
-  color:#888;
-  border-bottom:1px solid #eee;
-  margin-bottom:6px;
-}
-
-.profile-menu a{
-  display:block;
-  text-decoration:none;
-  padding:12px;
-  border-radius:10px;
-  font-weight:bold;
-  color:#444;
-}
-
-.profile-menu a:hover{
-  background:#eeeaff;
-  color:#5f4ce0;
-}
-
-.profile-menu .private-link:hover{
-  background:#ffeaf4;
-  color:#b52270;
 }
 
 .badge-row{
@@ -275,11 +192,6 @@ nav a:hover{
   font-size:13px;
 }
 
-.edited{
-  font-style:italic;
-  margin-left:6px;
-}
-
 .actions{
   display:flex;
   flex-wrap:wrap;
@@ -297,17 +209,9 @@ nav a:hover{
   cursor:pointer;
 }
 
-.action-btn:hover{
-  background:#ddd6ff;
-}
-
 .delete-btn{
   background:#ffe5ea;
   color:#d63050;
-}
-
-.delete-btn:hover{
-  background:#ffd5dd;
 }
 
 .edit-area{
@@ -321,8 +225,6 @@ nav a:hover{
   border:1px solid #ccc;
   border-radius:14px;
   font-size:17px;
-  resize:vertical;
-  outline:none;
 }
 
 .save-edit{
@@ -333,7 +235,53 @@ nav a:hover{
   background:#6c5ce7;
   color:white;
   font-weight:bold;
-  cursor:pointer;
+}
+
+/* =========================================
+   FLOATING USER MENU
+========================================= */
+
+#userMenu{
+  position:fixed;
+  z-index:99999;
+  width:230px;
+  background:white;
+  border-radius:16px;
+  padding:10px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+  border:1px solid #ddd;
+  display:none;
+}
+
+#userMenu.show{
+  display:block;
+}
+
+.user-menu-name{
+  font-weight:bold;
+  color:#5f4ce0;
+  padding:10px;
+  border-bottom:1px solid #eee;
+  margin-bottom:6px;
+}
+
+#userMenu a{
+  display:block;
+  padding:13px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  color:#444;
+}
+
+#userMenu a:hover{
+  background:#eeeaff;
+  color:#5f4ce0;
+}
+
+#userMenu .pm-link:hover{
+  background:#ffeaf4;
+  color:#b52270;
 }
 
 footer{
@@ -347,38 +295,21 @@ footer{
 
   header{
     flex-direction:column;
-    gap:14px;
-  }
-
-  nav{
-    justify-content:center;
-  }
-
-  nav a{
-    margin:3px;
   }
 
   .hero h1{
     font-size:34px;
   }
 
-  .container{
-    width:94%;
-  }
-
   .post{
     padding:20px;
   }
 
-  .profile-menu{
-    left:20px;
-    top:68px;
+  #userMenu{
+    width:210px;
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
@@ -390,38 +321,20 @@ footer{
 </div>
 
 <nav>
-
 <a href="home.html">Home</a>
-
 <a href="explore.html">Explore</a>
-
 <a href="community.html">Community</a>
-
 <a href="profile.html">Profile</a>
-
-<a
-href="customize.html"
-class="customize-nav"
->
-✨ Customize
-</a>
-
-<a
-href="premium.html"
-class="premium-nav"
->
-💎 Premium
-</a>
-
+<a href="friends.html">Friends</a>
+<a href="customize.html">✨ Customize</a>
+<a href="premium.html">💎 Premium</a>
 </nav>
 
 </header>
 
 <section class="hero">
 
-<h1>
-💬 TeenSpace Community
-</h1>
+<h1>💬 TeenSpace Community</h1>
 
 <p>
 Share, connect and build the TeenSpace world 🌍
@@ -431,10 +344,7 @@ Share, connect and build the TeenSpace world 🌍
 
 <main class="container">
 
-<a
-href="post.html"
-class="create-post"
->
+<a href="post.html" class="create-post">
 ✍️ Create a Post
 </a>
 
@@ -449,17 +359,40 @@ Loading posts...
 </main>
 
 <footer>
-
-© 2026 TeenSpace 🌍 |
-Made for teens, with safety in mind.
-
+© 2026 TeenSpace 🌍 | Made for teens, with safety in mind.
 </footer>
 
-<script>
 
-/* =========================================
-   SUPABASE
-========================================= */
+<!-- GLOBAL USER MENU -->
+
+<div id="userMenu">
+
+<div
+id="userMenuName"
+class="user-menu-name"
+>
+👤 User
+</div>
+
+<a
+id="viewProfileLink"
+href="#"
+>
+👤 View Profile
+</a>
+
+<a
+id="privateMessageLink"
+class="pm-link"
+href="#"
+>
+💬 Private Message
+</a>
+
+</div>
+
+
+<script>
 
 const SUPABASE_URL =
 "https://gcigveojqwwovitlwtxl.supabase.co";
@@ -472,20 +405,33 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY,
 {
-  auth:{
-    persistSession:true,
-    autoRefreshToken:true
-  }
-});
+auth:{
+persistSession:true,
+autoRefreshToken:true
+}
+}
+);
 
 const postsContainer =
 document.getElementById("posts");
+
+const userMenu =
+document.getElementById("userMenu");
+
+const userMenuName =
+document.getElementById("userMenuName");
+
+const viewProfileLink =
+document.getElementById("viewProfileLink");
+
+const privateMessageLink =
+document.getElementById("privateMessageLink");
 
 let currentUser = null;
 
 
 /* =========================================
-   CURRENT USER
+   GET USER
 ========================================= */
 
 async function getCurrentUser(){
@@ -521,31 +467,81 @@ return div.innerHTML;
 
 
 /* =========================================
-   TIME
+   USER MENU
 ========================================= */
 
-function formatTime(dateString){
+function openUserMenu(
+button,
+userId,
+username
+){
 
-return new Date(
-dateString
-).toLocaleString();
+userMenuName.textContent =
+"👤 " + username;
+
+viewProfileLink.href =
+"profile.html?user_id=" +
+encodeURIComponent(userId);
+
+privateMessageLink.href =
+"messages.html?user_id=" +
+encodeURIComponent(userId) +
+"&name=" +
+encodeURIComponent(username);
+
+
+/* Put menu beside the username */
+
+const rect =
+button.getBoundingClientRect();
+
+let left =
+rect.left;
+
+let top =
+rect.bottom + 8;
+
+
+/* Keep menu inside screen */
+
+if(
+left + 230 >
+window.innerWidth - 10
+){
+
+left =
+window.innerWidth - 240;
+
+}
+
+if(
+top + 150 >
+window.innerHeight
+){
+
+top =
+rect.top - 160;
+
+}
+
+userMenu.style.left =
+Math.max(10,left) + "px";
+
+userMenu.style.top =
+Math.max(10,top) + "px";
+
+userMenu.classList.add(
+"show"
+);
 
 }
 
 
-/* =========================================
-   CLOSE ALL PROFILE MENUS
-========================================= */
+function closeUserMenu(){
 
-function closeProfileMenus(){
-
-document
-.querySelectorAll(".profile-menu")
-.forEach(menu => {
-
-menu.classList.remove("show");
-
-});
+userMenu.classList.remove(
+"show"
+);
 
 }
 
@@ -572,7 +568,7 @@ await supabaseClient
 .from("posts")
 
 .select(
-"id, user_id, content, created_at, edited"
+"id,user_id,content,created_at,edited"
 )
 
 .order(
@@ -584,11 +580,6 @@ ascending:false
 
 
 if(postsError){
-
-console.error(
-"Posts error:",
-postsError
-);
 
 postsContainer.innerHTML = `
 <div class="status error">
@@ -629,13 +620,8 @@ post => post.user_id
 ];
 
 
-let profiles = [];
-
-
-if(userIds.length > 0){
-
 const {
-data,
+data:profiles,
 error:profileError
 } =
 await supabaseClient
@@ -643,7 +629,7 @@ await supabaseClient
 .from("profiles")
 
 .select(
-'username, role, badge, premium, "user-id"'
+'username,role,badge,premium,"user-id"'
 )
 
 .in(
@@ -655,16 +641,8 @@ userIds
 if(profileError){
 
 console.error(
-"Profiles error:",
 profileError
 );
-
-}else{
-
-profiles =
-data || [];
-
-}
 
 }
 
@@ -673,7 +651,8 @@ const profileMap =
 new Map();
 
 
-profiles.forEach(profile => {
+(profiles || []).forEach(
+profile => {
 
 profileMap.set(
 profile["user-id"],
@@ -683,7 +662,8 @@ profile
 });
 
 
-postsContainer.innerHTML = "";
+postsContainer.innerHTML =
+"";
 
 
 posts.forEach(post => {
@@ -709,8 +689,9 @@ profile.premium === true;
 
 
 const card =
-document.createElement("article");
-
+document.createElement(
+"article"
+);
 
 card.className =
 "post";
@@ -733,11 +714,10 @@ card.classList.add(
 }
 
 
-/* =========================================
-   BADGES
-========================================= */
+/* BADGES */
 
-let badgeHTML = "";
+let badgeHTML =
+"";
 
 
 if(role === "owner"){
@@ -780,9 +760,7 @@ badgeHTML += `
 }
 
 
-/* =========================================
-   POST HTML
-========================================= */
+/* POST */
 
 card.innerHTML = `
 
@@ -805,48 +783,14 @@ ${badgeHTML}
 
 </div>
 
-
-<!-- PROFILE MENU -->
-
-<div class="profile-menu">
-
-<div class="profile-menu-title">
-👤 ${escapeHTML(username)}
-</div>
-
-<a
-href="profile.html?user_id=${encodeURIComponent(post.user_id)}"
->
-👤 View Profile
-</a>
-
-<a
-class="private-link"
-href="messages.html?user_id=${encodeURIComponent(post.user_id)}&name=${encodeURIComponent(username)}"
->
-💬 Private Message
-</a>
-
-</div>
-
-
 <div class="message">
 ${escapeHTML(post.content)}
 </div>
 
-
 <div class="time">
-
-${formatTime(post.created_at)}
-
-${
-post.edited
-? '<span class="edited">(edited)</span>'
-: ''
-}
-
+${new Date(post.created_at).toLocaleString()}
+${post.edited ? " (edited)" : ""}
 </div>
-
 
 <div class="actions">
 
@@ -856,12 +800,10 @@ class="action-btn quote-button"
 💬 Quote
 </button>
 
-
 ${
 currentUser &&
 currentUser.id === post.user_id
 ?
-
 `
 <button
 class="action-btn edit-button"
@@ -875,9 +817,7 @@ class="action-btn delete-btn delete-button"
 🗑️ Delete
 </button>
 `
-
 :
-
 ""
 }
 
@@ -887,7 +827,7 @@ class="action-btn delete-btn delete-button"
 
 
 /* =========================================
-   USERNAME MENU
+   USERNAME CLICK
 ========================================= */
 
 const usernameButton =
@@ -895,47 +835,28 @@ card.querySelector(
 ".username-button"
 );
 
-const profileMenu =
-card.querySelector(
-".profile-menu"
-);
-
-
 usernameButton.addEventListener(
 "click",
 function(event){
 
 event.stopPropagation();
 
-const alreadyOpen =
-profileMenu.classList.contains(
-"show"
+openUserMenu(
+usernameButton,
+post.user_id,
+username
 );
 
-closeProfileMenus();
-
-if(!alreadyOpen){
-
-profileMenu.classList.add(
-"show"
-);
-
-}
-
-}
-);
+});
 
 
 /* =========================================
    QUOTE
 ========================================= */
 
-const quoteButton =
-card.querySelector(
-".quote-button"
-);
-
-quoteButton.addEventListener(
+card
+.querySelector(".quote-button")
+.addEventListener(
 "click",
 function(){
 
@@ -951,8 +872,7 @@ encodeURIComponent(
 quoteText
 );
 
-}
-);
+});
 
 
 /* =========================================
@@ -975,8 +895,7 @@ card,
 post
 );
 
-}
-);
+});
 
 }
 
@@ -1000,8 +919,7 @@ deletePost(
 post.id
 );
 
-}
-);
+});
 
 }
 
@@ -1016,38 +934,35 @@ card
 
 
 /* =========================================
-   CLOSE MENU WHEN CLICKING OUTSIDE
+   CLOSE MENU
 ========================================= */
 
 document.addEventListener(
 "click",
-function(){
+function(event){
 
-closeProfileMenus();
+if(
+!userMenu.contains(event.target)
+){
+
+closeUserMenu();
 
 }
-);
+
+});
 
 
 /* =========================================
-   EDIT POST
+   EDIT
 ========================================= */
 
-function openEdit(
-card,
-post
-){
+function openEdit(card,post){
 
 const message =
-card.querySelector(
-".message"
-);
+card.querySelector(".message");
 
 const actions =
-card.querySelector(
-".actions"
-);
-
+card.querySelector(".actions");
 
 message.style.display =
 "none";
@@ -1055,29 +970,20 @@ message.style.display =
 actions.style.display =
 "none";
 
-
 const editArea =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 editArea.className =
 "edit-area";
 
-
 const textarea =
-document.createElement(
-"textarea"
-);
+document.createElement("textarea");
 
 textarea.value =
 post.content;
 
-
 const saveButton =
-document.createElement(
-"button"
-);
+document.createElement("button");
 
 saveButton.className =
 "save-edit";
@@ -1085,25 +991,19 @@ saveButton.className =
 saveButton.textContent =
 "Save Changes";
 
-
-saveButton.addEventListener(
-"click",
+saveButton.onclick =
 async function(){
 
 const newContent =
 textarea.value.trim();
 
-
 if(!newContent){
 
-alert(
-"Post cannot be empty."
-);
+alert("Post cannot be empty.");
 
 return;
 
 }
-
 
 const {
 error
@@ -1113,13 +1013,8 @@ await supabaseClient
 .from("posts")
 
 .update({
-
-content:
-newContent,
-
-edited:
-true
-
+content:newContent,
+edited:true
 })
 
 .eq(
@@ -1127,25 +1022,17 @@ true
 post.id
 );
 
-
 if(error){
 
-console.error(error);
-
-alert(
-error.message
-);
+alert(error.message);
 
 return;
 
 }
 
-
 loadPosts();
 
-}
-);
-
+};
 
 editArea.appendChild(
 textarea
@@ -1163,25 +1050,18 @@ editArea
 
 
 /* =========================================
-   DELETE POST
+   DELETE
 ========================================= */
 
-async function deletePost(
-postId
+async function deletePost(postId){
+
+if(
+!confirm("Delete this post?")
 ){
-
-const confirmed =
-confirm(
-"Delete this post?"
-);
-
-
-if(!confirmed){
 
 return;
 
 }
-
 
 const {
 error
@@ -1197,19 +1077,13 @@ await supabaseClient
 postId
 );
 
-
 if(error){
 
-console.error(error);
-
-alert(
-error.message
-);
+alert(error.message);
 
 return;
 
 }
-
 
 loadPosts();
 
@@ -1228,12 +1102,10 @@ await loadPosts();
 
 }
 
-
 start();
 
 </script>
 
 </body>
-
 </html>
 ```
