@@ -3,930 +3,1817 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TeenSpace Community 💬</title>
+<title>TeenSpace Community</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 *{
   box-sizing:border-box;
 }
 
 :root{
-  --accent:#6c5ce7;
-  --page:#f1f3f8;
-  --chat:#ffffff;
-  --bubble:#eeeaff;
-  --text:#202124;
-  --muted:#777;
-  --border:#e4e4e8;
-  --header:#ffffff;
-  --input:#f5f5f8;
-  --danger:#ff4d6d;
-  --font:Arial,sans-serif;
+  --bg:#050914;
+  --bg2:#080d1c;
+  --panel:#0b1122;
+  --panel2:#0e162b;
+  --panel3:#121a31;
+  --border:rgba(255,255,255,.08);
+
+  --accent:#8b5cf6;
+  --accent2:#6366f1;
+  --pink:#d946ef;
+
+  --text:#f5f7ff;
+  --muted:#8e99b4;
+
+  --green:#20d879;
+  --red:#ff4d6d;
+
+  --font:Inter,Arial,sans-serif;
 }
 
-*{
-  scrollbar-width:thin;
-}
-
-body.dark{
-  --page:#101116;
-  --chat:#17181f;
-  --bubble:#252631;
-  --text:#f4f4f7;
-  --muted:#9b9ca8;
-  --border:#292a34;
-  --header:#17181f;
-  --input:#22232d;
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
 }
 
 body{
-  margin:0;
-  min-height:100vh;
-  background:var(--page);
+  background:
+    radial-gradient(circle at 20% 10%,rgba(99,102,241,.13),transparent 28%),
+    radial-gradient(circle at 80% 90%,rgba(217,70,239,.10),transparent 30%),
+    var(--bg);
+
   color:var(--text);
+
   font-family:var(--font);
-  transition:.25s;
-}
 
-/* HEADER */
-
-header{
-  height:64px;
-  background:var(--header);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-
-.logo{
-  color:var(--accent);
-  font-size:23px;
-  font-weight:800;
-}
-
-nav{
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-
-nav a,
-.theme-btn{
-  border:0;
-  background:transparent;
-  color:var(--text);
-  text-decoration:none;
-  padding:9px 11px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-nav a:hover,
-.theme-btn:hover{
-  background:var(--bubble);
-}
-
-.premium-nav{
-  color:#b88600!important;
-}
-
-/* PAGE */
-
-.page{
-  width:100%;
-  max-width:1250px;
-  margin:auto;
-  padding:22px;
-}
-
-/* CHAT */
-
-.chat{
-  height:calc(100vh - 108px);
-  min-height:600px;
-  display:flex;
-  background:var(--chat);
-  border:1px solid var(--border);
-  border-radius:20px;
   overflow:hidden;
-  box-shadow:0 12px 35px rgba(0,0,0,.10);
 }
 
-/* LEFT PANEL */
+/* =========================================
+   APP
+========================================= */
 
-.chat-sidebar{
-  width:255px;
+.app{
+  height:100vh;
+  display:grid;
+
+  grid-template-columns:
+    335px
+    290px
+    minmax(0,1fr);
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* =========================================
+   LEFT SIDEBAR
+========================================= */
+
+.sidebar{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10,16,33,.98),
+      rgba(6,10,22,.98)
+    );
+
   border-right:1px solid var(--border);
-  background:var(--header);
+
   display:flex;
   flex-direction:column;
+
+  min-width:0;
 }
 
-.sidebar-title{
-  padding:22px;
-  font-size:21px;
+.brand{
+  height:92px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 25px;
+
+  border-bottom:1px solid var(--border);
+}
+
+.brand-icon{
+  font-size:35px;
+  margin-right:10px;
+}
+
+.brand-name{
+  font-size:25px;
   font-weight:800;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ff4fd8,
+      #8b5cf6,
+      #5da9ff
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
 
-.online-box{
-  margin:0 15px 15px;
-  padding:13px;
+.brand-sub{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.nav{
+  padding:18px 14px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  width:100%;
+
+  padding:13px 16px;
+
+  margin-bottom:6px;
+
   border-radius:13px;
-  background:var(--bubble);
-}
 
-.online-dot{
-  display:inline-block;
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#25c46b;
-  margin-right:6px;
-}
+  color:#b8c0d4;
 
-.room{
-  margin:4px 12px;
-  padding:13px;
-  border-radius:12px;
-  cursor:pointer;
+  text-decoration:none;
+
+  font-size:15px;
   font-weight:600;
+
+  transition:.2s;
 }
 
-.room.active{
-  background:var(--accent);
+.nav-item:hover{
+  background:rgba(139,92,246,.12);
   color:white;
 }
 
-/* MAIN CHAT */
+.nav-item.active{
+  color:white;
 
-.chat-main{
-  flex:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(139,92,246,.30),
+      rgba(217,70,239,.16)
+    );
+
+  box-shadow:
+    inset 3px 0 0 #9b5cff;
 }
 
-.chat-header{
-  min-height:72px;
-  border-bottom:1px solid var(--border);
+.nav-icon{
+  width:22px;
+  text-align:center;
+  font-size:19px;
+}
+
+.nav-badge{
+  margin-left:auto;
+
+  min-width:23px;
+  height:23px;
+
+  padding:0 7px;
+
+  border-radius:999px;
+
+  background:#8b5cf6;
+
+  color:white;
+
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:12px 20px;
+  justify-content:center;
+
+  font-size:11px;
 }
 
-.room-name{
-  font-size:20px;
+/* =========================================
+   PREMIUM BOX
+========================================= */
+
+.premium-box{
+  margin:10px 18px;
+
+  padding:20px;
+
+  border-radius:18px;
+
+  border:1px solid rgba(168,85,247,.45);
+
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(217,70,239,.25),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(88,28,135,.45),
+      rgba(49,46,129,.28)
+    );
+}
+
+.premium-title{
+  font-weight:800;
+  color:#e8d5ff;
+  font-size:16px;
+}
+
+.premium-text{
+  color:#b7a9d4;
+  font-size:12px;
+  line-height:1.5;
+  margin:8px 0 15px;
+}
+
+.premium-button{
+  width:100%;
+  border:0;
+
+  padding:11px;
+
+  border-radius:11px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #9333ea,
+      #c026d3
+    );
+
+  color:white;
+
+  font-weight:800;
+
+  cursor:pointer;
+}
+
+/* =========================================
+   CURRENT USER
+========================================= */
+
+.current-user{
+  margin-top:auto;
+
+  padding:15px;
+
+  border-top:1px solid var(--border);
+
+  display:flex;
+  align-items:center;
+
+  gap:11px;
+}
+
+.current-avatar{
+  width:43px;
+  height:43px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:2px solid #765cff;
+}
+
+.current-info{
+  min-width:0;
+  flex:1;
+}
+
+.current-name{
+  font-size:14px;
+  font-weight:700;
+}
+
+.current-handle{
+  font-size:11px;
+  color:var(--muted);
+
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.online-dot{
+  width:9px;
+  height:9px;
+
+  border-radius:50%;
+
+  background:var(--green);
+
+  box-shadow:0 0 10px rgba(32,216,121,.8);
+
+  display:inline-block;
+}
+
+/* =========================================
+   MEMBERS
+========================================= */
+
+.members{
+  background:#080e1d;
+
+  border-right:1px solid var(--border);
+
+  display:flex;
+  flex-direction:column;
+
+  min-width:0;
+}
+
+.members-header{
+  height:92px;
+
+  padding:22px 18px;
+
+  border-bottom:1px solid var(--border);
+}
+
+.members-title{
+  font-size:15px;
   font-weight:800;
 }
 
-.room-description{
+.members-count{
+  color:var(--green);
+}
+
+.search{
+  margin-top:14px;
+
+  width:100%;
+
+  background:#10172b;
+
+  border:1px solid var(--border);
+
+  border-radius:11px;
+
+  padding:11px 13px;
+
+  color:white;
+
+  outline:none;
+}
+
+.search::placeholder{
+  color:#68738e;
+}
+
+.member-section{
+  padding:15px 12px 5px;
+
+  font-size:11px;
+
+  color:#7e8aa7;
+
+  font-weight:800;
+
+  letter-spacing:.5px;
+}
+
+.member-list{
+  overflow-y:auto;
+  flex:1;
+  padding:5px 10px 20px;
+}
+
+.member{
+  display:flex;
+
+  align-items:center;
+
+  gap:11px;
+
+  padding:9px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  transition:.15s;
+}
+
+.member:hover{
+  background:rgba(255,255,255,.045);
+}
+
+.member-avatar-wrap{
+  position:relative;
+  flex-shrink:0;
+}
+
+.member-avatar{
+  width:42px;
+  height:42px;
+
+  object-fit:cover;
+
+  border-radius:50%;
+
+  border:2px solid #33405d;
+}
+
+.member-status{
+  position:absolute;
+
+  right:-1px;
+  bottom:0;
+
+  width:10px;
+  height:10px;
+
+  border-radius:50%;
+
+  border:2px solid #080e1d;
+
+  background:#20d879;
+}
+
+.member-info{
+  min-width:0;
+}
+
+.member-name{
   font-size:13px;
-  color:var(--muted);
+  font-weight:700;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.member-preview{
+  font-size:11px;
+
+  color:#7f8aa3;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
   margin-top:3px;
 }
 
-.premium-label{
-  background:#fff0b5;
-  color:#916d00;
-  padding:7px 10px;
-  border-radius:999px;
-  font-size:11px;
+/* =========================================
+   CHAT
+========================================= */
+
+.chat{
+  min-width:0;
+
+  display:flex;
+  flex-direction:column;
+
+  background:
+    radial-gradient(
+      circle at 60% 20%,
+      rgba(99,102,241,.06),
+      transparent 35%
+    ),
+    #060b18;
+}
+
+.chat-header{
+  height:92px;
+
+  padding:0 22px;
+
+  display:flex;
+  align-items:center;
+
+  border-bottom:1px solid var(--border);
+
+  gap:15px;
+}
+
+.community-icon{
+  width:43px;
+  height:43px;
+
+  border-radius:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #191f38,
+      #0f1528
+    );
+
+  border:1px solid var(--border);
+
+  font-size:21px;
+}
+
+.chat-heading{
+  flex:1;
+  min-width:0;
+}
+
+.chat-title{
+  font-size:19px;
   font-weight:800;
 }
 
-/* MESSAGES */
+.chat-subtitle{
+  color:#929bb2;
+  font-size:13px;
+  margin-top:4px;
+}
+
+.chat-actions{
+  display:flex;
+  gap:8px;
+}
+
+.icon-btn{
+  width:43px;
+  height:43px;
+
+  border-radius:12px;
+
+  border:1px solid var(--border);
+
+  background:#0e1527;
+
+  color:#cbd3e8;
+
+  cursor:pointer;
+
+  font-size:18px;
+}
+
+.icon-btn:hover{
+  background:#151d34;
+  color:white;
+}
+
+/* =========================================
+   PUBLIC/PRIVATE
+========================================= */
+
+.chat-tabs{
+  padding:11px 20px 0;
+
+  display:flex;
+
+  gap:5px;
+}
+
+.tab{
+  padding:10px 22px;
+
+  border:0;
+
+  background:#10172a;
+
+  color:#7e89a3;
+
+  border-radius:11px 11px 0 0;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+.tab.active{
+  color:#b989ff;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(139,92,246,.20),
+      rgba(217,70,239,.10)
+    );
+
+  border-bottom:2px solid #9b5cff;
+}
+
+/* =========================================
+   SAFETY NOTICE
+========================================= */
+
+.notice{
+  margin:10px 20px;
+
+  padding:11px 14px;
+
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(139,92,246,.10),
+      rgba(217,70,239,.07)
+    );
+
+  border:1px solid var(--border);
+
+  color:#e1c9ff;
+
+  font-size:13px;
+
+  display:flex;
+  align-items:center;
+
+  gap:8px;
+}
+
+.notice-close{
+  margin-left:auto;
+
+  border:0;
+
+  background:none;
+
+  color:#8790a8;
+
+  cursor:pointer;
+}
+
+/* =========================================
+   MESSAGES
+========================================= */
 
 .messages{
   flex:1;
+
   overflow-y:auto;
-  padding:22px;
-  background:var(--page);
+
+  padding:10px 25px 20px;
 }
 
 .status{
   text-align:center;
-  color:var(--muted);
-  padding:40px;
+
+  color:#79849d;
+
+  padding:50px 15px;
 }
 
 .message-row{
   display:flex;
-  gap:10px;
-  margin-bottom:18px;
-  align-items:flex-end;
+
+  gap:11px;
+
+  margin:18px 0;
+
+  align-items:flex-start;
 }
 
 .message-row.mine{
   justify-content:flex-end;
 }
 
-.avatar{
+.message-row.mine .message-avatar-wrap{
+  order:2;
+}
+
+.message-row.mine .message-content{
+  align-items:flex-end;
+}
+
+.message-avatar-wrap{
+  position:relative;
+
+  flex-shrink:0;
+}
+
+.message-avatar{
   width:42px;
   height:42px;
+
   border-radius:50%;
+
   object-fit:cover;
-  background:var(--bubble);
+
+  border:2px solid #28334d;
+
   cursor:pointer;
-  border:2px solid var(--chat);
-  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+.message-online{
+  position:absolute;
+
+  right:0;
+  bottom:0;
+
+  width:10px;
+  height:10px;
+
+  border-radius:50%;
+
+  background:#20d879;
+
+  border:2px solid #060b18;
 }
 
 .message-content{
-  max-width:min(72%,650px);
+  max-width:min(72%,700px);
+
+  display:flex;
+  flex-direction:column;
 }
 
-.username{
-  color:var(--accent);
+.message-name{
   font-size:13px;
+
+  color:#9bbcff;
+
   font-weight:800;
-  margin:0 0 5px 6px;
+
+  margin:0 0 5px 3px;
+
   cursor:pointer;
 }
 
-.username:hover{
+.message-name:hover{
   text-decoration:underline;
 }
 
+.message-name.premium{
+  color:#d49aff;
+}
+
+.premium-badge{
+  display:inline-block;
+
+  margin-left:6px;
+
+  padding:2px 6px;
+
+  border-radius:5px;
+
+  background:#752bb5;
+
+  color:#efd8ff;
+
+  font-size:9px;
+
+  vertical-align:middle;
+}
+
 .bubble{
-  position:relative;
-  background:var(--bubble);
-  color:var(--text);
+  background:
+    linear-gradient(
+      135deg,
+      #121a2e,
+      #151d32
+    );
+
+  border:1px solid rgba(255,255,255,.045);
+
   padding:11px 14px;
-  border-radius:17px;
+
+  border-radius:8px 15px 15px 15px;
+
+  color:#eef1f8;
+
   line-height:1.5;
+
   white-space:pre-wrap;
+
   word-break:break-word;
+
+  font-size:14px;
 }
 
 .mine .bubble{
-  background:var(--accent);
-  color:white;
-  border-bottom-right-radius:5px;
+  background:
+    linear-gradient(
+      135deg,
+      #6739db,
+      #7538df
+    );
+
+  border-color:rgba(255,255,255,.08);
+
+  border-radius:15px 8px 15px 15px;
 }
 
-.message-time{
-  color:var(--muted);
+.message-meta{
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  color:#69758f;
+
   font-size:10px;
-  margin:5px 6px;
+
+  margin:5px 4px;
 }
 
-.edited{
-  font-style:italic;
+.mine .message-meta{
+  justify-content:flex-end;
 }
 
-/* REACTIONS */
+.media{
+  display:block;
+
+  max-width:100%;
+  max-height:360px;
+
+  border-radius:11px;
+}
+
+.audio{
+  width:310px;
+  max-width:100%;
+}
+
+/* =========================================
+   REACTIONS
+========================================= */
 
 .reactions{
   display:flex;
+
   gap:5px;
-  margin-top:5px;
-  flex-wrap:wrap;
+
+  margin-top:6px;
 }
 
 .reaction{
   border:1px solid var(--border);
-  background:var(--chat);
-  border-radius:999px;
-  padding:4px 8px;
+
+  background:#0e1629;
+
+  color:#e7eaf3;
+
+  border-radius:9px;
+
+  padding:5px 9px;
+
   cursor:pointer;
+
   font-size:12px;
 }
 
 .reaction:hover{
-  transform:scale(1.05);
+  background:#172039;
 }
 
-/* MESSAGE ACTIONS */
-
-.message-actions{
-  display:none;
-  gap:5px;
-  margin-top:5px;
-}
-
-.message-row:hover .message-actions{
-  display:flex;
-}
-
-.small-btn{
-  border:0;
-  background:var(--chat);
-  color:var(--muted);
-  border-radius:8px;
-  padding:5px 8px;
-  cursor:pointer;
-  font-size:11px;
-}
-
-.small-btn:hover{
-  background:var(--bubble);
-}
-
-/* MEDIA */
-
-.media{
-  display:block;
-  max-width:100%;
-  max-height:350px;
-  border-radius:13px;
-}
-
-.audio{
-  max-width:100%;
-  width:290px;
-}
-
-/* COMPOSER */
+/* =========================================
+   COMPOSER
+========================================= */
 
 .composer{
-  background:var(--header);
   border-top:1px solid var(--border);
-  padding:12px;
+
+  padding:13px 20px 18px;
+
+  background:#080e1c;
 }
 
-.toolbar{
+.composer-box{
+  border:1px solid rgba(255,255,255,.09);
+
+  background:#0e1527;
+
+  border-radius:15px;
+
   display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-bottom:8px;
-}
 
-.tool{
-  border:0;
-  background:var(--bubble);
-  color:var(--accent);
-  border-radius:10px;
-  padding:8px 11px;
-  cursor:pointer;
-  font-weight:700;
-}
+  align-items:flex-end;
 
-.tool:hover{
-  filter:brightness(.95);
+  padding:8px;
+
+  gap:8px;
 }
 
 textarea{
-  width:100%;
-  min-height:52px;
-  max-height:150px;
-  resize:vertical;
-  border:1px solid var(--border);
-  background:var(--input);
-  color:var(--text);
-  border-radius:14px;
-  padding:13px;
-  font-family:var(--font);
-  font-size:16px;
-  outline:none;
-}
-
-textarea:focus{
-  border-color:var(--accent);
-}
-
-.send-row{
-  display:flex;
-  gap:8px;
-  margin-top:8px;
-}
-
-.send{
   flex:1;
+
+  min-height:45px;
+  max-height:130px;
+
+  resize:none;
+
   border:0;
-  border-radius:12px;
-  background:var(--accent);
+
+  outline:none;
+
+  background:transparent;
+
   color:white;
-  padding:12px;
-  font-size:16px;
-  font-weight:800;
+
+  font-family:var(--font);
+
+  font-size:14px;
+
+  padding:10px;
+}
+
+textarea::placeholder{
+  color:#68738d;
+}
+
+.composer-btn{
+  width:42px;
+  height:42px;
+
+  flex-shrink:0;
+
+  border:0;
+
+  border-radius:11px;
+
+  background:#151e34;
+
+  color:#b8c1d7;
+
   cursor:pointer;
+
+  font-size:18px;
 }
 
-.send:disabled{
-  opacity:.5;
+.composer-btn:hover{
+  background:#202b46;
+  color:white;
 }
 
-/* EMOJIS */
+.send-btn{
+  background:
+    linear-gradient(
+      135deg,
+      #733cff,
+      #a23ee9
+    );
+
+  color:white;
+}
+
+.send-btn:hover{
+  filter:brightness(1.1);
+}
+
+.premium-tool{
+  position:relative;
+}
+
+.premium-tool::after{
+  content:"💎";
+
+  position:absolute;
+
+  right:-2px;
+  top:-4px;
+
+  font-size:9px;
+}
+
+.file-name{
+  font-size:11px;
+  color:#9eabc4;
+  margin:7px 5px;
+}
+
+.hidden{
+  display:none;
+}
+
+.recording{
+  background:#e63b64!important;
+  color:white!important;
+}
+
+/* =========================================
+   EMOJI PANEL
+========================================= */
 
 .emoji-panel{
   display:none;
-  padding:10px;
+
   margin-bottom:8px;
-  border-radius:13px;
-  background:var(--bubble);
-  max-height:145px;
-  overflow-y:auto;
+
+  padding:10px;
+
+  background:#11192c;
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
 }
 
 .emoji-panel button{
   border:0;
+
   background:transparent;
-  font-size:23px;
+
+  font-size:21px;
+
   padding:5px;
+
   cursor:pointer;
 }
 
-/* PREMIUM NOTICE */
+/* =========================================
+   SCROLLBAR
+========================================= */
 
-.premium-notice{
-  display:none;
-  background:#fff4c7;
-  color:#745800;
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:8px;
-  font-size:13px;
-  font-weight:700;
+::-webkit-scrollbar{
+  width:7px;
 }
 
-.premium-notice a{
-  color:#745800;
+::-webkit-scrollbar-track{
+  background:transparent;
 }
 
-/* EDIT */
-
-.edit-box{
-  margin-top:8px;
+::-webkit-scrollbar-thumb{
+  background:#242d45;
+  border-radius:20px;
 }
 
-.edit-box textarea{
-  min-height:90px;
-}
+/* =========================================
+   RESPONSIVE
+========================================= */
 
-.edit-save{
-  margin-top:6px;
-  border:0;
-  padding:8px 12px;
-  border-radius:9px;
-  background:var(--accent);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
+@media(max-width:1050px){
 
-/* MOBILE */
+  .app{
+    grid-template-columns:80px 250px minmax(0,1fr);
+  }
 
-@media(max-width:800px){
+  .brand-name,
+  .brand-sub,
+  .nav-item span:not(.nav-icon),
+  .premium-box,
+  .current-info{
+    display:none;
+  }
 
-  .page{
+  .brand{
+    justify-content:center;
     padding:0;
   }
 
-  .chat{
-    height:calc(100vh - 64px);
-    min-height:0;
-    border-radius:0;
-    border:0;
+  .brand-icon{
+    margin:0;
   }
 
-  .chat-sidebar{
+  .nav-item{
+    justify-content:center;
+    padding:14px;
+  }
+
+  .current-user{
+    justify-content:center;
+  }
+
+}
+
+@media(max-width:760px){
+
+  body{
+    overflow:auto;
+  }
+
+  .app{
+    height:100vh;
+
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
     display:none;
   }
 
-  header{
+  .members{
+    display:none;
+  }
+
+  .chat{
+    height:100vh;
+  }
+
+  .chat-header{
+    height:75px;
     padding:0 12px;
   }
 
-  nav a{
-    display:none;
-  }
-
-  nav a[href="profile.html"],
-  nav a[href="premium.html"]{
-    display:block;
+  .messages{
+    padding:8px 12px 15px;
   }
 
   .message-content{
     max-width:82%;
   }
 
-  .messages{
-    padding:15px 11px;
+  .notice{
+    margin:8px 12px;
+  }
+
+  .composer{
+    padding:9px;
   }
 
 }
 
-@media(max-width:450px){
-
-  .logo{
-    font-size:19px;
-  }
-
-  .chat-header{
-    padding:10px 13px;
-  }
-
-  .chat-description{
-    display:none;
-  }
-
-}
 </style>
 </head>
 
 <body>
 
-<header>
+<div class="app">
 
-  <div class="logo">
-    🌍 TeenSpace
+<!-- =========================================
+     SIDEBAR
+========================================= -->
+
+<aside class="sidebar">
+
+  <div class="brand">
+
+    <div class="brand-icon">🪐</div>
+
+    <div>
+      <div class="brand-name">
+        TeenSpace
+      </div>
+
+      <div class="brand-sub">
+        Made for teens, by teens
+      </div>
+    </div>
+
   </div>
 
-  <nav>
-    <a href="home.html">Home</a>
-    <a href="explore.html">Explore</a>
-    <a href="community.html">Community</a>
-    <a href="profile.html">Profile</a>
-    <a href="premium.html" class="premium-nav">💎 Premium</a>
 
-    <button id="themeBtn" class="theme-btn">
-      🌙
-    </button>
+  <nav class="nav">
+
+    <a class="nav-item active" href="community.html">
+      <span class="nav-icon">💬</span>
+      <span>Community</span>
+    </a>
+
+    <a class="nav-item" href="home.html">
+      <span class="nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+
+    <a class="nav-item" href="explore.html">
+      <span class="nav-icon">◉</span>
+      <span>Explore</span>
+    </a>
+
+    <a class="nav-item" href="notifications.html">
+      <span class="nav-icon">🔔</span>
+      <span>Notifications</span>
+      <span class="nav-badge">3</span>
+    </a>
+
+    <a class="nav-item" href="messages.html">
+      <span class="nav-icon">➤</span>
+      <span>Messages</span>
+    </a>
+
+    <a class="nav-item" href="profile.html">
+      <span class="nav-icon">♙</span>
+      <span>Profile</span>
+    </a>
+
+    <a class="nav-item" href="premium.html">
+      <span class="nav-icon">💎</span>
+      <span>Premium</span>
+    </a>
+
+    <a class="nav-item" href="settings.html">
+      <span class="nav-icon">⚙</span>
+      <span>Settings</span>
+    </a>
+
+    <a class="nav-item" href="help.html">
+      <span class="nav-icon">?</span>
+      <span>Help</span>
+    </a>
+
   </nav>
 
-</header>
 
-<div class="page">
+  <div class="premium-box">
 
-<div class="chat">
-
-  <aside class="chat-sidebar">
-
-    <div class="sidebar-title">
-      💬 Chats
+    <div class="premium-title">
+      💎 Go Premium ✨
     </div>
 
-    <div class="online-box">
-      <span class="online-dot"></span>
-      Community chat
+    <div class="premium-text">
+      Unlock cool themes, custom fonts,
+      bigger uploads, voice messages
+      and more.
     </div>
 
-    <div class="room active">
-      🌍 Global TeenSpace
-    </div>
+    <button
+      class="premium-button"
+      onclick="location.href='premium.html'"
+    >
+      Upgrade Now
+    </button>
 
-    <div class="room">
-      🎮 Gaming
-    </div>
-
-    <div class="room">
-      🎨 Creative
-    </div>
-
-    <div class="room">
-      📚 School
-    </div>
-
-  </aside>
+  </div>
 
 
-  <section class="chat-main">
+  <div class="current-user">
 
-    <div class="chat-header">
+    <img
+      id="currentAvatar"
+      class="current-avatar"
+      src=""
+      alt="Your profile"
+    >
 
-      <div>
-        <div class="room-name">
-          🌍 Global TeenSpace
-        </div>
+    <div class="current-info">
 
-        <div class="room-description">
-          Talk, share and meet the community
-        </div>
+      <div
+        id="currentName"
+        class="current-name"
+      >
+        You
       </div>
 
       <div
-        id="premiumLabel"
-        class="premium-label"
-        style="display:none"
+        id="currentHandle"
+        class="current-handle"
       >
-        💎 PREMIUM
+        @teenspace
+      </div>
+
+    </div>
+
+    <span class="online-dot"></span>
+
+  </div>
+
+</aside>
+
+
+<!-- =========================================
+     MEMBERS
+========================================= -->
+
+<aside class="members">
+
+  <div class="members-header">
+
+    <div class="members-title">
+      ONLINE —
+      <span
+        id="onlineCount"
+        class="members-count"
+      >
+        0
+      </span>
+    </div>
+
+    <input
+      id="memberSearch"
+      class="search"
+      type="text"
+      placeholder="Search users..."
+    >
+
+  </div>
+
+
+  <div
+    id="memberList"
+    class="member-list"
+  >
+
+    <div class="status">
+      Loading members...
+    </div>
+
+  </div>
+
+</aside>
+
+
+<!-- =========================================
+     CHAT
+========================================= -->
+
+<main class="chat">
+
+  <div class="chat-header">
+
+    <div class="community-icon">
+      🌎
+    </div>
+
+    <div class="chat-heading">
+
+      <div class="chat-title">
+        Global Community
+      </div>
+
+      <div class="chat-subtitle">
+        Talk, share & connect with teens worldwide ✨
       </div>
 
     </div>
 
 
-    <div id="messages" class="messages">
+    <div class="chat-actions">
 
-      <div class="status">
-        Loading community...
-      </div>
+      <button
+        class="icon-btn"
+        title="Search"
+      >
+        🔍
+      </button>
+
+      <button
+        class="icon-btn"
+        title="Members"
+      >
+        👥
+      </button>
+
+      <button
+        class="icon-btn"
+        title="Notifications"
+      >
+        🔔
+      </button>
+
+      <button
+        class="icon-btn"
+        title="Dark mode"
+      >
+        🌙
+      </button>
 
     </div>
 
+  </div>
 
-    <div class="composer">
 
-      <div
-        id="premiumNotice"
-        class="premium-notice"
+  <div class="chat-tabs">
+
+    <button
+      class="tab active"
+      id="publicTab"
+    >
+      💬 Public Chat
+    </button>
+
+    <button
+      class="tab"
+      onclick="location.href='messages.html'"
+    >
+      🔒 Private
+    </button>
+
+  </div>
+
+
+  <div
+    id="notice"
+    class="notice"
+  >
+
+    📢
+    <span>
+      Be kind & respect others. No spam,
+      hate or bullying. Let's keep TeenSpace awesome! 💜
+    </span>
+
+    <button
+      class="notice-close"
+      onclick="this.parentElement.style.display='none'"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div
+    id="messages"
+    class="messages"
+  >
+
+    <div class="status">
+      Loading community...
+    </div>
+
+  </div>
+
+
+  <div class="composer">
+
+    <div
+      id="emojiPanel"
+      class="emoji-panel"
+    ></div>
+
+
+    <div
+      id="fileName"
+      class="file-name"
+    ></div>
+
+
+    <div class="composer-box">
+
+      <button
+        id="emojiBtn"
+        class="composer-btn"
+        title="Emoji"
       >
-        💎 This feature is for Premium members.
-        <a href="premium.html">Upgrade to Premium</a>
-      </div>
+        😊
+      </button>
 
 
-      <div id="emojiPanel" class="emoji-panel">
-
-        😀 😂 🤣 😍 🥰 😎 😭 😡 😱 🤔 🙄 😴
-        🤗 🥳 😇 🤩 ❤️ 🧡 💛 💚 💙 💜 🖤 🤍
-        🔥 ⭐ ✨ 🎉 👏 🙌 💯 👍 👎 💀 👀 🙏
-        💖 💫 🌍 🚀 🎮 🎨 📚 🏆 🥹 😭 🤣
-
-      </div>
-
-
-      <div class="toolbar">
-
-        <button id="emojiBtn" class="tool">
-          😀
-        </button>
-
-        <button id="mediaBtn" class="tool">
-          📎 Media 💎
-        </button>
-
-        <button id="voiceBtn" class="tool">
-          🎙️ Voice 💎
-        </button>
-
-      </div>
-
-
-      <input
-        id="mediaInput"
-        type="file"
-        hidden
-        accept="image/*,video/*"
+      <button
+        id="mediaBtn"
+        class="composer-btn premium-tool"
+        title="Premium media"
       >
+        📎
+      </button>
 
 
-      <div id="fileName"></div>
+      <button
+        id="voiceBtn"
+        class="composer-btn premium-tool"
+        title="Premium voice"
+      >
+        🎙
+      </button>
 
 
       <textarea
         id="messageInput"
         maxlength="2000"
-        placeholder="Message TeenSpace..."
+        placeholder="Type a message..."
       ></textarea>
 
 
-      <div class="send-row">
-
-        <button id="sendBtn" class="send">
-          Send 💬
-        </button>
-
-      </div>
+      <button
+        id="sendBtn"
+        class="composer-btn send-btn"
+        title="Send"
+      >
+        ➤
+      </button>
 
     </div>
 
-  </section>
+  </div>
+
+</main>
 
 </div>
 
-</div>
+
+<input
+  id="mediaInput"
+  class="hidden"
+  type="file"
+  accept="image/*,video/*"
+>
 
 
 <script>
 
-/* ===============================
+/* =========================================
    SUPABASE
-================================ */
+========================================= */
 
 const SUPABASE_URL =
-"https://gcigveojqwwovitlwtxl.supabase.co";
+  "https://gcigveojqwwovitlwtxl.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+  "sb_publishable_Br7HdEgbHvQxx4_8HHR9Fg_fJ5sH_r7";
+
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:true
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
     }
-  }
-);
-
-
-/* ===============================
-   ELEMENTS
-================================ */
-
-const messagesBox =
-document.getElementById("messages");
-
-const input =
-document.getElementById("messageInput");
-
-const sendBtn =
-document.getElementById("sendBtn");
-
-const emojiBtn =
-document.getElementById("emojiBtn");
-
-const emojiPanel =
-document.getElementById("emojiPanel");
-
-const mediaBtn =
-document.getElementById("mediaBtn");
-
-const voiceBtn =
-document.getElementById("voiceBtn");
-
-const mediaInput =
-document.getElementById("mediaInput");
-
-const premiumNotice =
-document.getElementById("premiumNotice");
-
-const premiumLabel =
-document.getElementById("premiumLabel");
-
-const fileName =
-document.getElementById("fileName");
-
-const themeBtn =
-document.getElementById("themeBtn");
-
-
-let currentUser=null;
-let currentProfile={};
-let isPremium=false;
-let selectedFile=null;
-let recorder=null;
-let audioChunks=[];
-
-
-/* ===============================
-   THEME
-================================ */
-
-const savedTheme =
-localStorage.getItem("teenspace-theme");
-
-if(savedTheme==="dark"){
-  document.body.classList.add("dark");
-}
-
-function updateThemeButton(){
-
-  themeBtn.textContent =
-    document.body.classList.contains("dark")
-      ? "☀️"
-      : "🌙";
-
-}
-
-updateThemeButton();
-
-themeBtn.onclick=function(){
-
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    "teenspace-theme",
-    document.body.classList.contains("dark")
-      ? "dark"
-      : "light"
   );
 
-  updateThemeButton();
 
-};
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const messagesBox =
+  document.getElementById("messages");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const emojiBtn =
+  document.getElementById("emojiBtn");
+
+const emojiPanel =
+  document.getElementById("emojiPanel");
+
+const mediaBtn =
+  document.getElementById("mediaBtn");
+
+const voiceBtn =
+  document.getElementById("voiceBtn");
+
+const mediaInput =
+  document.getElementById("mediaInput");
+
+const fileName =
+  document.getElementById("fileName");
+
+const memberList =
+  document.getElementById("memberList");
+
+const memberSearch =
+  document.getElementById("memberSearch");
+
+const onlineCount =
+  document.getElementById("onlineCount");
+
+const currentAvatar =
+  document.getElementById("currentAvatar");
+
+const currentName =
+  document.getElementById("currentName");
+
+const currentHandle =
+  document.getElementById("currentHandle");
 
 
-/* ===============================
-   PREMIUM FONT
-================================ */
+let currentUser = null;
+let currentProfile = {};
+let allProfiles = [];
 
-const allowedFonts={
-  Arial:"Arial,sans-serif",
-  Poppins:"Poppins,sans-serif",
-  Inter:"Inter,sans-serif",
-  Nunito:"Nunito,sans-serif",
-  Comic:"Comic Sans MS,cursive",
-  Georgia:"Georgia,serif"
-};
+let isPremium = false;
 
-function applyFont(font){
+let selectedFile = null;
 
-  if(!isPremium){
-    document.documentElement
-      .style.setProperty(
-        "--font",
-        "Arial,sans-serif"
-      );
-    return;
-  }
+let recorder = null;
+let audioChunks = [];
 
-  const selected =
-    allowedFonts[font] ||
-    allowedFonts.Poppins;
 
-  document.documentElement
-    .style.setProperty(
-      "--font",
-      selected
-    );
+/* =========================================
+   FALLBACK AVATAR
+========================================= */
+
+function fallbackAvatar(name="TeenSpace"){
+
+  const letter =
+    (name || "T")
+      .charAt(0)
+      .toUpperCase();
+
+  return (
+    "https://ui-avatars.com/api/" +
+    "?name=" +
+    encodeURIComponent(letter) +
+    "&background=171d35" +
+    "&color=ffffff" +
+    "&size=100"
+  );
 
 }
 
 
-/* ===============================
-   USER
-================================ */
+/* =========================================
+   ESCAPE
+========================================= */
 
-async function loadUser(){
+function escapeHTML(value){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    value || "";
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================================
+   LOAD USER
+========================================= */
+
+async function loadCurrentUser(){
 
   const {
-    data:{user},
-    error
+    data:{
+      user
+    }
   } =
   await supabaseClient
     .auth
     .getUser();
 
-  if(error || !user){
 
-    location.href="login.html";
+  if(!user){
+
+    location.href =
+      "login.html";
+
     return false;
 
   }
 
-  currentUser=user;
+
+  currentUser =
+    user;
 
 
   const {
-    data:profile
+    data:profile,
+    error
   } =
   await supabaseClient
     .from("profiles")
     .select("*")
-    .eq("user-id",user.id)
+    .eq(
+      "user-id",
+      user.id
+    )
     .maybeSingle();
 
 
-  currentProfile=profile || {};
+  if(error){
 
-  isPremium =
-    currentProfile.premium===true;
-
-
-  if(isPremium){
-
-    premiumLabel.style.display=
-      "inline-block";
-
-    applyFont(
-      currentProfile.font_family
+    console.error(
+      "Profile:",
+      error
     );
 
-  }else{
-
-    applyFont("Arial");
-
   }
+
+
+  currentProfile =
+    profile || {};
+
+
+  isPremium =
+    currentProfile.premium === true;
+
+
+  applyProfileTheme(
+    currentProfile
+  );
+
+
+  const avatar =
+    getAvatar(
+      currentProfile
+    );
+
+
+  currentAvatar.src =
+    avatar;
+
+
+  currentName.textContent =
+    currentProfile.username ||
+    "You";
+
+
+  currentHandle.textContent =
+    "@" +
+    (
+      currentProfile.username ||
+      "teenspace"
+    );
+
 
   return true;
 
 }
 
 
-/* ===============================
-   AVATAR
-================================ */
+/* =========================================
+   PROFILE AVATAR
+========================================= */
 
-function fallbackAvatar(){
+function getAvatar(profile){
 
-  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236c5ce7'/%3E%3Ctext x='50' y='65' text-anchor='middle' font-size='45'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E";
+  if(!profile){
+
+    return fallbackAvatar();
+
+  }
+
+
+  return (
+    profile.avatar_url ||
+    profile.avatar ||
+    profile.profile_picture ||
+    profile.profile_pic ||
+    profile.photo_url ||
+    fallbackAvatar(
+      profile.username
+    )
+  );
 
 }
 
 
-/* ===============================
-   PROFILES
-================================ */
+/* =========================================
+   PROFILE THEME
+========================================= */
 
-async function getProfiles(ids){
+function applyProfileTheme(profile){
 
-  if(!ids.length)
-    return new Map();
+  const root =
+    document.documentElement;
+
+
+  /*
+    Dark mode is the default TeenSpace
+    community theme.
+  */
+
+
+  if(
+    isPremium &&
+    profile.accent_color
+  ){
+
+    root.style.setProperty(
+      "--accent",
+      profile.accent_color
+    );
+
+  }
+
+
+  if(
+    isPremium &&
+    profile.font_family
+  ){
+
+    const fonts = {
+      "Inter":"Inter,Arial,sans-serif",
+      "Poppins":"Poppins,Arial,sans-serif",
+      "Nunito":"Nunito,Arial,sans-serif",
+      "Space Grotesk":"Space Grotesk,Arial,sans-serif"
+    };
+
+
+    root.style.setProperty(
+      "--font",
+      fonts[profile.font_family] ||
+      "Inter,Arial,sans-serif"
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD PROFILES
+========================================= */
+
+async function loadProfiles(){
 
   const {
     data,
@@ -934,37 +1821,224 @@ async function getProfiles(ids){
   } =
   await supabaseClient
     .from("profiles")
-    .select(
-      'username,avatar_url,"user-id",premium'
-    )
-    .in("user-id",ids);
+    .select("*")
+    .limit(100);
+
 
   if(error){
 
-    console.error(error);
-    return new Map();
+    console.error(
+      "Profiles:",
+      error
+    );
+
+    return;
 
   }
 
-  const map=new Map();
 
-  (data||[]).forEach(profile=>{
+  allProfiles =
+    data || [];
 
-    map.set(
-      profile["user-id"],
-      profile
-    );
 
-  });
-
-  return map;
+  renderMembers(
+    allProfiles
+  );
 
 }
 
 
-/* ===============================
+/* =========================================
+   MEMBERS
+========================================= */
+
+function renderMembers(profiles){
+
+  const search =
+    memberSearch.value
+      .trim()
+      .toLowerCase();
+
+
+  const filtered =
+    profiles.filter(
+      profile =>
+        !search ||
+        (
+          profile.username ||
+          ""
+        )
+        .toLowerCase()
+        .includes(search)
+    );
+
+
+  onlineCount.textContent =
+    Math.max(
+      filtered.length,
+      0
+    );
+
+
+  if(!filtered.length){
+
+    memberList.innerHTML =
+      `<div class="status">
+        No members found.
+      </div>`;
+
+    return;
+
+  }
+
+
+  memberList.innerHTML =
+    "";
+
+
+  filtered.forEach(
+    profile=>{
+
+      const member =
+        document.createElement("div");
+
+      member.className =
+        "member";
+
+
+      const avatarWrap =
+        document.createElement("div");
+
+      avatarWrap.className =
+        "member-avatar-wrap";
+
+
+      const avatar =
+        document.createElement("img");
+
+      avatar.className =
+        "member-avatar";
+
+      avatar.src =
+        getAvatar(profile);
+
+      avatar.onerror =
+        function(){
+
+          this.onerror =
+            null;
+
+          this.src =
+            fallbackAvatar(
+              profile.username
+            );
+
+        };
+
+
+      const dot =
+        document.createElement("span");
+
+      dot.className =
+        "member-status";
+
+
+      avatarWrap.appendChild(
+        avatar
+      );
+
+      avatarWrap.appendChild(
+        dot
+      );
+
+
+      const info =
+        document.createElement("div");
+
+      info.className =
+        "member-info";
+
+
+      const name =
+        document.createElement("div");
+
+      name.className =
+        "member-name";
+
+      name.textContent =
+        profile.username ||
+        "TeenSpace Member";
+
+
+      const preview =
+        document.createElement("div");
+
+      preview.className =
+        "member-preview";
+
+      preview.textContent =
+        profile.bio ||
+        "Online in TeenSpace";
+
+
+      info.appendChild(name);
+      info.appendChild(preview);
+
+
+      member.appendChild(
+        avatarWrap
+      );
+
+      member.appendChild(
+        info
+      );
+
+
+      member.onclick =
+        function(){
+
+          openProfile(
+            profile["user-id"]
+          );
+
+        };
+
+
+      memberList.appendChild(
+        member
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+function openProfile(userId){
+
+  if(!userId){
+
+    return;
+
+  }
+
+
+  location.href =
+    "profile.html?user_id=" +
+    encodeURIComponent(
+      userId
+    );
+
+}
+
+
+/* =========================================
    LOAD MESSAGES
-================================ */
+========================================= */
 
 async function loadMessages(){
 
@@ -975,58 +2049,120 @@ async function loadMessages(){
   await supabaseClient
     .from("messages")
     .select(
-      "id,sender_id,receiver_id,content,created_at,message_type,media_url,media_name,edited"
+      "id,sender_id,content,created_at,message_type,media_url,media_name"
     )
-    .is("receiver_id",null)
+    .is(
+      "receiver_id",
+      null
+    )
     .order(
       "created_at",
-      {ascending:true}
+      {
+        ascending:true
+      }
     );
 
 
   if(error){
 
-    messagesBox.innerHTML=
+    console.error(
+      error
+    );
+
+
+    messagesBox.innerHTML =
       `<div class="status">
-        ❌ ${escapeHTML(error.message)}
+        ❌ Could not load community chat.
+        <br><br>
+        ${escapeHTML(error.message)}
       </div>`;
 
     return;
 
   }
 
-  renderMessages(data||[]);
+
+  renderMessages(
+    data || []
+  );
 
 }
 
 
-/* ===============================
-   ESCAPE
-================================ */
+/* =========================================
+   GET PROFILE MAP
+========================================= */
 
-function escapeHTML(value){
+async function getProfilesForMessages(
+  ids
+){
 
-  const div=
-    document.createElement("div");
+  if(!ids.length){
 
-  div.textContent=value||"";
+    return new Map();
 
-  return div.innerHTML;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select("*")
+    .in(
+      "user-id",
+      ids
+    );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    return new Map();
+
+  }
+
+
+  const map =
+    new Map();
+
+
+  (
+    data || []
+  ).forEach(
+    profile=>{
+
+      map.set(
+        profile["user-id"],
+        profile
+      );
+
+    }
+  );
+
+
+  return map;
 
 }
 
 
-/* ===============================
-   RENDER
-================================ */
+/* =========================================
+   RENDER MESSAGES
+========================================= */
 
 async function renderMessages(data){
 
   if(!data.length){
 
-    messagesBox.innerHTML=
+    messagesBox.innerHTML =
       `<div class="status">
-        👋 No messages yet.<br>
+        👋 No messages yet.
+        <br><br>
         Start the conversation!
       </div>`;
 
@@ -1035,641 +2171,790 @@ async function renderMessages(data){
   }
 
 
-  const ids=[
-    ...new Set(
-      data
-        .map(x=>x.sender_id)
-        .filter(Boolean)
-    )
-  ];
+  const ids =
+    [
+      ...new Set(
+        data
+          .map(
+            m => m.sender_id
+          )
+          .filter(Boolean)
+      )
+    ];
 
 
-  const profiles=
-    await getProfiles(ids);
+  const profiles =
+    await getProfilesForMessages(
+      ids
+    );
 
 
-  messagesBox.innerHTML="";
+  messagesBox.innerHTML =
+    "";
 
 
-  data.forEach(message=>{
+  data.forEach(
+    message=>{
 
-    const profile=
-      profiles.get(
-        message.sender_id
-      )||{};
-
-
-    const mine=
-      message.sender_id===
-      currentUser.id;
+      const profile =
+        profiles.get(
+          message.sender_id
+        ) || {};
 
 
-    const row=
-      document.createElement("div");
-
-    row.className=
-      "message-row"+
-      (mine?" mine":"");
+      const mine =
+        message.sender_id ===
+        currentUser.id;
 
 
-    const avatar=
-      document.createElement("img");
+      const row =
+        document.createElement(
+          "div"
+        );
 
-    avatar.className="avatar";
 
-    avatar.src=
-      profile.avatar_url ||
-      fallbackAvatar();
+      row.className =
+        "message-row" +
+        (
+          mine
+            ? " mine"
+            : ""
+        );
 
-    avatar.onerror=function(){
 
-      this.onerror=null;
-      this.src=fallbackAvatar();
+      /* AVATAR */
 
-    };
+      const avatarWrap =
+        document.createElement(
+          "div"
+        );
 
-    avatar.onclick=function(){
+      avatarWrap.className =
+        "message-avatar-wrap";
 
-      openProfile(
-        message.sender_id
+
+      const avatar =
+        document.createElement(
+          "img"
+        );
+
+      avatar.className =
+        "message-avatar";
+
+      avatar.src =
+        getAvatar(profile);
+
+      avatar.alt =
+        "Profile picture";
+
+
+      avatar.onerror =
+        function(){
+
+          this.onerror =
+            null;
+
+          this.src =
+            fallbackAvatar(
+              profile.username
+            );
+
+        };
+
+
+      avatar.onclick =
+        function(){
+
+          openProfile(
+            message.sender_id
+          );
+
+        };
+
+
+      const online =
+        document.createElement(
+          "span"
+        );
+
+      online.className =
+        "message-online";
+
+
+      avatarWrap.appendChild(
+        avatar
       );
 
-    };
-
-
-    const content=
-      document.createElement("div");
-
-    content.className=
-      "message-content";
-
-
-    const username=
-      document.createElement("div");
-
-    username.className="username";
-
-    username.textContent=
-      profile.username ||
-      "TeenSpace Member";
-
-    username.onclick=function(){
-
-      openProfile(
-        message.sender_id
+      avatarWrap.appendChild(
+        online
       );
 
-    };
+
+      /* CONTENT */
+
+      const content =
+        document.createElement(
+          "div"
+        );
+
+      content.className =
+        "message-content";
 
 
-    const bubble=
-      document.createElement("div");
+      const name =
+        document.createElement(
+          "div"
+        );
 
-    bubble.className="bubble";
-
-
-    const type=
-      message.message_type ||
-      "text";
+      name.className =
+        "message-name";
 
 
-    if(type==="image"){
+      if(profile.premium){
 
-      const img=
-        document.createElement("img");
+        name.classList.add(
+          "premium"
+        );
 
-      img.className="media";
-      img.src=message.media_url;
-      img.alt="Shared image";
-
-      bubble.appendChild(img);
-
-    }
-
-    else if(type==="video"){
-
-      const video=
-        document.createElement("video");
-
-      video.className="media";
-      video.src=message.media_url;
-      video.controls=true;
-      video.playsInline=true;
-
-      bubble.appendChild(video);
-
-    }
-
-    else if(type==="audio"){
-
-      const audio=
-        document.createElement("audio");
-
-      audio.className="audio";
-      audio.src=message.media_url;
-      audio.controls=true;
-
-      bubble.appendChild(audio);
-
-    }
-
-    else{
-
-      bubble.textContent=
-        message.content||"";
-
-    }
+      }
 
 
-    const time=
-      document.createElement("div");
+      name.textContent =
+        profile.username ||
+        "TeenSpace Member";
 
-    time.className="message-time";
 
-    time.textContent=
-      new Date(
-        message.created_at
-      ).toLocaleTimeString(
-        [],
-        {
-          hour:"2-digit",
-          minute:"2-digit"
+      if(profile.premium){
+
+        const badge =
+          document.createElement(
+            "span"
+          );
+
+        badge.className =
+          "premium-badge";
+
+        badge.textContent =
+          "PREMIUM";
+
+        name.appendChild(
+          badge
+        );
+
+      }
+
+
+      name.onclick =
+        function(){
+
+          openProfile(
+            message.sender_id
+          );
+
+        };
+
+
+      content.appendChild(
+        name
+      );
+
+
+      /* BUBBLE */
+
+      const bubble =
+        document.createElement(
+          "div"
+        );
+
+      bubble.className =
+        "bubble";
+
+
+      const type =
+        message.message_type ||
+        "text";
+
+
+      if(
+        type === "image" &&
+        message.media_url
+      ){
+
+        const img =
+          document.createElement(
+            "img"
+          );
+
+        img.className =
+          "media";
+
+        img.src =
+          message.media_url;
+
+        img.alt =
+          "Shared image";
+
+
+        bubble.appendChild(
+          img
+        );
+
+      }
+
+      else if(
+        type === "video" &&
+        message.media_url
+      ){
+
+        const video =
+          document.createElement(
+            "video"
+          );
+
+        video.className =
+          "media";
+
+        video.src =
+          message.media_url;
+
+        video.controls =
+          true;
+
+        video.playsInline =
+          true;
+
+
+        bubble.appendChild(
+          video
+        );
+
+      }
+
+      else if(
+        type === "audio" &&
+        message.media_url
+      ){
+
+        const audio =
+          document.createElement(
+            "audio"
+          );
+
+        audio.className =
+          "audio";
+
+        audio.src =
+          message.media_url;
+
+        audio.controls =
+          true;
+
+
+        bubble.appendChild(
+          audio
+        );
+
+      }
+
+      else{
+
+        bubble.textContent =
+          message.content ||
+          "";
+
+      }
+
+
+      content.appendChild(
+        bubble
+      );
+
+
+      /* META */
+
+      const meta =
+        document.createElement(
+          "div"
+        );
+
+      meta.className =
+        "message-meta";
+
+
+      meta.textContent =
+        new Date(
+          message.created_at
+        ).toLocaleTimeString(
+          [],
+          {
+            hour:"2-digit",
+            minute:"2-digit"
+          }
+        );
+
+
+      if(mine){
+
+        meta.textContent +=
+          "  ✓✓";
+
+      }
+
+
+      content.appendChild(
+        meta
+      );
+
+
+      /* REACTIONS — VISUAL UI */
+
+      const reactions =
+        document.createElement(
+          "div"
+        );
+
+      reactions.className =
+        "reactions";
+
+
+      [
+        "❤️",
+        "🔥",
+        "😂"
+      ].forEach(
+        emoji=>{
+
+          const reaction =
+            document.createElement(
+              "button"
+            );
+
+          reaction.className =
+            "reaction";
+
+          reaction.textContent =
+            emoji + " 0";
+
+
+          reaction.onclick =
+            function(){
+
+              const parts =
+                reaction.textContent
+                  .split(" ");
+
+              const count =
+                Number(
+                  parts[
+                    parts.length - 1
+                  ]
+                ) || 0;
+
+
+              reaction.textContent =
+                emoji +
+                " " +
+                (count + 1);
+
+            };
+
+
+          reactions.appendChild(
+            reaction
+          );
+
         }
       );
 
 
-    if(message.edited){
-
-      const edited=
-        document.createElement("span");
-
-      edited.className="edited";
-
-      edited.textContent=
-        " · edited";
-
-      time.appendChild(edited);
-
-    }
+      content.appendChild(
+        reactions
+      );
 
 
-    const reactions=
-      document.createElement("div");
+      row.appendChild(
+        avatarWrap
+      );
 
-    reactions.className="reactions";
-
-    ["❤️","😂","🔥","👍"].forEach(emoji=>{
-
-      const button=
-        document.createElement("button");
-
-      button.className="reaction";
-      button.textContent=emoji;
-
-      button.onclick=function(){
-
-        alert(
-          "Reaction system ready for the reactions table."
-        );
-
-      };
-
-      reactions.appendChild(button);
-
-    });
+      row.appendChild(
+        content
+      );
 
 
-    const actions=
-      document.createElement("div");
-
-    actions.className=
-      "message-actions";
-
-
-    if(mine){
-
-      const edit=
-        document.createElement("button");
-
-      edit.className="small-btn";
-      edit.textContent="✏️ Edit";
-
-      edit.onclick=function(){
-
-        editMessage(
-          message,
-          content,
-          bubble
-        );
-
-      };
-
-
-      const del=
-        document.createElement("button");
-
-      del.className="small-btn";
-      del.textContent="🗑️ Delete";
-
-      del.onclick=function(){
-
-        deleteMessage(
-          message.id
-        );
-
-      };
-
-
-      actions.appendChild(edit);
-      actions.appendChild(del);
+      messagesBox.appendChild(
+        row
+      );
 
     }
+  );
 
 
-    content.appendChild(username);
-    content.appendChild(bubble);
-    content.appendChild(reactions);
-    content.appendChild(time);
-    content.appendChild(actions);
-
-
-    if(mine){
-
-      row.appendChild(content);
-      row.appendChild(avatar);
-
-    }else{
-
-      row.appendChild(avatar);
-      row.appendChild(content);
-
-    }
-
-
-    messagesBox.appendChild(row);
-
-  });
-
-
-  messagesBox.scrollTop=
+  messagesBox.scrollTop =
     messagesBox.scrollHeight;
 
 }
 
 
-/* ===============================
-   PROFILE
-================================ */
+/* =========================================
+   EMOJI
+========================================= */
 
-function openProfile(id){
-
-  location.href=
-    "profile.html?user_id="+
-    encodeURIComponent(id);
-
-}
-
-
-/* ===============================
-   EDIT
-================================ */
-
-function editMessage(
-  message,
-  content,
-  bubble
-){
-
-  const old=
-    message.content||"";
-
-  const box=
-    document.createElement("div");
-
-  box.className="edit-box";
-
-
-  const textarea=
-    document.createElement("textarea");
-
-  textarea.value=old;
-
-
-  const save=
-    document.createElement("button");
-
-  save.className="edit-save";
-  save.textContent="Save";
-
-
-  save.onclick=async function(){
-
-    const value=
-      textarea.value.trim();
-
-    if(!value)
-      return;
-
-
-    const {
-      error
-    } =
-    await supabaseClient
-      .from("messages")
-      .update({
-        content:value,
-        edited:true
-      })
-      .eq("id",message.id)
-      .eq("sender_id",currentUser.id);
-
-
-    if(error){
-
-      alert(error.message);
-      return;
-
-    }
-
-    loadMessages();
-
-  };
-
-
-  box.appendChild(textarea);
-  box.appendChild(save);
-
-  content.appendChild(box);
-
-}
-
-
-/* ===============================
-   DELETE
-================================ */
-
-async function deleteMessage(id){
-
-  if(!confirm("Delete this message?"))
-    return;
-
-
-  const {
-    error
-  } =
-  await supabaseClient
-    .from("messages")
-    .delete()
-    .eq("id",id)
-    .eq("sender_id",currentUser.id);
-
-
-  if(error){
-
-    alert(error.message);
-    return;
-
-  }
-
-  loadMessages();
-
-}
-
-
-/* ===============================
-   EMOJIS
-================================ */
-
-emojiBtn.onclick=function(){
-
-  emojiPanel.style.display=
-    emojiPanel.style.display==="block"
-      ? "none"
-      : "block";
-
-};
-
-
-const emojiList=[
-"😀","😂","🤣","😍","🥰","😘","😎","😭",
-"😡","😱","🤔","🙄","😴","🤗","🥳","😇",
-"🤩","❤️","🧡","💛","💚","💙","💜","🖤",
-"🤍","🔥","⭐","✨","🎉","👏","🙌","💯",
-"👍","👎","💀","👀","🙏","💖","💫","🌍",
-"🚀","🎮","🎨","📚","🏆","🥹","😅","😏"
+const emojis = [
+  "😀","😂","🤣","😍","🥰","😘",
+  "😎","😭","😡","😱","🤔","🙄",
+  "😴","🤗","🥳","🤩","❤️","💜",
+  "💙","💚","💛","🖤","🔥","⭐",
+  "✨","🎉","👏","🙌","💯","👍",
+  "👎","💀","👀","🙏","💖","💫",
+  "🌍","🚀"
 ];
 
 
-emojiPanel.innerHTML="";
+emojis.forEach(
+  emoji=>{
 
-emojiList.forEach(emoji=>{
+    const button =
+      document.createElement(
+        "button"
+      );
 
-  const button=
-    document.createElement("button");
+    button.textContent =
+      emoji;
 
-  button.textContent=emoji;
 
-  button.onclick=function(){
+    button.onclick =
+      function(){
 
-    const start=input.selectionStart;
-    const end=input.selectionEnd;
+        const start =
+          messageInput.selectionStart;
 
-    input.value=
-      input.value.slice(0,start)+
-      emoji+
-      input.value.slice(end);
+        const end =
+          messageInput.selectionEnd;
 
-    input.focus();
+        const text =
+          messageInput.value;
+
+
+        messageInput.value =
+          text.slice(0,start) +
+          emoji +
+          text.slice(end);
+
+
+        messageInput.focus();
+
+
+        const pos =
+          start +
+          emoji.length;
+
+
+        messageInput.selectionStart =
+          pos;
+
+        messageInput.selectionEnd =
+          pos;
+
+      };
+
+
+    emojiPanel.appendChild(
+      button
+    );
+
+  }
+);
+
+
+emojiBtn.onclick =
+  function(){
+
+    emojiPanel.style.display =
+      emojiPanel.style.display ===
+      "block"
+        ? "none"
+        : "block";
 
   };
 
-  emojiPanel.appendChild(button);
 
-});
-
-
-/* ===============================
-   PREMIUM
-================================ */
+/* =========================================
+   PREMIUM CHECK
+========================================= */
 
 function requirePremium(){
 
   if(isPremium){
 
-    premiumNotice.style.display="none";
     return true;
 
   }
 
-  premiumNotice.style.display="block";
 
-  setTimeout(
-    ()=>premiumNotice.style.display="none",
-    4500
+  alert(
+    "💎 This feature is available to TeenSpace Premium members."
   );
+
 
   return false;
 
 }
 
 
-/* ===============================
+/* =========================================
    MEDIA
-================================ */
+========================================= */
 
-mediaBtn.onclick=function(){
+mediaBtn.onclick =
+  function(){
 
-  if(!requirePremium())
-    return;
+    if(
+      !requirePremium()
+    ){
 
-  mediaInput.click();
-
-};
-
-
-mediaInput.onchange=function(){
-
-  selectedFile=
-    mediaInput.files?.[0]||
-    null;
-
-  if(selectedFile){
-
-    if(selectedFile.size>
-      25*1024*1024){
-
-      alert(
-        "Maximum media size is 25 MB."
-      );
-
-      mediaInput.value="";
-      selectedFile=null;
       return;
 
     }
 
-    fileName.textContent=
-      "📎 "+
+
+    mediaInput.click();
+
+  };
+
+
+mediaInput.onchange =
+  function(){
+
+    if(!isPremium){
+
+      mediaInput.value =
+        "";
+
+      selectedFile =
+        null;
+
+      return;
+
+    }
+
+
+    selectedFile =
+      mediaInput.files &&
+      mediaInput.files[0]
+        ? mediaInput.files[0]
+        : null;
+
+
+    if(!selectedFile){
+
+      fileName.textContent =
+        "";
+
+      return;
+
+    }
+
+
+    if(
+      selectedFile.size >
+      25 * 1024 * 1024
+    ){
+
+      alert(
+        "Media must be 25 MB or smaller."
+      );
+
+      mediaInput.value =
+        "";
+
+      selectedFile =
+        null;
+
+      return;
+
+    }
+
+
+    fileName.textContent =
+      "📎 " +
       selectedFile.name;
 
-  }
-
-};
+  };
 
 
-/* ===============================
+/* =========================================
    VOICE
-================================ */
+========================================= */
 
-voiceBtn.onclick=async function(){
+voiceBtn.onclick =
+  async function(){
 
-  if(!requirePremium())
-    return;
+    if(
+      !requirePremium()
+    ){
 
+      return;
 
-  if(
-    recorder &&
-    recorder.state==="recording"
-  ){
-
-    recorder.stop();
-
-    voiceBtn.textContent=
-      "🎙️ Voice 💎";
-
-    return;
-
-  }
+    }
 
 
-  try{
+    if(
+      recorder &&
+      recorder.state ===
+      "recording"
+    ){
 
-    const stream=
-      await navigator.mediaDevices
-        .getUserMedia({
-          audio:true
-        });
+      recorder.stop();
 
+      voiceBtn.textContent =
+        "🎙";
 
-    audioChunks=[];
+      voiceBtn.classList.remove(
+        "recording"
+      );
 
+      return;
 
-    recorder=
-      new MediaRecorder(stream);
-
-
-    recorder.ondataavailable=
-      event=>{
-
-        if(event.data.size)
-          audioChunks.push(event.data);
-
-      };
+    }
 
 
-    recorder.onstop=()=>{
+    if(
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ){
 
-      stream
-        .getTracks()
-        .forEach(track=>track.stop());
+      alert(
+        "Voice recording is not supported by this browser."
+      );
+
+      return;
+
+    }
 
 
-      const blob=
-        new Blob(
-          audioChunks,
-          {type:"audio/webm"}
+    try{
+
+      const stream =
+        await navigator.mediaDevices
+          .getUserMedia({
+            audio:true
+          });
+
+
+      audioChunks =
+        [];
+
+
+      recorder =
+        new MediaRecorder(
+          stream
         );
 
 
-      selectedFile=
-        new File(
-          [blob],
-          "voice-"+Date.now()+".webm",
-          {type:"audio/webm"}
-        );
+      recorder.ondataavailable =
+        function(event){
+
+          if(
+            event.data.size > 0
+          ){
+
+            audioChunks.push(
+              event.data
+            );
+
+          }
+
+        };
 
 
-      fileName.textContent=
-        "🎙️ Voice recording ready";
+      recorder.onstop =
+        function(){
 
-    };
-
-
-    recorder.start();
-
-    voiceBtn.textContent=
-      "⏹️ Stop recording";
-
-  }
-
-  catch(error){
-
-    alert(
-      "Microphone permission was not granted."
-    );
-
-  }
-
-};
+          stream
+            .getTracks()
+            .forEach(
+              track =>
+                track.stop()
+            );
 
 
-/* ===============================
+          const blob =
+            new Blob(
+              audioChunks,
+              {
+                type:
+                  recorder.mimeType ||
+                  "audio/webm"
+              }
+            );
+
+
+          selectedFile =
+            new File(
+              [blob],
+              "voice-" +
+              Date.now() +
+              ".webm",
+              {
+                type:
+                  blob.type
+              }
+            );
+
+
+          fileName.textContent =
+            "🎙️ Voice recording ready";
+
+        };
+
+
+      recorder.start();
+
+
+      voiceBtn.textContent =
+        "⏹";
+
+      voiceBtn.classList.add(
+        "recording"
+      );
+
+    }
+
+    catch(error){
+
+      console.error(
+        error
+      );
+
+      alert(
+        "Microphone permission was not granted."
+      );
+
+    }
+
+  };
+
+
+/* =========================================
    UPLOAD
-================================ */
+========================================= */
 
 async function uploadFile(file){
 
-  const extension=
+  const extension =
     file.name.includes(".")
-      ? file.name.split(".").pop()
+      ? file.name
+          .split(".")
+          .pop()
+          .toLowerCase()
       : "bin";
 
 
-  const path=
-    currentUser.id+
-    "/"+
-    crypto.randomUUID()+
-    "."+
+  const path =
+    currentUser.id +
+    "/community-" +
+    crypto.randomUUID() +
+    "." +
     extension;
 
 
@@ -1685,14 +2970,19 @@ async function uploadFile(file){
       file,
       {
         contentType:
-          file.type||
-          "application/octet-stream"
+          file.type ||
+          "application/octet-stream",
+
+        upsert:false
       }
     );
 
 
-  if(error)
+  if(error){
+
     throw error;
+
+  }
 
 
   const {
@@ -1711,125 +3001,196 @@ async function uploadFile(file){
 }
 
 
-/* ===============================
+/* =========================================
    SEND
-================================ */
+========================================= */
 
-sendBtn.onclick=async function(){
+sendBtn.onclick =
+  async function(){
 
-  const text=
-    input.value.trim();
+    if(!currentUser){
 
-
-  if(!text && !selectedFile)
-    return;
-
-
-  sendBtn.disabled=true;
-
-
-  try{
-
-    let payload={
-      sender_id:currentUser.id,
-      receiver_id:null,
-      content:text,
-      message_type:"text",
-      media_url:null,
-      media_name:null
-    };
-
-
-    if(selectedFile){
-
-      if(!isPremium)
-        throw new Error(
-          "Premium is required for media."
-        );
-
-
-      const url=
-        await uploadFile(
-          selectedFile
-        );
-
-
-      payload.media_url=url;
-      payload.media_name=
-        selectedFile.name;
-
-
-      if(
-        selectedFile.type
-          ?.startsWith("image/")
-      )
-        payload.message_type="image";
-
-      else if(
-        selectedFile.type
-          ?.startsWith("video/")
-      )
-        payload.message_type="video";
-
-      else
-        payload.message_type="audio";
+      return;
 
     }
 
 
-    const {
-      error
-    } =
-    await supabaseClient
-      .from("messages")
-      .insert(payload);
+    const text =
+      messageInput.value.trim();
 
-
-    if(error)
-      throw error;
-
-
-    input.value="";
-    selectedFile=null;
-    mediaInput.value="";
-    fileName.textContent="";
-
-    loadMessages();
-
-  }
-
-  catch(error){
-
-    alert(
-      error.message||
-      "Could not send message."
-    );
-
-  }
-
-  finally{
-
-    sendBtn.disabled=false;
-
-  }
-
-};
-
-
-/* ===============================
-   ENTER SEND
-================================ */
-
-input.addEventListener(
-  "keydown",
-  event=>{
 
     if(
-      event.key==="Enter" &&
+      !text &&
+      !selectedFile
+    ){
+
+      return;
+
+    }
+
+
+    sendBtn.disabled =
+      true;
+
+
+    try{
+
+      let payload = {
+
+        sender_id:
+          currentUser.id,
+
+        receiver_id:
+          null,
+
+        content:
+          text,
+
+        message_type:
+          "text",
+
+        media_url:
+          null,
+
+        media_name:
+          null
+
+      };
+
+
+      if(selectedFile){
+
+        if(
+          !isPremium
+        ){
+
+          throw new Error(
+            "Premium is required for media."
+          );
+
+        }
+
+
+        const url =
+          await uploadFile(
+            selectedFile
+          );
+
+
+        let type =
+          "audio";
+
+
+        if(
+          selectedFile.type &&
+          selectedFile.type.startsWith(
+            "image/"
+          )
+        ){
+
+          type =
+            "image";
+
+        }
+
+        else if(
+          selectedFile.type &&
+          selectedFile.type.startsWith(
+            "video/"
+          )
+        ){
+
+          type =
+            "video";
+
+        }
+
+
+        payload.message_type =
+          type;
+
+        payload.media_url =
+          url;
+
+        payload.media_name =
+          selectedFile.name;
+
+      }
+
+
+      const {
+        error
+      } =
+      await supabaseClient
+        .from("messages")
+        .insert(
+          payload
+        );
+
+
+      if(error){
+
+        throw error;
+
+      }
+
+
+      messageInput.value =
+        "";
+
+      selectedFile =
+        null;
+
+      mediaInput.value =
+        "";
+
+      fileName.textContent =
+        "";
+
+
+      await loadMessages();
+
+    }
+
+    catch(error){
+
+      console.error(
+        error
+      );
+
+
+      alert(
+        error.message ||
+        "Could not send message."
+      );
+
+    }
+
+    finally{
+
+      sendBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =========================================
+   ENTER
+========================================= */
+
+messageInput.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter" &&
       !event.shiftKey
     ){
 
       event.preventDefault();
+
       sendBtn.click();
 
     }
@@ -1838,39 +3199,77 @@ input.addEventListener(
 );
 
 
-/* ===============================
-   REALTIME
-================================ */
+/* =========================================
+   MEMBER SEARCH
+========================================= */
 
-supabaseClient
-.channel("teen-space-live-chat")
-.on(
-  "postgres_changes",
-  {
-    event:"*",
-    schema:"public",
-    table:"messages"
-  },
-  ()=>{
-    loadMessages();
+memberSearch.addEventListener(
+  "input",
+  function(){
+
+    renderMembers(
+      allProfiles
+    );
+
   }
-)
-.subscribe();
+);
 
 
-/* ===============================
+/* =========================================
+   REALTIME
+========================================= */
+
+function subscribe(){
+
+  supabaseClient
+    .channel(
+      "teen-space-community"
+    )
+    .on(
+      "postgres_changes",
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"messages"
+      },
+      function(){
+
+        loadMessages();
+
+      }
+    )
+    .subscribe();
+
+}
+
+
+/* =========================================
    START
-================================ */
+========================================= */
 
-(async function(){
+async function start(){
 
-  const ok=
-    await loadUser();
+  const ok =
+    await loadCurrentUser();
 
-  if(ok)
-    await loadMessages();
 
-})();
+  if(!ok){
+
+    return;
+
+  }
+
+
+  await loadProfiles();
+
+  await loadMessages();
+
+  subscribe();
+
+}
+
+
+start();
 
 </script>
 
